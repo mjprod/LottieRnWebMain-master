@@ -1,0 +1,41 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Inter-Bold.ttf",
+      "sha1": "47ff07c75746682133b81e7ac0537ce50a4c9916"
+    },
+    {
+      "path": "src/assets/fonts/Inter-ExtraBold.ttf",
+      "sha1": "c9b3d2f2449ab2c67ff075f806973fa3d7e104b3"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Medium.ttf",
+      "sha1": "e76f580811e031813e7150131a0724811cdd737a"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Regular-Italic.ttf",
+      "sha1": "e4d1197681f380cf9050be01e80b0f7cb428ce3f"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Regular.ttf",
+      "sha1": "7237d9cf55f177702066a28a4dde1e4c7e8ab576"
+    },
+    {
+      "path": "src/assets/fonts/Inter-SemiBold-Italic.ttf",
+      "sha1": "b6b6ed867894ef78700a5524d3721793aca186a4"
+    },
+    {
+      "path": "src/assets/fonts/Inter-SemiBold.ttf",
+      "sha1": "431007da316de60d85174aeec9b8389b5c73e7d6"
+    },
+    {
+      "path": "src/assets/fonts/Teko-Medium.ttf",
+      "sha1": "9b2926fea3daf1c1a13ae8d0d1bfce8218b16460"
+    },
+    {
+      "path": "src/assets/fonts/Teko-Regular.ttf",
+      "sha1": "af065fdd632f2f58db79b4991e50ca5f7f51fb9c"
+    }
+  ]
+}
