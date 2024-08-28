@@ -9,7 +9,8 @@
       "plugins": [
         "transform-object-rest-spread",
         "transform-react-jsx-source",
-        "@babel/plugin-transform-react-jsx"
+        "@babel/plugin-transform-react-jsx",
+        "react-native-reanimated/plugin"
       ]
     }
   }

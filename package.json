@@ -13,10 +13,14 @@
     "react": "latest",
     "react-dom": "latest",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "react-native-canvas": "^0.1.40",
     "react-native-cli": "^2.0.1",
+    "react-native-gesture-handler": "^2.18.1",
+    "react-native-svg-web": "^1.0.9",
     "react-native-web": "^0.19.12",
     "react-native-web-lottie": "^1.4.4",
     "react-native-web-video": "^5.0.0",
+    "react-native-webview": "^13.12.0",
     "typescript": "^5.5.4"
   },
   "scripts": {

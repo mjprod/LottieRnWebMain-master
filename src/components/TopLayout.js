@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -10,15 +10,13 @@ import {
   Dimensions,
   TouchableOpacity,
   Easing,
-} from 'react-native';
-//import LottieLuckySymbolCoinSlot from './LottieLuckySymbolCoinSlot';
-//import LottieView from 'lottie-react';
-import LottieView from 'react-native-web-lottie';
+} from "react-native";
 
-const backgroundTopLayout = require('./../assets/image/background_top_layout.png');
-const imageLuckySymbol = require('./../assets/image/icon_lucky_symbol.png');
-const imageCenterIcon = require('./../assets/image/game_center_icon.png');
-const lottieCountDownBonus = require('../assets/lotties/lottieCountdownBonus.json');
+import LottieView from "react-native-web-lottie";
+
+const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
+const imageLuckySymbol = require("./../assets/image/icon_lucky_symbol.png");
+const lottieCountDownBonus = require("../assets/lotties/lottieCountdownBonus.json");
 const scratched = true;
 const bonusValue = 70;
 const countdown = 3;
@@ -27,32 +25,34 @@ const showCountDown = true;
 //const showModalSetting = true;
 
 //type TopLayoutProps = {
-  //scratched: boolean;
-  //bonusValue: number;
-  //countdown: number;
-  //luckySymbolCount: number;
-  //style?: any;
-  //setShowModalSetting: (value: boolean) => void;
+//scratched: boolean;
+//bonusValue: number;
+//countdown: number;
+//luckySymbolCount: number;
+//style?: any;
+//setShowModalSetting: (value: boolean) => void;
 //};
 
-const TopLayout = ({
-  //scratched,
-  //bonusValue,
-  //countdown,
-  //luckySymbolCount,
-  //style,
-  //setShowModalSetting,
-}) => {
-  //const bounceAnim = useRef(new Animated.Value(1)).current;
-  //const fadeAnim = useRef(new Animated.Value(1)).current;
+const TopLayout = (
+  {
+    scratched,
+    //bonusValue,
+    //countdown,
+    //luckySymbolCount,
+    //style,
+    //setShowModalSetting,
+  }
+) => {
+  const bounceAnim = (new Animated.Value(1)).current;
+  const fadeAnim = (new Animated.Value(1)).current;
   //const [animationFinished, setAnimationFinished] = useState(false);
 
   //const [showCountDown, setShowCountDown] = useState(false);
   //const scaleAnim = useRef(new Animated.Value(1.8)).current;
-  
-  const scaleAnim = (new Animated.Value(1.8)).current;
 
-/*
+  const scaleAnim = new Animated.Value(1.8).current;
+
+  /*
   useEffect(() => {
     let timer;
     if (scratched) {
@@ -74,7 +74,7 @@ const TopLayout = ({
   }, [scratched, scaleAnim]);
 */
 
-/*
+  /*
   useEffect(() => {
     if (scratched) {
       Animated.sequence([
@@ -100,8 +100,8 @@ const TopLayout = ({
         }),
       ]).start();
       */
-      //playSong(require('./../../assets/audio/sfx_count_down.aac'));
-/*
+  //playSong(require('./../../assets/audio/sfx_count_down.aac'));
+  /*
       const timer = setTimeout(() => {
         setAnimationFinished(true);
         Animated.timing(fadeAnim, {
@@ -115,39 +115,40 @@ const TopLayout = ({
     }
   }, [scratched, bounceAnim, fadeAnim]);
   */
- 
+
   const getTextAnimationColor = (value) => {
     switch (value) {
       case 50:
-        return '#dc4445'; // Red
+        return "#dc4445"; // Red
       case 70:
-        return '#ddaa43'; // Yellow
+        return "#ddaa43"; // Yellow
       case 100:
-        return '#43db47'; // Green
+        return "#43db47"; // Green
       default:
-        return '#FFFFFF'; // Default to white if no match
+        return "#FFFFFF"; // Default to white if no match
     }
   };
 
   const getTextColor = (value) => {
     switch (value) {
       case 1:
-        return '#dc4445'; // Red
+        return "#dc4445"; // Red
       case 2:
-        return '#ddaa43'; // Yellow
+        return "#ddaa43"; // Yellow
       case 3:
-        return '#43db47'; // Green
+        return "#43db47"; // Green
       default:
-        return '#dc4445'; // Default to white if no match
+        return "#dc4445"; // Default to white if no match
     }
   };
 
   return (
-    <View style={{marginTop:-25}}>
+    <View style={{ marginTop: -25 }}>
       <ImageBackground
         source={backgroundTopLayout}
         resizeMode="contain"
-        style={styles.image_top}>
+        style={styles.image_top}
+      >
         <View style={styles.textContainer}>
           <View style={styles.textColumn}>
             <Text style={styles.textTopLeft}>BONUS TIMER</Text>
@@ -155,8 +156,9 @@ const TopLayout = ({
               <Animated.View
                 style={[
                   styles.rowCountDown,
-                  {transform: [{scale: scaleAnim}]},
-                ]}>
+                  { transform: [{ scale: scaleAnim }] },
+                ]}
+              >
                 <LottieView
                   style={styles.lottieAnimation}
                   source={lottieCountDownBonus}
@@ -164,7 +166,9 @@ const TopLayout = ({
                   speed={0}
                   loop={false}
                 />
-                <Text style={[styles.countDownText, {color: getTextColor(3)}]}>
+                <Text
+                  style={[styles.countDownText, { color: getTextColor(3) }]}
+                >
                   {3} s
                 </Text>
               </Animated.View>
@@ -181,8 +185,9 @@ const TopLayout = ({
                 <Text
                   style={[
                     styles.countDownText,
-                    {color: getTextColor(countdown)},
-                  ]}>
+                    { color: getTextColor(countdown) },
+                  ]}
+                >
                   {countdown} s
                 </Text>
               </View>
@@ -191,7 +196,10 @@ const TopLayout = ({
 
           <View style={styles.textColumnRigth}>
             <View style={styles.viewRow}>
-              <Image style={{width:15,height:15}} source={imageLuckySymbol} />
+              <Image
+                style={{ width: 15, height: 15 }}
+                source={imageLuckySymbol}
+              />
               <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
             </View>
             {/*LottieLuckySymbolCoinSlot({luckySymbolCount})*/}
@@ -200,7 +208,7 @@ const TopLayout = ({
       </ImageBackground>
       <View style={styles.containerBottom}>
         <View style={styles.textWrapper}>
-          {/*scratched && (
+          {scratched && (
             <Animated.Text
               style={[
                 styles.textBottomLeft,
@@ -210,127 +218,112 @@ const TopLayout = ({
               ]}>
               BONUS +{bonusValue} JKC
             </Animated.Text>
-            )*/}
+            )}
         </View>
         <Text style={styles.textBottomRight}>FIND 3x TO WIN</Text>
       </View>
-      <TouchableOpacity
-        style={styles.centralImage}
-        /*onPress={() => setShowModalSetting(true)}*/>
-        <Image  style={styles.centralImage} source={imageCenterIcon} />
-      </TouchableOpacity>
+     
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   image_top: {
-    width: '100%',
-    marginTop:  '-20%',
-    marginBottom: '3%' ,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
+    width: "100%",
+    marginTop: "-15%",
+    marginBottom: "3%",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
   },
   textContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
     paddingHorizontal: 10,
     marginBottom: 0,
   },
   viewRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 40,
   },
   textColumn: {
-    position: 'relative',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    position: "relative",
+    flexDirection: "column",
+    alignItems: "flex-start",
     marginTop: 45,
   },
   textColumnRigth: {
-    position: 'relative',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
+    position: "relative",
+    flexDirection: "column",
+    alignItems: "flex-end",
     marginTop: 45,
   },
   textTopLeft: {
-    color: 'white',
-    textAlign: 'left',
-    fontFamily: 'Teko-Medium',
+    color: "white",
+    textAlign: "left",
+    fontFamily: "Teko-Medium",
     fontSize: 12,
     marginBottom: 85,
   },
   textTopRight: {
-    color: 'white',
-    textAlign: 'right',
-    fontFamily: 'Teko-Medium',
+    color: "white",
+    textAlign: "right",
+    fontFamily: "Teko-Medium",
     fontSize: 12,
     marginLeft: 15,
   },
   containerBottom: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    position: 'relative',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    position: "relative",
   },
   textWrapper: {
-    width: '50%',
+    width: "50%",
   },
   textBottomRight: {
     bottom: 35,
     right: 10,
-    color: '#FFDFAC',
-    textAlign: 'right',
-    fontFamily: 'Teko-Medium',
+    color: "#FFDFAC",
+    textAlign: "right",
+    fontFamily: "Teko-Medium",
     fontSize: 12,
   },
   textBottomLeft: {
     bottom: 35,
     left: 10,
-    color: '#FFDFAC',
-    textAlign: 'left',
-    fontFamily: 'Teko-Medium',
+    color: "#FFDFAC",
+    textAlign: "left",
+    fontFamily: "Teko-Medium",
     fontSize: 18,
   },
   lottieAnimation: {
-    width: '40%',
-    height: '40%',
+    width: "40%",
+    height: "40%",
   },
   rowCountDown: {
-    position: 'absolute',
-    top:  18.5,
+    position: "absolute",
+    top: 18.5,
     left: -10,
     right: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   countDownText: {
-    fontFamily: 'Inter-Bold',
+    fontFamily: "Inter-Bold",
     fontSize: 18,
-    color: 'blue',
+    color: "blue",
     marginLeft: 10,
-    alignItems: 'center',
+    alignItems: "center",
     marginVertical: 10,
   },
-  centralImage: {
-    justifyContent: 'center',
-    position: 'absolute',
-    alignSelf: 'center',
-    alignItems: 'center',
-    transform: [{translateY: -30}],
-    marginTop: 20,
-    width: 150,
-    height: 150,
-    zIndex: 1,
-  },
+  
 });
 
 export default TopLayout;

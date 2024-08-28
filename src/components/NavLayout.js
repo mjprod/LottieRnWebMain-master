@@ -1,9 +1,11 @@
 import React from "react";
+import { Image } from "react-native";
 import { StyleSheet, View, Text ,TouchableOpacity} from "react-native";
 
 import LottieView from "react-native-web-lottie";
 
 const lottieAppBackground = require("../assets/lotties/lottieAppBackground.json");
+const coinIcon = require("./../assets/image/icon_currency_joker_coin.png");
 
 
 const ScratchAndWin = () => {
@@ -19,7 +21,7 @@ const ScratchAndWin = () => {
       <Text style={styles.balanceLabel}>Current Balance</Text>
 
       <View style={styles.balanceContainer}>
-          {/*<FontAwesome5 name="coins" size={24} color="white" />*/}
+          {<Image tintColor='#FFDEA8' source={coinIcon} style={styles.coinIcon} />}
         <Text style={styles.balanceText}>500 JKC</Text>
       </View>
 
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
   viewBackground: {
     flexDirection:'flex-start',
     backgroundColor:'#222021',
-    height:150,
+    height:170,
     overflow: 'hidden'
   },
   textContainer: {
@@ -95,13 +97,16 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginLeft: 15,
   },
-
-
+  coinIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
+  },
   containerNav: {
     position: 'absolute',
     flexDirection: 'flex-start',
     backgroundColor: 'transparent', // Background color from the image
-    top: 0,
+    top: 10,
     left: 0,
     right: 0,
     justifyContent: 'center',
@@ -133,10 +138,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: '#A88C5D',
-    padding: 10,
+    padding: 12,
     paddingHorizontal: '16%',
     borderRadius: 5,
-    marginTop: 20,
+    marginTop: 5,
   },
   balanceText: {
     fontSize: 14,
@@ -147,7 +152,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     position: 'absolute',
-    bottom: 50, // Adjust this value as needed
+    bottom: 50,
     width: '100%',
     paddingHorizontal: 20,
   },

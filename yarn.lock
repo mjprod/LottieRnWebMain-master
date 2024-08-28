@@ -1159,6 +1159,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@egjs/hammerjs@npm:^2.0.17":
+  version: 2.0.17
+  resolution: "@egjs/hammerjs@npm:2.0.17"
+  dependencies:
+    "@types/hammerjs": ^2.0.36
+  checksum: 8945137cec5837edd70af3f2e0ea621543eb0aa3b667e6269ec6485350f4d120c2434b37c7c30b1cf42a65275dd61c1f24626749c616696d3956ac0c008c4766
+  languageName: node
+  linkType: hard
+
 "@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -2076,6 +2085,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 79d746a8f053954bba36bd3d94a90c78de995d126289d656fb3271dd9f1229d33f678da04d10bce6be440494a5a73438e2e363e92802d16b8315b051036c5256
+  languageName: node
+  linkType: hard
+
+"@types/hammerjs@npm:^2.0.36":
+  version: 2.0.45
+  resolution: "@types/hammerjs@npm:2.0.45"
+  checksum: 40a29067c485a2a1f4345718104218fcf769adb1dbe091cdb6f679b3293dfa0798b207eb498ee7fd79ae8664c999117738fa0c01753f7465a639128f38c3ff5b
   languageName: node
   linkType: hard
 
@@ -6205,6 +6221,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ctx-polyfill@npm:^1.1.4":
+  version: 1.1.4
+  resolution: "ctx-polyfill@npm:1.1.4"
+  checksum: 28235272803eb70a0aa71b3c6d4c0424f21a777ccce51dc0ea4caf3ff8dbb6eb28e2de0bebc6fad070ad11389aa14ff9357a70dac04f4b4b126aab838e67c804
+  languageName: node
+  linkType: hard
+
 "currently-unhandled@npm:^0.4.1":
   version: 0.4.1
   resolution: "currently-unhandled@npm:0.4.1"
@@ -9127,6 +9150,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hoist-non-react-statics@npm:^3.3.0":
+  version: 3.3.2
+  resolution: "hoist-non-react-statics@npm:3.3.2"
+  dependencies:
+    react-is: ^16.7.0
+  checksum: b1538270429b13901ee586aa44f4cc3ecd8831c061d06cb8322e50ea17b3f5ce4d0e2e66394761e6c8e152cd8c34fb3b4b690116c6ce2bd45b18c746516cb9e8
+  languageName: node
+  linkType: hard
+
 "home-or-tmp@npm:^2.0.0":
   version: 2.0.0
   resolution: "home-or-tmp@npm:2.0.0"
@@ -9609,7 +9641,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"invariant@npm:^2.2.2, invariant@npm:^2.2.4":
+"invariant@npm:2.2.4, invariant@npm:^2.2.2, invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
   dependencies:
@@ -14895,7 +14927,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.10, prop-types@npm:^15.5.8, prop-types@npm:^15.6.2":
+"prop-types@npm:^15.5.10, prop-types@npm:^15.5.8, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -15218,7 +15250,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:^16.13.1, react-is@npm:^16.5.1":
+"react-is@npm:^16.13.1, react-is@npm:^16.5.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
@@ -15239,6 +15271,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-canvas@npm:^0.1.40":
+  version: 0.1.40
+  resolution: "react-native-canvas@npm:0.1.40"
+  dependencies:
+    ctx-polyfill: ^1.1.4
+  peerDependencies:
+    react-native-webview: ">=5.10.0 || >=6.1.0"
+  checksum: c14bc9c4a5d948686018a2b7f8e74650b2f16e652c152711baa0993bacb17e8f77c616121004328a55cabf1a57e4b4916be3b156588e4b7794708c841b7348d9
+  languageName: node
+  linkType: hard
+
 "react-native-cli@npm:^2.0.1":
   version: 2.0.1
   resolution: "react-native-cli@npm:2.0.1"
@@ -15250,6 +15293,32 @@ __metadata:
   bin:
     react-native: index.js
   checksum: d157dd7392af4dd25db77e31b6394024ce6ab897631adf0ea12ace577f6807a97a826a84ef311b48469b5e8a0d5d6d89bb75acef58bd376ca1977fb9fa3d777a
+  languageName: node
+  linkType: hard
+
+"react-native-gesture-handler@npm:^2.18.1":
+  version: 2.18.1
+  resolution: "react-native-gesture-handler@npm:2.18.1"
+  dependencies:
+    "@egjs/hammerjs": ^2.0.17
+    hoist-non-react-statics: ^3.3.0
+    invariant: ^2.2.4
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 49b5b9a232fc60ddc38124a804410150070af5b20efbba1550831221560d71df704b7a7edfa2fb70d84fde32faf8675ad6118aea8b40f50c2a9d80eb7a08eb1c
+  languageName: node
+  linkType: hard
+
+"react-native-svg-web@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "react-native-svg-web@npm:1.0.9"
+  peerDependencies:
+    prop-types: "*"
+    react: "*"
+    react-native-web: ">= 0.10.1"
+  checksum: fb217afb275a3e06f8c4e5e79d6099cdabb16fa294cd7611bc4cdbbc3ffcaa6c848cdb23dbe7673d11ab57a635c82a0f752a627fbc183f4884c255346f1c53e5
   languageName: node
   linkType: hard
 
@@ -15287,10 +15356,14 @@ __metadata:
     react-art: 16.5.1
     react-dom: latest
     react-native: "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz"
+    react-native-canvas: ^0.1.40
     react-native-cli: ^2.0.1
+    react-native-gesture-handler: ^2.18.1
+    react-native-svg-web: ^1.0.9
     react-native-web: ^0.19.12
     react-native-web-lottie: ^1.4.4
     react-native-web-video: ^5.0.0
+    react-native-webview: ^13.12.0
     react-scripts: 1.1.4
     react-test-renderer: 16.5.1
     typescript: ^5.5.4
@@ -15324,6 +15397,19 @@ __metadata:
     react: ^18.0.0
     react-dom: ^18.0.0
   checksum: 676b1ba510c92e01dc69cb3102080f83976d2d209647323fb0a3a14113a455a6a506cf78d3e392c3fa33015135b61e2d6a3eed837a6876665064a6eb87516781
+  languageName: node
+  linkType: hard
+
+"react-native-webview@npm:^13.12.0":
+  version: 13.12.0
+  resolution: "react-native-webview@npm:13.12.0"
+  dependencies:
+    escape-string-regexp: ^4.0.0
+    invariant: 2.2.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: a7e4b9658908ef8662dc69ae6206e68ebd31b8cc10251f5d226d6d1d2756ae3c77a95f656fbf237f54e6f13e95ab0f2bbb72a0ebf5e22f3e62690d1591850219
   languageName: node
   linkType: hard
 

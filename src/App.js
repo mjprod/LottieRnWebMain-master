@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#35363A",
     },
     app: {
         maxWidth: 400,  
-        maxHeight: 850,
+        maxHeight: 800,
         flex: 1,
         backgroundColor: "black",
         borderRadius: 8,

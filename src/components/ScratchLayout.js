@@ -8,8 +8,18 @@ import {
   Image,
 } from "react-native";
 import GameButton from "./GameButton";
+import ScratchCardLeft from "./ScratchCardLeft";
+import ScratchGame from "./ScratchGame";
+import ScratchCard from "./ScratchCard";
+import {
+  eraserShouldBeScratched,
+  setLuckySymbolCountTimer,
+  simulateScratchTimeOut,
+  } from '../global/Settings';
 
 const backgroundScratchTop = require("./../assets/image/background_scratch_top.png");
+const imageCenterIcon = require("./../assets/image/game_center_icon.png");
+const scratchForeground = require("./../assets/image/scratch_foreground.jpg");
 
 //import GameButton, {GameButtonType} from './GameButton';
 //import ScratchGame from './ScratchGame';
@@ -19,14 +29,9 @@ const backgroundScratchTop = require("./../assets/image/background_scratch_top.p
 //import {triggerVibration} from '../global/Vibration';
 //import TransparentVideo from '@status-im/react-native-transparent-video';
 //import {playSong} from '../global/Player';
-//import {
-//eraserShouldBeScratched,
-//setLuckySymbolCountTimer,
-//simulateScratchTimeOut,
-//} from '../global/Settings';
+
 //import LuckySymbolOverlay from './LuckySymbolOverlay';
 /*
-const scratchForeground = require('./../../assets/image/scratch_foreground.jpg');
 const iconArrowScratchTop = require('./../../assets/image/icon_arrow_scratch_top.png');
 const audioLuckySymbolCoins = require('./../../assets/audio/background_lucky_symbol_coins.wav');
 const audioGameLoseScreen = require('../../assets/audio/background_game_lose_screen.aac');
@@ -55,24 +60,26 @@ type ScratchLayoutProps = {
   setLuckySymbolCount: (value: number) => void;
 };
 */
-const ScratchLayout = ({}) => {
+const ScratchLayout = ({ reset, setReset, scratched, setScratched ,luckySymbolCount,setLuckySymbolCount}) => {
   const [buttonText, setButtonText] = useState("AUTO SCRATCH");
   const [buttonLoading, setButtonLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
+  const [isWinner, setIsWinner] = useState(false);
+  const [isLuckySymbolTrue, setIsLuckySymbolTrue] = useState(false);
+  const [triggerAutoPop, setTriggerAutoPop] = useState(false);
+  const [isScratchCardVisible, setIsScratchCardVisible] = useState(true);
+  const [autoScratch, setAutoScratch] = useState(false);
+  const [collectLuckySymbol, setCollectShowLuckySymbol] = useState(false);
+  const [showLuckySymbol, setShowLuckySymbol] = useState(false);
+  const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
+  const [scratchedStarted, setScratchedStarted] = useState(false);
 
-  //const [isScratchCardVisible, setIsScratchCardVisible] = useState(true);
-  //const [showLuckySymbol, setShowLuckySymbol] = useState(false);
-
-  //const [triggerAutoPop, setTriggerAutoPop] = useState(false);
   // const [isWinner, setIsWinner] = useState(false);
-  //const [scratchedStarted, setScratchedStarted] = useState(false);
-  //const [autoScratch, setAutoScratch] = useState(false);
-  // const [collectLuckySymbol, setCollectShowLuckySymbol] = useState(false);
+  //
   // const [isLuckySymbolTrue, setIsLuckySymbolTrue] = useState(false);
 
   //const buttonRef = useRef(null);
 
-  //const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
   //const videoRef = useRef(null);
 
@@ -134,20 +141,6 @@ const ScratchLayout = ({}) => {
       }
     };
 
-    const handleScratch = (scratchPercentage: number) => {
-      if (
-        scratchPercentage >= eraserShouldBeScratched &&
-        isScratchCardVisible
-      ) {
-        setScratchedCard();
-      } else {
-        if (scratchPercentage > 0) {
-          setScratchedStarted(true);
-        }
-      }
-    };
-
-
     const simulateScratch = () => {
       setButtonLoading(true);
       setAutoScratch(true);
@@ -203,14 +196,12 @@ const ScratchLayout = ({}) => {
     }, [triggerAutoPop, isWinner, endGame]);
 
   
-
+*/
     const addLuckySymbol = () => {
-      if (luckySymbolCount != 3) {
+      if (luckySymbolCount !== 3) {
         setLuckySymbolCount(luckySymbolCount + 1);
       }
     };
-
-
 
     const setScratchedCard = () => {
       if (isLuckySymbolTrue) {
@@ -218,7 +209,7 @@ const ScratchLayout = ({}) => {
           setCollectShowLuckySymbol(true);
         } else {
           setShowLuckySymbol(true);
-          playSong(audioLuckySymbolCoins);
+          //playSong(audioLuckySymbolCoins);
         }
 
         setTimeout(() => {
@@ -241,7 +232,7 @@ const ScratchLayout = ({}) => {
             if (isWinner) {
               setButtonText('AUTO POP');
             } else {
-              endGame();
+              //endGame();
             }
           }
          
@@ -252,11 +243,22 @@ const ScratchLayout = ({}) => {
         if (isWinner) {
           setButtonText('AUTO POP');
         } else {
-          endGame();
+          //endGame();
         }
       }
     };
-*/
+
+
+  const handleScratch = (scratchPercentage) => {
+    if (scratchPercentage >= eraserShouldBeScratched && isScratchCardVisible) {
+      setScratchedCard();
+    } else {
+      if (scratchPercentage > 0) {
+        setScratchedStarted(true);
+      }
+    }
+  };
+
   const handleButtonPress = () => {
     if (!imageLoading && !buttonLoading) {
       if (buttonText === "AUTO SCRATCH") {
@@ -304,11 +306,27 @@ const ScratchLayout = ({}) => {
         ]}
       >
         <View style={styles.bottomView}>
-          {/*isScratchCardVisible && (
-              <View style={styles.scratchCardContainer}>
-                
-              </View>
-            )*/}
+          <ScratchGame
+            setIsWinner={setIsWinner}
+            onAutoPop={triggerAutoPop}
+            //onEndGame={endGame}
+            scratched={scratched}
+            reset={reset}
+            //onLoading={imageLoading}
+            //isLuckySymbolTrue={isLuckySymbolTrue}
+            setIsLuckySymbolTrue={setIsLuckySymbolTrue}
+          />
+          {/*!isScratchCardVisible && (
+            <View style={styles.scratchCardContainer}>
+              <ScratchCard
+                setReset={setReset}
+                imageSource={scratchForeground}
+                autoScratch={autoScratch}
+                onScratch={handleScratch}
+                onLoading={setImageLoading}
+              />
+            </View>
+          )*/}
         </View>
 
         <Image style={styles.arrowImage} source={null} />
@@ -332,6 +350,7 @@ const ScratchLayout = ({}) => {
           loading={buttonLoading || imageLoading}
           type={getButtonType()}
         />
+        <ScratchCardLeft scratchCardsLeft={9} />
       </View>
       {/*showLuckySymbol && (
           <View
@@ -347,16 +366,18 @@ const ScratchLayout = ({}) => {
             </View>
           </View>
           )*/}
+      <View style={styles.centralImageContainer}>
+          <Image style={styles.centralImage} source={imageCenterIcon} />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    justifyContent: "center",
+    flex: 1,
     marginHorizontal: 12,
-    marginTop: "20%",
+    marginTop: "-10%",
   },
   bottomView: {
     width: "100%",
@@ -494,6 +515,22 @@ const styles = StyleSheet.create({
   transparentOverlay: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0)",
+  },
+  centralImageContainer: {
+    position: "relative", // Position the container relative to allow absolute positioning inside
+    width: '100%',        // Full width to center the icon
+    height: 140,          // Set the height of the container
+    alignItems: 'center', // Center the child horizontally
+    justifyContent: 'center', // Center the child vertically  
+  },
+  centralImage: {
+    position: "absolute",  // Allows precise positioning within the container
+    top: '-420%',               // Position at the top of the container
+    width: 150,
+    height: 150,
+    zIndex: 9999,    
+    alignItems: 'center', // Center the child horizontally
+    justifyContent: 'center',     // Ensure it stays above other elements
   },
 });
 

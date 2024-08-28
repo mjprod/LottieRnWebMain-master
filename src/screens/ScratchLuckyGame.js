@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, ImageBackground } from "react-native";
 import { VideoBackground } from "../components/VideoBackground";
 import TopLayout from "../components/TopLayout";
@@ -8,7 +8,13 @@ import NavLayout from "../components/NavLayout";
 const backgroundLoop = require("./../assets/video/background_movie_loop.mp4");
 const backgroundGame = require("./../assets/image/background_game.png");
 
-const ScratchLuckyGame = () => {
+const ScratchLuckyGame = ( 
+  luckySymbolCount,
+  setLuckySymbolCount) => {
+
+  const [reset, setReset] = useState(false);
+  const [scratched, setScratched] = useState(true);
+
   return (
     <View style={styles.fullScreen}>
       <VideoBackground source={backgroundLoop} />
@@ -22,10 +28,19 @@ const ScratchLuckyGame = () => {
         >
           {
             <View style={styles.overlay}>
-              <TopLayout />
+              <TopLayout
+                scratched={scratched}
+              />
+              <ScratchLayout
+              reset={reset}
+              setReset={setReset} 
+              scratched={scratched}
+              setScratched={setScratched}
+              luckySymbolCount={luckySymbolCount}
+              setLuckySymbolCount={setLuckySymbolCount} />
             </View>
           }
-          {<ScratchLayout />}
+        
         </ImageBackground>
       </View>
     </View>
@@ -55,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   overlay: {
-    flex: 1, // Ocupar todo o espaço disponível no ImageBackground
+    flex: 1,
     width: "100%",
     height: "100%",
     //justifyContent: 'center',
