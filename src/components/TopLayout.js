@@ -1,15 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {  } from "react";
 import {
   StyleSheet,
   View,
   Text,
   Image,
   ImageBackground,
-  Platform,
   Animated,
-  Dimensions,
-  TouchableOpacity,
-  Easing,
 } from "react-native";
 
 import LottieView from "react-native-web-lottie";
@@ -17,10 +13,8 @@ import LottieView from "react-native-web-lottie";
 const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
 const imageLuckySymbol = require("./../assets/image/icon_lucky_symbol.png");
 const lottieCountDownBonus = require("../assets/lotties/lottieCountdownBonus.json");
-const scratched = true;
 const bonusValue = 70;
 const countdown = 3;
-const luckySymbolCount = 3;
 const showCountDown = true;
 //const showModalSetting = true;
 
@@ -249,6 +243,7 @@ const styles = StyleSheet.create({
   viewRow: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     marginBottom: 40,
   },
   textColumn: {
@@ -267,15 +262,15 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "left",
     fontFamily: "Teko-Medium",
-    fontSize: 12,
+    fontSize: 14,
     marginBottom: 85,
   },
   textTopRight: {
     color: "white",
     textAlign: "right",
     fontFamily: "Teko-Medium",
-    fontSize: 12,
-    marginLeft: 15,
+    fontSize: 14,
+    marginLeft: 26,
   },
   containerBottom: {
     flexDirection: "row",
@@ -292,7 +287,7 @@ const styles = StyleSheet.create({
     color: "#FFDFAC",
     textAlign: "right",
     fontFamily: "Teko-Medium",
-    fontSize: 12,
+    fontSize: 14,
   },
   textBottomLeft: {
     bottom: 35,
@@ -300,7 +295,7 @@ const styles = StyleSheet.create({
     color: "#FFDFAC",
     textAlign: "left",
     fontFamily: "Teko-Medium",
-    fontSize: 18,
+    fontSize: 14,
   },
   lottieAnimation: {
     width: "40%",

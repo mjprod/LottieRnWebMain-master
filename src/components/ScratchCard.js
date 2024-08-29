@@ -1,11 +1,17 @@
-import React, {useRef, useEffect, useState} from 'react';
-import {View, StyleSheet, Dimensions, ImageBackground, Platform} from 'react-native';
-import Canvas, {Image as CanvasImage} from 'react-native-canvas';
+import React, { useRef, useEffect, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  Platform,
+} from "react-native";
+import Canvas, { Image as CanvasImage } from "react-native-canvas";
 //import {
-  //useSharedValue,
-  //withTiming,
-  //Easing,
-  //runOnJS,
+//useSharedValue,
+//withTiming,
+//Easing,
+//runOnJS,
 //} from 'react-native-reanimated';
 //import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 //import {PanGestureHandler} from 'react-native-gesture-handler';
@@ -19,12 +25,13 @@ import settings, {
   eraserDurationAnimation,
   eraserRadius,
   timerSoundBetweenScratchWithFinger,
-} from '../global/Settings';
+} from "../global/Settings";
+//import { set } from "react-native/Libraries/Utilities/Dimensions";
 //import {WorkletFunction} from 'react-native-reanimated/lib/typescript/commonTypes';
 
-const scratch_foreground_thumbnail = require('./../assets/image/scratch_foreground.jpg');
+const scratch_foreground_thumbnail = require("./../assets/image/scratch_foreground.jpg");
 
-const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 const ScratchCard = ({
   imageSource,
@@ -35,15 +42,18 @@ const ScratchCard = ({
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [scratchPoints, setScratchPoints] = useState([]);
-  const [lastAnimationPoint, setLastAnimationPoint] = useState({x: 0, y: 0});
+  const [lastAnimationPoint, setLastAnimationPoint] = useState({ x: 0, y: 0 });
   const [lastAnimationTime, setLastAnimationTime] = useState(0);
   const canvasRef = useRef(null);
   const [totalArea, setTotalArea] = useState(0);
   const [erasedArea, setErasedArea] = useState(0);
   const [erasedMap, setErasedMap] = useState([]);
-  const [dimensions, setDimensions] = useState({width: 0, height: 0});
-  const [imageDimensions, setImageDimensions] = useState({width: 0, height: 0});
-  const [imageOffset, setImageOffset] = useState({x: 0, y: 0});
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [imageDimensions, setImageDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+  const [imageOffset, setImageOffset] = useState({ x: 0, y: 0 });
   const [isVisibleThumbnail, setIsVisibleThumbnail] = useState(true);
 
   const [soundLastCalled, setSoundLastCalled] = useState(0);
@@ -51,100 +61,24 @@ const ScratchCard = ({
   const animationThreshold = 100;
   const animationDebounceTime = 100;
 
-  //const eraserPosX = useSharedValue(-eraserRadius);
-  //const eraserPosY = useSharedValue(-eraserRadius);
- const eraserPosX = 0;
+  const eraserPosX = 0;
   const eraserPosY = 0;
 
-  //let isPlaying = false;
-  //let whoosh: Sound | null = null;
+  const [ctx, setCtx] = useState(null);
+  //const [scratching, setScratching] = useState(false);
+
+  const radius = eraserRadius;
+
 
   const names_file = [
-    'ui_scratch_1.mp3',
-    'ui_scratch_2.mp3',
-    'ui_scratch_3.mp3',
-    'ui_scratch_4.mp3',
-    'ui_scratch_5.mp3',
+    "ui_scratch_1.mp3",
+    "ui_scratch_2.mp3",
+    "ui_scratch_3.mp3",
+    "ui_scratch_4.mp3",
+    "ui_scratch_5.mp3",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  //Sound.setCategory('Playback');
-
-  const animateEraser = (
-    startX,
-    startY,
-    endX,
-    endY,
-    duration,
-    resolve:
-      | ((...args: unknown[]) => unknown)
-      | (
-          | ((...args: unknown[]) => unknown)
-          | {__remoteFunction: (...args: unknown[]) => unknown}
-        )
-      | WorkletFunction<unknown[], unknown>,
-  ) => {
-    'worklet';
-    //eraserPosX.value = withTiming(startX, {duration: 0});
-    //eraserPosY.value = withTiming(startY, {duration: 0});
-    //eraserPosX.value = withTiming(endX, {duration, easing: Easing.linear});
-    //eraserPosY.value = withTiming(
-      //endY,
-      //{duration, easing: Easing.linear},
-      //() => {
-       // runOnJS(resolve)();
-      //},
-    //);
-  };
-
-  /*const playSoundFinger = (): void => {
-    if (!settings.soundOn) {
-      return;
-    }
-    const currentTime = Date.now();
-    if (currentTime - soundLastCalled < timerSoundBetweenScratchWithFinger) {
-    
-      return;
-    }
-    setSoundLastCalled(currentTime);
-
-    if (isPlaying || whoosh) {
-      return;
-    }
-
-    whoosh = new Sound(names_file[currentIndex], Sound.MAIN_BUNDLE, error => {
-      if (error) {
-        console.log('Failed to load the sound', error);
-        isPlaying = false;
-        return;
-      }
-      isPlaying = true;
-
-      whoosh?.play(success => {
-        if (success) {
-          if (currentIndex >= names_file.length - 1) {
-            setCurrentIndex(0);
-          } else {
-            setCurrentIndex(currentIndex + 1);
-          }
-          //console.log('Successfully finished playing');
-        } else {
-          console.log('Playback failed due to audio decoding errors');
-        }
-        whoosh?.release();
-        whoosh = null;
-      });
-    });
-
-    if (whoosh) {
-      whoosh.setVolume(1);
-      whoosh.setNumberOfLoops(-1);
-      whoosh.getCurrentTime(seconds => console.log('At ' + seconds));
-    }
-  };
-*/
-  
 
   const startErasing = () => {
     const duration = eraserDurationAnimation;
@@ -164,8 +98,8 @@ const ScratchCard = ({
           const endX = imageOffset.x + edgeMargin;
           const endY = y + imageDimensions.width - edgeMargin;
 
-          await new Promise(resolve => {
-            animateEraser(startX, startY, endX, endY, duration, resolve);
+          await new Promise((resolve) => {
+            //animateEraser(startX, startY, endX, endY, duration, resolve);
             //triggerVibration('light');
             //playSoundAnimation();
           });
@@ -175,8 +109,8 @@ const ScratchCard = ({
           const endX = imageOffset.x + imageDimensions.width - edgeMargin;
           const endY = y;
 
-          await new Promise(resolve => {
-            animateEraser(startX, startY, endX, endY, duration, resolve);
+          await new Promise((resolve) => {
+            //animateEraser(startX, startY, endX, endY, duration, resolve);
             //triggerVibration('light');
             //playSoundAnimation();
           });
@@ -188,90 +122,38 @@ const ScratchCard = ({
     eraseAnimation();
   };
 
-  const loadImage = () => {
+  useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) {
-      console.log('Canvas not initialized');
-      return;
-    }
-    setImageLoaded(false);
-    onLoading(true);
+    if (!canvas) return;
 
-    if (dimensions.width === 0 || dimensions.height === 0) {
-      console.log('Invalid canvas dimensions', dimensions);
-      return;
-    }
+    const context = canvas.getContext("2d");
+    setCtx(context);
 
-    const ctx = canvas.getContext('2d');
-    const resolvedImageSource = (imageSource);
-    console.log('Resolved Image source:', resolvedImageSource);
+    const img = new Image();
+    img.src = require("./../assets/image/scratch_foreground.jpg");
 
-    const img = new CanvasImage(canvas);
-    img.src = resolvedImageSource.uri;
-
-    
-    img.addEventListener('load', () => {
-      console.log('Image loaded successfully');
-
-      const drawWidth = windowWidth;
-      const drawHeight = img.height * (windowWidth / img.width);
-
-      canvas.width = drawWidth;
-      canvas.height = drawHeight;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, drawWidth, drawHeight);
-
-      setImageDimensions({width: drawWidth, height: drawHeight});
-      setImageOffset({
-        x: (dimensions.width - drawWidth) / 2,
-        y: (dimensions.height - drawHeight) / 2,
-      });
-
+    img.onload = () => {
+      canvas.width = windowWidth;
+      canvas.height = windowHeight;
+      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+      context.globalCompositeOperation = "destination-out";
+      setTotalArea(canvas.width * canvas.height); 
       setImageLoaded(true);
       onLoading(false);
-      setTotalArea(drawWidth * drawHeight);
+    };
 
-      setReset(true);
-
-      try {
-        const maxCanvasSize = 10000;
-        const width = Math.floor(canvas.width);
-        const height = Math.floor(canvas.height);
-
-        if (
-          width > 0 &&
-          height > 0 &&
-          width <= maxCanvasSize &&
-          height <= maxCanvasSize
-        ) {
-          const newErasedMap = Array.from({length: width}, () =>
-            Array(height).fill(false),
-          );
-          setErasedMap(newErasedMap);
-        } else {
-          console.error('Invalid canvas dimensions', {width, height});
-        }
-      } catch (error) {
-        console.error('Error initializing erased map:', error);
+    return () => {
+      // Cleanup on component unmount
+      if (canvas) {
+        canvas.width = 0;
+        canvas.height = 0;
       }
-    });
-
-    img.addEventListener('error', e => {
-      console.error('Error loading image:', e);
-    });
-    
-  };
-
-  useEffect(() => {
-    if (dimensions.width > 0 && dimensions.height > 0 && !imageLoaded) {
-      loadImage();
-    }
-  }, [imageSource, dimensions, imageLoaded]);
+    };
+  }, [canvasRef]);
 
   useEffect(() => {
     if (autoScratch) {
-      console.log('Auto scratch enabled, starting erasing...');
+      console.log("Auto scratch enabled, starting erasing...");
       startErasing();
     }
   }, [autoScratch]);
@@ -282,95 +164,18 @@ const ScratchCard = ({
       return;
     }
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
 
     const interval = setInterval(() => {
-      ctx.globalCompositeOperation = 'destination-out';
+      ctx.globalCompositeOperation = "destination-out";
       ctx.beginPath();
       ctx.arc(eraserPosX.value, eraserPosY.value, eraserRadius, 0, Math.PI * 2);
       ctx.fill();
+      
     }, 16);
 
     return () => clearInterval(interval);
   }, [eraserPosX, eraserPosY]);
-
-  const handleGesture = evt => {
-    const {x, y} = evt.nativeEvent;
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-
-    const offsetX = x - imageOffset.x;
-    const offsetY = y - imageOffset.y;
-
-    if (
-      offsetX >= 0 &&
-      offsetX <= imageDimensions.width &&
-      offsetY >= 0 &&
-      offsetY <= imageDimensions.height
-    ) {
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.beginPath();
-      ctx.arc(offsetX, offsetY, eraserRadius, 0, Math.PI * 2);
-      ctx.fill();
-
-      const circleArea = Math.PI * Math.pow(eraserRadius, 2);
-      let newErasedArea = 0;
-
-      const newErasedMap = erasedMap.map(arr => arr.slice());
-      let vibrate = false;
-      let addAnimation = false;
-      /*
-      for (
-        let i = Math.max(0, Math.floor(offsetX - eraserRadius));
-        i < Math.min(canvas.width, Math.ceil(offsetX + eraserRadius));
-        i++
-      ) {
-        for (
-          let j = Math.max(0, Math.floor(offsetY - eraserRadius));
-          j < Math.min(canvas.height, Math.ceil(offsetY + eraserRadius));
-          j++
-        ) {
-          if (newErasedMap[i] && newErasedMap[i][j] === false) {
-            const dx = i - offsetX;
-            const dy = j - offsetY;
-            if (dx * dx + dy * dy <= eraserRadius * eraserRadius) {
-              newErasedMap[i][j] = true;
-              newErasedArea += 1;
-              vibrate = true;
-              addAnimation = true;
-            }
-          }
-        }
-      }*/
-      if (vibrate) {
-        //playSong(require('../../assets/audio/sfx_scratch.aac'));
-        //triggerVibration('light');
-        //playSoundFinger();
-      }
-      setErasedMap(newErasedMap);
-      setErasedArea(prevArea => prevArea + newErasedArea);
-
-      const currentTime = Date.now();
-      if (
-        addAnimation &&
-        currentTime - lastAnimationTime > animationDebounceTime
-      ) {
-        const distance = Math.sqrt(
-          Math.pow(offsetX - lastAnimationPoint.x, 2) +
-            Math.pow(offsetY - lastAnimationPoint.y, 2),
-        );
-        if (distance > animationThreshold) {
-          const id = new Date().getTime() + Math.random();
-          setScratchPoints(points => [...points, {id, x, y}]);
-          setLastAnimationPoint({x: offsetX, y: offsetY});
-          setLastAnimationTime(currentTime);
-        }
-      }
-    } else {
-      console.log('Touch outside the image area.');
-    }
-  };
 
   useEffect(() => {
     if (imageLoaded) {
@@ -393,10 +198,10 @@ const ScratchCard = ({
   const renderScratchAnimations = () => {
     return scratchPoints
       .filter((_, index) => index % 1 === 0)
-      .map(point => (
+      .map((point) => (
         <LottieView
           key={point.id}
-          source={require('./../assets/lotties/lottieScratchParticles.json')}
+          source={require("./../assets/lotties/lottieScratchParticles.json")}
           style={[
             styles.scratchAnimation,
             {
@@ -408,69 +213,83 @@ const ScratchCard = ({
           autoPlay
           loop={false}
           onAnimationFinish={() => {
-            setScratchPoints(points => points.filter(p => p.id !== point.id));
+            setScratchPoints((points) =>
+              points.filter((p) => p.id !== point.id)
+            );
           }}
         />
       ));
   };
 
+  const updateErasedArea = (x, y) => {
+    const areaErased = Math.PI * radius * radius; // Area of a circle with radius
+    setErasedArea((prev) => prev + areaErased);
+  };
+
+  const handleMouseMove = (event) => {
+   //if (scratching && ctx) {
+      const rect = canvasRef.current.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, 2 * Math.PI);
+      ctx.fill();
+      updateErasedArea(x, y);
+    //}
+  };
+
+ // const handleMouseDown = () => setScratching(true);
+  //const handleMouseUp = () => setScratching(false);
+
   return (
     <View
-        style={[styles.container, {height: imageDimensions.height || 'auto'}]}
-        onLayout={event => {
-          const {width, height} = event.nativeEvent.layout;
-          if (width !== dimensions.width || height !== dimensions.height) {
-            setDimensions({width, height});
-            setImageLoaded(false);
-            onLoading(true);
-          }
-        }}>
-        {/*<PanGestureHandler onGestureEvent={handleGesture}>*/}
-          <View
-            style={{width: '100%', height: imageDimensions.height || 'auto'}}>
-            {
-              
-              <Canvas
-              ref={canvasRef}
-              style={[styles.canvas, {height:windowHeight,width: windowWidth}]}
-            />
-            }
-            {!isVisibleThumbnail && (
+      style={[styles.container]}
+    >
+      <View style={{ }}>
+        {
+          <canvas
+            ref={canvasRef}
+            onMouseMove={handleMouseMove}
+            //onMouseDown={handleMouseDown}
+            //onMouseUp={handleMouseUp}
+            //onMouseLeave={handleMouseUp}
+          />
+        }
+        {/*!isVisibleThumbnail && (
               <ImageBackground
                 resizeMode="cover"
                 source={scratch_foreground_thumbnail}
                 style={styles.iconLose}
               />
-            )}
-          </View>
-          {/*</PanGestureHandler>*/}
-        { renderScratchAnimations()}
+            )*/}
       </View>
+      {renderScratchAnimations()}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "center",
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
   },
   canvas: {
     flex: 1,
     //height: windowHeight,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   scratchAnimation: {
-    position: 'absolute',
+    position: "absolute",
     width: 150,
     height: 150,
   },
   iconLose: {
     width: windowWidth,
-    height: '100%',
+    height: "100%",
   },
 });
 

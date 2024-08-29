@@ -214,7 +214,7 @@ const ScratchLayout = ({ reset, setReset, scratched, setScratched ,luckySymbolCo
 
         setTimeout(() => {
           if (!skipToFinishLuckyVideo) {
-            addLuckySymbol();
+            //addLuckySymbol();
           }
         }, setLuckySymbolCountTimer);
 
@@ -316,7 +316,7 @@ const ScratchLayout = ({ reset, setReset, scratched, setScratched ,luckySymbolCo
             //isLuckySymbolTrue={isLuckySymbolTrue}
             setIsLuckySymbolTrue={setIsLuckySymbolTrue}
           />
-          {/*!isScratchCardVisible && (
+          {isScratchCardVisible && (
             <View style={styles.scratchCardContainer}>
               <ScratchCard
                 setReset={setReset}
@@ -326,7 +326,7 @@ const ScratchLayout = ({ reset, setReset, scratched, setScratched ,luckySymbolCo
                 onLoading={setImageLoading}
               />
             </View>
-          )*/}
+          )}
         </View>
 
         <Image style={styles.arrowImage} source={null} />
@@ -417,20 +417,21 @@ const styles = StyleSheet.create({
     width: "100%",
     alignContent: "center",
     marginVertical: 4,
+    marginTop: 10,
   },
   textTopLeft: {
     color: "#FFEAC8",
     marginLeft: 15,
     textAlign: "left",
     fontFamily: "Teko-Medium",
-    fontSize: 14,
+    fontSize: 22,
   },
   textTopRight: {
     color: "#3E362A",
     marginRight: 15,
     textAlign: "right",
     fontFamily: "Teko-Medium",
-    fontSize: 14,
+    fontSize: 22,
     marginLeft: 15,
   },
   imageTop: {
@@ -459,13 +460,13 @@ const styles = StyleSheet.create({
   textFooterTop: {
     textAlign: "center",
     fontFamily: "Inter-Medium",
-    fontSize: 16,
+    fontSize: 12,
     color: "#F1D3A3",
   },
   textFooterBottom: {
     textAlign: "center",
     fontFamily: "Inter-Medium",
-    fontSize: 16,
+    fontSize: 12,
     color: "#A9A9A9",
   },
   lottieAnimation: {

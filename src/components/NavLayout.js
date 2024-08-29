@@ -122,11 +122,13 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   headerText: {
-    fontSize: 22,
+    fontFamily: "Teko-Medium",
+    fontSize: 26,
     color: '#FFDEA8',
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
   },
   balanceLabel: {
+    fontFamily: "Inter-Medium",
     fontSize: 12,
     color: 'white',
     marginTop: 40,
@@ -144,6 +146,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   balanceText: {
+    fontFamily: "Inter-Medium",
     fontSize: 14,
     color: 'white',
     marginLeft: 10,

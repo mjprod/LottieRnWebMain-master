@@ -13,7 +13,7 @@ const ScratchCardLeft = ({scratchCardsLeft}) => {
     }
     const timeoutId = setTimeout(() => {
       setDisplayedScratchCardsLeft(scratchCardsLeft);
-    }, 600); // Adjust the delay as needed
+    }, 600);
 
     return () => clearTimeout(timeoutId);
   }, [scratchCardsLeft]);
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'Inter-Medium',
     color: '#A9A9A9',
-    fontSize: 16,
-    marginHorizontal: 4,
+    fontSize: 12,
+    marginHorizontal: 6,
   },
   number: {
     fontFamily: 'Inter-Bold',

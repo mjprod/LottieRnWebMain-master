@@ -1,21 +1,40 @@
-import React from "react";
-import {View, StyleSheet} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet } from "react-native";
 
 export const VideoBackground = ({ source }) => {
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    // Adiciona o event listener para redimensionamento
+    window.addEventListener("resize", handleResize);
+
+    // Remove o event listener quando o componente é desmontado
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <View style={styles.container}>
       <video
         src={source}
         style={{
-          objectFit: "cover",
-          width: "100%",
-          height: "100%",
+          ...styles.video,
+          width: dimensions.width,
+          height: dimensions.height,
         }}
         loop
-        autoPlay
+        autoPlay="autoplay"
         muted
         playsInline
-        
       />
     </View>
   );
@@ -24,16 +43,14 @@ export const VideoBackground = ({ source }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     width: "100vw",
     height: "100vh",
     margin: 0,
     padding: 0,
-    position: "relative",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
+  },
+  video: {
+    objectFit: "cover",
   },
 });
+
+export default VideoBackground;
