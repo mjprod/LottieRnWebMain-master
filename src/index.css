@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family:  sans-serif;
 }
 
 #root {
@@ -10,3 +10,21 @@ body {
   min-height: 100vh;
   max-height: 100vh; 
 }
+
+@font-face {
+  font-family: 'Teko-Medium';
+  src: url('./assets/fonts/Teko-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter-Medium';
+  src: url('./assets/fonts/Inter-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter-Bold';
+  src: url('./assets/fonts/Teko-Medium.ttf') format('truetype');
+}
+
+
+

@@ -1,7 +1,8 @@
 import React from "react";
 import { View, Text, Animated, StyleSheet } from "react-native";
 import ScratchLuckyGame from "./screens/ScratchLuckyGame";
-
+import ScratchCardScreen from "./components/ScratchCardScreen";
+import './index.css';
 const logo = require("./assets/react-logo.png");
 
 export default class App extends React.Component {
@@ -17,7 +18,8 @@ export default class App extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.app}>
-                    <ScratchLuckyGame />
+                  <ScratchLuckyGame />
+                      {/*<ScratchCardScreen />*/}
                 </View>
             </View>
         );

@@ -13,7 +13,7 @@ const ScratchLuckyGame = (
   setLuckySymbolCount) => {
 
   const [reset, setReset] = useState(false);
-  const [scratched, setScratched] = useState(true);
+  const [scratched, setScratched] = useState(false);
 
   return (
     <View style={styles.fullScreen}>
