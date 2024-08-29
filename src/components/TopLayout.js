@@ -146,7 +146,7 @@ const TopLayout = (
         <View style={styles.textContainer}>
           <View style={styles.textColumn}>
             <Text style={styles.textTopLeft}>BONUS TIMER</Text>
-            {scratched && !showCountDown && (
+            {/*scratched && !showCountDown && (
               <Animated.View
                 style={[
                   styles.rowCountDown,
@@ -166,8 +166,8 @@ const TopLayout = (
                   {3} s
                 </Text>
               </Animated.View>
-            )}
-            {showCountDown && (
+              )*/}
+            {!showCountDown && (
               <View style={styles.rowCountDown}>
                 <LottieView
                   style={styles.lottieAnimation}

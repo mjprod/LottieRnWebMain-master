@@ -250,6 +250,7 @@ const ScratchLayout = ({ reset, setReset, scratched, setScratched ,luckySymbolCo
 
 
   const handleScratch = (scratchPercentage) => {
+    console.log("Scratch percentage: ", scratchPercentage);
     if (scratchPercentage >= eraserShouldBeScratched && isScratchCardVisible) {
       setScratchedCard();
     } else {
