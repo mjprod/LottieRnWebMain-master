@@ -1,16 +1,38 @@
 import React from 'react';
 import settings from './Settings';
 
+const audioCache = {}; // Object to cache preloaded audio files
+
+// Function to preload audio files
+export const preloadAudio = (fileName) => {
+    if (!audioCache[fileName]) {
+        const audio = new Audio(fileName);
+        audio.load();
+        audioCache[fileName] = audio;
+    }
+};
+
 export const playSound = (fileName) => {
-  //if (!settings.soundOn) {
-    //return;
-  //}
-  
-  const audio = new Audio((fileName));
-  audio.play().then(() => {
-    console.log('Sound played!');
-  }).catch(error => {
-    console.error('Error playing sound:', error);
-  });
-  
+    let audio = audioCache[fileName];
+
+    if (!audio) {
+      console.log('Playing sound:', fileName);
+
+        audio = new Audio(fileName);
+        audioCache[fileName] = audio;
+    }
+    console.log('Playing sound cached:', fileName);
+
+    audio.currentTime = 0;
+    audio.play().then(() => {
+        console.log('Sound played!');
+    }).catch(error => {
+        console.error('Error playing sound:', error);
+    });
+};
+
+export const preloadSounds = (fileNames) => {
+    fileNames.forEach(fileName => {
+        preloadAudio(fileName);
+    });
 };

@@ -1,7 +1,6 @@
 import React from "react";
-import { View, Text, Animated, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import ScratchLuckyGame from "./screens/ScratchLuckyGame";
-import ScratchCardScreen from "./components/ScratchCardScreen";
 import './index.css';
 const logo = require("./assets/react-logo.png");
 

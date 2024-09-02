@@ -24,7 +24,7 @@ import settings, {
   generateRandomLuckySymbolPercentage,
   finishPopUpToVideoTimer,
 } from '../global/Settings';
-import { playSound } from '../global/Player';
+import { playSound, preloadAudio, preloadSounds } from '../global/Player';
 //import Sound from 'react-native-sound';
 
 const iconComponentsDefault = [
@@ -207,6 +207,10 @@ const ScratchGame = ({
     }
   };
  
+
+
+
+
   useEffect(() => {
     if (onLoading) {
       fadeAnim.setValue(0);
@@ -268,6 +272,14 @@ const ScratchGame = ({
       autoPop();
     }
   }, [clickedIcons, iconsArray, onAutoPop, winningIcon]);
+
+useEffect(() => {
+  preloadSounds([
+    require('./../assets/audio/sfx_pop01.mp3'),
+    require( './../assets/audio/sfx_pop02.mp3'),
+    require('./../assets/audio/sfx_pop03.mp3')
+  ]);
+}, []);
 
   return (
     <ImageBackground source={scratchBackground} style={styles.background_view}>

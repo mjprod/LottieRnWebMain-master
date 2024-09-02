@@ -89,6 +89,8 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading }) => {
 
   const updateErasedArea = () => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+    
     const ctx = canvas.getContext("2d");
 
     // Get image data from the canvas
