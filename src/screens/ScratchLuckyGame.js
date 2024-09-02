@@ -8,12 +8,11 @@ import NavLayout from "../components/NavLayout";
 const backgroundLoop = require("./../assets/video/background_movie_loop.mp4");
 const backgroundGame = require("./../assets/image/background_game.png");
 
-const ScratchLuckyGame = ( 
-  luckySymbolCount,
-  setLuckySymbolCount) => {
+const ScratchLuckyGame = () => {
 
   const [reset, setReset] = useState(false);
   const [scratched, setScratched] = useState(false);
+  const [luckySymbolCount, setLuckySymbolCount] = useState(0);
 
   return (
     <View style={styles.fullScreen}>

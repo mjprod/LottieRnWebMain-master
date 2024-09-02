@@ -7,7 +7,7 @@ export default settings;
 
 //Eraser settings
 export const eraserRadius = 45;
-export const eraserShouldBeScratched = 90;
+export const eraserShouldBeScratched = 88;
 
 //Eraser
 export const eraserDurationAnimation = 250;

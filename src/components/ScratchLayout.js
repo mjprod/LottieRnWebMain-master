@@ -60,7 +60,7 @@ type ScratchLayoutProps = {
   setLuckySymbolCount: (value: number) => void;
 };
 */
-const ScratchLayout = ({ reset, setReset, scratched, setScratched ,luckySymbolCount,setLuckySymbolCount}) => {
+const ScratchLayout = ({ reset, setReset, scratched, setScratched, luckySymbolCount, setLuckySymbolCount}) => {
   const [buttonText, setButtonText] = useState("AUTO SCRATCH");
   const [buttonLoading, setButtonLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
@@ -141,16 +141,7 @@ const ScratchLayout = ({ reset, setReset, scratched, setScratched ,luckySymbolCo
       }
     };
 
-    const simulateScratch = () => {
-      setButtonLoading(true);
-      setAutoScratch(true);
-      setScratchedStarted(true);
-      setTimeout(() => {
-        setScratchedCard();
-        setAutoScratch(false);
-        setButtonLoading(false);
-      }, simulateScratchTimeOut);
-    };
+ 
 
     const autoPopPressed = () => {
       setButtonLoading(true);
@@ -197,6 +188,18 @@ const ScratchLayout = ({ reset, setReset, scratched, setScratched ,luckySymbolCo
 
   
 */
+
+const simulateScratch = () => {
+  setButtonLoading(true);
+  setAutoScratch(true);
+  setScratchedStarted(true);
+  setTimeout(() => {
+    setScratchedCard();
+    setAutoScratch(false);
+    setButtonLoading(false);
+  }, simulateScratchTimeOut);
+};
+
     const addLuckySymbol = () => {
       if (luckySymbolCount !== 3) {
         setLuckySymbolCount(luckySymbolCount + 1);
@@ -214,7 +217,7 @@ const ScratchLayout = ({ reset, setReset, scratched, setScratched ,luckySymbolCo
 
         setTimeout(() => {
           if (!skipToFinishLuckyVideo) {
-            //addLuckySymbol();
+            addLuckySymbol();
           }
         }, setLuckySymbolCountTimer);
 
@@ -263,7 +266,7 @@ const ScratchLayout = ({ reset, setReset, scratched, setScratched ,luckySymbolCo
   const handleButtonPress = () => {
     if (!imageLoading && !buttonLoading) {
       if (buttonText === "AUTO SCRATCH") {
-        //simulateScratch();
+        simulateScratch();
       } else if (buttonText === "AUTO POP") {
         //autoPopPressed();
       } else if (buttonText === "NEXT CARD") {

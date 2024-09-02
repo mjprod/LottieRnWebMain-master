@@ -1,17 +1,21 @@
 import React, { useRef, useEffect, useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import Canvas from "react-native-canvas";
+import { eraserRadius } from "../global/Settings";
 
 const scratch_foreground_thumbnail = require("./../assets/image/scratch_foreground.jpg");
 
-const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
+//const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 const ScratchCard = ({ autoScratch, onScratch, onLoading }) => {
   const canvasRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [totalArea, setTotalArea] = useState(0);
   const [erasedArea, setErasedArea] = useState(0);
-  const radius = 30;
+  const radius = eraserRadius;
+
+  const  windowWidth =400;
+    const windowHeight =300;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -84,9 +88,30 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading }) => {
   }, [imageLoaded, canvasRef]);
 
   const updateErasedArea = () => {
-    const areaErased = Math.PI * radius * radius; // Area of the circle being erased
-    setErasedArea((prev) => prev + areaErased);
-  };
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    // Get image data from the canvas
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const pixels = imageData.data;
+
+    let erasedPixelCount = 0;
+
+    // Count transparent pixels
+    for (let i = 3; i < pixels.length; i += 4) {
+        if (pixels[i] === 0) { // Alpha channel fully transparent
+            erasedPixelCount++;
+        }
+    }
+
+    // Calculate the total number of pixels
+    const totalPixelCount = canvas.width * canvas.height;
+
+    // Calculate the erased area as a proportion of the total area
+    const erasedArea = erasedPixelCount / totalPixelCount;
+
+    setErasedArea(erasedArea * totalArea); // Update the erased area state
+};
 
   useEffect(() => {
     if (totalArea > 0) {
@@ -97,6 +122,7 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading }) => {
       }
     }
   }, [erasedArea, totalArea, onScratch]);
+  
 
   return (
     <View style={styles.container}>
