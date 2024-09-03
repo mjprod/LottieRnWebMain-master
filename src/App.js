@@ -5,20 +5,11 @@ import './index.css';
 const logo = require("./assets/react-logo.png");
 
 export default class App extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    componentDidMount() {
-       
-    }
-
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.app}>
                   <ScratchLuckyGame />
-                      {/*<ScratchCardScreen />*/}
                 </View>
             </View>
         );
@@ -34,7 +25,7 @@ const styles = StyleSheet.create({
     },
     app: {
         maxWidth: 400,  
-        maxHeight: 830,
+        maxHeight: 720,
         flex: 1,
         backgroundColor: "black",
         borderRadius: 8,
