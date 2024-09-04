@@ -1,21 +1,21 @@
 import React, { useRef, useEffect, useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import Canvas from "react-native-canvas";
-import { eraserRadius } from "../global/Settings";
+import { eraserRadius, heightScratch } from "../global/Settings";
 
 const scratch_foreground_thumbnail = require("./../assets/image/scratch_foreground.jpg");
 
 //const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
-const ScratchCard = ({ autoScratch, onScratch, onLoading }) => {
+const ScratchCard = ({ autoScratch, onScratch, onLoading , setScratchStarted}) => {
   const canvasRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [totalArea, setTotalArea] = useState(0);
   const [erasedArea, setErasedArea] = useState(0);
   const radius = eraserRadius;
 
-  const  windowWidth =400;
-    const windowHeight =300;
+  const  windowWidth = 400;
+    const windowHeight = heightScratch;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -121,6 +121,9 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading }) => {
       console.log("Percentage Erased:", percentageErased);
       if (onScratch) {
         onScratch(percentageErased);
+        if (percentageErased > 0){
+          //setScratchStarted(true);
+        }
       }
     }
   }, [erasedArea, totalArea, onScratch]);

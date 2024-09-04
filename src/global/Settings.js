@@ -15,7 +15,18 @@ export const eraserAnimationSteps = 85;
 
 //ScratchCard
 export const simulateScratchTimeOut = 2500;
-export const generateRandomLuckySymbolPercentage = 0.9;
+export const generateRandomLuckySymbolPercentage = 0.1;
 export const finishPopUpToVideoTimer = 1000;
 export const setLuckySymbolCountTimer = 5700;
 export const timerSoundBetweenScratchWithFinger = 300;
+
+//ScratchGame
+export const maxCountWin = 4;
+export const maxOtherCount = 3;
+export const totalIcons = 8;
+export const totalPositions = 20;
+export const columns = 4;
+export const heightScratch = 425;
+
+//Theme 
+export const currentTheme = 'egypt';
