@@ -24,6 +24,9 @@ import {IconTypeSleighdefault} from '../assets/icons/IconTypeSleighdefault';
 
 import {IconTypeLucky} from './../assets/icons/IconTypeLucky';
 
+import { Howl } from 'howler';
+
+
 import {
   generateRandomLuckySymbolPercentage,
   finishPopUpToVideoTimer,
@@ -34,7 +37,6 @@ import {
   columns,
   maxRepeatedIcons,
 } from '../global/Settings';
-import { playSound, preloadSounds } from '../global/Player';
 
 const iconComponentsDefault = [
   <IconTypeAnubisdefault key="0" />,
@@ -230,7 +232,8 @@ const handleIconClick = (index) => {
     // Verifica se o usuário clicou em um ícone diferente antes de completar 3 cliques
     // Somente toque o som de erro se o último ícone clicado não tiver completado a sequência de 3 cliques
     if (lastClickedIcon !== null && lastClickedIcon !== icon && clickedCount[lastClickedIcon] < 3) {
-      playSound(require('./../assets/audio/sfx_autopopup.wav'));  // Toca o som de erro
+      //playSound(require('./../assets/audio/sfx_autopopup.wav'));  // Toca o som de erro
+      playSoundError();
       setClickCount(1);  // Reseta o contador de cliques para 1
 
       // Mantenha os ícones já clicados e adicione o novo ícone clicado
@@ -254,13 +257,16 @@ const handleIconClick = (index) => {
     // Toca o som correspondente ao número de ícones clicados
     switch (newClickedCount[icon]) {
       case 1:
-        playSound(require('./../assets/audio/sfx_pop01.mp3'));
+        playSound1();
+        //playSound(require('./../assets/audio/sfx_pop01.mp3'));
         break;
       case 2:
-        playSound(require('./../assets/audio/sfx_pop02.mp3'));
+        playSound2();
+        //playSound(require('./../assets/audio/sfx_pop02.mp3'));
         break;
       case 3:
-        playSound(require('./../assets/audio/sfx_pop03.mp3'));
+        playSound3();
+        //playSound(require('./../assets/audio/sfx_pop03.mp3'));
         // Reseta o contador após três cliques
         setClickCount(0);
         break;
@@ -312,14 +318,36 @@ const handleIconClick = (index) => {
     }
   }, [clickedIcons, iconsArray, onAutoPop, winningIcons]);
 
-  useEffect(() => {
-    preloadSounds([
-      require('./../assets/audio/sfx_pop01.mp3'),
-      require('./../assets/audio/sfx_pop02.mp3'),
-      require('./../assets/audio/sfx_pop03.mp3'),
-      require('./../assets/audio/sfx_autopopup.wav'),
-    ]);
-  }, []);
+  const sound1 = new Howl({
+    src: [require('./../assets/audio/sfx_pop01.mp3')],
+    preload: true,  // Preload the sound
+  });
+  const sound2 = new Howl({
+    src: [require('./../assets/audio/sfx_pop02.mp3')],
+    preload: true,  // Preload the sound
+  });
+  const sound3 = new Howl({
+    src: [require('./../assets/audio/sfx_pop03.mp3')],
+    preload: true,  // Preload the sound
+  });
+  const error = new Howl({
+    src: [require('./../assets/audio/sfx_autopopup.wav')],
+    preload: true,  // Preload the sound
+
+  });
+
+  const playSound1 = () => {
+    sound1.play();
+  };
+  const playSound2 = () => {
+    sound2.play();
+  };
+  const playSound3 = () => {
+    sound3.play();
+  };
+  const playSoundError = () => {
+    error.play();
+  };
 
   return (
     <ImageBackground source={scratchBackground} style={styles.background_view}>
