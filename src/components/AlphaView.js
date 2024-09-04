@@ -2,13 +2,13 @@ import React, { useEffect, useRef } from "react";
 import { StyleSheet, Animated } from "react-native";
 
 const AlphaView = ({ showAlphaView }) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current; // Valor inicial da animação
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
-      toValue: showAlphaView ? 1 : 0, // Transição para 1 (visível) ou 0 (invisível)
-      duration: 500, // Duração da animação em milissegundos
-      useNativeDriver: true, // Usar driver nativo para melhor desempenho
+      toValue: showAlphaView ? 1 : 0,
+      duration: 300,
+      useNativeDriver: true,
     }).start();
   }, [showAlphaView]);
 
@@ -17,7 +17,7 @@ const AlphaView = ({ showAlphaView }) => {
       style={[
         styles.containerNav,
         {
-          opacity: fadeAnim, // Aplica a opacidade animada
+          opacity: fadeAnim,
           backgroundColor: "rgba(0,0,0,0.7)",
         },
       ]}

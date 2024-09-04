@@ -90,7 +90,7 @@ const ScratchGame = ({
     const generatedArray = generateIconsArray(generated);
     console.log('generatedArray', generatedArray);
     setIconsArray(generatedArray);
-    const winners = checkWinCondition(generatedArray);  // Agora pode retornar múltiplos vencedores
+    const winners = checkWinCondition(generatedArray);
     console.log('winners', winners);
     setWinningIcons(winners);
     setIsWinner(winners.length > 0);

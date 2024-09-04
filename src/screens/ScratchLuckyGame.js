@@ -1,4 +1,4 @@
-import React, { useRef, useState , useEffect} from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { View, StyleSheet, ImageBackground, Animated } from "react-native";
 import { VideoBackground } from "../components/VideoBackground";
 import TopLayout from "../components/TopLayout";
@@ -20,14 +20,14 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (scratchStarted) {
       Animated.timing(marginTopAnim, {
-        toValue: 10, // Target value for marginTop
-        duration: 500, // Duration of the animation (500ms)
-        useNativeDriver: false, // Cannot use native driver for layout properties
+        toValue: 10,
+        duration: 300,
+        useNativeDriver: false,
       }).start();
     } else {
       Animated.timing(marginTopAnim, {
-        toValue: 0, // Reset marginTop to 0
-        duration: 500, // Duration of the animation (500ms)
+        toValue: 0,
+        duration: 300,
         useNativeDriver: false,
       }).start();
     }
@@ -94,8 +94,6 @@ const styles = StyleSheet.create({
     marginTop: -6,
     width: "100%",
     height: "100%",
-    //justifyContent: 'center',
-    //alignItems: 'center',
   },
 });
 

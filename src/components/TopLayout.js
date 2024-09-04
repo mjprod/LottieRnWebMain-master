@@ -13,21 +13,9 @@ import LottieView from "react-native-web-lottie";
 const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
 const imageLuckySymbol = require("./../assets/image/icon_lucky_symbol.png");
 const imageTicket = require("./../assets/image/icon_ticket.png");
-
 const lottieCountDownBonus = require("../assets/lotties/lottieCountdownBonus.json");
-const bonusValue = 70;
 const countdown = 3;
 const showCountDown = true;
-//const showModalSetting = true;
-
-//type TopLayoutProps = {
-//scratched: boolean;
-//bonusValue: number;
-//countdown: number;
-//luckySymbolCount: number;
-//style?: any;
-//setShowModalSetting: (value: boolean) => void;
-//};
 
 const TopLayout = ({
   scratched,
@@ -40,7 +28,6 @@ const TopLayout = ({
   const bounceAnim = new Animated.Value(1).current;
   const fadeAnim = new Animated.Value(1).current;
   //const [animationFinished, setAnimationFinished] = useState(false);
-
   //const [showCountDown, setShowCountDown] = useState(false);
   //const scaleAnim = useRef(new Animated.Value(1.8)).current;
 
