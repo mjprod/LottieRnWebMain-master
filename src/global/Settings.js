@@ -21,11 +21,12 @@ export const setLuckySymbolCountTimer = 5700;
 export const timerSoundBetweenScratchWithFinger = 300;
 
 //ScratchGame
-export const maxCountWin = 4;
+export const maxCountWin = 3;
 export const maxOtherCount = 3;
-export const totalIcons = 8;
+export const totalIcons = 12;
 export const totalPositions = 20;
 export const columns = 4;
+export const maxRepeatedIcons = 3;
 export const heightScratch = 425;
 
 //Theme 

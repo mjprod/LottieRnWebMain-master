@@ -9,7 +9,11 @@ import {IconTypePyramidActive} from './../assets/icons/IconTypePyramidActive';
 import {IconTypeScarabActive} from './../assets/icons/IconTypeScarabActive';
 import {IconTypeSphinxActive} from './../assets/icons/IconTypeSphinxActive';
 import {IconTypeTabletActive} from './../assets/icons/IconTypeTabletActive';
-import { Button } from 'react-native';
+import {IconTypeSunRaActive} from './../assets/icons/IconTypeSunRaActive';
+import {IconTypeEyePyramidActive} from './../assets/icons/IconTypeEyePyramidActive';
+import {IconTypeSleighActive} from './../assets/icons/IconTypeSleighActive';
+import { IconTypePharoahActive } from '../assets/icons/IconTypePharoahActive';
+
 
 const iconComponentsActive = [
   <IconTypeAnubisActive key="0" />,
@@ -20,6 +24,10 @@ const iconComponentsActive = [
   <IconTypeScarabActive key="5" />,
   <IconTypeSphinxActive key="6" />,
   <IconTypeTabletActive key="7" />,
+  <IconTypeSunRaActive key="8" />,
+  <IconTypeEyePyramidActive key="9" />,
+  <IconTypePharoahActive key="10" />,
+  <IconTypeSleighActive key="11" />,
 ];
 
 const AnimatedIcon = ({

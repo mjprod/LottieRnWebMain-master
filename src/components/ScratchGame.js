@@ -17,15 +17,24 @@ import {IconTypePyramiddefault} from './../assets/icons/IconTypePyramiddefault';
 import {IconTypeScarabdefault} from './../assets/icons/IconTypeScarabdefault';
 import {IconTypeSphinxdefault} from './../assets/icons/IconTypeSphinxdefault';
 import {IconTypeTabletdefault} from './../assets/icons/IconTypeTabletdefault';
+import {IconTypeSunRadefault} from './../assets/icons/IconTypeSunRadefault';
+import {IconTypeEyePyramiddefault} from '../assets/icons/IconTypeEyePyramiddefault';
+import {IconTypePharoahdefault} from '../assets/icons/IconTypePharoahdefault';
+import {IconTypeSleighdefault} from '../assets/icons/IconTypeSleighdefault';
+
 import {IconTypeLucky} from './../assets/icons/IconTypeLucky';
 
-//import {triggerVibration} from '../global/Vibration';
 import settings, {
   generateRandomLuckySymbolPercentage,
   finishPopUpToVideoTimer,
+  maxCountWin,
+  maxOtherCount,
+  totalIcons,
+  totalPositions,
+  columns,
+  maxRepeatedIcons,
 } from '../global/Settings';
-import { playSound, preloadAudio, preloadSounds } from '../global/Player';
-//import Sound from 'react-native-sound';
+import { playSound, preloadSounds } from '../global/Player';
 
 const iconComponentsDefault = [
   <IconTypeAnubisdefault key="0" />,
@@ -36,27 +45,19 @@ const iconComponentsDefault = [
   <IconTypeScarabdefault key="5" />,
   <IconTypeSphinxdefault key="6" />,
   <IconTypeTabletdefault key="7" />,
-  <IconTypeLucky key="8" />,
+  <IconTypeSunRadefault key="8" />,
+  <IconTypeEyePyramiddefault key="9" />,
+  <IconTypePharoahdefault key="10" />,
+  <IconTypeSleighdefault key="11" />,
+  <IconTypeLucky key="12" />,
 ];
 
 const scratchBackground = require('./../assets/image/scratch_background.png');
-const lottieScratchieBubblePopUp = require('./../assets/lotties/lottieScratchieBubblePopUp.json');
-
-/*type ScratchGameProps = {
-  onAutoPop: boolean;
-  setIsWinner: (value: boolean) => void;
-  onEndGame: () => void;
-  scratched: boolean;
-  reset: boolean;
-  onLoading: boolean;
-  isLuckySymbolTrue: boolean;
-  setIsLuckySymbolTrue: (value: boolean) => void;
-};*/
+const lottieScratchieBubblePopUp = require('./../assets/lotties/green_ball.json');
 
 const ScratchGame = ({
   onAutoPop,
   setIsWinner,
-  //onEndGame,
   scratched,
   reset,
   onLoading,
@@ -65,10 +66,12 @@ const ScratchGame = ({
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
-  const [winningIcon, setWinningIcon] = useState(null);
+  const [winningIcons, setWinningIcons] = useState([]);
   const [clickedIcons, setClickedIcons] = useState([]);
   const [clickedCount, setClickedCount] = useState({});
- 
+  const [lastClickedIcon, setLastClickedIcon] = useState(null);
+  const [clickCount, setClickCount] = useState(0);  
+
   const generateRandomLuckySymbol = () => {
     return Math.random() < generateRandomLuckySymbolPercentage;
   };
@@ -76,6 +79,8 @@ const ScratchGame = ({
   useEffect(() => {
     setClickedIcons([]);
     setClickedCount({});
+    setClickCount(0);
+    setLastClickedIcon(null);
 
     let generated = generateRandomLuckySymbol();
     console.log('generated', generated);
@@ -83,97 +88,88 @@ const ScratchGame = ({
     const generatedArray = generateIconsArray(generated);
     console.log('generatedArray', generatedArray);
     setIconsArray(generatedArray);
-    const winner = checkWinCondition(generatedArray);
-    console.log('winner', winner);
-    setWinningIcon(winner);
-    setIsWinner(winner !== null);
+    const winners = checkWinCondition(generatedArray);  // Agora pode retornar múltiplos vencedores
+    console.log('winners', winners);
+    setWinningIcons(winners);
+    setIsWinner(winners.length > 0);
   }, [setIsWinner, reset, setIsLuckySymbolTrue]);
 
   const generateIconsArray = (winLuckySymbol) => {
-    const maxCount = 3;
-    const maxOtherCount = 2;
-    const totalIcons = 8;
-    const totalPositions = 12;
-    const columns = 4;
-  
     let iconCounts = Array(totalIcons).fill(0);
     let resultArray = new Array(totalPositions).fill(null);
     let iconWithMaxCount = null;
-    let columnIconMap = {}; // Remove the type annotation here
-  
+    let columnIconMap = {};
+
     if (winLuckySymbol) {
       const luckyPosition = Math.floor(Math.random() * totalPositions);
       resultArray[luckyPosition] = 8;
       iconCounts[8] = 1;
     }
-  
+
     for (let i = 0; i < totalPositions; i++) {
-      if (resultArray[i] !== null) {
-        continue;
-      } // Skip already filled position
-  
+      if (resultArray[i] !== null) continue;
+
       let columnIndex = i % columns;
       if (!columnIconMap[columnIndex]) {
         columnIconMap[columnIndex] = new Set();
       }
-  
+
       let availableIcons = iconCounts
         .map((count, index) => {
           if (
-            count < maxCount &&
+            count < maxCountWin &&
+            count < maxRepeatedIcons && 
             (iconWithMaxCount === null ||
               count < maxOtherCount ||
               index === iconWithMaxCount) &&
             !columnIconMap[columnIndex].has(index) &&
-            (winLuckySymbol === false || index !== 8) // Ensure no duplicate lucky symbol
+            (winLuckySymbol === false || index !== 8)
           ) {
             return index;
           }
           return null;
         })
         .filter(index => index !== null);
-  
+
       if (availableIcons.length === 0) {
         break;
       }
-  
+
       let selectedIcon =
         availableIcons[Math.floor(Math.random() * availableIcons.length)];
-  
+
       resultArray[i] = selectedIcon;
       iconCounts[selectedIcon]++;
       columnIconMap[columnIndex].add(selectedIcon);
-  
-      if (iconCounts[selectedIcon] === maxCount) {
+
+      if (iconCounts[selectedIcon] === maxCountWin) {
         iconWithMaxCount = selectedIcon;
       }
     }
-  
+
     return resultArray;
   };
   
   const checkWinCondition = (array) => {
-    const maxCount = 3;
-    const totalIcons = 8;
-    const iconCounts = Array(totalIcons).fill(0); // Removed type annotation
-  
-    array.forEach((icon) => { // Removed type annotations
+    const iconCounts = Array(totalIcons).fill(0);
+    array.forEach((icon) => {
       if (icon !== null) {
         iconCounts[icon]++;
       }
     });
-  
-    const winningIcon = iconCounts.findIndex(count => count === maxCount);
-  console.log('winningIcon', winningIcon);
-    return winningIcon !== -1 ? winningIcon : null;
-  };
-  
 
-  const handleIconClick = (index) => {
-    console.log('handleIconClick', index);
+    const winners = [];
+    iconCounts.forEach((count, index) => {
+      if (count === maxCountWin) {
+        winners.push(index);  // Adiciona todos os ícones que atingiram a condição de vitória
+      }
+    });
+    return winners;
+  };
+
+  /*const handleIconClick = (index) => {
     if (!clickedIcons.includes(index)) {
       const newClickedIcons = [...clickedIcons, index];
-
       setClickedIcons(newClickedIcons);
 
       const icon = iconsArray[index];
@@ -181,7 +177,6 @@ const ScratchGame = ({
         ...clickedCount,
         [icon]: (clickedCount[icon] || 0) + 1,
       };
-      console.log('newClickedCount', newClickedCount);
       setClickedCount(newClickedCount);
 
       switch (newClickedIcons.length) {
@@ -195,7 +190,6 @@ const ScratchGame = ({
           playSound(require('./../assets/audio/sfx_pop03.mp3'));
           break;
         default:
-          console.log('default');
           break;
       }
 
@@ -206,8 +200,86 @@ const ScratchGame = ({
       }
     }
   };
- 
+*/
 
+
+let popSound1, popSound2, popSound3, errorSound;
+
+useEffect(() => {
+  // Pré-carrega os sons usando o objeto nativo Audio
+  popSound1 = new Audio(require('./../assets/audio/sfx_pop01.mp3'));
+  popSound2 = new Audio(require('./../assets/audio/sfx_pop02.mp3'));
+  popSound3 = new Audio(require('./../assets/audio/sfx_pop03.mp3'));
+  errorSound = new Audio(require('./../assets/audio/sfx_autopopup.wav'));
+
+  return () => {
+    // Limpa os recursos ao desmontar o componente
+    popSound1 = null;
+    popSound2 = null;
+    popSound3 = null;
+    errorSound = null;
+  };
+}, []);
+
+const handleIconClick = (index) => {
+  const icon = iconsArray[index];  // Obtém o ícone no índice clicado
+
+  // Verifica se o ícone já foi clicado
+  if (!clickedIcons.includes(index)) {
+
+    // Verifica se o usuário clicou em um ícone diferente antes de completar 3 cliques
+    // Somente toque o som de erro se o último ícone clicado não tiver completado a sequência de 3 cliques
+    if (lastClickedIcon !== null && lastClickedIcon !== icon && clickedCount[lastClickedIcon] < 3) {
+      playSound(require('./../assets/audio/sfx_autopopup.wav'));  // Toca o som de erro
+      setClickCount(1);  // Reseta o contador de cliques para 1
+
+      // Mantenha os ícones já clicados e adicione o novo ícone clicado
+      setClickedIcons([...clickedIcons, index]);  // Adiciona o novo ícone ao array sem reiniciar
+
+      setLastClickedIcon(icon);  // Atualiza o último ícone clicado para o novo ícone
+      return;  // Sai da função para evitar processamento adicional
+    }
+
+    // Atualiza o estado dos ícones clicados
+    const newClickedIcons = [...clickedIcons, index];
+    setClickedIcons(newClickedIcons);
+
+    // Atualiza a contagem de cliques no ícone
+    const newClickedCount = {
+      ...clickedCount,
+      [icon]: (clickedCount[icon] || 0) + 1,  // Incrementa a contagem do ícone
+    };
+    setClickedCount(newClickedCount);
+
+    // Toca o som correspondente ao número de ícones clicados
+    switch (newClickedCount[icon]) {
+      case 1:
+        playSound(require('./../assets/audio/sfx_pop01.mp3'));
+        break;
+      case 2:
+        playSound(require('./../assets/audio/sfx_pop02.mp3'));
+        break;
+      case 3:
+        playSound(require('./../assets/audio/sfx_pop03.mp3'));
+        // Reseta o contador após três cliques
+        setClickCount(0);
+        break;
+      default:
+        break;
+    }
+
+    // Se o usuário clicou três vezes no mesmo ícone, execute uma ação
+    if (newClickedCount[icon] === 3) {
+      setTimeout(() => {
+        // Realize qualquer ação adicional após três cliques, se necessário
+        // onEndGame(); // Comente ou descomente conforme necessário
+      }, finishPopUpToVideoTimer);
+    }
+
+    // Atualiza o último ícone clicado
+    setLastClickedIcon(icon);
+  }
+};
 
 
 
@@ -223,45 +295,12 @@ const ScratchGame = ({
       }).start();
     }
   }, [fadeAnim, onLoading]);
- /*
-  //let whoosh: Sound | null = null;
-  //Sound.setCategory('Playback');
 
-  /*const playSoundAnimation = (fileName: string): void => {
-    if (!settings.soundOn) {
-      return;
-    }
-    whoosh = new Sound(fileName, Sound.MAIN_BUNDLE, error => {
-      if (error) {
-        console.log('Failed to load the sound', error);
-
-        return;
-      }
-
-      whoosh?.play(success => {
-        if (success) {
-          //console.log('Successfully finished playing');
-        } else {
-          //console.log('Playback failed due to audio decoding errors');
-        }
-        whoosh?.release();
-        whoosh = null;
-      });
-    });
-
-    if (whoosh) {
-      whoosh.setVolume(1);
-      whoosh.setNumberOfLoops(-1);
-      whoosh.setCurrentTime(0);
-      whoosh.getCurrentTime(seconds => console.log('At ' + seconds));
-    }
-  };
-*/
   useEffect(() => {
     const autoPop = () => {
       const newClickedIcons = [...clickedIcons];
       iconsArray.forEach((icon, index) => {
-        if (icon === winningIcon && !newClickedIcons.includes(index)) {
+        if (winningIcons.includes(icon) && !newClickedIcons.includes(index)) {
           newClickedIcons.push(index);
         }
       });
@@ -271,15 +310,16 @@ const ScratchGame = ({
     if (onAutoPop) {
       autoPop();
     }
-  }, [clickedIcons, iconsArray, onAutoPop, winningIcon]);
+  }, [clickedIcons, iconsArray, onAutoPop, winningIcons]);
 
-useEffect(() => {
-  preloadSounds([
-    require('./../assets/audio/sfx_pop01.mp3'),
-    require( './../assets/audio/sfx_pop02.mp3'),
-    require('./../assets/audio/sfx_pop03.mp3')
-  ]);
-}, []);
+  useEffect(() => {
+    preloadSounds([
+      require('./../assets/audio/sfx_pop01.mp3'),
+      require('./../assets/audio/sfx_pop02.mp3'),
+      require('./../assets/audio/sfx_pop03.mp3'),
+      require('./../assets/audio/sfx_autopopup.wav'),
+    ]);
+  }, []);
 
   return (
     <ImageBackground source={scratchBackground} style={styles.background_view}>
@@ -289,7 +329,7 @@ useEffect(() => {
             <View key={index} style={styles.iconContainer}>
               {icon !== null && (
                 <View style={styles.iconWrapper}>
-                  {winningIcon === icon &&
+                  {winningIcons.includes(icon) &&
                   !clickedIcons.includes(index) &&
                   scratched ? (
                     <AnimatedIcon
@@ -300,7 +340,7 @@ useEffect(() => {
                     <View
                       style={[
                         styles.lottieContainer,
-                        {top: '-40%'},
+                        {top: '0%'},
                       ]}>
                       <LottieView
                         style={styles.lottieAnimation}
@@ -316,7 +356,7 @@ useEffect(() => {
                 </View>
               )}
             </View>
-                  ))}
+          ))}
         </Animated.View>
       </View>
     </ImageBackground>
@@ -326,20 +366,22 @@ useEffect(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //justifyContent: 'center',
-    //alignItems: 'center',
-    padding: 8,
   },
   gridContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
     width: '100%',
   },
   iconContainer: {
-    width: '23%',
+    flexBasis: '23%',
+    maxWidth: '23%',
+    minWidth: '20%',
     aspectRatio: 1,
     margin: '1%',
+    boxSizing: 'border-box',
   },
   iconWrapper: {
     width: '100%',
@@ -356,13 +398,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   lottieAnimation: {
-    width: '180%',
-    height: '180%',
+    width: '100%',
+    height: '100%',
   },
   background_view: {
     width: '100%',
     height: '100%',
     backgroundColor: 'transparent',
+    flex: 1,
+    resizeMode: 'cover',
   },
 });
 

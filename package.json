@@ -24,15 +24,15 @@
     "typescript": "^5.5.4"
   },
   "scripts": {
-    "web": "react-scripts start",
-    "build-web": "react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "start-expo": "expo start",
     "start-native": "react-native-scripts start",
     "eject-native": "react-native-scripts eject",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "test": "jest",
-    "start": "react-native start"
+    "mobile": "react-native start"
   },
   "jest": {
     "preset": "react-native"

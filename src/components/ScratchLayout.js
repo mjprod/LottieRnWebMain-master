@@ -2,23 +2,23 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   View,
-  Text,
-  ImageBackground,
-  Platform,
   Image,
 } from "react-native";
-import GameButton from "./GameButton";
 import ScratchCardLeft from "./ScratchCardLeft";
 import ScratchGame from "./ScratchGame";
 import ScratchCard from "./ScratchCard";
 import {
   eraserShouldBeScratched,
+  heightScratch,
   setLuckySymbolCountTimer,
   simulateScratchTimeOut,
   } from '../global/Settings';
 
+  import {
+    gameCenterIcon,
+    } from '../global/Assets';
+
 const backgroundScratchTop = require("./../assets/image/background_scratch_top.png");
-const imageCenterIcon = require("./../assets/image/game_center_icon.png");
 const scratchForeground = require("./../assets/image/scratch_foreground.jpg");
 
 //import GameButton, {GameButtonType} from './GameButton';
@@ -60,7 +60,7 @@ type ScratchLayoutProps = {
   setLuckySymbolCount: (value: number) => void;
 };
 */
-const ScratchLayout = ({ reset, setReset, scratched, setScratched, luckySymbolCount, setLuckySymbolCount}) => {
+const ScratchLayout = ({ reset, setReset, scratched, setScratched, luckySymbolCount, setLuckySymbolCount,setScratchStarted}) => {
   const [buttonText, setButtonText] = useState("AUTO SCRATCH");
   const [buttonLoading, setButtonLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
@@ -290,25 +290,6 @@ const simulateScratch = () => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={backgroundScratchTop}
-        resizeMode="contain"
-        style={styles.imageTop}
-      >
-        <View style={styles.textContainer}>
-          <Text style={styles.textTopLeft}>MATCH 3x SYMBOLS</Text>
-          <View style={styles.viewRow}>
-            <Text style={styles.textTopRight}>WIN 100 JKC</Text>
-          </View>
-        </View>
-      </ImageBackground>
-
-      <View
-        style={[
-          styles.innerContainer,
-          Platform.OS === "android" ? styles.androidMargin : styles.iosMargin,
-        ]}
-      >
         <View style={styles.bottomView}>
           <ScratchGame
             setIsWinner={setIsWinner}
@@ -328,32 +309,20 @@ const simulateScratch = () => {
                 autoScratch={autoScratch}
                 onScratch={handleScratch}
                 onLoading={setImageLoading}
+                setScratchStarted={setScratchStarted}
               />
             </View>
           )}
-        </View>
 
         <Image style={styles.arrowImage} source={null} />
       </View>
-      <View style={styles.textBottomContainer}>
-        <Text style={styles.textFooterTop}>
-          BONUS: TAP THE MATCHING SYMBOLS
-        </Text>
-        <Text style={styles.textFooterBottom}>
-          before the bonus timer ends for more wins!
-        </Text>
-      </View>
+     
       <View
         //ref={buttonRef}
         //onLayout={handleLayout}
-        style={{ alignSelf: "stretch" }}
+        style={{ marginTop:5, overflow: "hidden",alignSelf: "stretch" }}
       >
-        <GameButton
-          onPress={handleButtonPress}
-          text={buttonText}
-          loading={buttonLoading || imageLoading}
-          type={getButtonType()}
-        />
+  
         <ScratchCardLeft scratchCardsLeft={9} />
       </View>
       {/*showLuckySymbol && (
@@ -371,7 +340,7 @@ const simulateScratch = () => {
           </View>
           )*/}
       <View style={styles.centralImageContainer}>
-          <Image style={styles.centralImage} source={imageCenterIcon} />
+          <Image style={styles.centralImage} source={gameCenterIcon} />
       </View>
     </View>
   );
@@ -385,9 +354,11 @@ const styles = StyleSheet.create({
   },
   bottomView: {
     width: "100%",
-    height: 280,
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16,
+    height: heightScratch,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
@@ -397,8 +368,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     display: "flex",
-    position: "relative",
-    height: 280,
+    //position: "relative",
+    height: heightScratch,
   },
   scratchCardContainer: {
     position: "absolute",
@@ -437,13 +408,6 @@ const styles = StyleSheet.create({
     fontFamily: "Teko-Medium",
     fontSize: 22,
     marginLeft: 15,
-  },
-  imageTop: {
-    width: "100%",
-    height: 100,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
   },
   viewRow: {
     flexDirection: "row",
@@ -530,9 +494,9 @@ const styles = StyleSheet.create({
   },
   centralImage: {
     position: "absolute",  // Allows precise positioning within the container
-    top: '-420%',               // Position at the top of the container
-    width: 150,
-    height: 150,
+    top: '-405%',               // Position at the top of the container
+    width: 100,
+    height: 100,
     zIndex: 9999,    
     alignItems: 'center', // Center the child horizontally
     justifyContent: 'center',     // Ensure it stays above other elements

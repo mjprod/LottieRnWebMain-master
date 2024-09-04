@@ -122,7 +122,7 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading , setScratchStarted}) =
       if (onScratch) {
         onScratch(percentageErased);
         if (percentageErased > 0){
-          //setScratchStarted(true);
+          setScratchStarted(true);
         }
       }
     }

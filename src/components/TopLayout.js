@@ -1,4 +1,4 @@
-import React, {  } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -12,6 +12,8 @@ import LottieView from "react-native-web-lottie";
 
 const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
 const imageLuckySymbol = require("./../assets/image/icon_lucky_symbol.png");
+const imageTicket = require("./../assets/image/icon_ticket.png");
+
 const lottieCountDownBonus = require("../assets/lotties/lottieCountdownBonus.json");
 const bonusValue = 70;
 const countdown = 3;
@@ -27,18 +29,16 @@ const showCountDown = true;
 //setShowModalSetting: (value: boolean) => void;
 //};
 
-const TopLayout = (
-  {
-    scratched,
-    //bonusValue,
-    //countdown,
-    //luckySymbolCount,
-    //style,
-    //setShowModalSetting,
-  }
-) => {
-  const bounceAnim = (new Animated.Value(1)).current;
-  const fadeAnim = (new Animated.Value(1)).current;
+const TopLayout = ({
+  scratched,
+  //bonusValue,
+  //countdown,
+  //luckySymbolCount,
+  //style,
+  //setShowModalSetting,
+}) => {
+  const bounceAnim = new Animated.Value(1).current;
+  const fadeAnim = new Animated.Value(1).current;
   //const [animationFinished, setAnimationFinished] = useState(false);
 
   //const [showCountDown, setShowCountDown] = useState(false);
@@ -123,19 +123,6 @@ const TopLayout = (
     }
   };
 
-  const getTextColor = (value) => {
-    switch (value) {
-      case 1:
-        return "#dc4445"; // Red
-      case 2:
-        return "#ddaa43"; // Yellow
-      case 3:
-        return "#43db47"; // Green
-      default:
-        return "#dc4445"; // Default to white if no match
-    }
-  };
-
   return (
     <View style={{ marginTop: -25 }}>
       <ImageBackground
@@ -145,7 +132,7 @@ const TopLayout = (
       >
         <View style={styles.textContainer}>
           <View style={styles.textColumn}>
-            <Text style={styles.textTopLeft}>BONUS TIMER</Text>
+            <Text style={styles.textTopLeft}>POP POINTS COUNTDOWN</Text>
             {/*scratched && !showCountDown && (
               <Animated.View
                 style={[
@@ -179,7 +166,7 @@ const TopLayout = (
                 <Text
                   style={[
                     styles.countDownText,
-                    { color: getTextColor(countdown) },
+                    // { color: getTextColor(countdown) },
                   ]}
                 >
                   {countdown} s
@@ -191,7 +178,7 @@ const TopLayout = (
           <View style={styles.textColumnRigth}>
             <View style={styles.viewRow}>
               <Image
-                style={{ width: 15, height: 15 }}
+                style={{ width: 12, height: 12, marginBottom: 4 }}
                 source={imageLuckySymbol}
               />
               <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
@@ -202,21 +189,35 @@ const TopLayout = (
       </ImageBackground>
       <View style={styles.containerBottom}>
         <View style={styles.textWrapper}>
-          {scratched && (
+          {
             <Animated.Text
               style={[
                 styles.textBottomLeft,
-                {transform: [{translateX: bounceAnim}]},
-                {color: getTextAnimationColor(bonusValue)},
-                {opacity: fadeAnim},
-              ]}>
-              BONUS +{bonusValue} JKC
+                { transform: [{ translateX: bounceAnim }] },
+                { opacity: fadeAnim },
+              ]}
+            >
+              You’re Doing Great!
             </Animated.Text>
-            )}
+          }
         </View>
-        <Text style={styles.textBottomRight}>FIND 3x TO WIN</Text>
+
+        <View
+          style={{
+            flexDirection: "row",
+            bottom: 45,
+            right: 14,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.textBottomRight}>3x Symbols = 1x</Text>
+          <Image
+            style={{ marginLeft: 3, width: 22, height: 22 }}
+            source={imageTicket}
+          />
+        </View>
       </View>
-     
     </View>
   );
 };
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
   },
   image_top: {
     width: "100%",
-    marginTop: "-15%",
+    marginTop: "-10%",
     marginBottom: "3%",
     justifyContent: "center",
     alignItems: "center",
@@ -259,17 +260,17 @@ const styles = StyleSheet.create({
     marginTop: 45,
   },
   textTopLeft: {
-    color: "white",
+    color: "#43db47",
     textAlign: "left",
     fontFamily: "Teko-Medium",
-    fontSize: 14,
+    fontSize: 15,
     marginBottom: 85,
   },
   textTopRight: {
     color: "white",
     textAlign: "right",
     fontFamily: "Teko-Medium",
-    fontSize: 14,
+    fontSize: 15,
     marginLeft: 26,
   },
   containerBottom: {
@@ -282,20 +283,18 @@ const styles = StyleSheet.create({
     width: "50%",
   },
   textBottomRight: {
-    bottom: 35,
-    right: 10,
     color: "#FFDFAC",
     textAlign: "right",
     fontFamily: "Teko-Medium",
-    fontSize: 14,
+    fontSize: 12,
   },
   textBottomLeft: {
-    bottom: 35,
-    left: 10,
-    color: "#FFDFAC",
+    bottom: 45,
+    left: 14,
+    color: "#43db47",
     textAlign: "left",
     fontFamily: "Teko-Medium",
-    fontSize: 14,
+    fontSize: 12,
   },
   lottieAnimation: {
     width: "40%",
@@ -318,7 +317,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 10,
   },
-  
 });
 
 export default TopLayout;

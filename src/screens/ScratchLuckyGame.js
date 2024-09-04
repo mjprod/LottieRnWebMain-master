@@ -1,24 +1,43 @@
-import React, { useState } from "react";
-import { View, StyleSheet, ImageBackground } from "react-native";
+import React, { useRef, useState , useEffect} from "react";
+import { View, StyleSheet, ImageBackground, Animated } from "react-native";
 import { VideoBackground } from "../components/VideoBackground";
 import TopLayout from "../components/TopLayout";
 import ScratchLayout from "../components/ScratchLayout";
 import NavLayout from "../components/NavLayout";
+import { backgroundLoop } from "../global/Assets";
 
-const backgroundLoop = require("./../assets/video/background_movie_loop.mp4");
 const backgroundGame = require("./../assets/image/background_game.png");
 
 const ScratchLuckyGame = () => {
-
   const [reset, setReset] = useState(false);
   const [scratched, setScratched] = useState(false);
+
+  const [scratchStarted, setScratchStarted] = useState(false);
   const [luckySymbolCount, setLuckySymbolCount] = useState(0);
+
+  const marginTopAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (scratchStarted) {
+      Animated.timing(marginTopAnim, {
+        toValue: 10, // Target value for marginTop
+        duration: 500, // Duration of the animation (500ms)
+        useNativeDriver: false, // Cannot use native driver for layout properties
+      }).start();
+    } else {
+      Animated.timing(marginTopAnim, {
+        toValue: 0, // Reset marginTop to 0
+        duration: 500, // Duration of the animation (500ms)
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [scratchStarted]);
 
   return (
     <View style={styles.fullScreen}>
-      <VideoBackground source={backgroundLoop} />
+      <VideoBackground showAlphaView={scratchStarted} source={backgroundLoop} />
       <View style={styles.containerOverlay}>
-        <NavLayout />
+        <NavLayout showAlphaView={scratchStarted} />
 
         <ImageBackground
           source={backgroundGame}
@@ -27,19 +46,21 @@ const ScratchLuckyGame = () => {
         >
           {
             <View style={styles.overlay}>
-              <TopLayout
-                scratched={scratched}
-              />
+              <Animated.View style={{ marginTop: marginTopAnim }}>
+                <TopLayout scratched={scratched} />
+              </Animated.View>
+
               <ScratchLayout
-              reset={reset}
-              setReset={setReset} 
-              scratched={scratched}
-              setScratched={setScratched}
-              luckySymbolCount={luckySymbolCount}
-              setLuckySymbolCount={setLuckySymbolCount} />
+                reset={reset}
+                setReset={setReset}
+                scratched={scratched}
+                setScratched={setScratched}
+                luckySymbolCount={luckySymbolCount}
+                setLuckySymbolCount={setLuckySymbolCount}
+                setScratchStarted={setScratchStarted}
+              />
             </View>
           }
-        
         </ImageBackground>
       </View>
     </View>
@@ -60,7 +81,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     position: "absolute",
-    top: 220,
+    top: 130,
     left: 10,
     right: 10,
     bottom: 10,
@@ -70,6 +91,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
+    marginTop: -6,
     width: "100%",
     height: "100%",
     //justifyContent: 'center',
