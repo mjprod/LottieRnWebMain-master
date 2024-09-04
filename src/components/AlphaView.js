@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { StyleSheet, Animated, View } from "react-native";
+import { StyleSheet, Animated } from "react-native";
 
 const AlphaView = ({ showAlphaView }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current; // Valor inicial da animação

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, TouchableWithoutFeedback, Pressable} from 'react-native';
+import {StyleSheet, View, TouchableWithoutFeedback} from 'react-native';
 import LottieView from "react-native-web-lottie";
 import {IconTypeAnhkActive} from './../assets/icons/IconTypeAnhkActive';
 import {IconTypeAnubisActive} from './../assets/icons/IconTypeAnubisActive';

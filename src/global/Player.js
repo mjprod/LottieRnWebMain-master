@@ -1,5 +1,5 @@
 import React from 'react';
-import settings from './Settings';
+
 
 const audioCache = {}; // Object to cache preloaded audio files
 

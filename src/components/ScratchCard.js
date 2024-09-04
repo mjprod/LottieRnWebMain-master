@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
-import Canvas from "react-native-canvas";
+import { View, StyleSheet } from "react-native";
 import { eraserRadius, heightScratch } from "../global/Settings";
 
 const scratch_foreground_thumbnail = require("./../assets/image/scratch_foreground.jpg");

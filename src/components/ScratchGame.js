@@ -24,7 +24,7 @@ import {IconTypeSleighdefault} from '../assets/icons/IconTypeSleighdefault';
 
 import {IconTypeLucky} from './../assets/icons/IconTypeLucky';
 
-import settings, {
+import {
   generateRandomLuckySymbolPercentage,
   finishPopUpToVideoTimer,
   maxCountWin,
