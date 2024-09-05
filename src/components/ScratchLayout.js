@@ -14,11 +14,8 @@ import {
   simulateScratchTimeOut,
   } from '../global/Settings';
 
-  import {
-    gameCenterIcon,
-    } from '../global/Assets';
 
-const backgroundScratchTop = require("./../assets/image/background_scratch_top.png");
+
 const scratchForeground = require("./../assets/image/scratch_foreground.jpg");
 
 //import GameButton, {GameButtonType} from './GameButton';
@@ -339,9 +336,7 @@ const simulateScratch = () => {
             </View>
           </View>
           )*/}
-      <View style={styles.centralImageContainer}>
-          <Image style={styles.centralImage} source={gameCenterIcon} />
-      </View>
+     
     </View>
   );
 };
@@ -351,6 +346,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 12,
     marginTop: "-10%",
+    overflow: "hidden",
   },
   bottomView: {
     width: "100%",
@@ -485,22 +481,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0)",
   },
-  centralImageContainer: {
-    position: "relative", // Position the container relative to allow absolute positioning inside
-    width: '100%',        // Full width to center the icon
-    height: 140,          // Set the height of the container
-    alignItems: 'center', // Center the child horizontally
-    justifyContent: 'center', // Center the child vertically  
-  },
-  centralImage: {
-    position: "absolute",  // Allows precise positioning within the container
-    top: '-405%',               // Position at the top of the container
-    width: 100,
-    height: 100,
-    zIndex: 9999,    
-    alignItems: 'center', // Center the child horizontally
-    justifyContent: 'center',     // Ensure it stays above other elements
-  },
+ 
 });
 
 export default ScratchLayout;

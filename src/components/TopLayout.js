@@ -10,10 +10,16 @@ import {
 
 import LottieView from "react-native-web-lottie";
 
+import {
+  gameCenterIcon,
+  } from '../global/Assets';
+
 const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
 const imageLuckySymbol = require("./../assets/image/icon_lucky_symbol.png");
 const imageTicket = require("./../assets/image/icon_ticket.png");
 const lottieCountDownBonus = require("../assets/lotties/lottieCountdownBonus.json");
+const backgroundScratchTop = require("../assets/image/background_scratch_top.png");
+
 const countdown = 3;
 const showCountDown = true;
 
@@ -173,6 +179,11 @@ const TopLayout = ({
             {/*LottieLuckySymbolCoinSlot({luckySymbolCount})*/}
           </View>
         </View>
+
+       
+          <Image style={styles.centralImage} source={gameCenterIcon} />
+     
+
       </ImageBackground>
       <View style={styles.containerBottom}>
         <View style={styles.textWrapper}>
@@ -205,6 +216,7 @@ const TopLayout = ({
           />
         </View>
       </View>
+     
     </View>
   );
 };
@@ -303,6 +315,14 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     alignItems: "center",
     marginVertical: 10,
+  },
+  centralImage: {
+    marginTop: -110,
+    width: 100,
+    height: 100,
+    zIndex: 999,    
+    alignItems: 'center', // Center the child horizontally
+    justifyContent: 'center',     // Ensure it stays above other elements
   },
 });
 
