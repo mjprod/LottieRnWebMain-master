@@ -35,7 +35,7 @@ const AnimatedIcon = ({
   onClick,
 }) => {
   const handleIconClick = () => {
-    console.log('iconIndex', iconIndex);
+    //console.log('iconIndex', iconIndex);
     if (onClick) {
       onClick(iconIndex);
     }

@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Image,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Image } from "react-native";
 import ScratchCardLeft from "./ScratchCardLeft";
 import ScratchGame from "./ScratchGame";
 import ScratchCard from "./ScratchCard";
@@ -12,52 +8,21 @@ import {
   heightScratch,
   setLuckySymbolCountTimer,
   simulateScratchTimeOut,
-  } from '../global/Settings';
-
-
+} from "../global/Settings";
 
 const scratchForeground = require("./../assets/image/scratch_foreground.jpg");
 
-//import GameButton, {GameButtonType} from './GameButton';
-//import ScratchGame from './ScratchGame';
-//import LottieView from 'lottie-react-native';
-//import ScratchCardLeft from './ScratchCardLeft';
-//import ScratchCard from './ScratchCard';
-//import {triggerVibration} from '../global/Vibration';
-//import TransparentVideo from '@status-im/react-native-transparent-video';
-//import {playSong} from '../global/Player';
-
-//import LuckySymbolOverlay from './LuckySymbolOverlay';
-/*
-const iconArrowScratchTop = require('./../../assets/image/icon_arrow_scratch_top.png');
-const audioLuckySymbolCoins = require('./../../assets/audio/background_lucky_symbol_coins.wav');
-const audioGameLoseScreen = require('../../assets/audio/background_game_lose_screen.aac');
-const audioAutoPopup = require('../../assets/audio/sfx_autopopup.wav');
-const lottiePageCurl = require('../../assets/lotties/lottiePageCurl.json');
-
-const videoLuckySymbol = require('./../../assets/video/lucky_symbol_3d_coin.mp4');
-const videoLuckySymbolFinal = require('./../../assets/video/lucky_symbol_3d_coin_cut.mp4');
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height + 700;
-
-
-type ScratchLayoutProps = {
-  onWin: (value: boolean) => void;
-  onLose: (value: boolean) => void;
-  scratched: boolean;
-  setScratched: (value: boolean) => void;
-  setButtonLayout: (value: any) => void;
-  reset: boolean;
-  setReset: (value: boolean) => void;
-  scratchCardLeft: number;
-  setScratchCardLeft: (value: number) => void;
-  isCountingBonusDown: boolean;
-  luckySymbolCount: number;
-  setLuckySymbolCount: (value: number) => void;
-};
-*/
-const ScratchLayout = ({ reset, setReset, scratched, setScratched, luckySymbolCount, setLuckySymbolCount,setScratchStarted}) => {
+const ScratchLayout = ({
+  reset,
+  setReset,
+  scratched,
+  setScratched,
+  luckySymbolCount,
+  setLuckySymbolCount,
+  setScratchStarted,
+  scratchCardLeft,
+  setScratchCardLeft,
+}) => {
   const [buttonText, setButtonText] = useState("AUTO SCRATCH");
   const [buttonLoading, setButtonLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
@@ -71,183 +36,54 @@ const ScratchLayout = ({ reset, setReset, scratched, setScratched, luckySymbolCo
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
   const [scratchedStarted, setScratchedStarted] = useState(false);
 
-  // const [isWinner, setIsWinner] = useState(false);
-  //
-  // const [isLuckySymbolTrue, setIsLuckySymbolTrue] = useState(false);
+  const addLuckySymbol = () => {
+    if (luckySymbolCount !== 3) {
+      setLuckySymbolCount(luckySymbolCount + 1);
+    }
+  };
 
-  //const buttonRef = useRef(null);
+  const setScratchedCard = () => {
+    if (isLuckySymbolTrue) {
+      if (luckySymbolCount === 2) {
+        setCollectShowLuckySymbol(true);
+      } else {
+        setShowLuckySymbol(true);
+        //playSong(audioLuckySymbolCoins);
+      }
 
-
-  //const videoRef = useRef(null);
-
-  // useEffect(() => {
-  /// if (videoRef.current) {
-  //console.log('Video component methods:', Object.keys(videoRef.current));
-  // }
-  //}, []);
-  /*
-    const handleClick = () => {
-      if (videoRef.current) {
-        setSkipToFinishLuckyVideo(true);
-        
-        setTimeout(() => {
-
-          // code repeated
+      setTimeout(() => {
+        if (!skipToFinishLuckyVideo) {
           addLuckySymbol();
+        }
+      }, setLuckySymbolCountTimer);
+
+      setIsLuckySymbolTrue(false);
+      setTimeout(() => {
+        if (!skipToFinishLuckyVideo) {
           setShowLuckySymbol(false);
-          setSkipToFinishLuckyVideo(false);
+          if (isWinner) {
+            setButtonText("AUTO POP");
+          }
 
-
-          //TODO fix code
-          //setScratched(true);
+          setScratched(true);
           setIsScratchCardVisible(false);
           if (isWinner) {
-            setButtonText('AUTO POP');
+            setButtonText("AUTO POP");
           } else {
-            endGame();
+            //endGame();
           }
-
-        } , 500);
-        //TODO arrumar timer to finish the video
-        
-      }
-    };
-    */
-  /*
-    useEffect(() => {
-      if (reset) {
-        setIsScratchCardVisible(true);
-        setButtonText('AUTO SCRATCH');
-        setTriggerAutoPop(false);
-        setIsWinner(false);
-        setScratchedStarted(false);
-        setScratched(false);
-        setAutoScratch(false);
-        setCollectShowLuckySymbol(false);
-        setReset(false);
-      }
-    }, [reset, setReset, setScratched]);
-
-    const handleLayout = () => {
-      if (buttonRef.current) {
-        (buttonRef.current as any).measure(
-          (x: any, y: any, width: any, height: any, pageX: any, pageY: any) => {
-            setButtonLayout({x: pageX, y: pageY, width, height});
-          },
-        );
-      }
-    };
-
- 
-
-    const autoPopPressed = () => {
-      setButtonLoading(true);
-      setTriggerAutoPop(true);
-      playSong(audioAutoPopup);
-      triggerVibration('medium');
-      setTimeout(() => {
-        setButtonLoading(false);
-      }, 2000);
-    };
-
-    const nextCardPressed = () => {
-      setButtonLoading(true);
-      setReset(true);
-      setScratchCardLeft(scratchCardLeft - 1);
-      setTimeout(() => {
-        setButtonLoading(false);
-      }, 2000);
-    };
-
-   
-
-    useImperativeHandle(ref, () => ({
-      handleButtonPress,
-    }));
-
-
-     const endGame = useCallback(() => {
+        }
+      }, 5300);
+    } else {
+      setScratched(true);
+      setIsScratchCardVisible(false);
       if (isWinner) {
-        onWin(true);
+        setButtonText("AUTO POP");
       } else {
-        onLose(true);
-        playSong(audioGameLoseScreen);
+        //endGame();
       }
-      setButtonText('NEXT CARD');
-    }, [isWinner, onWin, onLose]);
-
-    useEffect(() => {
-      if (triggerAutoPop) {
-        setTriggerAutoPop(false);
-        endGame();
-      }
-    }, [triggerAutoPop, isWinner, endGame]);
-
-  
-*/
-
-const simulateScratch = () => {
-  setButtonLoading(true);
-  setAutoScratch(true);
-  setScratchedStarted(true);
-  setTimeout(() => {
-    setScratchedCard();
-    setAutoScratch(false);
-    setButtonLoading(false);
-  }, simulateScratchTimeOut);
-};
-
-    const addLuckySymbol = () => {
-      if (luckySymbolCount !== 3) {
-        setLuckySymbolCount(luckySymbolCount + 1);
-      }
-    };
-
-    const setScratchedCard = () => {
-      if (isLuckySymbolTrue) {
-        if (luckySymbolCount === 2) {
-          setCollectShowLuckySymbol(true);
-        } else {
-          setShowLuckySymbol(true);
-          //playSong(audioLuckySymbolCoins);
-        }
-
-        setTimeout(() => {
-          if (!skipToFinishLuckyVideo) {
-            addLuckySymbol();
-          }
-        }, setLuckySymbolCountTimer);
-
-        setIsLuckySymbolTrue(false);
-        setTimeout(() => {
-
-          if (!skipToFinishLuckyVideo) {
-            setShowLuckySymbol(false);
-            if (isWinner) {
-              setButtonText('AUTO POP');
-            }
-           
-            setScratched(true);
-            setIsScratchCardVisible(false);
-            if (isWinner) {
-              setButtonText('AUTO POP');
-            } else {
-              //endGame();
-            }
-          }
-         
-        }, 5300);
-      } else {
-        setScratched(true);
-        setIsScratchCardVisible(false);
-        if (isWinner) {
-          setButtonText('AUTO POP');
-        } else {
-          //endGame();
-        }
-      }
-    };
-
+    }
+  };
 
   const handleScratch = (scratchPercentage) => {
     console.log("Scratch percentage: ", scratchPercentage);
@@ -260,67 +96,55 @@ const simulateScratch = () => {
     }
   };
 
-  const handleButtonPress = () => {
-    if (!imageLoading && !buttonLoading) {
-      if (buttonText === "AUTO SCRATCH") {
-        simulateScratch();
-      } else if (buttonText === "AUTO POP") {
-        //autoPopPressed();
-      } else if (buttonText === "NEXT CARD") {
-        //nextCardPressed();
-      }
+  useEffect(() => {
+    if (reset) {
+      setIsScratchCardVisible(true);
+      setButtonText("AUTO SCRATCH");
+      setTriggerAutoPop(false);
+      setIsWinner(false);
+      setScratchedStarted(false);
+      setScratched(false);
+      setAutoScratch(false);
+      setReset(false);
     }
-  };
-
-  const getButtonType = () => {
-    switch (buttonText) {
-      case "CLAIM WIN":
-        return "CLAIM";
-      case "NEXT CARD":
-        return "NEXT";
-      case "AUTO SCRATCH":
-      case "AUTO POP":
-      default:
-        return "AUTO";
-    }
-  };
+  }, [reset, setReset, setScratched]);
 
   return (
     <View style={styles.container}>
-        <View style={styles.bottomView}>
-          <ScratchGame
-            setIsWinner={setIsWinner}
-            onAutoPop={triggerAutoPop}
-            //onEndGame={endGame}
-            scratched={scratched}
-            reset={reset}
-            //onLoading={imageLoading}
-            //isLuckySymbolTrue={isLuckySymbolTrue}
-            setIsLuckySymbolTrue={setIsLuckySymbolTrue}
-          />
-          {isScratchCardVisible && (
-            <View style={styles.scratchCardContainer}>
-              <ScratchCard
-                setReset={setReset}
-                imageSource={scratchForeground}
-                autoScratch={autoScratch}
-                onScratch={handleScratch}
-                onLoading={setImageLoading}
-                setScratchStarted={setScratchStarted}
-              />
-            </View>
-          )}
+      <View style={styles.bottomView}>
+        <ScratchGame
+          setIsWinner={setIsWinner}
+          onAutoPop={triggerAutoPop}
+          //onEndGame={endGame}
+          scratched={scratched}
+          reset={reset}
+          setReset={setReset}
+          //onLoading={imageLoading}
+          //isLuckySymbolTrue={isLuckySymbolTrue}
+          setIsLuckySymbolTrue={setIsLuckySymbolTrue}
+        />
+        {isScratchCardVisible && (
+          <View style={styles.scratchCardContainer}>
+            <ScratchCard
+              setReset={setReset}
+              imageSource={scratchForeground}
+              autoScratch={autoScratch}
+              onScratch={handleScratch}
+              onLoading={setImageLoading}
+              setScratchStarted={setScratchStarted}
+            />
+          </View>
+        )}
 
         <Image style={styles.arrowImage} source={null} />
       </View>
-     
+
       <View
         //ref={buttonRef}
         //onLayout={handleLayout}
-        style={{ marginTop:5, overflow: "hidden",alignSelf: "stretch" }}
+        style={{ marginTop: 5, overflow: "hidden", alignSelf: "stretch" }}
       >
-  
-        <ScratchCardLeft scratchCardsLeft={9} />
+        <ScratchCardLeft scratchCardsLeft={scratchCardLeft} />
       </View>
       {/*showLuckySymbol && (
           <View
@@ -336,7 +160,6 @@ const simulateScratch = () => {
             </View>
           </View>
           )*/}
-     
     </View>
   );
 };
@@ -481,7 +304,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0)",
   },
- 
 });
 
 export default ScratchLayout;
