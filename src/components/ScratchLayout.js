@@ -22,9 +22,10 @@ const ScratchLayout = ({
   setScratchStarted,
   scratchCardLeft,
   setScratchCardLeft,
+  timerGame,
+  score,
+  setScore,
 }) => {
-  const [buttonText, setButtonText] = useState("AUTO SCRATCH");
-  const [buttonLoading, setButtonLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
   const [isWinner, setIsWinner] = useState(false);
   const [isLuckySymbolTrue, setIsLuckySymbolTrue] = useState(false);
@@ -62,13 +63,13 @@ const ScratchLayout = ({
         if (!skipToFinishLuckyVideo) {
           setShowLuckySymbol(false);
           if (isWinner) {
-            setButtonText("AUTO POP");
+            //setButtonText("AUTO POP");
           }
 
           setScratched(true);
           setIsScratchCardVisible(false);
           if (isWinner) {
-            setButtonText("AUTO POP");
+            //setButtonText("AUTO POP");
           } else {
             //endGame();
           }
@@ -78,7 +79,7 @@ const ScratchLayout = ({
       setScratched(true);
       setIsScratchCardVisible(false);
       if (isWinner) {
-        setButtonText("AUTO POP");
+        //setButtonText("AUTO POP");
       } else {
         //endGame();
       }
@@ -99,7 +100,6 @@ const ScratchLayout = ({
   useEffect(() => {
     if (reset) {
       setIsScratchCardVisible(true);
-      setButtonText("AUTO SCRATCH");
       setTriggerAutoPop(false);
       setIsWinner(false);
       setScratchedStarted(false);
@@ -113,6 +113,8 @@ const ScratchLayout = ({
     <View style={styles.container}>
       <View style={styles.bottomView}>
         <ScratchGame
+          score={score}
+          setScore={setScore}
           setIsWinner={setIsWinner}
           onAutoPop={triggerAutoPop}
           //onEndGame={endGame}
@@ -122,6 +124,7 @@ const ScratchLayout = ({
           //onLoading={imageLoading}
           //isLuckySymbolTrue={isLuckySymbolTrue}
           setIsLuckySymbolTrue={setIsLuckySymbolTrue}
+          timerGame={timerGame}
         />
         {isScratchCardVisible && (
           <View style={styles.scratchCardContainer}>

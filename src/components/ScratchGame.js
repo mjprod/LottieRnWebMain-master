@@ -57,13 +57,15 @@ const scratchBackground = require('./../assets/image/scratch_background.png');
 const lottieScratchieBubblePopUp = require('./../assets/lotties/green_ball.json');
 
 const ScratchGame = ({
-  onAutoPop,
+  score,
+  setScore,
   setIsWinner,
   scratched,
   reset,
   setReset={setReset},
   onLoading,
   setIsLuckySymbolTrue,
+  timerGame,
 }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
@@ -73,6 +75,7 @@ const ScratchGame = ({
   const [lastClickedIcon, setLastClickedIcon] = useState(null);
   const [clickCount, setClickCount] = useState(0);
   const [soundShouldPlay, setSoundShouldPlay] = useState(1);
+
 
   const generateRandomLuckySymbol = () => {
     return Math.random() < generateRandomLuckySymbolPercentage;
@@ -188,17 +191,18 @@ const ScratchGame = ({
         setClickCount(1);
         setSoundShouldPlay(1);
 
-        setClickedIcons([...clickedIcons, index]); // Adiciona o novo ícone ao array sem reiniciar
-        setLastClickedIcon(icon); // Atualiza o último ícone clicado para o novo ícone
+        setClickedIcons([...clickedIcons, index]);
+        setLastClickedIcon(icon);
         return;
       }
 
       const newClickedIcons = [...clickedIcons, index];
       setClickedIcons(newClickedIcons);
-
+      setScore(score + (timerGame*100));
+      console.log('SCORE: ', score + (timerGame*100));
       const newClickedCount = {
         ...clickedCount,
-        [icon]: (clickedCount[icon] || 0) + 1, // Incrementa a contagem do ícone
+        [icon]: (clickedCount[icon] || 0) + 1,
       };
       setClickedCount(newClickedCount);
 
@@ -206,17 +210,17 @@ const ScratchGame = ({
         case 1:
           playSound1();
           updateSounds();
-          triggerVibration('light');
+          //triggerVibration('light');
           break;
         case 2:
           playSound2();
           updateSounds();
-          triggerVibration('medium');
+          //triggerVibration('medium');
           break;
         case 3:
           playSound3();
           updateSounds();
-          triggerVibration('strong');
+          //triggerVibration('strong');
           break;
           case 4:
             playSound4();
@@ -285,22 +289,6 @@ const ScratchGame = ({
       }).start();
     }
   }, [fadeAnim, onLoading]);
-
-  useEffect(() => {
-    const autoPop = () => {
-      const newClickedIcons = [...clickedIcons];
-      iconsArray.forEach((icon, index) => {
-        if (winningIcons.includes(icon) && !newClickedIcons.includes(index)) {
-          newClickedIcons.push(index);
-        }
-      });
-      setClickedIcons(newClickedIcons);
-    };
-
-    if (onAutoPop) {
-      autoPop();
-    }
-  }, [clickedIcons, iconsArray, onAutoPop, winningIcons]);
 
   const sound1 = new Howl({
     src: [require('./../assets/audio/1_C.mp3')],
@@ -413,6 +401,7 @@ const ScratchGame = ({
                     <AnimatedIcon
                       iconIndex={icon}
                       onClick={() => handleIconClick(index)}
+                      timerGame={timerGame}
                     />
                   ) : clickedIcons.includes(index) ? (
                     <View

@@ -19,6 +19,8 @@ const ScratchLuckyGame = () => {
   const [reset, setReset] = useState(false);
   const [scratched, setScratched] = useState(false);
   const [scratchCardLeft, setScratchCardLeft] = useState(10);
+  const [timerGame, setTimerGame] = useState(0);
+  const [score, setScore] = useState(0);
 
   const [scratchStarted, setScratchStarted] = useState(false);
   const [luckySymbolCount, setLuckySymbolCount] = useState(0);
@@ -44,22 +46,40 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (reset) {
-      setScratchCardLeft(scratchCardLeft - 1);
-
+      setTimeout(() => {
+        setScratchCardLeft(scratchCardLeft - 1);
+      }, 600);
+      setTimerGame(0);
+      setScratchStarted(false);
+  
       Animated.timing(translateX, {
-        toValue: -width,
-        duration: 300,
+        toValue: width * 0.1,
+        duration: 200,
         useNativeDriver: true,
       }).start(() => {
-        translateX.setValue(width);
         Animated.timing(translateX, {
-          toValue: 0,
+          toValue: -width,
           duration: 300,
           useNativeDriver: true,
-        }).start();
+        }).start(() => {
+          translateX.setValue(width);
+          Animated.timing(translateX, {
+            toValue: -width * 0.1, 
+            duration: 300, 
+            useNativeDriver: true,
+          }).start(() => {
+            Animated.spring(translateX, {
+              toValue: 0,
+              friction: 5,
+              useNativeDriver: true,
+            }).start();
+          });
+        });
       });
     }
   }, [reset, setReset]);
+  
+  
 
   return (
     <View style={styles.fullScreen}>
@@ -76,7 +96,12 @@ const ScratchLuckyGame = () => {
             <Animated.View style={[{ transform: [{ translateX }] }]}>
               <View style={styles.overlay}>
                 <Animated.View style={{ marginTop: marginTopAnim }}>
-                  <TopLayout scratched={scratched} />
+                  <TopLayout 
+                  scratched={scratched} 
+                  scratchStarted={scratchStarted} 
+                  timerGame={timerGame} 
+                  setTimerGame={setTimerGame}
+                  score={score} />
                 </Animated.View>
 
                 <ScratchLayout
@@ -89,6 +114,9 @@ const ScratchLuckyGame = () => {
                   setScratchStarted={setScratchStarted}
                   scratchCardLeft={scratchCardLeft}
                   setScratchCardLeft={setScratchCardLeft}
+                  timerGame={timerGame}
+                  score={score}
+                  setScore={setScore}
                 />
               </View>
             </Animated.View>

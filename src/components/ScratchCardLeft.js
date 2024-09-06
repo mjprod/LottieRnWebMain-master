@@ -1,18 +1,22 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import LottieView from "react-native-web-lottie";
 
-const ScratchCardLeft = ({scratchCardsLeft}) => {
+const ScratchCardLeft = ({ scratchCardsLeft }) => {
   const [displayedScratchCardsLeft, setDisplayedScratchCardsLeft] =
     useState(scratchCardsLeft);
-  const animationRef = useRef(null);
+  
+  // Usar estado para controlar a remontagem do LottieView
+  const [showLottie, setShowLottie] = useState(true);
 
   useEffect(() => {
-    if (animationRef.current) {
-      animationRef.current.play();
-    }
+    // Primeiro desmonta o LottieView
+    setShowLottie(false);
+
+    // Recria o LottieView após um pequeno intervalo
     const timeoutId = setTimeout(() => {
       setDisplayedScratchCardsLeft(scratchCardsLeft);
+      setShowLottie(true);  // Mostra o LottieView novamente
     }, 600);
 
     return () => clearTimeout(timeoutId);
@@ -30,7 +34,7 @@ const ScratchCardLeft = ({scratchCardsLeft}) => {
               ? styles.activeCounter
               : styles.inactiveCounter,
           ]}
-        />,
+        />
       );
     }
     return counters;
@@ -39,14 +43,15 @@ const ScratchCardLeft = ({scratchCardsLeft}) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
-        <LottieView
-          ref={animationRef}
-          style={styles.lottieAnimation}
-          source={require('./../assets/lotties/lottieCardCountdown.json')}
-          autoPlay={false}
-          loop={false}
-          speed={1}
-        />
+        {showLottie && ( // Só renderiza o LottieView se showLottie for true
+          <LottieView
+            style={styles.lottieAnimation}
+            source={require("./../assets/lotties/lottieCardCountdown.json")}
+            autoPlay={true}  // AutoPlay ativado para começar a animação
+            loop={false}     // Não repetir
+            speed={1}        // Velocidade normal
+          />
+        )}
         <View style={styles.textRow}>
           <Text style={styles.number}>{displayedScratchCardsLeft}</Text>
           <Text style={styles.text}>Scratch Cards Left</Text>
@@ -62,17 +67,17 @@ const ScratchCardLeft = ({scratchCardsLeft}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 5,
   },
   leftContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   textRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   lottieAnimation: {
     width: 40,
@@ -81,20 +86,20 @@ const styles = StyleSheet.create({
     marginVertical: -12,
   },
   text: {
-    fontFamily: 'Inter-Medium',
-    color: '#A9A9A9',
+    fontFamily: "Inter-Medium",
+    color: "#A9A9A9",
     fontSize: 12,
     marginHorizontal: 6,
   },
   number: {
-    fontFamily: 'Inter-Bold',
-    color: '#FFDFAB',
+    fontFamily: "Inter-Bold",
+    color: "#FFDFAB",
     fontSize: 16,
   },
   rightContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 'auto',
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: "auto",
   },
   counter: {
     width: 10,
@@ -106,14 +111,14 @@ const styles = StyleSheet.create({
     width: 30,
     height: 10,
     borderRadius: 5,
-    backgroundColor: '#FFDEA7',
+    backgroundColor: "#FFDEA7",
     marginHorizontal: 2,
   },
   activeCounter: {
-    backgroundColor: '#646464',
+    backgroundColor: "#646464",
   },
   inactiveCounter: {
-    backgroundColor: '#434343',
+    backgroundColor: "#434343",
   },
 });
 
