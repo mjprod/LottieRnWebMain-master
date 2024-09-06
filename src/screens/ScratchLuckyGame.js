@@ -20,7 +20,7 @@ const ScratchLuckyGame = () => {
   const [gameOver, setGameOver] = useState(false);
   const [reset, setReset] = useState(false);
   const [scratched, setScratched] = useState(false);
-  const [scratchCardLeft, setScratchCardLeft] = useState(0);
+  const [scratchCardLeft, setScratchCardLeft] = useState(10);
   const [timerGame, setTimerGame] = useState(0);
   const [score, setScore] = useState(0);
 
@@ -49,12 +49,11 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (reset) {
       setTimeout(() => {
-        if(scratchCardLeft>0){
+        if (scratchCardLeft > 0) {
           setScratchCardLeft(scratchCardLeft - 1);
-        }
-        else{
+        } else {
           setGameOver(true);
-        } 
+        }
       }, 600);
       setTimerGame(0);
       setScratchStarted(false);
@@ -97,49 +96,40 @@ const ScratchLuckyGame = () => {
           style={styles.imageBackground}
           resizeMode="stretch"
         >
-          {
+          {gameOver ? (
+            <View>
+              <Text style={{ color: "#ffffff" }}>Game Over</Text>
+            </View>
+          ) : (
+            <Animated.View style={[{ transform: [{ translateX }] }]}>
+              <View style={styles.overlay}>
+                <Animated.View style={{ marginTop: marginTopAnim }}>
+                  <TopLayout
+                    scratched={scratched}
+                    scratchStarted={scratchStarted}
+                    timerGame={timerGame}
+                    setTimerGame={setTimerGame}
+                    score={score}
+                  />
+                </Animated.View>
 
-
-  gameOver ? (
-    <View>  
-      <Text style={{color:'#ffffff'}}>Game Over</Text>
-    </View>
-  )
-  :
-  (
-    <Animated.View style={[{ transform: [{ translateX }] }]}>
-    <View style={styles.overlay}>
-      <Animated.View style={{ marginTop: marginTopAnim }}>
-        <TopLayout
-          scratched={scratched}
-          scratchStarted={scratchStarted}
-          timerGame={timerGame}
-          setTimerGame={setTimerGame}
-          score={score}
-        />
-      </Animated.View>
-
-      <ScratchLayout
-        reset={reset}
-        setReset={setReset}
-        scratched={scratched}
-        setScratched={setScratched}
-        luckySymbolCount={luckySymbolCount}
-        setLuckySymbolCount={setLuckySymbolCount}
-        setScratchStarted={setScratchStarted}
-        scratchCardLeft={scratchCardLeft}
-        setScratchCardLeft={setScratchCardLeft}
-        timerGame={timerGame}
-        score={score}
-        setScore={setScore}
-      />
-    </View>
-  </Animated.View>
-  )
-
-
-         
-          }
+                <ScratchLayout
+                  reset={reset}
+                  setReset={setReset}
+                  scratched={scratched}
+                  setScratched={setScratched}
+                  luckySymbolCount={luckySymbolCount}
+                  setLuckySymbolCount={setLuckySymbolCount}
+                  setScratchStarted={setScratchStarted}
+                  scratchCardLeft={scratchCardLeft}
+                  setScratchCardLeft={setScratchCardLeft}
+                  timerGame={timerGame}
+                  score={score}
+                  setScore={setScore}
+                />
+              </View>
+            </Animated.View>
+          )}
         </ImageBackground>
       </View>
     </View>

@@ -53,21 +53,12 @@ const TopLayout = ({
         });
       }, 1000);
     }
+    else {
+      setCountdownTimer(0);
+    }
 
     return () => clearInterval(interval);
   }, [scratchStarted, setTimerGame]);
-
-  const getTextColor = (value) => {
-    if (value >= 1 && value <= 2) {
-      return "#FFFFFF"; // Red
-    } else if (value >= 3 && value <= 4) {
-      return "#FFFFFF"; // Yellow
-    } else if (value >= 5 && value <= 10) {
-      return "#FFFFFF"; // Black
-    } else {
-      return "#FFFFFF"; // Default to Red if no match
-    }
-  };
 
 
   const getBackground = (value) => {
@@ -95,7 +86,7 @@ const TopLayout = ({
               <Text
                 style={[
                   styles.textTopLeft,
-                  { color: getTextColor(countdownTimer) },
+                  { color: '#FFFFFF' },
                 ]}
               >
                 POP POINTS COUNTDOWN
@@ -111,7 +102,7 @@ const TopLayout = ({
                 <Text
                   style={[
                     styles.countDownText,
-                    { color: getTextColor(countdownTimer) },
+                    { color:  '#FFFFFF' },
                   ]}
                 >
                   {countdownTimer} s
