@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Image, ImageBackground, Animated } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  Animated,
+} from "react-native";
 import LottieView from "react-native-web-lottie";
 import { gameCenterIcon } from "../global/Assets";
 
 const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
+const backgroundTopLayoutRed = require("./../assets/image/background_top_layout_red.png");
+const backgroundTopLayoutYellow = require("./../assets/image/background_top_layout_yellow.png");
+const backgroundTopLayoutGreen = require("./../assets/image/background_top_layout_green.png");
+
 const imageLuckySymbol = require("./../assets/image/icon_lucky_symbol.png");
 const imageTicket = require("./../assets/image/icon_ticket.png");
 const lottieCountDownBonus = require("../assets/lotties/lottieCountdownBonus.json");
@@ -11,7 +22,13 @@ const lottieCountDownBonus = require("../assets/lotties/lottieCountdownBonus.jso
 const countdown = 3;
 const showCountDown = true;
 
-const TopLayout = ({ scratched, scratchStarted, timerGame, setTimerGame,score }) => {
+const TopLayout = ({
+  scratched,
+  scratchStarted,
+  timerGame,
+  setTimerGame,
+  score,
+}) => {
   const bounceAnim = new Animated.Value(1).current;
   const fadeAnim = new Animated.Value(1).current;
   const scaleAnim = new Animated.Value(1.8).current;
@@ -40,22 +57,77 @@ const TopLayout = ({ scratched, scratchStarted, timerGame, setTimerGame,score })
     return () => clearInterval(interval);
   }, [scratchStarted, setTimerGame]);
 
+  const getTextColor = (value) => {
+    if (value >= 1 && value <= 2) {
+      return "#FFFFFF"; // Red
+    } else if (value >= 3 && value <= 4) {
+      return "#FFFFFF"; // Yellow
+    } else if (value >= 5 && value <= 10) {
+      return "#FFFFFF"; // Black
+    } else {
+      return "#FFFFFF"; // Default to Red if no match
+    }
+  };
+
+
+  const getBackground = (value) => {
+    if (value >= 1 && value <= 2) {
+      return backgroundTopLayoutRed;
+    } else if (value >= 3 && value <= 4) {
+      return backgroundTopLayoutYellow;
+    } else if (value >= 5 && value <= 10) {
+      return backgroundTopLayoutGreen;
+    } else {
+      return backgroundTopLayout;
+    }
+  };
+
   return (
     <View style={{ marginTop: -25 }}>
-      <ImageBackground source={backgroundTopLayout} resizeMode="contain" style={styles.image_top}>
+      <ImageBackground
+        source={getBackground(countdownTimer)}
+        resizeMode="contain"
+        style={styles.image_top}
+      >
         <View style={styles.textContainer}>
           <View style={styles.textColumn}>
-            <Text style={styles.textTopLeft}>POP POINTS COUNTDOWN</Text>
-
+            {(
+              <Text
+                style={[
+                  styles.textTopLeft,
+                  { color: getTextColor(countdownTimer) },
+                ]}
+              >
+                POP POINTS COUNTDOWN
+              </Text>
+            )}
             {scratchStarted && (
-              <Animated.View style={[styles.rowCountDown, { transform: [{ scale: scaleAnim }] }]}>
-                <Text style={styles.countDownText}>{countdownTimer} s</Text>
+              <Animated.View
+                style={[
+                  styles.rowCountDown,
+                  { transform: [{ scale: scaleAnim }] },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.countDownText,
+                    { color: getTextColor(countdownTimer) },
+                  ]}
+                >
+                  {countdownTimer} s
+                </Text>
               </Animated.View>
             )}
 
             {!showCountDown && (
               <View style={styles.rowCountDown}>
-                <LottieView style={styles.lottieAnimation} source={lottieCountDownBonus} autoPlay speed={1} loop={false} />
+                <LottieView
+                  style={styles.lottieAnimation}
+                  source={lottieCountDownBonus}
+                  autoPlay
+                  speed={1}
+                  loop={false}
+                />
                 <Text style={[styles.countDownText]}>{countdown} s</Text>
               </View>
             )}
@@ -63,7 +135,10 @@ const TopLayout = ({ scratched, scratchStarted, timerGame, setTimerGame,score })
 
           <View style={styles.textColumnRigth}>
             <View style={styles.viewRow}>
-              <Image style={{ width: 12, height: 12, marginBottom: 4 }} source={imageLuckySymbol} />
+              <Image
+                style={{ width: 12, height: 12, marginBottom: 4 }}
+                source={imageLuckySymbol}
+              />
               <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
             </View>
           </View>
@@ -73,14 +148,31 @@ const TopLayout = ({ scratched, scratchStarted, timerGame, setTimerGame,score })
       </ImageBackground>
       <View style={styles.containerBottom}>
         <View style={styles.textWrapper}>
-          <Animated.Text style={[styles.textBottomLeft, { transform: [{ translateX: bounceAnim }] }, { opacity: fadeAnim }]}>
-           {score > 0 ? `+${score}` : "0"}
+          <Animated.Text
+            style={[
+              styles.textBottomLeft,
+              { transform: [{ translateX: bounceAnim }] },
+              { opacity: fadeAnim },
+            ]}
+          >
+            {score > 0 ? `+${score}` : "0"}
           </Animated.Text>
         </View>
 
-        <View style={{ flexDirection: "row", bottom: 45, right: 14, justifyContent: "center", alignItems: "center" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            bottom: 45,
+            right: 14,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Text style={styles.textBottomRight}>3x Symbols = 1x</Text>
-          <Image style={{ marginLeft: 3, width: 22, height: 22 }} source={imageTicket} />
+          <Image
+            style={{ marginLeft: 3, width: 22, height: 22 }}
+            source={imageTicket}
+          />
         </View>
       </View>
     </View>

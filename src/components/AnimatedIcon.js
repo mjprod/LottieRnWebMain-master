@@ -30,7 +30,7 @@ const iconComponentsActive = [
   <IconTypeSleighActive key="11" />,
 ];
 
-const AnimatedIcon = ({ iconIndex, onClick,timerGame }) => {
+const AnimatedIcon = ({ iconIndex, onClick, timerGame }) => {
   const handleIconClick = () => {
     if (onClick) {
       onClick(iconIndex);
@@ -39,10 +39,11 @@ const AnimatedIcon = ({ iconIndex, onClick,timerGame }) => {
 
   return (
     <View style={styles.iconWrapper}>
-      <View style={styles.centeredTextWrapper}>
-        <CenteredText value={timerGame}/>
-      </View>
-      
+      {timerGame > 0 && (
+        <View style={styles.centeredTextWrapper}>
+          <CenteredText value={timerGame} />
+        </View>
+      )}
       {iconComponentsActive[iconIndex]}
 
       <TouchableWithoutFeedback onPress={handleIconClick}>

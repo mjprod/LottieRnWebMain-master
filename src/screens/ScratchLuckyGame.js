@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Animated,
   Dimensions,
+  Text,
 } from "react-native";
 import { VideoBackground } from "../components/VideoBackground";
 import TopLayout from "../components/TopLayout";
@@ -16,9 +17,10 @@ const backgroundGame = require("./../assets/image/background_game.png");
 const { width } = Dimensions.get("window");
 
 const ScratchLuckyGame = () => {
+  const [gameOver, setGameOver] = useState(false);
   const [reset, setReset] = useState(false);
   const [scratched, setScratched] = useState(false);
-  const [scratchCardLeft, setScratchCardLeft] = useState(10);
+  const [scratchCardLeft, setScratchCardLeft] = useState(0);
   const [timerGame, setTimerGame] = useState(0);
   const [score, setScore] = useState(0);
 
@@ -47,11 +49,16 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (reset) {
       setTimeout(() => {
-        setScratchCardLeft(scratchCardLeft - 1);
+        if(scratchCardLeft>0){
+          setScratchCardLeft(scratchCardLeft - 1);
+        }
+        else{
+          setGameOver(true);
+        } 
       }, 600);
       setTimerGame(0);
       setScratchStarted(false);
-  
+
       Animated.timing(translateX, {
         toValue: width * 0.1,
         duration: 200,
@@ -64,8 +71,8 @@ const ScratchLuckyGame = () => {
         }).start(() => {
           translateX.setValue(width);
           Animated.timing(translateX, {
-            toValue: -width * 0.1, 
-            duration: 300, 
+            toValue: -width * 0.1,
+            duration: 300,
             useNativeDriver: true,
           }).start(() => {
             Animated.spring(translateX, {
@@ -78,8 +85,6 @@ const ScratchLuckyGame = () => {
       });
     }
   }, [reset, setReset]);
-  
-  
 
   return (
     <View style={styles.fullScreen}>
@@ -93,33 +98,47 @@ const ScratchLuckyGame = () => {
           resizeMode="stretch"
         >
           {
-            <Animated.View style={[{ transform: [{ translateX }] }]}>
-              <View style={styles.overlay}>
-                <Animated.View style={{ marginTop: marginTopAnim }}>
-                  <TopLayout 
-                  scratched={scratched} 
-                  scratchStarted={scratchStarted} 
-                  timerGame={timerGame} 
-                  setTimerGame={setTimerGame}
-                  score={score} />
-                </Animated.View>
 
-                <ScratchLayout
-                  reset={reset}
-                  setReset={setReset}
-                  scratched={scratched}
-                  setScratched={setScratched}
-                  luckySymbolCount={luckySymbolCount}
-                  setLuckySymbolCount={setLuckySymbolCount}
-                  setScratchStarted={setScratchStarted}
-                  scratchCardLeft={scratchCardLeft}
-                  setScratchCardLeft={setScratchCardLeft}
-                  timerGame={timerGame}
-                  score={score}
-                  setScore={setScore}
-                />
-              </View>
-            </Animated.View>
+
+  gameOver ? (
+    <View>  
+      <Text style={{color:'#ffffff'}}>Game Over</Text>
+    </View>
+  )
+  :
+  (
+    <Animated.View style={[{ transform: [{ translateX }] }]}>
+    <View style={styles.overlay}>
+      <Animated.View style={{ marginTop: marginTopAnim }}>
+        <TopLayout
+          scratched={scratched}
+          scratchStarted={scratchStarted}
+          timerGame={timerGame}
+          setTimerGame={setTimerGame}
+          score={score}
+        />
+      </Animated.View>
+
+      <ScratchLayout
+        reset={reset}
+        setReset={setReset}
+        scratched={scratched}
+        setScratched={setScratched}
+        luckySymbolCount={luckySymbolCount}
+        setLuckySymbolCount={setLuckySymbolCount}
+        setScratchStarted={setScratchStarted}
+        scratchCardLeft={scratchCardLeft}
+        setScratchCardLeft={setScratchCardLeft}
+        timerGame={timerGame}
+        score={score}
+        setScore={setScore}
+      />
+    </View>
+  </Animated.View>
+  )
+
+
+         
           }
         </ImageBackground>
       </View>

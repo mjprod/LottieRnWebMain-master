@@ -24,6 +24,20 @@ const CenteredText = ({ value }) => {
     ]).start();
   }, [value]);
 
+  const getTextColor = (value) => {
+    if (value >= 1 && value <= 2) {
+      return "#F56134"; // Red
+    } else if (value >= 3 && value <= 4) {
+      return "#DD9F4B"; // Yellow
+    } else if (value >= 5 && value <= 10) {
+      return "#3EDA41"; // Green
+    } else {
+      return "#dc4445"; // Default to Red if no match
+    }
+  };
+  
+
+
   return (
     <View style={styles.container}>
       <Animated.View
@@ -33,8 +47,10 @@ const CenteredText = ({ value }) => {
             transform: [{ scale: scaleValue }],
             opacity: opacityValue,
           },
+          {backgroundColor: getTextColor(value)}
         ]}
       >
+        
         <Text style={styles.text}>{value * 100}</Text>
       </Animated.View>
     </View>
@@ -56,6 +72,7 @@ const styles = StyleSheet.create({
   text: {
     padding: 2,
     fontSize: 12,
+    color: "#FFFFFF",
   },
 });
 

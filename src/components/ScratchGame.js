@@ -35,7 +35,6 @@ import {
   columns,
   maxRepeatedIcons,
 } from '../global/Settings';
-import { triggerVibration } from '../global/Vibration';
 
 const iconComponentsDefault = [
   <IconTypeAnubisdefault key="0" />,
@@ -59,6 +58,7 @@ const lottieScratchieBubblePopUp = require('./../assets/lotties/green_ball.json'
 const ScratchGame = ({
   score,
   setScore,
+  isWinner,
   setIsWinner,
   scratched,
   reset,
@@ -178,8 +178,6 @@ const ScratchGame = ({
       console.log('ALL ICONS CLIKED');
       setReset(true);
     }
-
-    
   }, [clickedIcons, iconsArray]);
 
   const handleIconClick = (index) => {
@@ -210,17 +208,14 @@ const ScratchGame = ({
         case 1:
           playSound1();
           updateSounds();
-          //triggerVibration('light');
           break;
         case 2:
           playSound2();
           updateSounds();
-          //triggerVibration('medium');
           break;
         case 3:
           playSound3();
           updateSounds();
-          //triggerVibration('strong');
           break;
           case 4:
             playSound4();
@@ -387,6 +382,15 @@ const ScratchGame = ({
     error.play();
   };
 
+  useEffect(() => {
+    if (scratched && !isWinner) {
+      setTimeout(() => {
+        setReset(true);
+      }
+      , 2000);
+    }
+  }, [scratched]);
+
   return (
     <ImageBackground source={scratchBackground} style={styles.background_view}>
       <View style={styles.container}>
@@ -407,7 +411,6 @@ const ScratchGame = ({
                     <View
                       style={[
                         styles.lottieContainer,
-                        {top: '0%'},
                       ]}>
                       <LottieView
                         style={styles.lottieAnimation}

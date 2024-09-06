@@ -115,6 +115,7 @@ const ScratchLayout = ({
         <ScratchGame
           score={score}
           setScore={setScore}
+          isWinner={isWinner}
           setIsWinner={setIsWinner}
           onAutoPop={triggerAutoPop}
           //onEndGame={endGame}

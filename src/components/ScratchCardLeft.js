@@ -6,17 +6,14 @@ const ScratchCardLeft = ({ scratchCardsLeft }) => {
   const [displayedScratchCardsLeft, setDisplayedScratchCardsLeft] =
     useState(scratchCardsLeft);
   
-  // Usar estado para controlar a remontagem do LottieView
   const [showLottie, setShowLottie] = useState(true);
 
   useEffect(() => {
-    // Primeiro desmonta o LottieView
     setShowLottie(false);
 
-    // Recria o LottieView após um pequeno intervalo
     const timeoutId = setTimeout(() => {
       setDisplayedScratchCardsLeft(scratchCardsLeft);
-      setShowLottie(true);  // Mostra o LottieView novamente
+      setShowLottie(true);
     }, 600);
 
     return () => clearTimeout(timeoutId);
@@ -43,13 +40,13 @@ const ScratchCardLeft = ({ scratchCardsLeft }) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
-        {showLottie && ( // Só renderiza o LottieView se showLottie for true
+        {showLottie && (
           <LottieView
             style={styles.lottieAnimation}
             source={require("./../assets/lotties/lottieCardCountdown.json")}
-            autoPlay={true}  // AutoPlay ativado para começar a animação
-            loop={false}     // Não repetir
-            speed={1}        // Velocidade normal
+            autoPlay={true}
+            loop={false}
+            speed={1}
           />
         )}
         <View style={styles.textRow}>
