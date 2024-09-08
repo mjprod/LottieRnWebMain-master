@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { View, Text, StyleSheet, Animated } from "react-native";
 
-const CenteredText = ({ value }) => {
+const PopUpText = ({ value }) => {
 
   const scaleValue = useRef(new Animated.Value(0)).current;
   const opacityValue = useRef(new Animated.Value(1)).current;
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CenteredText;
+export default PopUpText;

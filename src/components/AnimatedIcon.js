@@ -13,7 +13,7 @@ import { IconTypeSunRaActive } from "./../assets/icons/IconTypeSunRaActive";
 import { IconTypeEyePyramidActive } from "./../assets/icons/IconTypeEyePyramidActive";
 import { IconTypeSleighActive } from "./../assets/icons/IconTypeSleighActive";
 import { IconTypePharoahActive } from "../assets/icons/IconTypePharoahActive";
-import CenteredText from "./CenteredText";
+import PopUpText from "./PopUpText";
 
 const iconComponentsActive = [
   <IconTypeAnubisActive key="0" />,
@@ -41,7 +41,7 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame }) => {
     <View style={styles.iconWrapper}>
       {timerGame > 0 && (
         <View style={styles.centeredTextWrapper}>
-          <CenteredText value={timerGame} />
+          <PopUpText value={timerGame} />
         </View>
       )}
       {iconComponentsActive[iconIndex]}
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 65,
     justifyContent: "center",
     alignItems: "center",
   },
