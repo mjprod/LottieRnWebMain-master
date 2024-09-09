@@ -16,6 +16,9 @@ import { backgroundLoop } from "../global/Assets";
 const backgroundGame = require("./../assets/image/background_game.png");
 const { width } = Dimensions.get("window");
 
+const win_video = require('./../assets/video/win.mp4');
+
+
 const ScratchLuckyGame = () => {
   const [gameOver, setGameOver] = useState(false);
   const [reset, setReset] = useState(false);
@@ -29,6 +32,8 @@ const ScratchLuckyGame = () => {
 
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
+
+  const showWin = false;
 
   useEffect(() => {
     if (scratchStarted) {
@@ -132,6 +137,31 @@ const ScratchLuckyGame = () => {
           )}
         </ImageBackground>
       </View>
+
+      {showWin && (
+          <View
+            style={{
+              ...styles.transparentOverlay,
+              height: '100%',
+              width: '100%',
+              zIndex: 9999,
+              elevation: 10,
+            }}>
+             <video
+        //ref={videoRef}
+        src={win_video}
+        style={{
+          ...styles.video,
+          width: '100%' ,
+          height:  '100%' ,
+        }}
+        loop
+        autoPlay
+        muted
+        playsInline
+      />
+          </View>
+        )}
     </View>
   );
 };
@@ -163,6 +193,13 @@ const styles = StyleSheet.create({
     marginTop: -6,
     width: "100%",
     height: "100%",
+  },
+  transparentOverlay: {
+    position: 'absolute',
+    marginLeft: -10,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
