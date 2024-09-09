@@ -105,7 +105,7 @@ const TopLayout = ({
                     { color:  '#FFFFFF' },
                   ]}
                 >
-                  {countdownTimer} s
+                  {countdownTimer * 100} s
                 </Text>
               </Animated.View>
             )}
