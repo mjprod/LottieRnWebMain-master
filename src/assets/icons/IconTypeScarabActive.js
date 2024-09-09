@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, {ClipPath, Defs, G, Path} from 'react-native-svg-web';
 
 export const IconTypeScarabActive = () => (
-  <Svg width="78" height="84" fill="none">
+  <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
     <G clipPath="url(#A)">
       <Path
         d="M50.523 43.268H27.477v9.219c0 6.323 5.119 11.523 11.523 11.523a11.53 11.53 0 0 0 11.527-11.523c0-.279.001 1.817-.003-9.219z"

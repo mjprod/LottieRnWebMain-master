@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, {ClipPath, Defs, G, Path, Use} from 'react-native-svg-web';
 
 export const IconTypeFeatherActive = () => (
-  <Svg width="78" height="84" fill="none">
+  <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
     <G clipPath="url(#A)">
       <G fill="#ffda8f">
         <Path d="M53.488 31.6l1.644-8.729a4.61 4.61 0 0 0-4.609-4.609 4.61 4.61 0 0 0-4.609 4.609v37.566c.62-.23 7.832-4.609 18.438-4.609L53.488 31.6zm-27.656 0l1.644-8.729a4.61 4.61 0 0 0-4.609-4.609 4.61 4.61 0 0 0-4.609 4.609v37.566c.62-.23 7.833-4.609 18.438-4.609L25.832 31.6z" />

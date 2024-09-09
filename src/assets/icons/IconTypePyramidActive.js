@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, {ClipPath, Defs, G, Path, Use} from 'react-native-svg-web';
 
 export const IconTypePyramidActive = () => (
-  <Svg width="78" height="84" fill="none">
+  <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
     <G clipPath="url(#A)">
       <Path
         d="M44.893 35.131l-.167-.236-12.463 19.532 7.182 11.367"

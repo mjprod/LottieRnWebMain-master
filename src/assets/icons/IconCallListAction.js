@@ -5,7 +5,8 @@ export const IconCallListAction = () => (
   <Svg
     className="text-gray-400 w-6 h-6 p-2"
     fill="none"
-    viewBox="0 0 24 24"
+    width="78" height="84"   
+    viewBox="0 0 78 84"
     stroke-width="1.5"
     stroke="currentColor">
     <Path

@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, {ClipPath, Defs, G, Path} from 'react-native-svg-web';
 
 export const IconTypeSphinxActive = () => (
-  <Svg width="78" height="84" fill="none">
+  <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
     <G clipPath="url(#A)">
       <G fillRule="evenodd">
         <Path

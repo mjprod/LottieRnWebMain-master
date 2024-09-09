@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, {ClipPath, Defs, G, Path} from 'react-native-svg-web';
 
 export const IconTypeHorusActive = () => (
-  <Svg width="78" height="84" fill="none">
+  <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
     <G clipPath="url(#A)">
       <Path
         d="M67.348 29.277c0 1.521-1.233 2.753-2.753 2.753h-7.733c-5.673-6.613-11.288-13.102-22.024-13.102-8.457 0-14.992 3.883-20.153 8.766-1.524 1.441-4.032.361-4.032-1.736 0-.584.212-1.152.603-1.587 5.675-6.311 14.05-10.719 24.504-10.719 10.735 0 17.787 6.258 23.46 12.872h5.376c.759 0 1.449.309 1.946.807s.807 1.187.807 1.946z"

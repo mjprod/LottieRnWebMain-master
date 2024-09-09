@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, {ClipPath, Defs, G, Path} from 'react-native-svg-web';
 
 export const IconTypeAnubisActive = () => (
-  <Svg width="78" height="84" fill="none">
+  <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
     <G clipPath="url(#A)">
       <Path
         d="M46.663 27.25L42.93 14.389l-.038.056c-2.46 3.597-3.182 8.106-1.968 12.291l.641 2.208 5.098-1.694z"
