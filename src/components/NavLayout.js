@@ -1,21 +1,30 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import { ImageBackground } from "react-native-web";
 import AlphaView from "./AlphaView";
 
 const lottieAppBackground = require("../assets/image/background_top_nav.png");
 
-
+const { height: screenHeight, width: screenWidth } = Dimensions.get("window");
 
 const NavLayout = ({ showAlphaView }) => {
+  const isMobile = screenWidth < 768;
+
   return (
     <View style={styles.container}>
-      <View style={styles.viewBackground}>
+      <View
+        style={[
+          styles.viewBackground,
+          { height: screenHeight * 0.15 },
+        ]}
+      >
         <ImageBackground
           source={lottieAppBackground}
           style={styles.imageBackground}
-        />
-        <AlphaView showAlphaView={showAlphaView} />
+          reziseMode="cover"
+        >
+          <AlphaView showAlphaView={showAlphaView} />
+        </ImageBackground>
       </View>
     </View>
   );
@@ -23,15 +32,11 @@ const NavLayout = ({ showAlphaView }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // Não usar flex: 1 aqui
   },
   viewBackground: {
-    flexDirection: "flex-start",
     backgroundColor: "#222021",
-    height: 130,
-    overflow: "hidden",
   },
-
   imageBackground: {
     flex: 1,
     justifyContent: "center",

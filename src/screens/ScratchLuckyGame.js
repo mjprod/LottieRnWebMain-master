@@ -7,17 +7,15 @@ import {
   Dimensions,
   Text,
 } from "react-native";
-import { VideoBackground } from "../components/VideoBackground";
+import { BackgroundGame } from "../components/BackgroundGame";
 import TopLayout from "../components/TopLayout";
 import ScratchLayout from "../components/ScratchLayout";
-import NavLayout from "../components/NavLayout";
 import { backgroundLoop } from "../global/Assets";
 
 const backgroundGame = require("./../assets/image/background_game.png");
 const { width } = Dimensions.get("window");
 
-const win_video = require('./../assets/video/win.mp4');
-
+const win_video = require("./../assets/video/win.mp4");
 
 const ScratchLuckyGame = () => {
   const [gameOver, setGameOver] = useState(false);
@@ -92,76 +90,51 @@ const ScratchLuckyGame = () => {
 
   return (
     <View style={styles.fullScreen}>
-      <VideoBackground showAlphaView={scratchStarted} source={backgroundLoop} />
+      <BackgroundGame showAlphaView={scratchStarted} source={backgroundLoop} />
       <View style={styles.containerOverlay}>
-        <NavLayout showAlphaView={scratchStarted} />
-
-        <ImageBackground
-          source={backgroundGame}
-          style={styles.imageBackground}
-          resizeMode="stretch"
-        >
-          {gameOver ? (
-            <View>
-              <Text style={{ color: "#ffffff" }}>Game Over</Text>
-            </View>
-          ) : (
-            <Animated.View style={[{ transform: [{ translateX }] }]}>
-              <View style={styles.overlay}>
-                <Animated.View style={{ marginTop: marginTopAnim }}>
-                  <TopLayout
-                    scratched={scratched}
-                    scratchStarted={scratchStarted}
-                    timerGame={timerGame}
-                    setTimerGame={setTimerGame}
-                    score={score}
-                  />
-                </Animated.View>
-
-                <ScratchLayout
-                  reset={reset}
-                  setReset={setReset}
-                  scratched={scratched}
-                  setScratched={setScratched}
-                  luckySymbolCount={luckySymbolCount}
-                  setLuckySymbolCount={setLuckySymbolCount}
-                  setScratchStarted={setScratchStarted}
-                  scratchCardLeft={scratchCardLeft}
-                  setScratchCardLeft={setScratchCardLeft}
-                  timerGame={timerGame}
-                  score={score}
-                  setScore={setScore}
-                />
+        {
+          <BackgroundGame
+            source={backgroundGame}
+            style={styles.imageBackground}
+            resizeMode="stretch"
+          >
+            {gameOver ? (
+              <View>
+                <Text style={{ color: "#ffffff" }}>Game Over</Text>
               </View>
-            </Animated.View>
-          )}
-        </ImageBackground>
-      </View>
+            ) : (
+              <Animated.View style={[{ transform: [{ translateX }] }]}>
+                <View style={styles.overlay}>
+                  <Animated.View style={{ marginTop: marginTopAnim }}>
+                    <TopLayout
+                      scratched={scratched}
+                      scratchStarted={scratchStarted}
+                      timerGame={timerGame}
+                      setTimerGame={setTimerGame}
+                      score={score}
+                    />
+                  </Animated.View>
 
-      {showWin && (
-          <View
-            style={{
-              ...styles.transparentOverlay,
-              height: '100%',
-              width: '100%',
-              zIndex: 9999,
-              elevation: 10,
-            }}>
-             <video
-        //ref={videoRef}
-        src={win_video}
-        style={{
-          ...styles.video,
-          width: '100%' ,
-          height:  '100%' ,
-        }}
-        loop
-        autoPlay
-        muted
-        playsInline
-      />
-          </View>
-        )}
+                  <ScratchLayout
+                    reset={reset}
+                    setReset={setReset}
+                    scratched={scratched}
+                    setScratched={setScratched}
+                    luckySymbolCount={luckySymbolCount}
+                    setLuckySymbolCount={setLuckySymbolCount}
+                    setScratchStarted={setScratchStarted}
+                    scratchCardLeft={scratchCardLeft}
+                    setScratchCardLeft={setScratchCardLeft}
+                    timerGame={timerGame}
+                    score={score}
+                    setScore={setScore}
+                  />
+                </View>
+              </Animated.View>
+            )}
+          </BackgroundGame>
+        }
+      </View>
     </View>
   );
 };
@@ -190,17 +163,10 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    marginTop: -6,
     width: "100%",
     height: "100%",
   },
-  transparentOverlay: {
-    position: 'absolute',
-    marginLeft: -10,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
 });
 
 export default ScratchLuckyGame;
