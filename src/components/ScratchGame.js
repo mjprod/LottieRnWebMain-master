@@ -54,12 +54,11 @@ const iconComponentsDefault = [
 
 const scratchBackground = require("./../assets/image/scratch_background.png");
 
-// Mapeamento das animações Lottie
 const lottieAnimations = {
   lottieScratchieBubbleBlue: require("./../assets/lotties/lottieScratchieBubblePopBlue.json"),
   lottieScratchieBubbleGreen: require("./../assets/lotties/lottieScratchieBubblePopGreen.json"),
   lottieScratchieBubblePink: require("./../assets/lotties/lottieScratchieBubblePopPink.json"),
-  lottieScratchieBubblePurple: require("./../assets/lotties/lottieScratchieBubblePopPurple.json"),
+  lottieScratchieBubbleOrange: require("./../assets/lotties/lottieScratchieBubblePopOrange.json"),
   lottieScratchieBubblePopError: require("./../assets/lotties/lottieScratchieBubblePopError.json"),
 };
 
@@ -102,35 +101,38 @@ const ScratchGame = ({
     setIsLuckySymbolTrue(arrayIcon);
     const generatedArray = generateIconsArray(arrayIcon);
 
-    const newValue= findBoobleColor(generatedArray)
-    setArrayBobble(newValue);
-   
+    const booblePositions= findBoobleColor(generatedArray)
+    setArrayBobble(booblePositions);
+
     setIconsArray(generatedArray);
     const winners = checkWinCondition(generatedArray);
     setWinningIcons(winners);
     setIsWinner(winners.length > 0);
   }, [setIsWinner, reset, setIsLuckySymbolTrue]);
 
+  
   const generateIconsArray = (winLuckySymbol) => {
     let iconCounts = Array(totalIcons).fill(0);
     let resultArray = new Array(totalPositions).fill(null);
     let iconWithMaxCount = null;
     let columnIconMap = {};
-
+  
+    let luckyPosition = -1;
+    // Add lucky symbol
     if (winLuckySymbol) {
-      const luckyPosition = Math.floor(Math.random() * totalPositions);
-      resultArray[luckyPosition] = 11;
-      iconCounts[11] = 1;
+      luckyPosition = Math.floor(Math.random() * totalPositions);
+      resultArray[luckyPosition] = 12;
+      iconCounts[12] = 1;
     }
-
+  
     for (let i = 0; i < totalPositions; i++) {
       if (resultArray[i] !== null) continue;
-
+  
       let columnIndex = i % columns;
       if (!columnIconMap[columnIndex]) {
         columnIconMap[columnIndex] = new Set();
       }
-
+  
       let availableIcons = iconCounts
         .map((count, index) => {
           if (
@@ -140,30 +142,30 @@ const ScratchGame = ({
               count < maxOtherCount ||
               index === iconWithMaxCount) &&
             !columnIconMap[columnIndex].has(index) &&
-            (winLuckySymbol === false || index !== 8)
+            (winLuckySymbol === false || index !== 12) // Lucky symbol can't be repeated
           ) {
             return index;
           }
           return null;
         })
         .filter((index) => index !== null);
-
+  
       if (availableIcons.length === 0) {
         break;
       }
-
+  
       let selectedIcon =
         availableIcons[Math.floor(Math.random() * availableIcons.length)];
-
+  
       resultArray[i] = selectedIcon;
       iconCounts[selectedIcon]++;
       columnIconMap[columnIndex].add(selectedIcon);
-
+  
       if (iconCounts[selectedIcon] === maxCountWin) {
         iconWithMaxCount = selectedIcon;
       }
     }
-
+  
     return resultArray;
   };
 
@@ -173,7 +175,7 @@ const ScratchGame = ({
     { cor: 'Blue', animacao: 'lottieScratchieBubbleBlue' },
     { cor: 'Green', animacao: 'lottieScratchieBubbleGreen' },
     { cor: 'Pink', animacao: 'lottieScratchieBubblePink' },
-    { cor: 'Purple', animacao: 'lottieScratchieBubblePurple' },
+    { cor: 'Orange', animacao: 'lottieScratchieBubbleOrange' },
   ];
   
   let contador = {};
@@ -230,7 +232,7 @@ const ScratchGame = ({
       console.log("ALL ICONS CLIKED");
       setTimeout(() => {
         setReset(true);
-      }, 1300);
+      }, 1500);
      
     }
   }, [clickedIcons, iconsArray]);

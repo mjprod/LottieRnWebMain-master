@@ -35,7 +35,7 @@ const lottieAnimations = {
   lottieScratchieBubbleBlue: require('./../assets/lotties/lottieScratchieBubbleBlue.json'),
   lottieScratchieBubbleGreen: require('./../assets/lotties/lottieScratchieBubbleGreen.json'),
   lottieScratchieBubblePink: require('./../assets/lotties/lottieScratchieBubblePink.json'),
-  lottieScratchieBubblePurple: require('./../assets/lotties/lottieScratchieBubblePurple.json'),
+  lottieScratchieBubbleOrange: require('./../assets/lotties/lottieScratchieBubbleOrange.json'),
 };
 
 const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
