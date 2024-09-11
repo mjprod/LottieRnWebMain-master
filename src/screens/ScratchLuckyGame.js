@@ -93,7 +93,7 @@ const ScratchLuckyGame = () => {
       <BackgroundGame showAlphaView={scratchStarted} source={backgroundLoop} />
       <View style={styles.containerOverlay}>
         {
-          <BackgroundGame
+          <ImageBackground
             source={backgroundGame}
             style={styles.imageBackground}
             resizeMode="stretch"
@@ -132,7 +132,7 @@ const ScratchLuckyGame = () => {
                 </View>
               </Animated.View>
             )}
-          </BackgroundGame>
+          </ImageBackground>
         }
       </View>
     </View>
