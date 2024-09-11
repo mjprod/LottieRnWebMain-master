@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View, TouchableWithoutFeedback, Text } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
 import LottieView from "react-native-web-lottie";
 import { IconTypeAnhkActive } from "./../assets/icons/IconTypeAnhkActive";
 import { IconTypeAnubisActive } from "./../assets/icons/IconTypeAnubisActive";
@@ -15,6 +15,7 @@ import { IconTypeSleighActive } from "./../assets/icons/IconTypeSleighActive";
 import { IconTypePharoahActive } from "../assets/icons/IconTypePharoahActive";
 import PopUpText from "./PopUpText";
 
+// Mapeamento de ícones ativos
 const iconComponentsActive = [
   <IconTypeAnubisActive key="0" />,
   <IconTypeAnhkActive key="1" />,
@@ -30,12 +31,22 @@ const iconComponentsActive = [
   <IconTypeSleighActive key="11" />,
 ];
 
-const AnimatedIcon = ({ iconIndex, onClick, timerGame }) => {
+const lottieAnimations = {
+  lottieScratchieBubbleBlue: require('./../assets/lotties/lottieScratchieBubbleBlue.json'),
+  lottieScratchieBubbleGreen: require('./../assets/lotties/lottieScratchieBubbleGreen.json'),
+  lottieScratchieBubblePink: require('./../assets/lotties/lottieScratchieBubblePink.json'),
+  lottieScratchieBubblePurple: require('./../assets/lotties/lottieScratchieBubblePurple.json'),
+};
+
+const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
+  const selectedAnimation = lottieAnimations[bobble];
+
   const handleIconClick = () => {
     if (onClick) {
       onClick(iconIndex);
     }
   };
+
 
   return (
     <View style={styles.iconWrapper}>
@@ -48,12 +59,14 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame }) => {
 
       <TouchableWithoutFeedback onPress={handleIconClick}>
         <View style={styles.overlay}>
-          <LottieView
-            style={styles.lottieAnimation}
-            source={require("./../assets/lotties/lottieScratchieBubble.json")}
-            autoPlay
-            loop={true}
-          />
+          {selectedAnimation && (
+            <LottieView
+              style={styles.lottieAnimation}
+              source={selectedAnimation}
+              autoPlay
+              loop={true}
+            />
+          )}
         </View>
       </TouchableWithoutFeedback>
     </View>

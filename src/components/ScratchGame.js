@@ -1,29 +1,29 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   View,
   ImageBackground,
   Animated,
   Easing,
-} from 'react-native';
-import AnimatedIcon from './AnimatedIcon';
+} from "react-native";
+import AnimatedIcon from "./AnimatedIcon";
 import LottieView from "react-native-web-lottie";
 
-import {IconTypeAnhkdefault} from './../assets/icons/IconTypeAnhkdefault';
-import {IconTypeAnubisdefault} from './../assets/icons/IconTypeAnubisdefault';
-import {IconTypeFeatherdefault} from './../assets/icons/IconTypeFeatherdefault';
-import {IconTypeHorusdefault} from './../assets/icons/IconTypeHorusdefault';
-import {IconTypePyramiddefault} from './../assets/icons/IconTypePyramiddefault';
-import {IconTypeScarabdefault} from './../assets/icons/IconTypeScarabdefault';
-import {IconTypeSphinxdefault} from './../assets/icons/IconTypeSphinxdefault';
-import {IconTypeTabletdefault} from './../assets/icons/IconTypeTabletdefault';
-import {IconTypeSunRadefault} from './../assets/icons/IconTypeSunRadefault';
-import {IconTypeEyePyramiddefault} from '../assets/icons/IconTypeEyePyramiddefault';
-import {IconTypePharoahdefault} from '../assets/icons/IconTypePharoahdefault';
-import {IconTypeSleighdefault} from '../assets/icons/IconTypeSleighdefault';
-import {IconTypeLucky} from './../assets/icons/IconTypeLucky';
+import { IconTypeAnhkdefault } from "./../assets/icons/IconTypeAnhkdefault";
+import { IconTypeAnubisdefault } from "./../assets/icons/IconTypeAnubisdefault";
+import { IconTypeFeatherdefault } from "./../assets/icons/IconTypeFeatherdefault";
+import { IconTypeHorusdefault } from "./../assets/icons/IconTypeHorusdefault";
+import { IconTypePyramiddefault } from "./../assets/icons/IconTypePyramiddefault";
+import { IconTypeScarabdefault } from "./../assets/icons/IconTypeScarabdefault";
+import { IconTypeSphinxdefault } from "./../assets/icons/IconTypeSphinxdefault";
+import { IconTypeTabletdefault } from "./../assets/icons/IconTypeTabletdefault";
+import { IconTypeSunRadefault } from "./../assets/icons/IconTypeSunRadefault";
+import { IconTypeEyePyramiddefault } from "../assets/icons/IconTypeEyePyramiddefault";
+import { IconTypePharoahdefault } from "../assets/icons/IconTypePharoahdefault";
+import { IconTypeSleighdefault } from "../assets/icons/IconTypeSleighdefault";
+import { IconTypeLucky } from "./../assets/icons/IconTypeLucky";
 
-import { Howl } from 'howler';
+import { Howl } from "howler";
 
 import {
   generateRandomLuckySymbolPercentage,
@@ -34,7 +34,7 @@ import {
   totalPositions,
   columns,
   maxRepeatedIcons,
-} from '../global/Settings';
+} from "../global/Settings";
 
 const iconComponentsDefault = [
   <IconTypeAnubisdefault key="0" />,
@@ -52,8 +52,16 @@ const iconComponentsDefault = [
   <IconTypeLucky key="12" />,
 ];
 
-const scratchBackground = require('./../assets/image/scratch_background.png');
-const lottieScratchieBubblePopUp = require('./../assets/lotties/green_ball.json');
+const scratchBackground = require("./../assets/image/scratch_background.png");
+
+// Mapeamento das animações Lottie
+const lottieAnimations = {
+  lottieScratchieBubbleBlue: require("./../assets/lotties/lottieScratchieBubblePopBlue.json"),
+  lottieScratchieBubbleGreen: require("./../assets/lotties/lottieScratchieBubblePopGreen.json"),
+  lottieScratchieBubblePink: require("./../assets/lotties/lottieScratchieBubblePopPink.json"),
+  lottieScratchieBubblePurple: require("./../assets/lotties/lottieScratchieBubblePopPurple.json"),
+  lottieScratchieBubblePopError: require("./../assets/lotties/lottieScratchieBubblePopError.json"),
+};
 
 const ScratchGame = ({
   score,
@@ -62,7 +70,7 @@ const ScratchGame = ({
   setIsWinner,
   scratched,
   reset,
-  setReset={setReset},
+  setReset = { setReset },
   onLoading,
   setIsLuckySymbolTrue,
   timerGame,
@@ -76,6 +84,8 @@ const ScratchGame = ({
   const [clickCount, setClickCount] = useState(0);
   const [soundShouldPlay, setSoundShouldPlay] = useState(1);
 
+  const [arrayBobble, setArrayBobble] = useState();
+  const [arrayIcon, setArrayIcon] = useState();
 
   const generateRandomLuckySymbol = () => {
     return Math.random() < generateRandomLuckySymbolPercentage;
@@ -88,9 +98,13 @@ const ScratchGame = ({
     setLastClickedIcon(null);
     setSoundShouldPlay(1);
 
-    let generated = generateRandomLuckySymbol();
-    setIsLuckySymbolTrue(generated);
-    const generatedArray = generateIconsArray(generated);
+    setArrayIcon(generateRandomLuckySymbol());
+    setIsLuckySymbolTrue(arrayIcon);
+    const generatedArray = generateIconsArray(arrayIcon);
+
+    const newValue= findBoobleColor(generatedArray)
+    setArrayBobble(newValue);
+   
     setIconsArray(generatedArray);
     const winners = checkWinCondition(generatedArray);
     setWinningIcons(winners);
@@ -132,14 +146,14 @@ const ScratchGame = ({
           }
           return null;
         })
-        .filter(index => index !== null);
+        .filter((index) => index !== null);
 
       if (availableIcons.length === 0) {
         break;
       }
 
       let selectedIcon =
-        availableIcons[Math.floor(Math.random() * availableIcons.length)];        
+        availableIcons[Math.floor(Math.random() * availableIcons.length)];
 
       resultArray[i] = selectedIcon;
       iconCounts[selectedIcon]++;
@@ -152,6 +166,44 @@ const ScratchGame = ({
 
     return resultArray;
   };
+
+  const findBoobleColor = (arr) => {
+
+    const cores = [
+    { cor: 'Blue', animacao: 'lottieScratchieBubbleBlue' },
+    { cor: 'Green', animacao: 'lottieScratchieBubbleGreen' },
+    { cor: 'Pink', animacao: 'lottieScratchieBubblePink' },
+    { cor: 'Purple', animacao: 'lottieScratchieBubblePurple' },
+  ];
+  
+  let contador = {};
+  let corMap = {}; 
+  let animacaoMap = {};
+  let corIndex = 0;
+
+  arr.forEach(num => {
+    if (contador[num]) {
+      contador[num]++;
+    } else {
+      contador[num] = 1;
+    }
+  });
+
+
+  Object.keys(contador).forEach(num => {
+    if (contador[num] === 3) {
+      corMap[num] = cores[corIndex].cor;           
+      animacaoMap[num] = cores[corIndex].animacao;
+      corIndex = (corIndex + 1) % cores.length;
+    }
+  });
+
+  const arrayAnimacoes = arr.map(num => {
+    return animacaoMap[num] || null;
+  });
+
+  return arrayAnimacoes;
+};
 
   const checkWinCondition = (array) => {
     const iconCounts = Array(totalIcons).fill(0);
@@ -170,13 +222,16 @@ const ScratchGame = ({
     return winners;
   };
 
-
   useEffect(() => {
     if (
-      winningIcons.length  * 3 === clickedIcons.length &&  winningIcons.length >0
+      winningIcons.length * 3 === clickedIcons.length &&
+      winningIcons.length > 0
     ) {
-      console.log('ALL ICONS CLIKED');
-      setReset(true);
+      console.log("ALL ICONS CLIKED");
+      setTimeout(() => {
+        setReset(true);
+      }, 1300);
+     
     }
   }, [clickedIcons, iconsArray]);
 
@@ -184,20 +239,30 @@ const ScratchGame = ({
     const icon = iconsArray[index];
 
     if (!clickedIcons.includes(index)) {
-      if (lastClickedIcon !== null && lastClickedIcon !== icon && clickedCount[lastClickedIcon] < 3) {
+      if (
+        lastClickedIcon !== null &&
+        lastClickedIcon !== icon &&
+        clickedCount[lastClickedIcon] < 3
+      ) {
         playSoundError();
         setClickCount(1);
         setSoundShouldPlay(1);
 
         setClickedIcons([...clickedIcons, index]);
         setLastClickedIcon(icon);
+        
+        //Add bobble error
+        const newArrayBobble = [...arrayBobble];
+        newArrayBobble[index] = "lottieScratchieBubblePopError";
+        setArrayBobble(newArrayBobble);
+
         return;
       }
 
       const newClickedIcons = [...clickedIcons, index];
       setClickedIcons(newClickedIcons);
-      setScore(score + (timerGame*100));
-      console.log('SCORE: ', score + (timerGame*100));
+      setScore(score + timerGame * 100);
+      console.log("SCORE: ", score + timerGame * 100);
       const newClickedCount = {
         ...clickedCount,
         [icon]: (clickedCount[icon] || 0) + 1,
@@ -217,44 +282,44 @@ const ScratchGame = ({
           playSound3();
           updateSounds();
           break;
-          case 4:
-            playSound4();
-            updateSounds();
-            break;
-          case 5:
-            playSound5();
-            updateSounds();
-            break;
-          case 6:
-            playSound6();
-            updateSounds();     
-            break;
-          case 7:
-            playSound7();
-            updateSounds();
-            break;
-          case 8:
-            playSound8();
-            updateSounds();
-            break;
-          case 9:
-            playSound9();
-            updateSounds();
-            break;
-          case 10:
-            playSound10();
-            updateSounds();
-            break;
-          case 11:
-            playSound11();
-            updateSounds();
-            break;
-          case 12:
-            playSound12();
-            updateSounds();
-            setClickCount(0);
-            setSoundShouldPlay(1);
-            break;
+        case 4:
+          playSound4();
+          updateSounds();
+          break;
+        case 5:
+          playSound5();
+          updateSounds();
+          break;
+        case 6:
+          playSound6();
+          updateSounds();
+          break;
+        case 7:
+          playSound7();
+          updateSounds();
+          break;
+        case 8:
+          playSound8();
+          updateSounds();
+          break;
+        case 9:
+          playSound9();
+          updateSounds();
+          break;
+        case 10:
+          playSound10();
+          updateSounds();
+          break;
+        case 11:
+          playSound11();
+          updateSounds();
+          break;
+        case 12:
+          playSound12();
+          updateSounds();
+          setClickCount(0);
+          setSoundShouldPlay(1);
+          break;
         default:
           break;
       }
@@ -267,10 +332,9 @@ const ScratchGame = ({
     }
   };
 
- const updateSounds = () => {  
+  const updateSounds = () => {
     setSoundShouldPlay(soundShouldPlay + 1);
   };
-
 
   useEffect(() => {
     if (onLoading) {
@@ -286,59 +350,58 @@ const ScratchGame = ({
   }, [fadeAnim, onLoading]);
 
   const sound1 = new Howl({
-    src: [require('./../assets/audio/1_C.mp3')],
-    preload: true,  // Preload the sound
+    src: [require("./../assets/audio/1_C.mp3")],
+    preload: true, // Preload the sound
   });
   const sound2 = new Howl({
-    src: [require('./../assets/audio/2_D.mp3')],
-    preload: true,  // Preload the sound
+    src: [require("./../assets/audio/2_D.mp3")],
+    preload: true, // Preload the sound
   });
   const sound3 = new Howl({
-    src: [require('./../assets/audio/3_E.mp3')],
-    preload: true,  // Preload the sound
+    src: [require("./../assets/audio/3_E.mp3")],
+    preload: true, // Preload the sound
   });
 
   const sound4 = new Howl({
-    src: [require('./../assets/audio/4_E.mp3')],
-    preload: true,  // Preload the sound
+    src: [require("./../assets/audio/4_E.mp3")],
+    preload: true, // Preload the sound
   });
   const sound5 = new Howl({
-    src: [require('./../assets/audio/5_F_.mp3')],
-    preload: true,  // Preload the sound
+    src: [require("./../assets/audio/5_F_.mp3")],
+    preload: true, // Preload the sound
   });
   const sound6 = new Howl({
-    src: [require('./../assets/audio/6_G_.mp3')],
-    preload: true,  // Preload the sound
+    src: [require("./../assets/audio/6_G_.mp3")],
+    preload: true, // Preload the sound
   });
   const sound7 = new Howl({
-    src: [require('./../assets/audio/7_G_.mp3')],
-    preload: true,  // Preload the sound
+    src: [require("./../assets/audio/7_G_.mp3")],
+    preload: true, // Preload the sound
   });
   const sound8 = new Howl({
-    src: [require('./../assets/audio/8_A_.mp3')],
-    preload: true,  // Preload the sound
+    src: [require("./../assets/audio/8_A_.mp3")],
+    preload: true, // Preload the sound
   });
   const sound9 = new Howl({
-    src: [require('./../assets/audio/9_C_plus.mp3')],
-    preload: true,  // Preload the sound
+    src: [require("./../assets/audio/9_C_plus.mp3")],
+    preload: true, // Preload the sound
   });
 
   const sound10 = new Howl({
-    src: [require('./../assets/audio/10_C_plus.mp3')],
-    preload: true,  // Preload the sound
+    src: [require("./../assets/audio/10_C_plus.mp3")],
+    preload: true, // Preload the sound
   });
   const sound11 = new Howl({
-    src: [require('./../assets/audio/11_D_plus.mp3')],
-    preload: true,  // Preload the sound
+    src: [require("./../assets/audio/11_D_plus.mp3")],
+    preload: true, // Preload the sound
   });
   const sound12 = new Howl({
-    src: [require('./../assets/audio/12_E_plus.mp3')],
-    preload: true,  // Preload the sound
+    src: [require("./../assets/audio/12_E_plus.mp3")],
+    preload: true, // Preload the sound
   });
   const error = new Howl({
-    src: [require('./../assets/audio/sfx_autopopup.wav')],
-    preload: true,  // Preload the sound
-
+    src: [require("./../assets/audio/sfx_autopopup.wav")],
+    preload: true, // Preload the sound
   });
 
   const playSound1 = () => {
@@ -386,15 +449,14 @@ const ScratchGame = ({
     if (scratched && !isWinner) {
       setTimeout(() => {
         setReset(true);
-      }
-      , 2000);
+      }, 2000);
     }
   }, [scratched]);
 
   return (
     <ImageBackground source={scratchBackground} style={styles.background_view}>
       <View style={styles.container}>
-        <Animated.View style={[styles.gridContainer, {opacity: fadeAnim}]}>
+        <Animated.View style={[styles.gridContainer, { opacity: fadeAnim }]}>
           {iconsArray.map((icon, index) => (
             <View key={index} style={styles.iconContainer}>
               {icon !== null && (
@@ -406,15 +468,13 @@ const ScratchGame = ({
                       iconIndex={icon}
                       onClick={() => handleIconClick(index)}
                       timerGame={timerGame}
+                      bobble={arrayBobble[index]}
                     />
                   ) : clickedIcons.includes(index) ? (
-                    <View
-                      style={[
-                        styles.lottieContainer,
-                      ]}>
+                    <View style={[styles.lottieContainer]}>
                       <LottieView
                         style={styles.lottieAnimation}
-                        source={lottieScratchieBubblePopUp}
+                        source={lottieAnimations[arrayBobble[index]]}
                         autoPlay
                         loop={true}
                         resizeMode="cover"
@@ -439,43 +499,43 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
-    width: '100%',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    width: "100%",
   },
   iconContainer: {
-    flexBasis: '23%',
-    minWidth: '20%',
+    flexBasis: "23%",
+    minWidth: "20%",
     aspectRatio: 1,
-    margin: '1%',
-    boxSizing: 'border-box',
+    margin: "1%",
+    boxSizing: "border-box",
   },
   iconWrapper: {
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   lottieContainer: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
   },
   lottieAnimation: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   background_view: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'transparent',
+    width: "100%",
+    height: "100%",
+    backgroundColor: "transparent",
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
 });
 
