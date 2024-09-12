@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     },
     app: {
         maxWidth: 400,  
-        maxHeight: 720,
+        maxHeight: 650,
         flex: 1,
         backgroundColor: "black",
         borderRadius: 8,

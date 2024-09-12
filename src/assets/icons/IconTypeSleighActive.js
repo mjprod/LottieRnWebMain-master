@@ -6,9 +6,7 @@ export const IconTypeSleighActive = () => (
     width="78"
     height="84"
     viewBox="0 0 78 84"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+    fill="none">
     <G clipPath="url(#clip0_8945_52430)">
       <Path
         d="M50.6226 62.776L50.3601 60.0515C50.144 57.8128 48.9546 55.8039 47.098 54.5381L43.814 52.3008L46.8915 47.7754L50.1755 50.0128C53.3802 52.1968 55.4323 55.663 55.8042 59.526L56.0667 62.2505L50.6226 62.776Z"

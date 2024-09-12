@@ -15,7 +15,7 @@ const NavLayout = ({ showAlphaView }) => {
       <View
         style={[
           styles.viewBackground,
-          { height: screenHeight * 0.15 },
+          { height: 130 },
         ]}
       >
         <ImageBackground

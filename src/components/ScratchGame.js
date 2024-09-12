@@ -500,7 +500,7 @@ const ScratchGame = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingVertical: 10,
   },
   gridContainer: {
     flexDirection: "row",
@@ -511,10 +511,12 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   iconContainer: {
-    flexBasis: "23%",
-    minWidth: "20%",
+    flexBasis: "18%",
+    minWidth: "18%",
     aspectRatio: 1,
-    margin: "1%",
+    marginTop: "1.2%",
+    marginLeft: "2%",
+    marginRight: "2%",
     boxSizing: "border-box",
   },
   iconWrapper: {

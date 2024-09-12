@@ -134,7 +134,9 @@ const TopLayout = ({
               />
               <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
             </View>
-            {LottieLuckySymbolCoinSlot({luckySymbolCount})}
+          
+              {LottieLuckySymbolCoinSlot({luckySymbolCount})}
+          
           </View>
         </View>
 

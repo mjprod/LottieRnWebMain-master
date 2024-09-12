@@ -7,10 +7,14 @@ import {
   eraserShouldBeScratched,
   heightScratch,
   setLuckySymbolCountTimer,
-  simulateScratchTimeOut,
 } from "../global/Settings";
+import { Dimensions } from "react-native-web";
 
 const scratchForeground = require("./../assets/image/scratch_foreground.jpg");
+const videoLuckySymbolSafari = require('./../assets/video/win_safari.mp4');
+const videoLuckySymbol = require('./../assets/video/win_safari.mp4');
+
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 const ScratchLayout = ({
   reset,
@@ -33,12 +37,14 @@ const ScratchLayout = ({
   const [isScratchCardVisible, setIsScratchCardVisible] = useState(true);
   const [autoScratch, setAutoScratch] = useState(false);
   const [collectLuckySymbol, setCollectShowLuckySymbol] = useState(false);
-  const [showLuckySymbol, setShowLuckySymbol] = useState(false);
-  const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
+  const [showLuckySymbol, setShowLuckySymbol] = useState(true);
+  //const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
   const [scratchedStarted, setScratchedStarted] = useState(false);
 
   const addLuckySymbol = () => {
-    if (luckySymbolCount !== 3) {
+    if (luckySymbolCount === 3) {
+      setLuckySymbolCount(0);
+    } else {
       setLuckySymbolCount(luckySymbolCount + 1);
     }
   };
@@ -53,18 +59,18 @@ const ScratchLayout = ({
       }
 
       setTimeout(() => {
-        if (skipToFinishLuckyVideo) {
-          addLuckySymbol();
-        }
+        //if (skipToFinishLuckyVideo) {
+        addLuckySymbol();
+        //}
       }, setLuckySymbolCountTimer);
 
       setIsLuckySymbolTrue(false);
       setTimeout(() => {
-        if (skipToFinishLuckyVideo) {
-          setShowLuckySymbol(false);
-          setScratched(true);
-          setIsScratchCardVisible(false);
-        }
+        //if (skipToFinishLuckyVideo) {
+        setShowLuckySymbol(false);
+        setScratched(true);
+        setIsScratchCardVisible(false);
+        //}
       }, 5300);
     } else {
       setScratched(true);
@@ -142,19 +148,21 @@ const ScratchLayout = ({
         <ScratchCardLeft scratchCardsLeft={scratchCardLeft} />
       </View>
       {/*showLuckySymbol && (
-          <View
-            style={{
-              ...styles.transparentOverlayLose,
-              //height: windowHeight,
-              //width: windowWidth,
-              zIndex: 9999,
-              elevation: 10,
-            }}>
-            <View style={styles.overlay}>
-          
-            </View>
-          </View>
-          )*/}
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <video
+            src={videoLuckySymbol}
+            style={styles.transparentVideo}
+            loop
+            autoPlay
+            muted
+            playsInline
+          />
+        </View>
+      )*/}
     </View>
   );
 };
@@ -164,7 +172,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 12,
     marginTop: "-10%",
-    overflow: "hidden",
+    //overflow: "hidden",
   },
   bottomView: {
     width: "100%",
@@ -177,14 +185,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
-  innerContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    display: "flex",
-    //position: "relative",
-    height: heightScratch,
-  },
   scratchCardContainer: {
     position: "absolute",
     top: 0,
@@ -195,109 +195,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
-  textContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-  textBottomContainer: {
-    flexDirection: "column",
-    justifyContent: "center",
-    width: "100%",
-    alignContent: "center",
-    marginVertical: 4,
-    marginTop: 10,
-  },
-  textTopLeft: {
-    color: "#FFEAC8",
-    marginLeft: 15,
-    textAlign: "left",
-    fontFamily: "Teko-Medium",
-    fontSize: 22,
-  },
-  textTopRight: {
-    color: "#3E362A",
-    marginRight: 15,
-    textAlign: "right",
-    fontFamily: "Teko-Medium",
-    fontSize: 22,
-    marginLeft: 15,
-  },
-  viewRow: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  androidMargin: {
-    marginTop: -25,
-  },
-  iosMargin: {
-    marginTop: -30,
-  },
   arrowImage: {
     position: "absolute",
     marginTop: 10,
     top: -10,
     zIndex: 1,
   },
-  textFooterTop: {
-    textAlign: "center",
-    fontFamily: "Inter-Medium",
-    fontSize: 12,
-    color: "#F1D3A3",
-  },
-  textFooterBottom: {
-    textAlign: "center",
-    fontFamily: "Inter-Medium",
-    fontSize: 12,
-    color: "#A9A9A9",
-  },
-  lottieAnimation: {
-    position: "absolute",
-    top: 0,
-    left: -3,
-    width: "10%",
-    height: "10%",
-  },
   transparentVideo: {
-    position: "absolute",
-    top: -70,
-    left: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "100%",
-  },
-  transparentOverlayLose: {
-    position: "absolute",
-    marginLeft: -10,
-    backgroundColor: "rgba(0, 0, 0, 0.7)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  iconLose: {
-    width: "100%",
-    height: "100%",
-  },
-
-  overlay: {
-    position: "absolute",
-    //height: windowHeight,
-    //width: windowWidth,
-    zIndex: 9999,
-    elevation: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  clickableArea: {
-    position: "absolute",
+    position  : "absolute",
     top: 0,
     left: 0,
     //height: windowHeight,
     //width: windowWidth,
+    justifyContent: "center",
+    alignItems: "center",
+   
   },
   transparentOverlay: {
+    position  : "absolute",
+    top: 0,
+    left: 0,
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0)",
+    height: windowHeight,
+    width: windowWidth,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 999,
+    elevation: 10,
   },
 });
 

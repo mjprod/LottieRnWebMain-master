@@ -18,7 +18,7 @@ const ScratchCardScreen = () => {
     setCtx(context);
 
     const img = new Image();
-    img.src = require('./../assets/image/scratch_foreground.jpg'); // Correct way to handle image imports
+    img.src = require('./../assets/image/scratch_foreground.jpg');
 
     img.onload = () => {
       canvas.width = windowWidth;
@@ -105,13 +105,13 @@ const styles = StyleSheet.create({
   canvas: {
     width: windowWidth,
     height: windowHeight,
-    border: '1px solid black', // Border to visualize the canvas area
+    border: '1px solid black',
     backgroundColor: '#35363A',
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: 20, // Adjust based on your preference
-    zIndex: 1,  // Ensure button is above the canvas
+    bottom: 20,
+    zIndex: 1,
   },
 });
 

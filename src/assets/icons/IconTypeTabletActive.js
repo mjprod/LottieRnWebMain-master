@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, {ClipPath, Defs, G, Path, Use} from 'react-native-svg-web';
 
 export const IconTypeTabletActive = () => (
-  <Svg width="78" height="84" fill="none">
+  <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
     <G clipPath="url(#A)">
       <G fill="#c68a65">
         <Path d="M67.348 21.949l-13.943 2.766V13.652h7.029c3.819 0 6.914 3.096 6.914 6.914v1.383z" />

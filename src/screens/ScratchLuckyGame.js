@@ -26,7 +26,7 @@ const ScratchLuckyGame = () => {
   const [score, setScore] = useState(0);
 
   const [scratchStarted, setScratchStarted] = useState(false);
-  const [luckySymbolCount, setLuckySymbolCount] = useState(2);
+  const [luckySymbolCount, setLuckySymbolCount] = useState(0);
 
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
@@ -159,8 +159,8 @@ const styles = StyleSheet.create({
     right: 10,
     bottom: 10,
     zIndex: 2,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
   overlay: {
     flex: 1,

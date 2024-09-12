@@ -51,7 +51,7 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
   return (
     <View style={styles.iconWrapper}>
       {iconComponentsActive[iconIndex]}
-      <TouchableWithoutFeedback onPress={handleIconClick}>
+      <TouchableWithoutFeedback hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }} onPress={handleIconClick}>
         <View style={styles.overlay}>
           {selectedBobbleColour && (
             <LottieView
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     zIndex: 999,
-    elevation: 999,
+    elevation: 10,
   },
   centeredTextWrapper: {
     position: "absolute",
