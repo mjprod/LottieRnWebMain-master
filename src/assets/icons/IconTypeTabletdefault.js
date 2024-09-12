@@ -1,9 +1,12 @@
 import React from 'react';
 import Svg, {ClipPath, Defs, G, Path, Use} from 'react-native-svg-web';
+import { colorSymbolNotSelected } from '../../global/Settings';
 
-export const IconTypeTabletdefault = () => (
+const lowerOpacityColour = colorSymbolNotSelected;
+
+export const IconTypeTabletdefault = ({ lower_opacity }) => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
-    <G clipPath="url(#A)" fill="#262626">
+    <G clipPath="url(#A)" fill={lower_opacity ? lowerOpacityColour : "black"}>
       <Path d="M16.195 60.964c-.091.63.346 1.214.976 1.305a1.16 1.16 0 0 0 .166.012c.564 0 1.056-.414 1.139-.988.226-1.566.855-2.638 1.955-3.315l2.127 3.722a1.15 1.15 0 0 0 1.002.581c.194 0 .39-.049.57-.152.553-.316.745-1.02.429-1.572l-4.609-8.066c-.316-.553-1.02-.745-1.572-.429s-.745 1.02-.429 1.572l1.341 2.347c-1.706 1.033-2.769 2.732-3.095 4.983z" />
       <Use xlinkHref="#B" />
       <Use xlinkHref="#C" />
@@ -13,7 +16,7 @@ export const IconTypeTabletdefault = () => (
     </G>
     <Defs>
       <ClipPath id="A">
-        <Path fill="#fff" transform="translate(9.5 12.5)" d="M0 0h59v59H0z" />
+        <Path fill={lower_opacity ? lowerOpacityColour : "black"} transform="translate(9.5 12.5)" d="M0 0h59v59H0z" />
       </ClipPath>
       <Path
         id="B"

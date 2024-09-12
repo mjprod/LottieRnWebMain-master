@@ -53,26 +53,17 @@ const ScratchLayout = ({
       }
 
       setTimeout(() => {
-        if (!skipToFinishLuckyVideo) {
+        if (skipToFinishLuckyVideo) {
           addLuckySymbol();
         }
       }, setLuckySymbolCountTimer);
 
       setIsLuckySymbolTrue(false);
       setTimeout(() => {
-        if (!skipToFinishLuckyVideo) {
+        if (skipToFinishLuckyVideo) {
           setShowLuckySymbol(false);
-          if (isWinner) {
-            //setButtonText("AUTO POP");
-          }
-
           setScratched(true);
           setIsScratchCardVisible(false);
-          if (isWinner) {
-            //setButtonText("AUTO POP");
-          } else {
-            //endGame();
-          }
         }
       }, 5300);
     } else {

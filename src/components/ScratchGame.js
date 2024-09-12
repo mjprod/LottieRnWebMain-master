@@ -36,21 +36,7 @@ import {
   maxRepeatedIcons,
 } from "../global/Settings";
 
-const iconComponentsDefault = [
-  <IconTypeAnubisdefault key="0" />,
-  <IconTypeAnhkdefault key="1" />,
-  <IconTypeFeatherdefault key="2" />,
-  <IconTypeHorusdefault key="3" />,
-  <IconTypePyramiddefault key="4" />,
-  <IconTypeScarabdefault key="5" />,
-  <IconTypeSphinxdefault key="6" />,
-  <IconTypeTabletdefault key="7" />,
-  <IconTypeSunRadefault key="8" />,
-  <IconTypeEyePyramiddefault key="9" />,
-  <IconTypePharoahdefault key="10" />,
-  <IconTypeSleighdefault key="11" />,
-  <IconTypeLucky key="12" />,
-];
+
 
 const scratchBackground = require("./../assets/image/scratch_background.png");
 
@@ -85,6 +71,22 @@ const ScratchGame = ({
 
   const [arrayBobble, setArrayBobble] = useState();
   const [arrayIcon, setArrayIcon] = useState();
+
+  const iconComponentsDefault = [
+    <IconTypeAnubisdefault lower_opacity={scratched} key="0" />,
+    <IconTypeAnhkdefault lower_opacity={scratched} key="1" />,
+    <IconTypeFeatherdefault lower_opacity={scratched} key="2" />,
+    <IconTypeHorusdefault lower_opacity={scratched} key="3" />,
+    <IconTypePyramiddefault  lower_opacity={scratched} key="4" />,
+    <IconTypeScarabdefault  lower_opacity={scratched} key="5" />,
+    <IconTypeSphinxdefault  lower_opacity={scratched} key="6" />,
+    <IconTypeTabletdefault  lower_opacity={scratched} key="7" />,
+    <IconTypeSunRadefault  lower_opacity={scratched} key="8" />,
+    <IconTypeEyePyramiddefault  lower_opacity={scratched} key="9" />,
+    <IconTypePharoahdefault  lower_opacity={scratched} key="10" />,
+    <IconTypeSleighdefault  lower_opacity={scratched} key="11" />,
+    <IconTypeLucky key="12" />,
+  ];
 
   const generateRandomLuckySymbol = () => {
     return Math.random() < generateRandomLuckySymbolPercentage;

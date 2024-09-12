@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 999,
   },
   containerShape: {
     justifyContent: "center",
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
     padding: 2,
     fontSize: 12,
     color: "#FFFFFF",
+    fontFamily: "Teko-Medium",
   },
 });
 

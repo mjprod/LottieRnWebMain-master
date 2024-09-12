@@ -39,7 +39,7 @@ const lottieAnimations = {
 };
 
 const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
-  const selectedAnimation = lottieAnimations[bobble];
+  const selectedBobbleColour = lottieAnimations[bobble];
 
   const handleIconClick = () => {
     if (onClick) {
@@ -50,25 +50,24 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
 
   return (
     <View style={styles.iconWrapper}>
-      {timerGame > 0 && (
-        <View style={styles.centeredTextWrapper}>
-          <PopUpText value={timerGame} />
-        </View>
-      )}
       {iconComponentsActive[iconIndex]}
-
       <TouchableWithoutFeedback onPress={handleIconClick}>
         <View style={styles.overlay}>
-          {selectedAnimation && (
+          {selectedBobbleColour && (
             <LottieView
               style={styles.lottieAnimation}
-              source={selectedAnimation}
+              source={selectedBobbleColour}
               autoPlay
               loop={true}
             />
           )}
         </View>
       </TouchableWithoutFeedback>
+      {timerGame > 0 && (
+        <View style={styles.centeredTextWrapper}  pointerEvents='none' >
+          <PopUpText value={timerGame} />
+        </View>
+      )}
     </View>
   );
 };
@@ -91,6 +90,7 @@ const styles = StyleSheet.create({
     bottom: 65,
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 999,
   },
   overlay: {
     width: "100%",
