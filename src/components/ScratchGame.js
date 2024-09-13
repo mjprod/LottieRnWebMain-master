@@ -59,6 +59,7 @@ const ScratchGame = ({
   onLoading,
   setIsLuckySymbolTrue,
   timerGame,
+  setWinLuckySymbolVideo,
 }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
@@ -89,7 +90,9 @@ const ScratchGame = ({
   ];
 
   const generateRandomLuckySymbol = () => {
-    return Math.random() < generateRandomLuckySymbolPercentage;
+    const result = Math.random() < generateRandomLuckySymbolPercentage;
+    console.log("Generated result:", result); 
+    return result;
   };
 
   useEffect(() => {
@@ -98,18 +101,21 @@ const ScratchGame = ({
     setClickCount(0);
     setLastClickedIcon(null);
     setSoundShouldPlay(1);
-
-    setArrayIcon(generateRandomLuckySymbol());
-    setIsLuckySymbolTrue(arrayIcon);
-    const generatedArray = generateIconsArray(arrayIcon);
-
-    const booblePositions= findBoobleColor(generatedArray)
-    setArrayBobble(booblePositions);
-
-    setIconsArray(generatedArray);
-    const winners = checkWinCondition(generatedArray);
-    setWinningIcons(winners);
-    setIsWinner(winners.length > 0);
+    
+    // Generate lucky symbol once and use it
+    const icons = generateRandomLuckySymbol();
+  
+    setArrayIcon(icons); // Set the arrayIcon with the result of generateRandomLuckySymbol
+    setIsLuckySymbolTrue(icons); // Set if the lucky symbol is true
+  
+    const generatedArray = generateIconsArray(icons); // Generate icons array based on the result of generateRandomLuckySymbol
+    const booblePositions = findBoobleColor(generatedArray); // Find the bubble colors for the array
+    setArrayBobble(booblePositions); // Set the bubble positions
+    
+    setIconsArray(generatedArray); // Set the icons array
+    const winners = checkWinCondition(generatedArray); // Check for win condition
+    setWinningIcons(winners); // Set the winning icons
+    setIsWinner(winners.length > 0); // Determine if it's a winner
   }, [setIsWinner, reset, setIsLuckySymbolTrue]);
 
   
@@ -193,7 +199,6 @@ const ScratchGame = ({
     }
   });
 
-
   Object.keys(contador).forEach(num => {
     if (contador[num] === 3) {
       corMap[num] = cores[corIndex].cor;           
@@ -233,7 +238,13 @@ const ScratchGame = ({
     ) {
       console.log("ALL ICONS CLIKED");
       setTimeout(() => {
-        setReset(true);
+        
+        if (arrayIcon) {
+          setWinLuckySymbolVideo(true);
+        }
+        else {
+          setReset(true);
+        }
       }, 1500);
      
     }
@@ -355,57 +366,57 @@ const ScratchGame = ({
 
   const sound1 = new Howl({
     src: [require("./../assets/audio/1_C.mp3")],
-    preload: true, // Preload the sound
+    preload: true,
   });
   const sound2 = new Howl({
     src: [require("./../assets/audio/2_D.mp3")],
-    preload: true, // Preload the sound
+    preload: true,
   });
   const sound3 = new Howl({
     src: [require("./../assets/audio/3_E.mp3")],
-    preload: true, // Preload the sound
+    preload: true,
   });
 
   const sound4 = new Howl({
     src: [require("./../assets/audio/4_E.mp3")],
-    preload: true, // Preload the sound
+    preload: true,
   });
   const sound5 = new Howl({
     src: [require("./../assets/audio/5_F_.mp3")],
-    preload: true, // Preload the sound
+    preload: true,
   });
   const sound6 = new Howl({
     src: [require("./../assets/audio/6_G_.mp3")],
-    preload: true, // Preload the sound
+    preload: true,
   });
   const sound7 = new Howl({
     src: [require("./../assets/audio/7_G_.mp3")],
-    preload: true, // Preload the sound
+    preload: true,
   });
   const sound8 = new Howl({
     src: [require("./../assets/audio/8_A_.mp3")],
-    preload: true, // Preload the sound
+    preload: true,
   });
   const sound9 = new Howl({
     src: [require("./../assets/audio/9_C_plus.mp3")],
-    preload: true, // Preload the sound
+    preload: true,
   });
 
   const sound10 = new Howl({
     src: [require("./../assets/audio/10_C_plus.mp3")],
-    preload: true, // Preload the sound
+    preload: true,
   });
   const sound11 = new Howl({
     src: [require("./../assets/audio/11_D_plus.mp3")],
-    preload: true, // Preload the sound
+    preload: true,
   });
   const sound12 = new Howl({
     src: [require("./../assets/audio/12_E_plus.mp3")],
-    preload: true, // Preload the sound
+    preload: true,
   });
   const error = new Howl({
     src: [require("./../assets/audio/sfx_autopopup.wav")],
-    preload: true, // Preload the sound
+    preload: true,
   });
 
   const playSound1 = () => {

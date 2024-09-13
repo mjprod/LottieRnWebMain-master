@@ -11,8 +11,6 @@ import {
 import { Dimensions } from "react-native-web";
 
 const scratchForeground = require("./../assets/image/scratch_foreground.jpg");
-const videoLuckySymbolSafari = require('./../assets/video/win_safari.mp4');
-const videoLuckySymbol = require('./../assets/video/win_safari.mp4');
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -29,6 +27,7 @@ const ScratchLayout = ({
   timerGame,
   score,
   setScore,
+  setWinLuckySymbolVideo,
 }) => {
   const [imageLoading, setImageLoading] = useState(false);
   const [isWinner, setIsWinner] = useState(false);
@@ -41,14 +40,6 @@ const ScratchLayout = ({
   //const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
   const [scratchedStarted, setScratchedStarted] = useState(false);
 
-  const addLuckySymbol = () => {
-    if (luckySymbolCount === 3) {
-      setLuckySymbolCount(0);
-    } else {
-      setLuckySymbolCount(luckySymbolCount + 1);
-    }
-  };
-
   const setScratchedCard = () => {
     if (isLuckySymbolTrue) {
       if (luckySymbolCount === 2) {
@@ -60,7 +51,7 @@ const ScratchLayout = ({
 
       setTimeout(() => {
         //if (skipToFinishLuckyVideo) {
-        addLuckySymbol();
+        //addLuckySymbol();
         //}
       }, setLuckySymbolCountTimer);
 
@@ -84,7 +75,7 @@ const ScratchLayout = ({
   };
 
   const handleScratch = (scratchPercentage) => {
-    console.log("Scratch percentage: ", scratchPercentage);
+    //console.log("Scratch percentage: ", scratchPercentage);
     if (scratchPercentage >= eraserShouldBeScratched && isScratchCardVisible) {
       setScratchedCard();
     } else {
@@ -123,6 +114,7 @@ const ScratchLayout = ({
           //isLuckySymbolTrue={isLuckySymbolTrue}
           setIsLuckySymbolTrue={setIsLuckySymbolTrue}
           timerGame={timerGame}
+          setWinLuckySymbolVideo={setWinLuckySymbolVideo}
         />
         {isScratchCardVisible && (
           <View style={styles.scratchCardContainer}>

@@ -117,7 +117,7 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading , setScratchStarted}) =
   useEffect(() => {
     if (totalArea > 0) {
       const percentageErased = (erasedArea / totalArea) * 100;
-      console.log("Percentage Erased:", percentageErased);
+      //console.log("Percentage Erased:", percentageErased);
       if (onScratch) {
         onScratch(percentageErased);
         if (percentageErased > 0){
