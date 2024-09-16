@@ -75,7 +75,6 @@ const ScratchLayout = ({
   };
 
   const handleScratch = (scratchPercentage) => {
-    //console.log("Scratch percentage: ", scratchPercentage);
     if (scratchPercentage >= eraserShouldBeScratched && isScratchCardVisible) {
       setScratchedCard();
     } else {

@@ -72,9 +72,12 @@ const ScratchLuckyGame = () => {
     ),
   };
 
+  useEffect(() => {
+    console.log("Updated Lucky Symbol Count:", luckySymbolCount);
+  }, [luckySymbolCount]);
+  
   const nextCard = () => {
     setWinLuckySymbolVideo(false);
-    setCollectLuckySymbolVideo(false);
     setSkipToFinishLuckyVideo(false);
     addLuckySymbol();
 
@@ -236,8 +239,10 @@ const ScratchLuckyGame = () => {
       {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen()}
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect
-          handleVideoEnd={handleVideoEnd}
+          setReset={setReset}
           setLuckySymbolCount={setLuckySymbolCount}
+          setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
+
         />
       )}
     </View>

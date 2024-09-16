@@ -7,13 +7,14 @@ import {
   Platform,
 } from "react-native";
 import LottieView from "react-native-web-lottie";
+import { updateCurrentTheme } from "../global/Assets";
 
 const colectLuckyCoins = require("./../assets/image/lucky_coin.png");
 const lottieStars = require("./../assets/lotties/lottieStars.json");
 const lottieSymbolsAnim = require("./../assets/lotties/3LuckySymbolsPart01.json");
 const lottieBonusCard = require("./../assets/lotties/lottieBonusCard.json");
 
-const LuckySymbolCollect = ({ handleVideoEnd,setLuckySymbolCount }) => {
+const LuckySymbolCollect = ({ setReset,setLuckySymbolCount,setCollectLuckySymbolVideo}) => {
   const [clicks, setClicks] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [initialAnimationComplete, setInitialAnimationComplete] =
@@ -58,7 +59,7 @@ const LuckySymbolCollect = ({ handleVideoEnd,setLuckySymbolCount }) => {
         if (nextClickCount === 2) {
           setClicks(0);
           setShowBonusCard(true);
-          setLuckySymbolCount(3);
+            setLuckySymbolCount(3);
           // Additional logic to handle end game or other actions
         } else {
           //triggerVibration('light');
@@ -74,7 +75,16 @@ const LuckySymbolCollect = ({ handleVideoEnd,setLuckySymbolCount }) => {
 
   const handleBonusCardAnimationComplete = () => {
     setTimeout(() => {
-        handleVideoEnd();
+        setCollectLuckySymbolVideo(false);
+
+        setTimeout(() => {
+        setLuckySymbolCount(0);
+          setReset(true);
+    
+          setTimeout(() => {
+            updateCurrentTheme();
+          }, 500);
+        }, 1200);
     }, 1000);
   };
 
