@@ -15,13 +15,12 @@ import { updateCurrentTheme, backgroundLoop } from "../global/Assets";
 import Video from "../components/Video";
 import GameOverScreen from "../components/GameOverScreen.js";
 import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
-import BrowserDetection from 'react-browser-detection';
+import BrowserDetection from "react-browser-detection";
 
 // Importing media files
 const backgroundGame = require("./../assets/image/background_game.png");
 const videoWinLuckySymbol = require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4");
 const videoWinLuckySymbolChrome = require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_chrome.webm");
-
 
 const videoLuckySymbolFinal = require("./../assets/video/lucky_symbol_3d_coin_cut.mp4");
 
@@ -35,9 +34,8 @@ const ScratchLuckyGame = () => {
   const [scratchCardLeft, setScratchCardLeft] = useState(10); // Tracks remaining scratch cards
   const [timerGame, setTimerGame] = useState(0); // Game timer
   const [score, setScore] = useState(0); // Current score
-
   const [scratchStarted, setScratchStarted] = useState(false); // Tracks if the scratch action has started
-  const [luckySymbolCount, setLuckySymbolCount] = useState(0); // Tracks the number of lucky symbols uncovered
+  const [luckySymbolCount, setLuckySymbolCount] = useState(2); // Tracks the number of lucky symbols uncovered
 
   // Animation references for movement effects
   const marginTopAnim = useRef(new Animated.Value(0)).current;
@@ -49,28 +47,34 @@ const ScratchLuckyGame = () => {
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
   const browserHandler = {
-    chrome: () =>  <Video
-    source={
-      skipToFinishLuckyVideo ? videoLuckySymbolFinal : videoWinLuckySymbolChrome
-    } // Play the win video
-    style={styles.transparentVideo} // Video styling
-    onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
-    onEnded={handleVideoEnd} // Web: Trigger callback when video ends
-  />,
+    chrome: () => (
+      <Video
+        source={
+          skipToFinishLuckyVideo
+            ? videoLuckySymbolFinal
+            : videoWinLuckySymbolChrome
+        } // Play the win video
+        style={styles.transparentVideo} // Video styling
+        onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
+        onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+      />
+    ),
     //googlebot: () => <div>Hi GoogleBot!</div>,
-    default: (browser) => <Video
-    source={
-      skipToFinishLuckyVideo ? videoLuckySymbolFinal : videoWinLuckySymbol
-    } // Play the win video
-    style={styles.transparentVideo} // Video styling
-    onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
-    onEnded={handleVideoEnd} // Web: Trigger callback when video ends
-  />,
+    default: (browser) => (
+      <Video
+        source={
+          skipToFinishLuckyVideo ? videoLuckySymbolFinal : videoWinLuckySymbol
+        } // Play the win video
+        style={styles.transparentVideo} // Video styling
+        onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
+        onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+      />
+    ),
   };
-
 
   const nextCard = () => {
     setWinLuckySymbolVideo(false);
+    setCollectLuckySymbolVideo(false);
     setSkipToFinishLuckyVideo(false);
     addLuckySymbol();
 
@@ -80,13 +84,14 @@ const ScratchLuckyGame = () => {
       setTimeout(() => {
         updateCurrentTheme();
       }, 500);
-
     }, 1200);
   };
 
   const addLuckySymbol = () => {
+    console.log("Adding lucky symbol", luckySymbolCount);
     if (luckySymbolCount === 3) {
       setLuckySymbolCount(0);
+    } else if (luckySymbolCount === 2) {
       setCollectLuckySymbolVideo(true);
     } else {
       setLuckySymbolCount(luckySymbolCount + 1);
@@ -96,8 +101,6 @@ const ScratchLuckyGame = () => {
   // Callback function to handle when the video finishes
   const handleVideoEnd = () => {
     console.log("Video has finished playing.");
-    // Example: Trigger game logic after video ends
-    //setGameOver(true);
     nextCard();
   };
 
@@ -106,13 +109,13 @@ const ScratchLuckyGame = () => {
       Animated.timing(marginTopAnim, {
         toValue: 10,
         duration: 300,
-        useNativeDriver: false,
+        useNativeDriver: Platform.OS !== "web",
       }).start();
     } else {
       Animated.timing(marginTopAnim, {
         toValue: 0,
         duration: 300,
-        useNativeDriver: false,
+        useNativeDriver: Platform.OS !== "web",
       }).start();
     }
   }, [scratchStarted]);
@@ -131,23 +134,23 @@ const ScratchLuckyGame = () => {
       Animated.timing(translateX, {
         toValue: width * 0.1,
         duration: 200,
-        useNativeDriver: true,
+        useNativeDriver: Platform.OS !== "web",
       }).start(() => {
         Animated.timing(translateX, {
           toValue: -width,
           duration: 300,
-          useNativeDriver: true,
+          useNativeDriver: Platform.OS !== "web",
         }).start(() => {
           translateX.setValue(width);
           Animated.timing(translateX, {
             toValue: -width * 0.1,
             duration: 300,
-            useNativeDriver: true,
+            useNativeDriver: Platform.OS !== "web",
           }).start(() => {
             Animated.spring(translateX, {
               toValue: 0,
               friction: 5,
-              useNativeDriver: true,
+              useNativeDriver: Platform.OS !== "web",
             }).start();
           });
         });
@@ -176,10 +179,7 @@ const ScratchLuckyGame = () => {
           elevation: 10, // Ensures the overlay has proper visual depth on Android
         }}
       >
-       
-         <BrowserDetection>
-        { browserHandler }
-      </BrowserDetection>
+        <BrowserDetection>{browserHandler}</BrowserDetection>
         <TouchableOpacity style={styles.clickableArea} onPress={handleClick}>
           <View style={styles.transparentOverlay} />
         </TouchableOpacity>
@@ -226,6 +226,7 @@ const ScratchLuckyGame = () => {
                 score={score}
                 setScore={setScore}
                 setWinLuckySymbolVideo={setWinLuckySymbolVideo}
+                setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
               />
             </View>
           </Animated.View>
@@ -233,7 +234,12 @@ const ScratchLuckyGame = () => {
       </View>
       {gameOver && <GameOverScreen />}
       {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen()}
-      {collectLuckySymbolVideo && <LuckySymbolCollect />}
+      {collectLuckySymbolVideo && (
+        <LuckySymbolCollect
+          handleVideoEnd={handleVideoEnd}
+          setLuckySymbolCount={setLuckySymbolCount}
+        />
+      )}
     </View>
   );
 };

@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Animated,
   Easing,
+  Platform,
 } from "react-native";
 import AnimatedIcon from "./AnimatedIcon";
 import LottieView from "react-native-web-lottie";
@@ -60,6 +61,8 @@ const ScratchGame = ({
   setIsLuckySymbolTrue,
   timerGame,
   setWinLuckySymbolVideo,
+  setCollectLuckySymbolVideo,
+  luckySymbolCount,
 }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
@@ -240,7 +243,12 @@ const ScratchGame = ({
       setTimeout(() => {
         
         if (arrayIcon) {
-          setWinLuckySymbolVideo(true);
+          if(luckySymbolCount===2){
+            setCollectLuckySymbolVideo(true);
+          }
+          else{
+            setWinLuckySymbolVideo(true);
+          }
         }
         else {
           setReset(true);
@@ -359,7 +367,7 @@ const ScratchGame = ({
         toValue: 1,
         duration: 2400,
         easing: Easing.inOut(Easing.ease),
-        useNativeDriver: true,
+        useNativeDriver: Platform.OS !== 'web',
       }).start();
     }
   }, [fadeAnim, onLoading]);

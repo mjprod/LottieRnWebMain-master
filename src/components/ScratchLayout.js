@@ -20,7 +20,6 @@ const ScratchLayout = ({
   scratched,
   setScratched,
   luckySymbolCount,
-  setLuckySymbolCount,
   setScratchStarted,
   scratchCardLeft,
   setScratchCardLeft,
@@ -37,7 +36,7 @@ const ScratchLayout = ({
   const [isScratchCardVisible, setIsScratchCardVisible] = useState(true);
   const [autoScratch, setAutoScratch] = useState(false);
  // const [collectLuckySymbol, setCollectShowLuckySymbol] = useState(false);
-  const [showLuckySymbol, setShowLuckySymbol] = useState(true);
+ // const [showLuckySymbol, setShowLuckySymbol] = useState(true);
   //const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
   const [scratchedStarted, setScratchedStarted] = useState(false);
 
@@ -46,7 +45,7 @@ const ScratchLayout = ({
       if (luckySymbolCount === 2) {
        // setCollectShowLuckySymbol(true);
       } else {
-        setShowLuckySymbol(true);
+        //setShowLuckySymbol(true);
         //playSong(audioLuckySymbolCoins);
       }
 
@@ -59,7 +58,7 @@ const ScratchLayout = ({
       setIsLuckySymbolTrue(false);
       setTimeout(() => {
         //if (skipToFinishLuckyVideo) {
-        setShowLuckySymbol(false);
+        //setShowLuckySymbol(false);
         setScratched(true);
         setIsScratchCardVisible(false);
         //}
@@ -116,6 +115,8 @@ const ScratchLayout = ({
           setIsLuckySymbolTrue={setIsLuckySymbolTrue}
           timerGame={timerGame}
           setWinLuckySymbolVideo={setWinLuckySymbolVideo}
+          luckySymbolCount={luckySymbolCount}
+          setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
         />
         {isScratchCardVisible && (
           <View style={styles.scratchCardContainer}>
@@ -140,22 +141,6 @@ const ScratchLayout = ({
       >
         <ScratchCardLeft scratchCardsLeft={scratchCardLeft} />
       </View>
-      {/*showLuckySymbol && (
-        <View
-          style={{
-            flex: 1,
-          }}
-        >
-          <video
-            src={videoLuckySymbol}
-            style={styles.transparentVideo}
-            loop
-            autoPlay
-            muted
-            playsInline
-          />
-        </View>
-      )*/}
     </View>
   );
 };

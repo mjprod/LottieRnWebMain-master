@@ -13,10 +13,11 @@ const lottieStars = require("./../assets/lotties/lottieStars.json");
 const lottieSymbolsAnim = require("./../assets/lotties/3LuckySymbolsPart01.json");
 const lottieBonusCard = require("./../assets/lotties/lottieBonusCard.json");
 
-const LuckySymbolCollect = () => {
+const LuckySymbolCollect = ({ handleVideoEnd,setLuckySymbolCount }) => {
   const [clicks, setClicks] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [initialAnimationComplete, setInitialAnimationComplete] = useState(false);
+  const [initialAnimationComplete, setInitialAnimationComplete] =
+    useState(false);
   const [showBonusCard, setShowBonusCard] = useState(false);
   const [collectLuckySymbol, setCollectShowLuckySymbol] = useState(true);
 
@@ -43,20 +44,21 @@ const LuckySymbolCollect = () => {
       Animated.timing(bounceAnim, {
         toValue: finalScale + 0.1,
         duration: 100,
-        useNativeDriver: true,
+        useNativeDriver: Platform.OS !== "web",
       }),
       Animated.timing(bounceAnim, {
         toValue: finalScale,
         duration: 100,
-        useNativeDriver: true,
+        useNativeDriver: Platform.OS !== "web",
       }),
     ]).start(() => {
       console.log(lottieAnimRef.current);
       if (lottieAnimRef.current) {
         lottieAnimRef.current.play();
-        if (nextClickCount === 20) {
+        if (nextClickCount === 2) {
           setClicks(0);
           setShowBonusCard(true);
+          setLuckySymbolCount(3);
           // Additional logic to handle end game or other actions
         } else {
           //triggerVibration('light');
@@ -71,7 +73,9 @@ const LuckySymbolCollect = () => {
   };
 
   const handleBonusCardAnimationComplete = () => {
-    setCollectShowLuckySymbol(false); 
+    setTimeout(() => {
+        handleVideoEnd();
+    }, 1000);
   };
 
   if (!collectLuckySymbol) return null;
@@ -97,7 +101,7 @@ const LuckySymbolCollect = () => {
           onAnimationFinish={handleInitialAnimationComplete}
         />
       )}
-      {initialAnimationComplete &&  !showBonusCard &&(
+      {initialAnimationComplete && !showBonusCard && (
         <TouchableWithoutFeedback onPress={handlePress}>
           <Animated.View
             style={[
@@ -124,7 +128,7 @@ const LuckySymbolCollect = () => {
           </Animated.View>
         </TouchableWithoutFeedback>
       )}
-       {showBonusCard && (
+      {showBonusCard && (
         <LottieView
           //ref={initialLottieAnimRef}
           style={styles.initialLottieAnimation}
