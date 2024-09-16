@@ -11,7 +11,7 @@ export const IconTypeLucky = ({ scratched }) => {
   useEffect(() => {
     if (scratched) {
       // Bounce animation (scaling up and down)
-      Animated.loop(
+    /*  Animated.loop(
         Animated.sequence([
           Animated.timing(bounceAnim, {
             toValue: 1.2, // Scale up
@@ -27,8 +27,10 @@ export const IconTypeLucky = ({ scratched }) => {
           }),
         ])
       ).start();
+      */
 
       // Rotation animation
+      /*
       Animated.loop(
         Animated.timing(rotateAnim, {
           toValue: 1,
@@ -37,6 +39,7 @@ export const IconTypeLucky = ({ scratched }) => {
           useNativeDriver: true,
         })
       ).start();
+      */
     }
   }, [scratched, bounceAnim, rotateAnim]); // Depend on the scratched value
 
