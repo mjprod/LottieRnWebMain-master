@@ -5,19 +5,22 @@ import {
   ImageBackground,
   Animated,
   Dimensions,
-  Text,
   Platform,
+  TouchableOpacity,
 } from "react-native";
 import { BackgroundGame } from "../components/BackgroundGame";
 import TopLayout from "../components/TopLayout";
 import ScratchLayout from "../components/ScratchLayout";
-import { backgroundLoop } from "../global/Assets";
-import Video from '../components/Video';
+import { updateCurrentTheme, backgroundLoop } from "../global/Assets";
+import Video from "../components/Video";
 import GameOverScreen from "../components/GameOverScreen.js";
+import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
 
 // Importing media files
 const backgroundGame = require("./../assets/image/background_game.png");
-const videoWinLuckySymbol = require('./../assets/video/lucky_symbol_3d_coin.mp4');
+const videoWinLuckySymbol = require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4");
+const videoLuckySymbolFinal = require("./../assets/video/lucky_symbol_3d_coin_cut.mp4");
+
 const { width } = Dimensions.get("window");
 
 const ScratchLuckyGame = () => {
@@ -36,28 +39,41 @@ const ScratchLuckyGame = () => {
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
 
-  const [winLuckySymbolVideo, setWinLuckySymbolVideo] = useState(false); // Tracks if the scratch action has started
+  const [winLuckySymbolVideo, setWinLuckySymbolVideo] = useState(false); // Tracks if the Lucky Symbol video should be shown
+  const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false); // Tracks if the collect Lucky Symbol video should be shown
+
+  const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
+
+  const nextCard = () => {
+    setWinLuckySymbolVideo(false);
+    setSkipToFinishLuckyVideo(false);
+    addLuckySymbol();
+
+    setTimeout(() => {
+      setReset(true);
+
+      setTimeout(() => {
+        updateCurrentTheme();
+      }, 500);
+
+    }, 2000);
+  };
+
+  const addLuckySymbol = () => {
+    if (luckySymbolCount === 3) {
+      setLuckySymbolCount(0);
+      setCollectLuckySymbolVideo(true);
+    } else {
+      setLuckySymbolCount(luckySymbolCount + 1);
+    }
+  };
 
   // Callback function to handle when the video finishes
   const handleVideoEnd = () => {
     console.log("Video has finished playing.");
     // Example: Trigger game logic after video ends
     //setGameOver(true);
-    // Any additional actions after the video ends
-    setWinLuckySymbolVideo(false);
-
-    //const addLuckySymbol = () => {
-      if (luckySymbolCount === 3) {
-        setLuckySymbolCount(0);
-      } else {
-        setLuckySymbolCount(luckySymbolCount + 1);
-      }
-   // };
-
-   setTimeout(() => {
-
-    setReset(true);
-   }, 2000);
+    nextCard();
   };
 
   useEffect(() => {
@@ -78,16 +94,15 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (reset) {
       setTimeout(() => {
-        if(scratchCardLeft>0){
+        if (scratchCardLeft > 0) {
           setScratchCardLeft(scratchCardLeft - 1);
-        }
-        else{
+        } else {
           setGameOver(true);
-        } 
+        }
       }, 600);
       setTimerGame(0);
       setScratchStarted(false);
-  
+
       Animated.timing(translateX, {
         toValue: width * 0.1,
         duration: 200,
@@ -115,6 +130,15 @@ const ScratchLuckyGame = () => {
     }
   }, [reset, setReset]);
 
+  const handleClick = () => {
+    setSkipToFinishLuckyVideo(true);
+
+    setWinLuckySymbolVideo(false);
+    setTimeout(() => {
+      nextCard();
+    }, 500);
+  };
+
   // Function to render the win screen with a video overlay
   const renderWinLuckySymbolVideoScreen = () => {
     return (
@@ -125,13 +149,19 @@ const ScratchLuckyGame = () => {
           flex: 1,
           zIndex: 9999, // Makes sure the overlay is on top of all other elements
           elevation: 10, // Ensures the overlay has proper visual depth on Android
-        }}>
+        }}
+      >
         <Video
-          source={videoWinLuckySymbol} // Play the win video
+          source={
+            skipToFinishLuckyVideo ? videoLuckySymbolFinal : videoWinLuckySymbol
+          } // Play the win video
           style={styles.transparentVideo} // Video styling
           onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
           onEnded={handleVideoEnd} // Web: Trigger callback when video ends
         />
+        <TouchableOpacity style={styles.clickableArea} onPress={handleClick}>
+          <View style={styles.transparentOverlay} />
+        </TouchableOpacity>
       </View>
     );
   };
@@ -146,44 +176,43 @@ const ScratchLuckyGame = () => {
           style={styles.imageBackground}
           resizeMode="stretch"
         >
-            <Animated.View style={[{ transform: [{ translateX }] }]}>
-              <View style={styles.overlay}>
-                {/* Top part of the layout showing timer, score, etc. */}
-                <Animated.View style={{ marginTop: marginTopAnim }}>
-                  <TopLayout
-                    scratched={scratched}
-                    scratchStarted={scratchStarted}
-                    timerGame={timerGame}
-                    setTimerGame={setTimerGame}
-                    score={score}
-                    luckySymbolCount={luckySymbolCount}
-                  />
-                </Animated.View>
-
-                {/* Main scratch card layout */}
-                <ScratchLayout
-                  reset={reset}
-                  setReset={setReset}
+          <Animated.View style={[{ transform: [{ translateX }] }]}>
+            <View style={styles.overlay}>
+              {/* Top part of the layout showing timer, score, etc. */}
+              <Animated.View style={{ marginTop: marginTopAnim }}>
+                <TopLayout
                   scratched={scratched}
-                  setScratched={setScratched}
-                  luckySymbolCount={luckySymbolCount}
-                  setLuckySymbolCount={setLuckySymbolCount}
-                  setScratchStarted={setScratchStarted}
-                  scratchCardLeft={scratchCardLeft}
-                  setScratchCardLeft={setScratchCardLeft}
+                  scratchStarted={scratchStarted}
                   timerGame={timerGame}
+                  setTimerGame={setTimerGame}
                   score={score}
-                  setScore={setScore}
-                  setWinLuckySymbolVideo={setWinLuckySymbolVideo}
+                  luckySymbolCount={luckySymbolCount}
                 />
-              </View>
-            </Animated.View>
-          
+              </Animated.View>
+
+              {/* Main scratch card layout */}
+              <ScratchLayout
+                reset={reset}
+                setReset={setReset}
+                scratched={scratched}
+                setScratched={setScratched}
+                luckySymbolCount={luckySymbolCount}
+                setLuckySymbolCount={setLuckySymbolCount}
+                setScratchStarted={setScratchStarted}
+                scratchCardLeft={scratchCardLeft}
+                setScratchCardLeft={setScratchCardLeft}
+                timerGame={timerGame}
+                score={score}
+                setScore={setScore}
+                setWinLuckySymbolVideo={setWinLuckySymbolVideo}
+              />
+            </View>
+          </Animated.View>
         </ImageBackground>
       </View>
-
-      {gameOver && <GameOverScreen />} {/* Game over screen */} 
+      {gameOver && <GameOverScreen />}
       {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen()}
+      {collectLuckySymbolVideo && <LuckySymbolCollect />}
     </View>
   );
 };
@@ -260,6 +289,17 @@ const styles = StyleSheet.create({
         resizeMode: "cover",
       },
     }),
+  },
+  clickableArea: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: "100%",
+    width: "100%",
+  },
+  transparentOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0)",
   },
 });
 

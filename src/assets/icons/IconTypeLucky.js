@@ -2,41 +2,43 @@ import React, { useRef, useEffect } from 'react';
 import { View, Animated, Easing } from 'react-native';
 import Svg, { Image } from 'react-native-svg-web';
 
-export const IconTypeLucky = () => {
+export const IconTypeLucky = ({ scratched }) => {
   // Create animated value for the bounce and rotation
-  const bounceAnim = useRef(new Animated.Value(0)).current;
+  const bounceAnim = useRef(new Animated.Value(1)).current;
   const rotateAnim = useRef(new Animated.Value(0)).current;
 
-  // Define the bounce and rotation animations
+  // Define the bounce and rotation animations, triggered by the scratched prop
   useEffect(() => {
-    // Bounce animation (scaling up and down)
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(bounceAnim, {
-          toValue: 1.2, // Scale up
-          duration: 2000,
-          easing: Easing.bounce,
-          useNativeDriver: true,
-        }),
-        Animated.timing(bounceAnim, {
-          toValue: 1, 
-          duration: 2000,
-          easing: Easing.bounce,
-          useNativeDriver: true,
-        }),
-      ])
-    ).start();
+    if (scratched) {
+      // Bounce animation (scaling up and down)
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(bounceAnim, {
+            toValue: 1.2, // Scale up
+            duration: 2000,
+            easing: Easing.bounce,
+            useNativeDriver: true,
+          }),
+          Animated.timing(bounceAnim, {
+            toValue: 1, // Scale back to original size
+            duration: 2000,
+            easing: Easing.bounce,
+            useNativeDriver: true,
+          }),
+        ])
+      ).start();
 
-    // Rotation animation
-    Animated.loop(
-      Animated.timing(rotateAnim, {
-        toValue: 1,
-        duration: 2000,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      })
-    ).start();
-  }, [bounceAnim, rotateAnim]);
+      // Rotation animation
+      Animated.loop(
+        Animated.timing(rotateAnim, {
+          toValue: 1,
+          duration: 2000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        })
+      ).start();
+    }
+  }, [scratched, bounceAnim, rotateAnim]); // Depend on the scratched value
 
   // Interpolate rotation value from 0 to 360 degrees
   const rotation = rotateAnim.interpolate({

@@ -86,7 +86,7 @@ const ScratchGame = ({
     <IconTypeEyePyramiddefault  lower_opacity={scratched} key="9" />,
     <IconTypePharoahdefault  lower_opacity={scratched} key="10" />,
     <IconTypeSleighdefault  lower_opacity={scratched} key="11" />,
-    <IconTypeLucky key="12" />,
+    <IconTypeLucky scratched ={scratched} key="12" />,
   ];
 
   const generateRandomLuckySymbol = () => {
@@ -491,7 +491,7 @@ const ScratchGame = ({
                         style={styles.lottieAnimation}
                         source={lottieAnimations[arrayBobble[index]]}
                         autoPlay
-                        loop={true}
+                        loop={false}
                         resizeMode="cover"
                       />
                     </View>

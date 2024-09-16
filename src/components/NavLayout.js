@@ -5,11 +5,7 @@ import AlphaView from "./AlphaView";
 
 const lottieAppBackground = require("../assets/image/background_top_nav.png");
 
-const { height: screenHeight, width: screenWidth } = Dimensions.get("window");
-
 const NavLayout = ({ showAlphaView }) => {
-  const isMobile = screenWidth < 768;
-
   return (
     <View style={styles.container}>
       <View

@@ -2,7 +2,6 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 import './index.css';
-
 export default class App extends React.Component {
     render() {
         return (
