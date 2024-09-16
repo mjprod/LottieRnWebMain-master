@@ -15178,6 +15178,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-browser-detection@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "react-browser-detection@npm:1.2.1"
+  dependencies:
+    prop-types: ^15.5.10
+  peerDependencies:
+    react: ^16.0.0
+  checksum: b4d787e6c013a485744bdcaf0d037e559559192fbc5679cb93f5480d65e09f024884715252fe3c631eb0359fdf9a2084eccaa8a2904935140272245bd2caeab8
+  languageName: node
+  linkType: hard
+
 "react-clone-referenced-element@npm:^1.0.1":
   version: 1.1.1
   resolution: "react-clone-referenced-element@npm:1.1.1"
@@ -15362,6 +15373,7 @@ __metadata:
     lottie-react: ^2.4.0
     react: latest
     react-art: 16.5.1
+    react-browser-detection: ^1.2.1
     react-dom: ^18.3.1
     react-native: "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz"
     react-native-canvas: ^0.1.40

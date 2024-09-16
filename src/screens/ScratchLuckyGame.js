@@ -15,10 +15,14 @@ import { updateCurrentTheme, backgroundLoop } from "../global/Assets";
 import Video from "../components/Video";
 import GameOverScreen from "../components/GameOverScreen.js";
 import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
+import BrowserDetection from 'react-browser-detection';
 
 // Importing media files
 const backgroundGame = require("./../assets/image/background_game.png");
 const videoWinLuckySymbol = require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4");
+const videoWinLuckySymbolChrome = require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_chrome.webm");
+
+
 const videoLuckySymbolFinal = require("./../assets/video/lucky_symbol_3d_coin_cut.mp4");
 
 const { width } = Dimensions.get("window");
@@ -44,6 +48,27 @@ const ScratchLuckyGame = () => {
 
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
+  const browserHandler = {
+    chrome: () =>  <Video
+    source={
+      skipToFinishLuckyVideo ? videoLuckySymbolFinal : videoWinLuckySymbolChrome
+    } // Play the win video
+    style={styles.transparentVideo} // Video styling
+    onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
+    onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+  />,
+    //googlebot: () => <div>Hi GoogleBot!</div>,
+    default: (browser) => <Video
+    source={
+      skipToFinishLuckyVideo ? videoLuckySymbolFinal : videoWinLuckySymbol
+    } // Play the win video
+    style={styles.transparentVideo} // Video styling
+    onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
+    onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+  />,
+  };
+
+
   const nextCard = () => {
     setWinLuckySymbolVideo(false);
     setSkipToFinishLuckyVideo(false);
@@ -56,7 +81,7 @@ const ScratchLuckyGame = () => {
         updateCurrentTheme();
       }, 500);
 
-    }, 2000);
+    }, 1200);
   };
 
   const addLuckySymbol = () => {
@@ -151,14 +176,10 @@ const ScratchLuckyGame = () => {
           elevation: 10, // Ensures the overlay has proper visual depth on Android
         }}
       >
-        <Video
-          source={
-            skipToFinishLuckyVideo ? videoLuckySymbolFinal : videoWinLuckySymbol
-          } // Play the win video
-          style={styles.transparentVideo} // Video styling
-          onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
-          onEnded={handleVideoEnd} // Web: Trigger callback when video ends
-        />
+       
+         <BrowserDetection>
+        { browserHandler }
+      </BrowserDetection>
         <TouchableOpacity style={styles.clickableArea} onPress={handleClick}>
           <View style={styles.transparentOverlay} />
         </TouchableOpacity>
