@@ -17,9 +17,11 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: 'flex-start',
         alignItems: "center",
         backgroundColor: "#35363A",
+        paddingTop: "10%",
+
     },
     app: {
         maxWidth: 400,  

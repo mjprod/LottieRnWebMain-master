@@ -141,7 +141,7 @@ const LuckySymbolCollect = ({ setReset,setLuckySymbolCount,setCollectLuckySymbol
       {showBonusCard && (
         <LottieView
           //ref={initialLottieAnimRef}
-          style={styles.initialLottieAnimation}
+          style={styles.bonusLottieAnimation}
           source={lottieBonusCard}
           autoPlay={true}
           loop={false}
@@ -175,6 +175,10 @@ const styles = StyleSheet.create({
   initialLottieAnimation: {
     width: 300,
     height: 300,
+  },
+  bonusLottieAnimation: {
+    width: 450,
+    height: 450,
   },
   blackOverlayWin: {
     ...Platform.select({
