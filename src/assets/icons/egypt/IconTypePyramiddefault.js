@@ -1,6 +1,6 @@
 import React from 'react';
 import Svg, {ClipPath, Defs, G, Path, Use} from 'react-native-svg-web';
-import { colorSymbolNotSelected } from '../../global/Settings';
+import { colorSymbolNotSelected } from '../../../global/Settings';
 
 const lowerOpacityColour = colorSymbolNotSelected;
 

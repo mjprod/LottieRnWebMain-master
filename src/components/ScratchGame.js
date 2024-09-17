@@ -10,18 +10,18 @@ import {
 import AnimatedIcon from "./AnimatedIcon";
 import LottieView from "react-native-web-lottie";
 
-import { IconTypeAnhkdefault } from "./../assets/icons/IconTypeAnhkdefault";
-import { IconTypeAnubisdefault } from "./../assets/icons/IconTypeAnubisdefault";
-import { IconTypeFeatherdefault } from "./../assets/icons/IconTypeFeatherdefault";
-import { IconTypeHorusdefault } from "./../assets/icons/IconTypeHorusdefault";
-import { IconTypePyramiddefault } from "./../assets/icons/IconTypePyramiddefault";
-import { IconTypeScarabdefault } from "./../assets/icons/IconTypeScarabdefault";
-import { IconTypeSphinxdefault } from "./../assets/icons/IconTypeSphinxdefault";
-import { IconTypeTabletdefault } from "./../assets/icons/IconTypeTabletdefault";
-import { IconTypeSunRadefault } from "./../assets/icons/IconTypeSunRadefault";
-import { IconTypeEyePyramiddefault } from "../assets/icons/IconTypeEyePyramiddefault";
-import { IconTypePharoahdefault } from "../assets/icons/IconTypePharoahdefault";
-import { IconTypeSleighdefault } from "../assets/icons/IconTypeSleighdefault";
+import { IconTypeAnhkdefault } from "./../assets/icons/egypt/IconTypeAnhkdefault";
+import { IconTypeAnubisdefault } from "./../assets/icons/egypt/IconTypeAnubisdefault";
+import { IconTypeFeatherdefault } from "./../assets/icons/egypt/IconTypeFeatherdefault";
+import { IconTypeHorusdefault } from "./../assets/icons/egypt/IconTypeHorusdefault";
+import { IconTypePyramiddefault } from "./../assets/icons/egypt/IconTypePyramiddefault";
+import { IconTypeScarabdefault } from "./../assets/icons/egypt/IconTypeScarabdefault";
+import { IconTypeSphinxdefault } from "./../assets/icons/egypt/IconTypeSphinxdefault";
+import { IconTypeTabletdefault } from "./../assets/icons/egypt/IconTypeTabletdefault";
+import { IconTypeSunRadefault } from "./../assets/icons/egypt/IconTypeSunRadefault";
+import { IconTypeEyePyramiddefault } from "../assets/icons/egypt/IconTypeEyePyramiddefault";
+import { IconTypePharoahdefault } from "../assets/icons/egypt/IconTypePharoahdefault";
+import { IconTypeSleighdefault } from "../assets/icons/egypt/IconTypeSleighdefault";
 import { IconTypeLucky } from "./../assets/icons/IconTypeLucky";
 
 import { Howl } from "howler";
