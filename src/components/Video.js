@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
 import { unstable_createElement } from "react-native-web";
 
-const { width, height } = Dimensions.get("window"); // Get screen dimensions
 
 class Video extends Component {
   // Function to create the video element with attributes

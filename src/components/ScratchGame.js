@@ -10,20 +10,6 @@ import {
 import AnimatedIcon from "./AnimatedIcon";
 import LottieView from "react-native-web-lottie";
 
-import { IconTypeAnhkdefault } from "./../assets/icons/egypt/IconTypeAnhkdefault";
-import { IconTypeAnubisdefault } from "./../assets/icons/egypt/IconTypeAnubisdefault";
-import { IconTypeFeatherdefault } from "./../assets/icons/egypt/IconTypeFeatherdefault";
-import { IconTypeHorusdefault } from "./../assets/icons/egypt/IconTypeHorusdefault";
-import { IconTypePyramiddefault } from "./../assets/icons/egypt/IconTypePyramiddefault";
-import { IconTypeScarabdefault } from "./../assets/icons/egypt/IconTypeScarabdefault";
-import { IconTypeSphinxdefault } from "./../assets/icons/egypt/IconTypeSphinxdefault";
-import { IconTypeTabletdefault } from "./../assets/icons/egypt/IconTypeTabletdefault";
-import { IconTypeSunRadefault } from "./../assets/icons/egypt/IconTypeSunRadefault";
-import { IconTypeEyePyramiddefault } from "../assets/icons/egypt/IconTypeEyePyramiddefault";
-import { IconTypePharoahdefault } from "../assets/icons/egypt/IconTypePharoahdefault";
-import { IconTypeSleighdefault } from "../assets/icons/egypt/IconTypeSleighdefault";
-import { IconTypeLucky } from "./../assets/icons/IconTypeLucky";
-
 import { Howl } from "howler";
 
 import {
@@ -36,7 +22,8 @@ import {
   columns,
   maxRepeatedIcons,
 } from "../global/Settings";
-
+import themes from "../global/themeConfig";
+import { currentTheme } from "../global/Assets";
 
 
 const scratchBackground = require("./../assets/image/scratch_background.png");
@@ -77,21 +64,19 @@ const ScratchGame = ({
   const [arrayBobble, setArrayBobble] = useState();
   const [arrayIcon, setArrayIcon] = useState();
 
-  const iconComponentsDefault = [
-    <IconTypeAnubisdefault lower_opacity={scratched} key="0" />,
-    <IconTypeAnhkdefault lower_opacity={scratched} key="1" />,
-    <IconTypeFeatherdefault lower_opacity={scratched} key="2" />,
-    <IconTypeHorusdefault lower_opacity={scratched} key="3" />,
-    <IconTypePyramiddefault  lower_opacity={scratched} key="4" />,
-    <IconTypeScarabdefault  lower_opacity={scratched} key="5" />,
-    <IconTypeSphinxdefault  lower_opacity={scratched} key="6" />,
-    <IconTypeTabletdefault  lower_opacity={scratched} key="7" />,
-    <IconTypeSunRadefault  lower_opacity={scratched} key="8" />,
-    <IconTypeEyePyramiddefault  lower_opacity={scratched} key="9" />,
-    <IconTypePharoahdefault  lower_opacity={scratched} key="10" />,
-    <IconTypeSleighdefault  lower_opacity={scratched} key="11" />,
-    <IconTypeLucky scratched ={scratched} key="12" />,
-  ];
+  const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
+
+  useEffect(() => {    
+    if (themes[currentTheme] && themes[currentTheme].iconsDefault) {
+      const iconComponentsDefaultNew = themes[currentTheme].iconsDefault;
+
+      const updatedIcons = iconComponentsDefaultNew.map((icon, index) =>
+        React.cloneElement(icon, { lower_opacity: scratched, key: index })
+      );
+      setIconComponentsDefault(updatedIcons);
+    }
+  }, [scratched, currentTheme]); 
+
 
   const generateRandomLuckySymbol = () => {
     const result = Math.random() < generateRandomLuckySymbolPercentage;
@@ -470,13 +455,7 @@ const ScratchGame = ({
     error.play();
   };
 
-  useEffect(() => {
-    if (scratched && !isWinner) {
-      setTimeout(() => {
-        setReset(true);
-      }, 2000);
-    }
-  }, [scratched]);
+
 
   return (
     <ImageBackground source={scratchBackground} style={styles.background_view}>

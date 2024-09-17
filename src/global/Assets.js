@@ -3,7 +3,7 @@ import themes from './themeConfig';
 export const ThemeEnum = Object.freeze({
     EGYPT: 'egypt',
     MYTHOLOGY: 'mythology',
-    PILOT: 'pilot',
+    INTERNATIONAL: 'international',
     COWBOY: 'cowboy',
 });
 
