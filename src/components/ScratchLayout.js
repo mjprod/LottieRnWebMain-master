@@ -20,6 +20,7 @@ const ScratchLayout = ({
   scratched,
   setScratched,
   luckySymbolCount,
+  setLuckySymbolCount,
   setScratchStarted,
   scratchCardLeft,
   setScratchCardLeft,
@@ -115,6 +116,7 @@ const ScratchLayout = ({
           timerGame={timerGame}
           setWinLuckySymbolVideo={setWinLuckySymbolVideo}
           luckySymbolCount={luckySymbolCount}
+          setLuckySymbolCount={setLuckySymbolCount}
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
         />
         {isScratchCardVisible && (

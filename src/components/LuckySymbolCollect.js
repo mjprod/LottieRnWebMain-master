@@ -59,7 +59,7 @@ const LuckySymbolCollect = ({ setReset,setLuckySymbolCount,setCollectLuckySymbol
         if (nextClickCount === 2) {
           setClicks(0);
           setShowBonusCard(true);
-            setLuckySymbolCount(3);
+            //setLuckySymbolCount(3);
           // Additional logic to handle end game or other actions
         } else {
           //triggerVibration('light');

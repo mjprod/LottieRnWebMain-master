@@ -61,8 +61,9 @@ const ScratchGame = ({
   setIsLuckySymbolTrue,
   timerGame,
   setWinLuckySymbolVideo,
-  setCollectLuckySymbolVideo,
+  //setCollectLuckySymbolVideo,
   luckySymbolCount,
+  setLuckySymbolCount,
 }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
@@ -243,15 +244,16 @@ const ScratchGame = ({
       setTimeout(() => {
         
         if (arrayIcon) {
-          if(luckySymbolCount===2){
-            setCollectLuckySymbolVideo(true);
+          if(luckySymbolCount===3){
+            //setLuckySymbolCount(3);
+            //setCollectLuckySymbolVideo(true);
           }
           else{
             setWinLuckySymbolVideo(true);
           }
         }
         else {
-          setReset(true);
+          setReset(true); //NEXT CARD
         }
       }, 1500);
      

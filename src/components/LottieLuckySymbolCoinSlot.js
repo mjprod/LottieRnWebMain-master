@@ -1,12 +1,11 @@
 import React from 'react';
 import LottieView from "react-native-web-lottie";
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const LottieLuckySymbolCoinSlot = ({ luckySymbolCount }) => {
-  const renderLottieViews = () => {
-    const lottieViews = [];
-    for (let i = 0; i < luckySymbolCount; i++) {
-      lottieViews.push(
+  return (
+    <View style={styles.lottieContainer}>
+      {[...Array(luckySymbolCount)].map((_, i) => (
         <LottieView
           key={i}
           style={styles.lottieLuckyAnimation}
@@ -14,13 +13,10 @@ const LottieLuckySymbolCoinSlot = ({ luckySymbolCount }) => {
           autoPlay
           speed={1}
           loop={false}
-        />,
-      );
-    }
-    return lottieViews;
-  };
-
-  return <View style={styles.lottieContainer}>{renderLottieViews()}</View>;
+        />
+      ))}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

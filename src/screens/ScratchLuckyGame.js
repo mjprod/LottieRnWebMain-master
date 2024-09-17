@@ -72,33 +72,53 @@ const ScratchLuckyGame = () => {
     ),
   };
 
-  useEffect(() => {
-    console.log("Updated Lucky Symbol Count:", luckySymbolCount);
-  }, [luckySymbolCount]);
-  
   const nextCard = () => {
     setWinLuckySymbolVideo(false);
     setSkipToFinishLuckyVideo(false);
+
+    console.log("Next card", "addLuckySymbol");
     addLuckySymbol();
 
     setTimeout(() => {
-      setReset(true);
+      if (luckySymbolCount < 2) {
+        setReset(true);
 
-      setTimeout(() => {
-        updateCurrentTheme();
-      }, 500);
+        setTimeout(() => {
+          updateCurrentTheme();
+        }, 500);
+      }
     }, 1200);
   };
 
   const addLuckySymbol = () => {
     console.log("Adding lucky symbol", luckySymbolCount);
-    if (luckySymbolCount === 3) {
+    if (luckySymbolCount > 2) {
       setLuckySymbolCount(0);
     } else if (luckySymbolCount === 2) {
-      setCollectLuckySymbolVideo(true);
+      setLuckySymbolCount(luckySymbolCount + 1);
+      setTimeout(() => {
+        decrementLuckySymbol(3);
+      }, 300);
     } else {
       setLuckySymbolCount(luckySymbolCount + 1);
     }
+  };
+
+  const decrementLuckySymbol = (count, onComplete) => {
+    if (count >= 0) {
+      setLuckySymbolCount(count);
+      setTimeout(() => {
+        if (count === 0) {
+          onCountdownComplete(); 
+        } else {
+          decrementLuckySymbol(count - 1, onComplete);
+        }
+      }, 200);
+    }
+  };
+  
+  const onCountdownComplete = () => {
+    setCollectLuckySymbolVideo(true);
   };
 
   // Callback function to handle when the video finishes
@@ -242,7 +262,6 @@ const ScratchLuckyGame = () => {
           setReset={setReset}
           setLuckySymbolCount={setLuckySymbolCount}
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
-
         />
       )}
     </View>

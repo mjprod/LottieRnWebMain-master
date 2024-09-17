@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -31,9 +31,9 @@ const TopLayout = ({
   score,
   luckySymbolCount,
 }) => {
-  const bounceAnim = new Animated.Value(1).current;
-  const fadeAnim = new Animated.Value(1).current;
-  const scaleAnim = new Animated.Value(1.8).current;
+  const bounceAnim = useRef(new Animated.Value(1)).current;
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const scaleAnim = useRef(new Animated.Value(1.8)).current;
 
   const [countdownTimer, setCountdownTimer] = useState(0);
 
