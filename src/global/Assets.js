@@ -22,15 +22,10 @@ let backgroundLoop = themes[currentTheme].backgroundLoop;
 export const updateCurrentTheme = () => {
     // Update the current theme
     currentTheme = getRandomTheme();
-    console.log('Updated current theme:', currentTheme);
 
     // Reassign gameCenterIcon and backgroundLoop based on the new currentTheme
     gameCenterIcon = themes[currentTheme].gameCenterIcon;
     backgroundLoop = themes[currentTheme].backgroundLoop;
-
-    // Log the new values for debugging
-    console.log('Updated gameCenterIcon:', gameCenterIcon);
-    console.log('Updated backgroundLoop:', backgroundLoop);
 };
 
 // Export the assets so other parts of the app can use them

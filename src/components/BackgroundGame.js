@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   videoContainer: {
     flex: 1,
     maxWidth: 400,  
-    maxHeight: 650,
+    maxHeight: 200,
     width: "100%",
     height: "100%",
   },

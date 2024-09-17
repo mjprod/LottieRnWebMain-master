@@ -27,14 +27,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    right: 15,
+    right: 18,
     bottom: 15,
   },
   lottieLuckyAnimation: {
     width: '45%',
     height: '45%',
-    marginHorizontal: -9,
-    marginBottom: 3,
+    marginHorizontal: -18,
+    marginBottom: 4,
+    marginLeft: 0,
   },
 });
 
