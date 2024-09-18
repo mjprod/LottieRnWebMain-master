@@ -51,6 +51,30 @@ import { IconTypeSuitcaseActive } from '../assets/icons/international/IconTypeSu
 import { IconTypeTajActive } from '../assets/icons/international/IconTypeTajActive';
 import { IconTypeTravellerActive } from '../assets/icons/international/IconTypeTravellerActive';
 import { IconTypeVanActive } from '../assets/icons/international/IconTypeVanActive';
+import { IconTypeCentaurdefault } from '../assets/icons/mythology/IconTypeCentaurdefault';
+import { IconTypeCentaurActive } from '../assets/icons/mythology/IconTypeCentaurActive';
+import { IconTypeHarpdefault } from '../assets/icons/mythology/IconTypeHarpdefault';
+import { IconTypeHarpActive } from '../assets/icons/mythology/IconTypeHarpActive';
+import { IconTypeHelmetdefault } from '../assets/icons/mythology/IconTypeHelmetdefault';
+import { IconTypeHelmetActive } from '../assets/icons/mythology/IconTypeHelmetActive';
+import { IconTypeMedusadefault } from '../assets/icons/mythology/IconTypeMedusadefault';
+import { IconTypeMedusaActive } from '../assets/icons/mythology/IconTypeMedusaActive';
+import { IconTypeOlivedefault } from '../assets/icons/mythology/IconTypeOlivedefault';
+import { IconTypeOliveActive } from '../assets/icons/mythology/IconTypeOliveActive';
+import { IconTypePillarActive } from '../assets/icons/mythology/IconTypePillarActive';
+import { IconTypePillardefault } from '../assets/icons/mythology/IconTypePillardefault';
+import { IconTypeRuinsdefault } from '../assets/icons/mythology/IconTypeRuinsdefault';
+import { IconTypeRuinsActive } from '../assets/icons/mythology/IconTypeRuinsActive';
+import { IconTypeShielddefault } from '../assets/icons/mythology/IconTypeShielddefault';
+import { IconTypeShieldActive } from '../assets/icons/mythology/IconTypeShieldActive';
+import { IconTypeTorchdefault } from '../assets/icons/mythology/IconTypeTorchdefault';
+import { IconTypeTorchActive } from '../assets/icons/mythology/IconTypeTorchActive';
+import { IconTypeTroyBowdefault } from '../assets/icons/mythology/IconTypeTroyBowdefault';
+import { IconTypeTroyBowActive } from '../assets/icons/mythology/IconTypeTroyBowActive';
+import { IconTypeVasedefault } from '../assets/icons/mythology/IconTypeVasedefault';
+import { IconTypeVaseActive } from '../assets/icons/mythology/IconTypeVaseActive';
+import { IconTypeZeusActive } from "../assets/icons/mythology/IconTypeZeusActive";
+import { IconTypeZeusdefault } from "../assets/icons/mythology/IconTypeZeusdefault";
 
 const themes = {
     egypt: {
@@ -90,33 +114,33 @@ const themes = {
         gameCenterIcon: require('./../assets/image/mythology/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/mythology/background_movie_loop.mp4'),
         iconsDefault: [
-            <IconTypeAnubisdefault key="0" />,
-            <IconTypeAnhkdefault key="1" />,
-            <IconTypeFeatherdefault key="2" />,
-            <IconTypeHorusdefault key="3" />,
-            <IconTypePyramiddefault  key="4" />,
-            <IconTypeScarabdefault key="5" />,
-            <IconTypeSphinxdefault  key="6" />,
-            <IconTypeTabletdefault  key="7" />,
-            <IconTypeSunRadefault  key="8" />,
-            <IconTypeEyePyramiddefault  key="9" />,
-            <IconTypePharoahdefault  key="10" />,
-            <IconTypeSleighdefault  key="11" />,
+            <IconTypeCentaurdefault key="0" />,
+            <IconTypeHarpdefault key="1" />,
+            <IconTypeHelmetdefault key="2" />,
+            <IconTypeMedusadefault key="3" />,
+            <IconTypeOlivedefault  key="4" />,
+            <IconTypePillardefault key="5" />,
+            <IconTypeRuinsdefault  key="6" />,
+            <IconTypeShielddefault  key="7" />,
+            <IconTypeTorchdefault  key="8" />,
+            <IconTypeTroyBowdefault  key="9" />,
+            <IconTypeVasedefault  key="10" />,
+            <IconTypeZeusdefault  key="11" />,
             <IconTypeLucky key="12" />
         ],
         iconsActive: [
-            <IconTypeAnubisActive key="0" />,
-            <IconTypeAnhkActive key="1" />,
-            <IconTypeFeatherActive key="2" />,
-            <IconTypeHorusActive key="3" />,
-            <IconTypePyramidActive  key="4" />,
-            <IconTypeScarabActive key="5" />,
-            <IconTypeSphinxActive  key="6" />,
-            <IconTypeTabletActive  key="7" />,
-            <IconTypeSunRaActive  key="8" />,
-            <IconTypeEyePyramidActive  key="9" />,
-            <IconTypePharoahActive  key="10" />,
-            <IconTypeSleighActive  key="11" />,
+            <IconTypeCentaurActive key="0" />,
+            <IconTypeHarpActive key="1" />,
+            <IconTypeHelmetActive key="2" />,
+            <IconTypeMedusaActive key="3" />,
+            <IconTypeOliveActive  key="4" />,
+            <IconTypePillarActive key="5" />,
+            <IconTypeRuinsActive key="6" />,
+            <IconTypeShieldActive  key="7" />,
+            <IconTypeTorchActive  key="8" />,
+            <IconTypeTroyBowActive  key="9" />,
+            <IconTypeVaseActive  key="10" />,
+            <IconTypeZeusActive  key="11" />,
         ],
     },
     international: {
