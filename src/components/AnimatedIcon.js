@@ -1,45 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
 import LottieView from "react-native-web-lottie";
-import { IconTypeAnhkActive } from "./../assets/icons/egypt/IconTypeAnhkActive";
-import { IconTypeAnubisActive } from "./../assets/icons/egypt/IconTypeAnubisActive";
-import { IconTypeFeatherActive } from "./../assets/icons/egypt/IconTypeFeatherActive";
-import { IconTypeHorusActive } from "./../assets/icons/egypt/IconTypeHorusActive";
-import { IconTypePyramidActive } from "./../assets/icons/egypt/IconTypePyramidActive";
-import { IconTypeScarabActive } from "./../assets/icons/egypt/IconTypeScarabActive";
-import { IconTypeSphinxActive } from "./../assets/icons/egypt/IconTypeSphinxActive";
-import { IconTypeTabletActive } from "./../assets/icons/egypt/IconTypeTabletActive";
-import { IconTypeSunRaActive } from "./../assets/icons/egypt/IconTypeSunRaActive";
-import { IconTypeEyePyramidActive } from "./../assets/icons/egypt/IconTypeEyePyramidActive";
-import { IconTypeSleighActive } from "./../assets/icons/egypt/IconTypeSleighActive";
-import { IconTypePharoahActive } from "../assets/icons/egypt/IconTypePharoahActive";
 import PopUpText from "./PopUpText";
-
-// Mapeamento de ícones ativos
-const iconComponentsActive = [
-  <IconTypeAnubisActive key="0" />,
-  <IconTypeAnhkActive key="1" />,
-  <IconTypeFeatherActive key="2" />,
-  <IconTypeHorusActive key="3" />,
-  <IconTypePyramidActive key="4" />,
-  <IconTypeScarabActive key="5" />,
-  <IconTypeSphinxActive key="6" />,
-  <IconTypeTabletActive key="7" />,
-  <IconTypeSunRaActive key="8" />,
-  <IconTypeEyePyramidActive key="9" />,
-  <IconTypePharoahActive key="10" />,
-  <IconTypeSleighActive key="11" />,
-];
+import { currentTheme } from "../global/Assets";
+import themes from "../global/themeConfig";
 
 const lottieAnimations = {
-  lottieScratchieBubbleBlue: require('./../assets/lotties/lottieScratchieBubbleBlue.json'),
-  lottieScratchieBubbleGreen: require('./../assets/lotties/lottieScratchieBubbleGreen.json'),
-  lottieScratchieBubblePink: require('./../assets/lotties/lottieScratchieBubblePink.json'),
-  lottieScratchieBubbleOrange: require('./../assets/lotties/lottieScratchieBubbleOrange.json'),
+  lottieScratchieBubbleBlue: require("./../assets/lotties/lottieScratchieBubbleBlue.json"),
+  lottieScratchieBubbleGreen: require("./../assets/lotties/lottieScratchieBubbleGreen.json"),
+  lottieScratchieBubblePink: require("./../assets/lotties/lottieScratchieBubblePink.json"),
+  lottieScratchieBubbleOrange: require("./../assets/lotties/lottieScratchieBubbleOrange.json"),
 };
 
 const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
   const selectedBobbleColour = lottieAnimations[bobble];
+  const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
 
   const handleIconClick = () => {
     if (onClick) {
@@ -47,11 +22,21 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
     }
   };
 
+  useEffect(() => {
+    if (themes[currentTheme] && themes[currentTheme].iconsActive) {
+      const iconComponentsDefaultNew = themes[currentTheme].iconsActive;
+
+      setIconComponentsDefault(iconComponentsDefaultNew);
+    }
+  }, [currentTheme]);
 
   return (
     <View style={styles.iconWrapper}>
-      {iconComponentsActive[iconIndex]}
-      <TouchableWithoutFeedback hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }} onPress={handleIconClick}>
+      {iconComponentsDefault[iconIndex]}
+      <TouchableWithoutFeedback
+        hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        onPress={handleIconClick}
+      >
         <View style={styles.overlay}>
           {selectedBobbleColour && (
             <LottieView
@@ -64,7 +49,7 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
         </View>
       </TouchableWithoutFeedback>
       {timerGame > 0 && (
-        <View style={styles.centeredTextWrapper}  pointerEvents='none' >
+        <View style={styles.centeredTextWrapper} pointerEvents="none">
           <PopUpText value={timerGame} />
         </View>
       )}
