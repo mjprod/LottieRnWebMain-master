@@ -3,8 +3,8 @@ import Svg, { Defs, G, Path, Rect } from "react-native-svg-web";
 
 export const IconTypeVaseActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
-    <G clip-Path="url(#clip0_7563_52801)">
-      <G clip-Path="url(#clip1_7563_52801)">
+    <G clipPath="url(#clip0_7563_52801)">
+      <G clipPath="url(#clip1_7563_52801)">
         <Path
           d="M18.2109 33.9141C19.9288 33.0532 25.0494 30.2078 27.8891 24.0266C29.667 20.1566 29.7996 16.6137 29.7199 14.6367H48.2889C48.2091 16.6137 48.3417 20.1565 50.1197 24.0266C52.9593 30.2079 58.08 33.0533 59.7979 33.9141H18.2109Z"
           fill="#FFE4C1"

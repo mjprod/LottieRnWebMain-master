@@ -11,9 +11,9 @@ export const IconTypePillardefault = ({ lower_opacity }) => (
     viewBox="0 0 78 84"
     fill={lower_opacity ? lowerOpacityColour : "black"}
   >
-    <G clip-Path="url(#clip0_7563_52796)">
-      <G clip-Path="url(#clip1_7563_52796)">
-        <G clip-Path="url(#clip2_7563_52796)">
+    <G clipPath="url(#clip0_7563_52796)">
+      <G clipPath="url(#clip1_7563_52796)">
+        <G clipPath="url(#clip2_7563_52796)">
           <Path
             d="M60.545 26.2051C58.4937 26.2051 56.825 27.8738 56.825 29.9251C56.825 31.9763 58.4937 33.6451 60.545 33.6451C62.5961 33.6451 64.265 31.9763 64.265 29.9251C64.2648 27.8738 62.5961 26.2051 60.545 26.2051ZM60.545 31.8873C59.463 31.8873 58.5828 31.0071 58.5828 29.9251C58.5828 28.8432 59.463 27.9629 60.545 27.9629C61.6268 27.9629 62.5071 28.8431 62.5071 29.9251C62.507 31.007 61.6268 31.8873 60.545 31.8873Z"
             fill={lower_opacity ? lowerOpacityColour : "black"}

@@ -3,8 +3,8 @@ import Svg, { Defs, G, Path, Rect } from "react-native-svg-web";
 
 export const IconTypeShieldActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
-    <G clip-Path="url(#clip0_7563_52793)">
-      <G clip-Path="url(#clip1_7563_52793)">
+    <G clipPath="url(#clip0_7563_52793)">
+      <G clipPath="url(#clip1_7563_52793)">
         <Path
           d="M68.1211 42C68.1211 58.0831 55.0831 71.1211 39 71.1211C22.9169 71.1211 9.87891 58.0831 9.87891 42C9.87891 25.9169 22.9169 12.8789 39 12.8789C55.0831 12.8789 68.1211 25.9169 68.1211 42Z"
           fill="#E2A975"

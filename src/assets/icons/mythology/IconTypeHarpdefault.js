@@ -11,8 +11,8 @@ export const IconTypeHarpdefault = ({ lower_opacity }) => (
     viewBox="0 0 78 84"
     fill={lower_opacity ? lowerOpacityColour : "black"}
   >
-    <G clip-Path="url(#clip0_7563_52797)">
-      <G clip-Path="url(#clip1_7563_52797)">
+    <G clipPath="url(#clip0_7563_52797)">
+      <G clipPath="url(#clip1_7563_52797)">
         <Path
           d="M36.7751 65.2129C36.2897 65.2129 35.8962 65.6063 35.8962 66.0918C35.8962 66.5773 36.2897 66.9706 36.7751 66.9706H41.225C41.7105 66.9706 42.1039 66.5773 42.1039 66.0918C42.1039 65.6063 41.7105 65.2129 41.225 65.2129H36.7751Z"
           fill={lower_opacity ? lowerOpacityColour : "black"}

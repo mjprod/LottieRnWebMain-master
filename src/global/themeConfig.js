@@ -75,6 +75,30 @@ import { IconTypeVasedefault } from '../assets/icons/mythology/IconTypeVasedefau
 import { IconTypeVaseActive } from '../assets/icons/mythology/IconTypeVaseActive';
 import { IconTypeZeusActive } from "../assets/icons/mythology/IconTypeZeusActive";
 import { IconTypeZeusdefault } from "../assets/icons/mythology/IconTypeZeusdefault";
+import { IconTypeBandanadefault } from "../assets/icons/cowboy/IconTypeBandanadefault";
+import { IconTypeBandanaActive } from "../assets/icons/cowboy/IconTypeBandanaActive";
+import { IconTypeBootdefault } from "../assets/icons/cowboy/IconTypeBootdefault";
+import { IconTypeBootActive } from "../assets/icons/cowboy/IconTypeBootActive";
+import { IconTypeCactusActive } from "../assets/icons/cowboy/IconTypeCactusActive";
+import { IconTypeCarrigedefault } from "../assets/icons/cowboy/IconTypeCarrigedefault";
+import { IconTypeCarrigeActive } from "../assets/icons/cowboy/IconTypeCarrigeActive";
+import { IconTypeGunsdefault } from "../assets/icons/cowboy/IconTypeGunsdefault";
+import { IconTypeGunsActive } from "../assets/icons/cowboy/IconTypeGunsActive";
+import { IconTypeHatdefault } from "../assets/icons/cowboy/IconTypeHatdefault";
+import { IconTypeHatActive } from "../assets/icons/cowboy/IconTypeHatActive";
+import { IconTypeHorsedefault } from "../assets/icons/cowboy/IconTypeHorsedefault";
+import { IconTypeHorseActive } from "../assets/icons/cowboy/IconTypeHorseActive";
+import { IconTypeHorsehoedefault } from "../assets/icons/cowboy/IconTypeHorsehoedefault";
+import { IconTypeHorsehoeActive } from "../assets/icons/cowboy/IconTypeHorsehoeActive";
+import { IconTypeLassodefault } from "../assets/icons/cowboy/IconTypeLassodefault";
+import { IconTypeLassoActive } from "../assets/icons/cowboy/IconTypeLassoActive";
+import { IconTypeStardefault } from "../assets/icons/cowboy/IconTypeStardefault";
+import { IconTypeStarActive } from "../assets/icons/cowboy/IconTypeStarActive";
+import { IconTypeWanteddefault } from "../assets/icons/cowboy/IconTypeWanteddefault";
+import { IconTypeWantedActive } from "../assets/icons/cowboy/IconTypeWantedActive";
+import { IconTypeWhiskeydefault } from "../assets/icons/cowboy/IconTypeWhiskeydefault";
+import { IconTypeWhiskeyActive } from "../assets/icons/cowboy/IconTypeWhiskeyActive";
+import { IconTypeCactusdefault } from "../assets/icons/cowboy/IconTypeCactusdefault";
 
 const themes = {
     egypt: {
@@ -180,33 +204,33 @@ const themes = {
         gameCenterIcon: require('./../assets/image/cowboy/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/egypt/background_movie_loop.mp4'),
         iconsDefault: [
-            <IconTypeAnubisdefault key="0" />,
-            <IconTypeAnhkdefault key="1" />,
-            <IconTypeFeatherdefault key="2" />,
-            <IconTypeHorusdefault key="3" />,
-            <IconTypePyramiddefault  key="4" />,
-            <IconTypeScarabdefault key="5" />,
-            <IconTypeSphinxdefault  key="6" />,
-            <IconTypeTabletdefault  key="7" />,
-            <IconTypeSunRadefault  key="8" />,
-            <IconTypeEyePyramiddefault  key="9" />,
-            <IconTypePharoahdefault  key="10" />,
-            <IconTypeSleighdefault  key="11" />,
+            <IconTypeBandanadefault key="0" />,
+            <IconTypeBootdefault key="1" />,
+            <IconTypeCactusdefault key="2" />,
+            <IconTypeCarrigedefault key="3" />,
+            <IconTypeGunsdefault  key="4" />,
+            <IconTypeHatdefault key="5" />,
+            <IconTypeHorsedefault  key="6" />,
+            <IconTypeHorsehoedefault  key="7" />,
+            <IconTypeLassodefault  key="8" />,
+            <IconTypeStardefault  key="9" />,
+            <IconTypeWanteddefault  key="10" />,
+            <IconTypeWhiskeydefault  key="11" />,
             <IconTypeLucky key="12" />
         ],
         iconsActive: [
-            <IconTypeAnubisActive key="0" />,
-            <IconTypeAnhkActive key="1" />,
-            <IconTypeFeatherActive key="2" />,
-            <IconTypeHorusActive key="3" />,
-            <IconTypePyramidActive  key="4" />,
-            <IconTypeScarabActive key="5" />,
-            <IconTypeSphinxActive  key="6" />,
-            <IconTypeTabletActive  key="7" />,
-            <IconTypeSunRaActive  key="8" />,
-            <IconTypeEyePyramidActive  key="9" />,
-            <IconTypePharoahActive  key="10" />,
-            <IconTypeSleighActive  key="11" />,
+            <IconTypeBandanaActive key="0" />,
+            <IconTypeBootActive key="1" />,
+            <IconTypeCactusActive key="2" />,
+            <IconTypeCarrigeActive key="3" />,
+            <IconTypeGunsActive  key="4" />,
+            <IconTypeHatActive key="5" />,
+            <IconTypeHorseActive  key="6" />,
+            <IconTypeHorsehoeActive  key="7" />,
+            <IconTypeLassoActive key="8" />,
+            <IconTypeStarActive key="9" />,
+            <IconTypeWantedActive  key="10" />,
+            <IconTypeWhiskeyActive  key="11" />,
         ],
     },
 };

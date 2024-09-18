@@ -3,46 +3,46 @@ import Svg, { Defs, Path, Rect , G } from "react-native-svg-web";
 
 export const IconTypeTorchActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
-    <G clip-Path="url(#clip0_8949_52705)">
+    <G clipPath="url(#clip0_8949_52705)">
       <Path
         fill-rule="evenodd"
-        clip-rule="evenodd"
+        clipRule="evenodd"
         d="M38.293 27.6534C41.4236 29.4609 45.4517 35.445 44.1276 40.3868H49.7655C52.5457 30.0112 44.0884 17.4472 37.5154 13.6523C37.5154 23.8089 25.1636 29.2075 28.1591 40.3868H33.8367C32.41 35.0623 38.293 32.491 38.293 27.6534Z"
         fill="#FFC144"
       />
       <Path
         fill-rule="evenodd"
-        clip-rule="evenodd"
+        clipRule="evenodd"
         d="M44.1278 40.3877C45.4519 35.4459 41.4238 29.4617 38.2932 27.6543C38.2932 32.4918 32.4101 35.0632 33.8369 40.3877H44.1278Z"
         fill="#FF5A58"
       />
       <Path
         fill-rule="evenodd"
-        clip-rule="evenodd"
+        clipRule="evenodd"
         d="M44.1277 40.3867H33.8367H28.1591H26.3242C25.6904 40.3867 25.1719 40.9053 25.1719 41.5391V43.8438C25.1719 44.4775 25.6904 44.9961 26.3242 44.9961H27.4767H50.5234H51.6759C52.3097 44.9961 52.8282 44.4775 52.8282 43.8438V41.5391C52.8282 40.9053 52.3097 40.3867 51.6759 40.3867H49.7655H44.1277Z"
         fill="#C68A65"
       />
       <Path
         fill-rule="evenodd"
-        clip-rule="evenodd"
+        clipRule="evenodd"
         d="M50.5236 44.9961H27.4768V47.3009C27.4768 49.2023 29.0326 50.7579 30.9338 50.7579H35.5431H42.4572H47.0665C48.9678 50.7579 50.5236 49.2023 50.5236 47.3009V44.9961Z"
         fill="#DDB9A3"
       />
       <Path
         fill-rule="evenodd"
-        clip-rule="evenodd"
+        clipRule="evenodd"
         d="M35.543 50.7578H42.457V59.9766H35.543V50.7578Z"
         fill="#DDB9A3"
       />
       <Path
         fill-rule="evenodd"
-        clip-rule="evenodd"
+        clipRule="evenodd"
         d="M42.457 59.9766H35.543C34.2754 59.9766 33.2383 61.0137 33.2383 62.2812C33.2383 63.5488 34.2754 64.5859 35.543 64.5859H42.4573C43.7248 64.5859 44.7619 63.5488 44.7619 62.2812C44.7619 61.0137 43.7248 59.9766 42.457 59.9766Z"
         fill="#C68A65"
       />
       <Path
         fill-rule="evenodd"
-        clip-rule="evenodd"
+        clipRule="evenodd"
         d="M42.4573 64.5859H35.543V66.8907C35.543 68.7921 37.0986 70.3478 39 70.3478C40.9014 70.3478 42.457 68.7921 42.457 66.8907L42.4573 64.5859Z"
         fill="#DDB9A3"
       />

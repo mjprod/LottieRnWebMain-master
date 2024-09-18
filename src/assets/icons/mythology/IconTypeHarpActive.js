@@ -3,8 +3,8 @@ import Svg, { Defs, G, Path, Rect } from "react-native-svg-web";
 
 export const IconTypeHarpActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
-    <G clip-Path="url(#clip0_7563_52790)">
-      <G clip-Path="url(#clip1_7563_52790)">
+    <G clipPath="url(#clip0_7563_52790)">
+      <G clipPath="url(#clip1_7563_52790)">
         <Path
           d="M47.9927 59.9844H29.982C30.6296 62.9155 28.1951 65.8466 24.648 68.7778C24.3068 69.0597 24.5077 69.6145 24.9503 69.6145H53.0244C53.467 69.6145 53.6679 69.0597 53.3268 68.7778C49.7795 65.8466 47.345 62.9155 47.9927 59.9844Z"
           fill="#ECBE6B"

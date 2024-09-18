@@ -3,8 +3,8 @@ import Svg, { Defs, G, Path, Rect } from "react-native-svg-web";
 
 export const IconTypeRuinsActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
-    <G clip-Path="url(#clip0_7563_52800)">
-      <G clip-Path="url(#clip1_7563_52800)">
+    <G clipPath="url(#clip0_7563_52800)">
+      <G clipPath="url(#clip1_7563_52800)">
         <Path
           d="M58.03 34.2969H61.9249V37.9053H58.03V34.2969Z"
           fill="#E1D3CE"

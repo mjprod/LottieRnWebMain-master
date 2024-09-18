@@ -3,9 +3,9 @@ import Svg, { Defs, G, Path, Rect } from "react-native-svg-web";
 
 export const IconTypePillarActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
-    <G clip-Path="url(#clip0_7563_52798)">
-      <G clip-Path="url(#clip1_7563_52798)">
-        <G clip-Path="url(#clip2_7563_52798)">
+    <G clipPath="url(#clip0_7563_52798)">
+      <G clipPath="url(#clip1_7563_52798)">
+        <G clipPath="url(#clip2_7563_52798)">
           <Path
             d="M17.4551 29.9258H60.5448V37.502H17.4551V29.9258Z"
             fill="#FDDEB0"

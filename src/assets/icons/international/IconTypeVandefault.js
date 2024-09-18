@@ -11,8 +11,8 @@ export const IconTypeVandefault = ({ lower_opacity }) => (
     viewBox="0 0 78 84"
     fill={lower_opacity ? lowerOpacityColour : "black"}
   >
-    <G clip-Path="url(#clip0_8948_52263)">
-      <G clip-Path="url(#clip1_8948_52263)">
+    <G clipPath="url(#clip0_8948_52263)">
+      <G clipPath="url(#clip1_8948_52263)">
         <Path
           d="M25.71 64.1641C25.4069 64.1641 25.1096 64.2872 24.8953 64.5017C24.6809 64.7161 24.5576 65.0133 24.5576 65.3164C24.5576 65.6195 24.6808 65.9168 24.8953 66.131C25.1096 66.3453 25.4069 66.4688 25.71 66.4688C26.013 66.4688 26.3103 66.3454 26.5246 66.131C26.74 65.9168 26.8623 65.6195 26.8623 65.3164C26.8623 65.0133 26.74 64.716 26.5246 64.5017C26.3103 64.2872 26.013 64.1641 25.71 64.1641Z"
           fill={lower_opacity ? lowerOpacityColour : "black"}
