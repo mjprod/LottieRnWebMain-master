@@ -202,7 +202,7 @@ const themes = {
     },
     cowboy: {
         gameCenterIcon: require('./../assets/image/cowboy/game_center_icon.png'),
-        backgroundLoop: require('./../assets/video/egypt/background_movie_loop.mp4'),
+        backgroundLoop: require('./../assets/video/cowboy/background_movie_loop.mp4'),
         iconsDefault: [
             <IconTypeBandanadefault key="0" />,
             <IconTypeBootdefault key="1" />,

@@ -36,9 +36,6 @@ const ScratchLayout = ({
   const [triggerAutoPop, setTriggerAutoPop] = useState(false);
   const [isScratchCardVisible, setIsScratchCardVisible] = useState(true);
   const [autoScratch, setAutoScratch] = useState(false);
- // const [collectLuckySymbol, setCollectShowLuckySymbol] = useState(false);
- // const [showLuckySymbol, setShowLuckySymbol] = useState(true);
-  //const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
   const [scratchedStarted, setScratchedStarted] = useState(false);
 
   const setScratchedCard = () => {

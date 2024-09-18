@@ -35,7 +35,7 @@ const ScratchLuckyGame = () => {
   const [timerGame, setTimerGame] = useState(0); // Game timer
   const [score, setScore] = useState(0); // Current score
   const [scratchStarted, setScratchStarted] = useState(false); // Tracks if the scratch action has started
-  const [luckySymbolCount, setLuckySymbolCount] = useState(2); // Tracks the number of lucky symbols uncovered
+  const [luckySymbolCount, setLuckySymbolCount] = useState(0); // Tracks the number of lucky symbols uncovered
 
   // Animation references for movement effects
   const marginTopAnim = useRef(new Animated.Value(0)).current;
@@ -59,7 +59,6 @@ const ScratchLuckyGame = () => {
         onEnded={handleVideoEnd} // Web: Trigger callback when video ends
       />
     ),
-    //googlebot: () => <div>Hi GoogleBot!</div>,
     default: (browser) => (
       <Video
         source={

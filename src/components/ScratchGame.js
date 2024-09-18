@@ -220,30 +220,37 @@ const ScratchGame = ({
     return winners;
   };
 
+  const checkResults = () => {
+    setTimeout(() => {
+        
+      if (arrayIcon) {
+        if(luckySymbolCount!==3){
+          setWinLuckySymbolVideo(true);
+        }
+      }
+      else {
+        setReset(true); //NEXT CARD
+      }
+    }, 1500);
+  };
+
   useEffect(() => {
     if (
       winningIcons.length * 3 === clickedIcons.length &&
       winningIcons.length > 0
     ) {
       console.log("ALL ICONS CLIKED");
-      setTimeout(() => {
-        
-        if (arrayIcon) {
-          if(luckySymbolCount===3){
-            //setLuckySymbolCount(3);
-            //setCollectLuckySymbolVideo(true);
-          }
-          else{
-            setWinLuckySymbolVideo(true);
-          }
-        }
-        else {
-          setReset(true); //NEXT CARD
-        }
-      }, 1500);
-     
+      checkResults();
     }
   }, [clickedIcons, iconsArray]);
+
+  useEffect(() => {
+    if (
+      scratched && winningIcons.length === 0
+    ) {
+      checkResults();
+    }
+  }, [scratched]);
 
   const handleIconClick = (index) => {
     const icon = iconsArray[index];
