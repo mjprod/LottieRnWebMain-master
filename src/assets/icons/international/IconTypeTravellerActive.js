@@ -3,7 +3,7 @@ import Svg, { Defs, G, Path, Rect } from "react-native-svg-web";
 
 export const IconTypeTravellerActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
-    <G clip-path="url(#clip0_8948_52395)">
+    <G clipPathh="url(#clip0_8948_52395)">
       <Path
         d="M21.7929 50.5566V70.8476H15.073L16.2946 59.2944C16.6392 55.6516 18.7366 52.4132 21.7929 50.5566Z"
         fill="#868EAF"

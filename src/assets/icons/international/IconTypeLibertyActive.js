@@ -3,7 +3,7 @@ import Svg, { Defs, G, Path, Rect } from "react-native-svg-web";
 
 export const IconTypeLibertyActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
-    <G clip-path="url(#clip0_7702_51748)">
+    <G clipPathh="url(#clip0_7702_51748)">
       <Path d="M38.121 54.1311V43.5332H50.3871V55.0692" fill="#368A50" />
       <Path
         d="M55.2015 64.6238L57.2216 62.7803L51.6137 55.0694H40.2226L34.791 52.6451L28.745 32.0254H26.0287L29.3584 59.4506L26.7285 62.744L30.7603 67.6872V71.1243H44.779H58.6236L55.2015 64.6238Z"

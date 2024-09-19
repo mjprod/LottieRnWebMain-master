@@ -3,7 +3,7 @@ import Svg, { Defs, G, Path, Rect } from "react-native-svg-web";
 
 export const IconTypeColleseumActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
-    <G clip-path="url(#clip0_7702_51696)">
+    <G clipPathh="url(#clip0_7702_51696)">
       <Path
         d="M38.1635 38.3516H64.8978V58.8633H38.1635V38.3516Z"
         fill="#E4B591"

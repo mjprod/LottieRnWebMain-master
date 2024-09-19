@@ -3,7 +3,7 @@ import Svg, { Defs, G, Path, Rect } from "react-native-svg-web";
 
 export const IconTypeNiagraFallsActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">
-    <G clip-path="url(#clip0_8948_52493)">
+    <G clipPathh="url(#clip0_8948_52493)">
       <Path
         d="M39.5 27.9805V34.8945C39.5 36.804 37.9524 38.3516 36.043 38.3516C34.1335 38.3516 32.5859 39.8992 32.5859 41.8086V56.3396H67.8477V27.9805C62.3566 27.9805 45.3823 27.9805 39.5 27.9805Z"
         fill="#C68A65"
