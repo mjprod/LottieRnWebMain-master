@@ -16,6 +16,7 @@ import Video from "../components/Video";
 import GameOverScreen from "../components/GameOverScreen.js";
 import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
 import BrowserDetection from "react-browser-detection";
+import MusicPlayer from "../components/MusicPlayer.js";
 
 // Importing media files
 const backgroundGame = require("./../assets/image/background_game.png");
@@ -46,6 +47,19 @@ const ScratchLuckyGame = () => {
 
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
+  const musicPlayerRef = useRef(null); 
+
+
+    // Update background music when the game starts
+    useEffect(() => {
+      if (scratchStarted && musicPlayerRef.current) {
+        // Switch to next track when scratch starts
+        musicPlayerRef.current.switchTrack(0); 
+      }
+    }, [scratchStarted]);
+
+    
+    
   const browserHandler = {
     chrome: () => (
       <Video
@@ -87,6 +101,12 @@ const ScratchLuckyGame = () => {
         }, 500);
       }
     }, 1200);
+
+     // Play the next track when moving to the next card
+     if (musicPlayerRef.current) {
+      musicPlayerRef.current.playNextTrack();
+    }
+
   };
 
   const addLuckySymbol = () => {
@@ -141,6 +161,7 @@ const ScratchLuckyGame = () => {
       }).start();
     }
   }, [scratchStarted]);
+
   useEffect(() => {
     if (reset) {
       setTimeout(() => {
@@ -211,6 +232,8 @@ const ScratchLuckyGame = () => {
 
   return (
     <View style={styles.fullScreen}>
+       {/* Include the MusicPlayer component */}
+       <MusicPlayer ref={musicPlayerRef} startTrackIndex={0} /> 
       {/* Background of the game */}
       <BackgroundGame showAlphaView={scratchStarted} source={backgroundLoop} />
       <View style={styles.containerOverlay}>

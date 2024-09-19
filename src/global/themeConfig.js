@@ -102,6 +102,7 @@ import { IconTypeCactusdefault } from "../assets/icons/cowboy/IconTypeCactusdefa
 
 const themes = {
     egypt: {
+        src: '/sounds/egypt_theme.mp3',
         gameCenterIcon: require('./../assets/image/egypt/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/egypt/background_movie_loop.mp4'),
         iconsDefault: [
@@ -135,6 +136,7 @@ const themes = {
         ],
     },
     mythology: {
+        src: '/sounds/mythology_theme.mp3',
         gameCenterIcon: require('./../assets/image/mythology/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/mythology/background_movie_loop.mp4'),
         iconsDefault: [
@@ -168,6 +170,7 @@ const themes = {
         ],
     },
     international: {
+        src: '/sounds/international_theme.mp3',
         gameCenterIcon: require('./../assets/image/international/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/international/background_movie_loop.mp4'),
         iconsDefault: [
@@ -201,6 +204,7 @@ const themes = {
         ],
     },
     cowboy: {
+        src: '/sounds/cowboy_theme.mp3',
         gameCenterIcon: require('./../assets/image/cowboy/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/cowboy/background_movie_loop.mp4'),
         iconsDefault: [
@@ -233,6 +237,11 @@ const themes = {
             <IconTypeWhiskeyActive  key="11" />,
         ],
     },
+    global: {
+        src: '/sounds/cowboy_theme.mp3',
+        initial_src: '/sounds/321_go_countdown.mp3',
+    }
+
 };
 
 export default themes;
