@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { View, Animated, Easing } from 'react-native';
+import { View, Animated } from 'react-native';
 import Svg, { Image } from 'react-native-svg-web';
 
 export const IconTypeLucky = ({ scratched }) => {

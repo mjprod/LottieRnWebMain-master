@@ -204,7 +204,7 @@ const themes = {
         ],
     },
     cowboy: {
-        src: '/sounds/cowboy_theme.mp3',
+        src: './../assets/sounds/cowboy_theme.mp3',
         gameCenterIcon: require('./../assets/image/cowboy/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/cowboy/background_movie_loop.mp4'),
         iconsDefault: [
@@ -238,8 +238,10 @@ const themes = {
         ],
     },
     global: {
-        src: '/sounds/cowboy_theme.mp3',
-        initial_src: '/sounds/321_go_countdown.mp3',
+        src: './../assets/sounds/cowboy_theme.mp3',
+        initial_src: require('./../assets/sounds/321_go_countdown.mp3'),
+        
+
     }
 
 };

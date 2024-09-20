@@ -66,6 +66,39 @@ const ScratchGame = ({
 
   const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
 
+  const soundRefs = useRef({
+    sound1: new Howl({ src: [require("./../assets/audio/1_C.mp3")], preload: true }),
+    sound2: new Howl({ src: [require("./../assets/audio/2_D.mp3")], preload: true }),
+    sound3: new Howl({ src: [require("./../assets/audio/3_E.mp3")], preload: true }),
+    sound4: new Howl({ src: [require("./../assets/audio/4_E.mp3")], preload: true }),
+    sound5: new Howl({ src: [require("./../assets/audio/5_F_.mp3")], preload: true }),
+    sound6: new Howl({ src: [require("./../assets/audio/6_G_.mp3")], preload: true }),
+    sound7: new Howl({ src: [require("./../assets/audio/7_G_.mp3")], preload: true }),
+    sound8: new Howl({ src: [require("./../assets/audio/8_A_.mp3")], preload: true }),
+    sound9: new Howl({ src: [require("./../assets/audio/9_C_plus.mp3")], preload: true }),
+    sound10: new Howl({ src: [require("./../assets/audio/10_C_plus.mp3")], preload: true }),
+    sound11: new Howl({ src: [require("./../assets/audio/11_D_plus.mp3")], preload: true }),
+    sound12: new Howl({ src: [require("./../assets/audio/12_E_plus.mp3")], preload: true }),
+    error: new Howl({ src: [require("./../assets/audio/sfx_autopopup.wav")], preload: true }),
+  });
+
+  useEffect(() => {
+    // Clean up sounds when component unmounts
+    return () => {
+      Object.values(soundRefs.current).forEach((sound) => {
+        sound.stop();
+        sound.unload();
+      });
+    };
+  }, []);
+
+  const playSound = (soundKey) => {
+    if (soundRefs.current[soundKey]) {
+      soundRefs.current[soundKey].play();
+    }
+  };
+
+
   useEffect(() => {    
     if (themes[currentTheme] && themes[currentTheme].iconsDefault) {
       const iconComponentsDefaultNew = themes[currentTheme].iconsDefault;
@@ -261,7 +294,8 @@ const ScratchGame = ({
         lastClickedIcon !== icon &&
         clickedCount[lastClickedIcon] < 3
       ) {
-        playSoundError();
+        //playSoundError();
+        playSound("error");
         setClickCount(1);
         setSoundShouldPlay(1);
 
@@ -288,51 +322,51 @@ const ScratchGame = ({
 
       switch (soundShouldPlay) {
         case 1:
-          playSound1();
+          playSound("sound1");
           updateSounds();
           break;
         case 2:
-          playSound2();
+          playSound("sound2");
           updateSounds();
           break;
         case 3:
-          playSound3();
+          playSound("sound3");
           updateSounds();
           break;
         case 4:
-          playSound4();
+          playSound("sound4");
           updateSounds();
           break;
         case 5:
-          playSound5();
+          playSound("sound5");
           updateSounds();
           break;
         case 6:
-          playSound6();
+          playSound("sound6");
           updateSounds();
           break;
         case 7:
-          playSound7();
+          playSound("sound7");
           updateSounds();
           break;
         case 8:
-          playSound8();
+          playSound("sound8");
           updateSounds();
           break;
         case 9:
-          playSound9();
+          playSound("sound9");
           updateSounds();
           break;
         case 10:
-          playSound10();
+          playSound("sound10");
           updateSounds();
           break;
         case 11:
-          playSound11();
+          playSound("sound11");
           updateSounds();
           break;
         case 12:
-          playSound12();
+          playSound("sound1");
           updateSounds();
           setClickCount(0);
           setSoundShouldPlay(1);
@@ -366,6 +400,8 @@ const ScratchGame = ({
     }
   }, [fadeAnim, onLoading]);
 
+
+  /*
   const sound1 = new Howl({
     src: [require("./../assets/audio/1_C.mp3")],
     preload: true,
@@ -461,6 +497,7 @@ const ScratchGame = ({
   const playSoundError = () => {
     error.play();
   };
+  */
 
 
 

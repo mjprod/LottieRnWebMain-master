@@ -1,10 +1,7 @@
 import { Howl } from 'howler';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import themes from '../global/themeConfig';
 
-console.log(themes);
-// List of tracks to play
-console.log([themes.length ]);
 const tracks = [
   { title: "Track 1", url: themes['global'].initial_src},
   { title: "Track 2", url: themes['global'].src},
@@ -14,7 +11,8 @@ const tracks = [
   { title: "Track 6", url: themes['cowboy'].initial_src },
 ];
 
-export default function MusicPlayer({ startTrackIndex = 0 }) {
+// Forward the ref to access MusicPlayer methods
+const MusicPlayer = forwardRef(({ startTrackIndex = 0 }, ref) => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(startTrackIndex);
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -23,8 +21,10 @@ export default function MusicPlayer({ startTrackIndex = 0 }) {
   const playTrackWithFadeIn = (trackIndex) => {
     const newTrack = new Howl({
       src: [tracks[trackIndex].url],
-      volume: 0, // Start with volume 0 for fade-in effect
+      volume: 1, // Start with volume 0 for fade-in effect
       html5: true, // Enable HTML5 audio for larger files
+      loop: true, // Ensure the track loops continuously
+      autoplay: true, // Prevent automatic play
       onend: function () {
         console.log("Track ended, playing next track...");
         playNextTrack(); // Automatically play next track when the current one ends
@@ -55,12 +55,16 @@ export default function MusicPlayer({ startTrackIndex = 0 }) {
 
   // Handle track change (wait for the current track to fade out, then switch)
   const switchTrack = (trackIndex) => {
+    console.log(`Switching to track ${trackIndex}...`);
     fadeOutCurrentTrack(() => {
       setCurrentTrackIndex(trackIndex);
       playTrackWithFadeIn(trackIndex);
     });
   };
-
+  useEffect(() => {
+    switchTrack(0);
+  }
+  , []);
   // Play next track
   const playNextTrack = () => {
     const nextTrackIndex = (currentTrackIndex + 1) % tracks.length;
@@ -74,17 +78,17 @@ export default function MusicPlayer({ startTrackIndex = 0 }) {
     switchTrack(previousTrackIndex);
   };
 
-  // Automatically start the first track when the component mounts
-  useEffect(() => {
-    playTrackWithFadeIn(currentTrackIndex);
-
-    return () => {
-      if (currentTrack) {
-        currentTrack.stop();
-        currentTrack.unload(); // Cleanup track when component unmounts
-      }
-    };
-  }, []);
+  // Expose methods to the parent via ref
+  useImperativeHandle(ref, () => ({
+    playNextTrack,
+    switchTrack,
+    fadeOutCurrentTrack,
+  }));
 
   return null; // No UI rendering
-}
+});
+
+
+
+
+export default MusicPlayer;

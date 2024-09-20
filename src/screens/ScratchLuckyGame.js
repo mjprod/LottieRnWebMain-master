@@ -49,17 +49,14 @@ const ScratchLuckyGame = () => {
 
   const musicPlayerRef = useRef(null); 
 
-
-    // Update background music when the game starts
-    useEffect(() => {
-      if (scratchStarted && musicPlayerRef.current) {
-        // Switch to next track when scratch starts
-        musicPlayerRef.current.switchTrack(0); 
-      }
-    }, [scratchStarted]);
-
+  // Update background music when the game starts
+  useEffect(() => {
+    //if (&musicPlayerRef.current) {
+      musicPlayerRef.current.switchTrack(0); // Switch to the first track
+    //}
+  }, []);
     
-    
+
   const browserHandler = {
     chrome: () => (
       <Video
