@@ -1,46 +1,73 @@
 import { Howl } from 'howler';
-import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import themes from '../global/themeConfig';
 
-const tracks = [
-  { title: "Track 1", url: themes['global'].initial_src},
-  { title: "Track 2", url: themes['global'].src},
-  { title: "Track 3", url: themes['egypt'].src },
-  { title: "Track 4", url: themes['mythology'].initial_src },
-  { title: "Track 5", url:themes['international'].src },
-  { title: "Track 6", url: themes['cowboy'].initial_src },
-];
-
-// Forward the ref to access MusicPlayer methods
-const MusicPlayer = forwardRef(({ startTrackIndex = 0 }, ref) => {
+const MusicPlayer = ({ startTrackIndex = 0, onSwitchTrack, onFadeOutCurrentTrack }) => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(startTrackIndex);
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const trackKeys = ['intro', 'base_beat', 'cowboy_theme', 'international_theme', 'mythology_theme', 'egypt_theme'];
+
+  const soundRefs = useRef({
+    intro: new Howl({ 
+      src: [themes['global'].initial_src], 
+      preload: true,
+      loop: false,
+      onend: () => {
+        setCurrentTrackIndex(2);
+        console.log('Intro ended');
+      },
+    }),
+    base_beat: new Howl({ 
+      src: [themes['global'].src], 
+      preload: true,
+      loop: true,
+      onend: () => console.log('Base beat ended'),
+    }),
+    cowboy_theme: new Howl({ 
+      src: [themes['egypt'].src], 
+      preload: true,
+      loop: true,
+      onend: () => console.log('Cowboy theme ended'),
+    }),
+    international_theme: new Howl({ 
+      src: [themes['mythology'].src], 
+      preload: true, 
+      loop: true,
+      onend: () => console.log('International theme ended'),
+    }),
+    mythology_theme: new Howl({ 
+      src: [themes['international'].src], 
+      preload: true,
+      loop: true,
+      onend: () => console.log('Mythology theme ended'),
+    }),
+    egypt_theme: new Howl({ 
+      src: [themes['cowboy'].src], 
+      preload: true,
+      loop: true,
+      onend: () => console.log('Egypt theme ended'),
+    }),
+  });
 
   // Function to play a specific track with fade-in
   const playTrackWithFadeIn = (trackIndex) => {
-    const newTrack = new Howl({
-      src: [tracks[trackIndex].url],
-      volume: 1, // Start with volume 0 for fade-in effect
-      html5: true, // Enable HTML5 audio for larger files
-      loop: true, // Ensure the track loops continuously
-      autoplay: true, // Prevent automatic play
-      onend: function () {
-        console.log("Track ended, playing next track...");
-        playNextTrack(); // Automatically play next track when the current one ends
-      },
-      onload: function () {
-        newTrack.play();
-        newTrack.fade(0, 1, 2000); // Fade-in over 2 seconds
-        setIsPlaying(true);
-      }
-    });
-    setCurrentTrack(newTrack);
+    const trackKey = trackKeys[trackIndex];
+    const track = soundRefs.current[trackKey];
+
+    console.log(`Playing track ${trackIndex}: ${trackKey}`);
+
+    if (track) {
+      track.play();
+      setIsPlaying(true);
+      setCurrentTrack(track); // Set the new track as the current track
+    }
   };
 
   // Function to stop the current track with fade-out
   const fadeOutCurrentTrack = (callback) => {
     if (currentTrack) {
+      console.log('Fading out current track...');
       currentTrack.fade(1, 0, 2000); // Fade-out over 2 seconds
       setTimeout(() => {
         currentTrack.stop();
@@ -61,34 +88,23 @@ const MusicPlayer = forwardRef(({ startTrackIndex = 0 }, ref) => {
       playTrackWithFadeIn(trackIndex);
     });
   };
+
   useEffect(() => {
-    switchTrack(0);
-  }
-  , []);
-  // Play next track
-  const playNextTrack = () => {
-    const nextTrackIndex = (currentTrackIndex + 1) % tracks.length;
-    switchTrack(nextTrackIndex);
-  };
+    playTrackWithFadeIn(currentTrackIndex); // Play the initial track
+    console.log('Playing initial track');
+  }, [currentTrackIndex]);
 
-  // Play previous track
-  const playPreviousTrack = () => {
-    const previousTrackIndex =
-      (currentTrackIndex - 1 + tracks.length) % tracks.length;
-    switchTrack(previousTrackIndex);
-  };
-
-  // Expose methods to the parent via ref
-  useImperativeHandle(ref, () => ({
-    playNextTrack,
-    switchTrack,
-    fadeOutCurrentTrack,
-  }));
+  // Expose methods to the parent via props
+  useEffect(() => {
+    if (onSwitchTrack) {
+      onSwitchTrack(switchTrack);
+    }
+    if (onFadeOutCurrentTrack) {
+      onFadeOutCurrentTrack(fadeOutCurrentTrack);
+    }
+  }, [onSwitchTrack, onFadeOutCurrentTrack]);
 
   return null; // No UI rendering
-});
-
-
-
+};
 
 export default MusicPlayer;

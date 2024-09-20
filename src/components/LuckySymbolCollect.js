@@ -5,6 +5,7 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
   Platform,
+  Text,
 } from "react-native";
 import LottieView from "react-native-web-lottie";
 import { updateCurrentTheme } from "../global/Assets";
@@ -112,7 +113,8 @@ const LuckySymbolCollect = ({ setReset,setLuckySymbolCount,setCollectLuckySymbol
         />
       )}
       {initialAnimationComplete && !showBonusCard && (
-        <TouchableWithoutFeedback onPress={handlePress}>
+        <View>
+           <TouchableWithoutFeedback onPress={handlePress}>
           <Animated.View
             style={[
               styles.animatedContainer,
@@ -137,6 +139,9 @@ const LuckySymbolCollect = ({ setReset,setLuckySymbolCount,setCollectLuckySymbol
             </View>
           </Animated.View>
         </TouchableWithoutFeedback>
+        <Text style={styles.tapTextFormat}>TAP!</Text>
+        </View>
+       
       )}
       {showBonusCard && (
         <LottieView
@@ -201,6 +206,15 @@ const styles = StyleSheet.create({
         zIndex: 1000,
       },
     }),
+  },
+  tapTextFormat: {
+    fontFamily: "Inter-Bold",
+    fontSize: 48,
+    color: "#D4C0A4",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    marginTop: -100,
   },
 });
 

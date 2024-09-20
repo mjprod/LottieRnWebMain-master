@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { View, StyleSheet, Dimensions, Text } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import AlphaView from "./AlphaView";
 import NavLayout from "./NavLayout";
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth } = Dimensions.get("window");
 
 export const BackgroundGame = ({ source, showAlphaView }) => {
   const videoRef = useRef(null);

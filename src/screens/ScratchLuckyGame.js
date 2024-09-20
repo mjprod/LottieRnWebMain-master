@@ -7,55 +7,148 @@ import {
   Dimensions,
   Platform,
   TouchableOpacity,
+  Text,
 } from "react-native";
 import { BackgroundGame } from "../components/BackgroundGame";
 import TopLayout from "../components/TopLayout";
 import ScratchLayout from "../components/ScratchLayout";
-import { updateCurrentTheme, backgroundLoop } from "../global/Assets";
+import { updateCurrentTheme, backgroundLoop, currentTheme } from "../global/Assets";
 import Video from "../components/Video";
 import GameOverScreen from "../components/GameOverScreen.js";
 import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
 import BrowserDetection from "react-browser-detection";
-import MusicPlayer from "../components/MusicPlayer.js";
+import { Howl } from "howler";
+import LottieView from "react-native-web-lottie";
 
-// Importing media files
+
+import themes from "../global/themeConfig.js";
+import GameButton from "../components/GameButton.js";
+
+// Importando arquivos de mídia
 const backgroundGame = require("./../assets/image/background_game.png");
 const videoWinLuckySymbol = require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4");
 const videoWinLuckySymbolChrome = require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_chrome.webm");
-
 const videoLuckySymbolFinal = require("./../assets/video/lucky_symbol_3d_coin_cut.mp4");
+const lottieCountDown = require("../assets/lotties/lottieInitialCountdown.json");
 
 const { width } = Dimensions.get("window");
 
 const ScratchLuckyGame = () => {
-  // State variables to manage the game logic
-  const [gameOver, setGameOver] = useState(false); // Flag to indicate if the game is over
-  const [reset, setReset] = useState(false); // Flag to trigger reset state
-  const [scratched, setScratched] = useState(false); // State to track if the scratch has started
-  const [scratchCardLeft, setScratchCardLeft] = useState(10); // Tracks remaining scratch cards
-  const [timerGame, setTimerGame] = useState(0); // Game timer
-  const [score, setScore] = useState(0); // Current score
-  const [scratchStarted, setScratchStarted] = useState(false); // Tracks if the scratch action has started
-  const [luckySymbolCount, setLuckySymbolCount] = useState(0); // Tracks the number of lucky symbols uncovered
+  const [gameStarted, setGameStarted] = useState(false);
+  const [countDownStarted, setCountDownStarted] = useState(false);
 
-  // Animation references for movement effects
+  const [gameOver, setGameOver] = useState(false);
+
+  const [reset, setReset] = useState(false);
+  const [scratched, setScratched] = useState(false);
+  const [scratchCardLeft, setScratchCardLeft] = useState(10);
+  const [timerGame, setTimerGame] = useState(0);
+  const [score, setScore] = useState(0);
+  const [scratchStarted, setScratchStarted] = useState(false);
+  const [luckySymbolCount, setLuckySymbolCount] = useState(2);
+
+  // Referências de animação para efeitos de movimento
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
 
-  const [winLuckySymbolVideo, setWinLuckySymbolVideo] = useState(false); // Tracks if the Lucky Symbol video should be shown
-  const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false); // Tracks if the collect Lucky Symbol video should be shown
-
+  const [winLuckySymbolVideo, setWinLuckySymbolVideo] = useState(false);
+  const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
-  const musicPlayerRef = useRef(null); 
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
-  // Update background music when the game starts
+  const ref = useRef(null);
+  
+  const trackKeys = [
+    "intro",
+    "base_beat",
+    "egypt_theme",//2
+    "international_theme",//3
+    "mythology_theme",//4
+    "cowboy_theme",//5
+  ];
+
+  const soundRefs = useRef({
+    intro: new Howl({
+      src: [themes["global"].initial_src],
+      preload: true,
+      autoplay: false,
+      loop: false,
+      onend: () => {
+        playNextTrack();
+        console.log("Intro ended");
+      },
+    }),
+    base_beat: new Howl({
+      src: [themes["global"].src],
+      preload: true,
+      loop: true,
+      onend: () => console.log("Base beat ended"),
+    }),
+    cowboy_theme: new Howl({
+      src: [themes["egypt"].src],
+      preload: true,
+      loop: true,
+      onend: () => console.log("Cowboy theme ended"),
+    }),
+    international_theme: new Howl({
+      src: [themes["mythology"].src],
+      preload: true,
+      loop: true,
+      onend: () => console.log("International theme ended"),
+    }),
+    mythology_theme: new Howl({
+      src: [themes["international"].src],
+      preload: true,
+      loop: true,
+      onend: () => console.log("Mythology theme ended"),
+    }),
+    egypt_theme: new Howl({
+      src: [themes["cowboy"].src],
+      preload: true,
+      loop: true,
+      onend: () => console.log("Egypt theme ended"),
+    }),
+  });
+  
+
   useEffect(() => {
-    //if (&musicPlayerRef.current) {
-      musicPlayerRef.current.switchTrack(0); // Switch to the first track
-    //}
+    return () => {
+      Object.values(soundRefs.current).forEach((sound) => {
+        sound.stop();
+        sound.unload();
+      });
+    };
   }, []);
-    
+
+const playNextTrack = () => {
+  if (currentTheme === 'egypt') {
+    setCurrentTrackIndex(2);
+  } else if (currentTheme === 'international') {
+    setCurrentTrackIndex(3);
+  } else if (currentTheme === 'mythology') {
+    setCurrentTrackIndex(4);
+  } else if (currentTheme === 'cowboy') {
+    setCurrentTrackIndex(5);
+  }
+};
+
+const playSound = (soundKey) => {
+  if (soundRefs.current[soundKey]) {
+    soundRefs.current[soundKey].play();
+    soundRefs.current[soundKey].once('end', () => {
+      playNextTrack();
+      console.log('Sound ended');
+    });
+  }
+};
+
+  useEffect(() => {
+    const trackKey = trackKeys[currentTrackIndex];
+
+    playSound(trackKey);
+    console.log(`Playing track: ${trackKey}`);
+  }, [currentTrackIndex]);
 
   const browserHandler = {
     chrome: () => (
@@ -85,9 +178,11 @@ const ScratchLuckyGame = () => {
   const nextCard = () => {
     setWinLuckySymbolVideo(false);
     setSkipToFinishLuckyVideo(false);
-
-    console.log("Next card", "addLuckySymbol");
     addLuckySymbol();
+
+
+    //setSoundLopping(false);
+
 
     setTimeout(() => {
       if (luckySymbolCount < 2) {
@@ -95,15 +190,11 @@ const ScratchLuckyGame = () => {
 
         setTimeout(() => {
           updateCurrentTheme();
+
+          
         }, 500);
       }
     }, 1200);
-
-     // Play the next track when moving to the next card
-     if (musicPlayerRef.current) {
-      musicPlayerRef.current.playNextTrack();
-    }
-
   };
 
   const addLuckySymbol = () => {
@@ -125,14 +216,14 @@ const ScratchLuckyGame = () => {
       setLuckySymbolCount(count);
       setTimeout(() => {
         if (count === 0) {
-          onCountdownComplete(); 
+          onCountdownComplete();
         } else {
           decrementLuckySymbol(count - 1, onComplete);
         }
       }, 200);
     }
   };
-  
+
   const onCountdownComplete = () => {
     setCollectLuckySymbolVideo(true);
   };
@@ -227,21 +318,73 @@ const ScratchLuckyGame = () => {
     );
   };
 
+  const handleAnimationFinish = () => {
+    setGameStarted(true);
+  };
+
+  // Function to render the win screen with a video overlay
+  const renderInitialScreen = () => {
+    return (
+      <View
+        key="overlay"
+        style={{
+          ...styles.blackOverlayWin,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: "rgba(0, 0, 0, 0.8)", // Semi-transparent background for win screen
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+          zIndex: 9999, // Makes sure the overlay is on top of all other elements
+          elevation: 10, // Ensures the overlay has proper visual depth on Android
+        }}
+      >
+        <TouchableOpacity
+          style={{ width: "80%" }}
+          //onPress={setCountDownStarted(true)}
+        >
+          {countDownStarted ? (
+            <View style={styles.rowCountDown}>
+              <LottieView
+               ref={ref}
+                style={styles.lottieAnimation}
+                source={lottieCountDown}
+                speed={1}
+                loop={false}
+                onAnimationFinish={handleAnimationFinish}
+              />
+            </View>
+          ) : (
+            <GameButton text="Start Game" 
+            onPress={() => {
+              setCountDownStarted(true)
+              //useEffect(() => {
+                setTimeout(() => {
+                  ref.current.play();
+                }, 700) // DELAY INITIAL LOTTIE ANIMATION
+              //}, [])
+            }} />
+          )}
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.fullScreen}>
-       {/* Include the MusicPlayer component */}
-       <MusicPlayer ref={musicPlayerRef} startTrackIndex={0} /> 
-      {/* Background of the game */}
+      {/* Resto da interface do jogo */}
       <BackgroundGame showAlphaView={scratchStarted} source={backgroundLoop} />
       <View style={styles.containerOverlay}>
         <ImageBackground
-          source={backgroundGame} // The background image for the game
+          source={backgroundGame}
           style={styles.imageBackground}
           resizeMode="stretch"
         >
           <Animated.View style={[{ transform: [{ translateX }] }]}>
             <View style={styles.overlay}>
-              {/* Top part of the layout showing timer, score, etc. */}
               <Animated.View style={{ marginTop: marginTopAnim }}>
                 <TopLayout
                   scratched={scratched}
@@ -253,7 +396,6 @@ const ScratchLuckyGame = () => {
                 />
               </Animated.View>
 
-              {/* Main scratch card layout */}
               <ScratchLayout
                 reset={reset}
                 setReset={setReset}
@@ -283,15 +425,23 @@ const ScratchLuckyGame = () => {
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
         />
       )}
+      {(!gameStarted || !countDownStarted) && renderInitialScreen()}
     </View>
   );
 };
 
-// Styles for the components
+// Styles
 const styles = StyleSheet.create({
   fullScreen: {
     flex: 1,
     position: "relative",
+  },
+  musicButton: {
+    position: "absolute",
+    top: 50,
+    left: "50%",
+    transform: [{ translateX: -50 }],
+    zIndex: 10,
   },
   containerOverlay: {
     ...Platform.select({
@@ -304,7 +454,7 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
       },
-      default: StyleSheet.absoluteFillObject, // For mobile, this covers the entire screen
+      default: StyleSheet.absoluteFillObject,
     }),
     flexDirection: "row",
   },
@@ -316,7 +466,7 @@ const styles = StyleSheet.create({
     left: 10,
     right: 10,
     bottom: 10,
-    zIndex: 2, // Ensures the background is behind other elements
+    zIndex: 2,
     justifyContent: "flex-start",
     alignItems: "flex-start",
   },
@@ -371,6 +521,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0)",
   },
+ 
 });
 
 export default ScratchLuckyGame;

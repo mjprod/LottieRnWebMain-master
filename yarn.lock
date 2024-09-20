@@ -15249,7 +15249,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.3.1":
+"react-dom@npm:latest":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
   dependencies:
@@ -15374,7 +15374,7 @@ __metadata:
     react: latest
     react-art: 16.5.1
     react-browser-detection: ^1.2.1
-    react-dom: ^18.3.1
+    react-dom: latest
     react-native: "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz"
     react-native-canvas: ^0.1.40
     react-native-cli: ^2.0.1

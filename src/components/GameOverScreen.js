@@ -38,14 +38,14 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.7)", // Semi-transparent background for win screen
+        backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background for win screen
         justifyContent: "center",
         alignItems: "center",
         zIndex: 1000,
       },
       default: {
         ...StyleSheet.absoluteFillObject,
-        backgroundColor: "rgba(0, 0, 0, 0.7)", // Same semi-transparent background for mobile
+        backgroundColor: "rgba(0, 0, 0, 0.5)", // Same semi-transparent background for mobile
         justifyContent: "center",
         alignItems: "center",
         zIndex: 1000,

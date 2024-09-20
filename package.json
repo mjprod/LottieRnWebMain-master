@@ -13,7 +13,7 @@
     "lottie-react": "^2.4.0",
     "react": "latest",
     "react-browser-detection": "^1.2.1",
-    "react-dom": "^18.3.1",
+    "react-dom": "latest",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
     "react-native-canvas": "^0.1.40",
     "react-native-cli": "^2.0.1",
