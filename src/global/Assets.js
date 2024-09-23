@@ -30,3 +30,6 @@ export const updateCurrentTheme = () => {
 
 // Export the assets so other parts of the app can use them
 export { gameCenterIcon, backgroundLoop };
+
+//export const getGameCenterIcon = () => themes[currentTheme].gameCenterIcon;
+//export const getBackgroundLoop = () => themes[currentTheme].backgroundLoop;

@@ -7,19 +7,21 @@ import {
   Dimensions,
   Platform,
   TouchableOpacity,
-  Text,
 } from "react-native";
 import { BackgroundGame } from "../components/BackgroundGame";
 import TopLayout from "../components/TopLayout";
 import ScratchLayout from "../components/ScratchLayout";
-import { updateCurrentTheme, backgroundLoop, currentTheme } from "../global/Assets";
+import {
+  updateCurrentTheme,
+  backgroundLoop,
+  currentTheme,
+} from "../global/Assets";
 import Video from "../components/Video";
 import GameOverScreen from "../components/GameOverScreen.js";
 import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
 import BrowserDetection from "react-browser-detection";
 import { Howl } from "howler";
 import LottieView from "react-native-web-lottie";
-
 
 import themes from "../global/themeConfig.js";
 import GameButton from "../components/GameButton.js";
@@ -47,7 +49,6 @@ const ScratchLuckyGame = () => {
   const [scratchStarted, setScratchStarted] = useState(false);
   const [luckySymbolCount, setLuckySymbolCount] = useState(2);
 
-  // Referências de animação para efeitos de movimento
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
 
@@ -58,14 +59,14 @@ const ScratchLuckyGame = () => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
   const ref = useRef(null);
-  
+
   const trackKeys = [
     "intro",
     "base_beat",
-    "egypt_theme",//2
-    "international_theme",//3
-    "mythology_theme",//4
-    "cowboy_theme",//5
+    "egypt_theme", //2
+    "international_theme", //3
+    "mythology_theme", //4
+    "cowboy_theme", //5
   ];
 
   const soundRefs = useRef({
@@ -110,7 +111,6 @@ const ScratchLuckyGame = () => {
       onend: () => console.log("Egypt theme ended"),
     }),
   });
-  
 
   useEffect(() => {
     return () => {
@@ -121,34 +121,46 @@ const ScratchLuckyGame = () => {
     };
   }, []);
 
-const playNextTrack = () => {
-  if (currentTheme === 'egypt') {
-    setCurrentTrackIndex(2);
-  } else if (currentTheme === 'international') {
-    setCurrentTrackIndex(3);
-  } else if (currentTheme === 'mythology') {
-    setCurrentTrackIndex(4);
-  } else if (currentTheme === 'cowboy') {
-    setCurrentTrackIndex(5);
-  }
-};
+  const playNextTrack = () => {
+    if (currentTheme === "egypt") {
+      console.log("Playing next track: egypt");
+      setCurrentTrackIndex(2);
+    } else if (currentTheme === "international") {
+      console.log("Playing next track: international");
+      setCurrentTrackIndex(3);
+    } else if (currentTheme === "mythology") {
+      console.log("Playing next track: mythology");
+      setCurrentTrackIndex(4);
+    } else if (currentTheme === "cowboy") {
+      console.log("Playing next track: cowboy");
+      setCurrentTrackIndex(5);
+    }
+  };
 
-const playSound = (soundKey) => {
-  if (soundRefs.current[soundKey]) {
-    soundRefs.current[soundKey].play();
-    soundRefs.current[soundKey].once('end', () => {
-      playNextTrack();
-      console.log('Sound ended');
-    });
-  }
-};
+  const playSound = (soundKey) => {
+    if (soundRefs.current[soundKey]) {
+      soundRefs.current[soundKey].play();
+      soundRefs.current[soundKey].once("end", () => {
+        playNextTrack();
+        console.log("Sound ended");
+      });
+    }
+  };
+
+  const stopCurrentTrack = () => {
+    const trackKey = trackKeys[currentTrackIndex];
+    if (soundRefs.current[trackKey]) {
+      soundRefs.current[trackKey].stop();
+    }
+  };
 
   useEffect(() => {
     const trackKey = trackKeys[currentTrackIndex];
+    if (countDownStarted) {
+      playSound(trackKey);
+    }
+  }, [currentTrackIndex,countDownStarted]);
 
-    playSound(trackKey);
-    console.log(`Playing track: ${trackKey}`);
-  }, [currentTrackIndex]);
 
   const browserHandler = {
     chrome: () => (
@@ -180,9 +192,7 @@ const playSound = (soundKey) => {
     setSkipToFinishLuckyVideo(false);
     addLuckySymbol();
 
-
     //setSoundLopping(false);
-
 
     setTimeout(() => {
       if (luckySymbolCount < 2) {
@@ -190,8 +200,6 @@ const playSound = (soundKey) => {
 
         setTimeout(() => {
           updateCurrentTheme();
-
-          
         }, 500);
       }
     }, 1200);
@@ -297,7 +305,7 @@ const playSound = (soundKey) => {
       nextCard();
     }, 500);
   };
-
+  
   // Function to render the win screen with a video overlay
   const renderWinLuckySymbolVideoScreen = () => {
     return (
@@ -349,7 +357,7 @@ const playSound = (soundKey) => {
           {countDownStarted ? (
             <View style={styles.rowCountDown}>
               <LottieView
-               ref={ref}
+                ref={ref}
                 style={styles.lottieAnimation}
                 source={lottieCountDown}
                 speed={1}
@@ -358,15 +366,18 @@ const playSound = (soundKey) => {
               />
             </View>
           ) : (
-            <GameButton text="Start Game" 
-            onPress={() => {
-              setCountDownStarted(true)
-              //useEffect(() => {
+            <GameButton
+              text="Start Game"
+              onPress={() => {
+                console.log("Start Game");  
+                setCountDownStarted(true);
+                //useEffect(() => {
                 setTimeout(() => {
                   ref.current.play();
-                }, 700) // DELAY INITIAL LOTTIE ANIMATION
-              //}, [])
-            }} />
+                }, 700); // DELAY INITIAL LOTTIE ANIMATION
+                //}, [])
+              }}
+            />
           )}
         </TouchableOpacity>
       </View>
@@ -521,7 +532,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0)",
   },
- 
 });
 
 export default ScratchLuckyGame;
