@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { StyleSheet, Animated } from "react-native";
+import { Platform } from "react-native-web";
 
 const AlphaView = ({ showAlphaView }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -8,7 +9,7 @@ const AlphaView = ({ showAlphaView }) => {
     Animated.timing(fadeAnim, {
       toValue: showAlphaView ? 1 : 0,
       duration: 300,
-      useNativeDriver: true,
+      useNativeDriver: Platform.OS !== 'web',
     }).start();
   }, [showAlphaView]);
 
@@ -18,7 +19,7 @@ const AlphaView = ({ showAlphaView }) => {
         styles.containerNav,
         {
           opacity: fadeAnim,
-          backgroundColor: "rgba(0,0,0,0.7)",
+          backgroundColor: "rgba(0,0,0,0.5)",
         },
       ]}
     />

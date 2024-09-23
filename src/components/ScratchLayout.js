@@ -7,10 +7,12 @@ import {
   eraserShouldBeScratched,
   heightScratch,
   setLuckySymbolCountTimer,
-  simulateScratchTimeOut,
 } from "../global/Settings";
+import { Dimensions } from "react-native-web";
 
 const scratchForeground = require("./../assets/image/scratch_foreground.jpg");
+
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 const ScratchLayout = ({
   reset,
@@ -25,6 +27,8 @@ const ScratchLayout = ({
   timerGame,
   score,
   setScore,
+  setWinLuckySymbolVideo,
+  setCollectLuckySymbolVideo,
 }) => {
   const [imageLoading, setImageLoading] = useState(false);
   const [isWinner, setIsWinner] = useState(false);
@@ -32,48 +36,30 @@ const ScratchLayout = ({
   const [triggerAutoPop, setTriggerAutoPop] = useState(false);
   const [isScratchCardVisible, setIsScratchCardVisible] = useState(true);
   const [autoScratch, setAutoScratch] = useState(false);
-  const [collectLuckySymbol, setCollectShowLuckySymbol] = useState(false);
-  const [showLuckySymbol, setShowLuckySymbol] = useState(false);
-  const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
   const [scratchedStarted, setScratchedStarted] = useState(false);
-
-  const addLuckySymbol = () => {
-    if (luckySymbolCount !== 3) {
-      setLuckySymbolCount(luckySymbolCount + 1);
-    }
-  };
 
   const setScratchedCard = () => {
     if (isLuckySymbolTrue) {
       if (luckySymbolCount === 2) {
-        setCollectShowLuckySymbol(true);
+       // setCollectShowLuckySymbol(true);
       } else {
-        setShowLuckySymbol(true);
+        //setShowLuckySymbol(true);
         //playSong(audioLuckySymbolCoins);
       }
 
       setTimeout(() => {
-        if (!skipToFinishLuckyVideo) {
-          addLuckySymbol();
-        }
+        //if (skipToFinishLuckyVideo) {
+        //addLuckySymbol();
+        //}
       }, setLuckySymbolCountTimer);
 
       setIsLuckySymbolTrue(false);
       setTimeout(() => {
-        if (!skipToFinishLuckyVideo) {
-          setShowLuckySymbol(false);
-          if (isWinner) {
-            //setButtonText("AUTO POP");
-          }
-
-          setScratched(true);
-          setIsScratchCardVisible(false);
-          if (isWinner) {
-            //setButtonText("AUTO POP");
-          } else {
-            //endGame();
-          }
-        }
+        //if (skipToFinishLuckyVideo) {
+        //setShowLuckySymbol(false);
+        setScratched(true);
+        setIsScratchCardVisible(false);
+        //}
       }, 5300);
     } else {
       setScratched(true);
@@ -87,7 +73,6 @@ const ScratchLayout = ({
   };
 
   const handleScratch = (scratchPercentage) => {
-    console.log("Scratch percentage: ", scratchPercentage);
     if (scratchPercentage >= eraserShouldBeScratched && isScratchCardVisible) {
       setScratchedCard();
     } else {
@@ -126,6 +111,10 @@ const ScratchLayout = ({
           //isLuckySymbolTrue={isLuckySymbolTrue}
           setIsLuckySymbolTrue={setIsLuckySymbolTrue}
           timerGame={timerGame}
+          setWinLuckySymbolVideo={setWinLuckySymbolVideo}
+          luckySymbolCount={luckySymbolCount}
+          setLuckySymbolCount={setLuckySymbolCount}
+          setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
         />
         {isScratchCardVisible && (
           <View style={styles.scratchCardContainer}>
@@ -150,20 +139,6 @@ const ScratchLayout = ({
       >
         <ScratchCardLeft scratchCardsLeft={scratchCardLeft} />
       </View>
-      {/*showLuckySymbol && (
-          <View
-            style={{
-              ...styles.transparentOverlayLose,
-              //height: windowHeight,
-              //width: windowWidth,
-              zIndex: 9999,
-              elevation: 10,
-            }}>
-            <View style={styles.overlay}>
-          
-            </View>
-          </View>
-          )*/}
     </View>
   );
 };
@@ -173,7 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 12,
     marginTop: "-10%",
-    overflow: "hidden",
+    //overflow: "hidden",
   },
   bottomView: {
     width: "100%",
@@ -186,14 +161,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
-  innerContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    display: "flex",
-    //position: "relative",
-    height: heightScratch,
-  },
   scratchCardContainer: {
     position: "absolute",
     top: 0,
@@ -204,109 +171,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
-  textContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-  textBottomContainer: {
-    flexDirection: "column",
-    justifyContent: "center",
-    width: "100%",
-    alignContent: "center",
-    marginVertical: 4,
-    marginTop: 10,
-  },
-  textTopLeft: {
-    color: "#FFEAC8",
-    marginLeft: 15,
-    textAlign: "left",
-    fontFamily: "Teko-Medium",
-    fontSize: 22,
-  },
-  textTopRight: {
-    color: "#3E362A",
-    marginRight: 15,
-    textAlign: "right",
-    fontFamily: "Teko-Medium",
-    fontSize: 22,
-    marginLeft: 15,
-  },
-  viewRow: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  androidMargin: {
-    marginTop: -25,
-  },
-  iosMargin: {
-    marginTop: -30,
-  },
   arrowImage: {
     position: "absolute",
     marginTop: 10,
     top: -10,
     zIndex: 1,
   },
-  textFooterTop: {
-    textAlign: "center",
-    fontFamily: "Inter-Medium",
-    fontSize: 12,
-    color: "#F1D3A3",
-  },
-  textFooterBottom: {
-    textAlign: "center",
-    fontFamily: "Inter-Medium",
-    fontSize: 12,
-    color: "#A9A9A9",
-  },
-  lottieAnimation: {
-    position: "absolute",
-    top: 0,
-    left: -3,
-    width: "10%",
-    height: "10%",
-  },
   transparentVideo: {
-    position: "absolute",
-    top: -70,
-    left: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "100%",
-  },
-  transparentOverlayLose: {
-    position: "absolute",
-    marginLeft: -10,
-    backgroundColor: "rgba(0, 0, 0, 0.7)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  iconLose: {
-    width: "100%",
-    height: "100%",
-  },
-
-  overlay: {
-    position: "absolute",
-    //height: windowHeight,
-    //width: windowWidth,
-    zIndex: 9999,
-    elevation: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  clickableArea: {
-    position: "absolute",
+    position  : "absolute",
     top: 0,
     left: 0,
     //height: windowHeight,
     //width: windowWidth,
+    justifyContent: "center",
+    alignItems: "center",
+   
   },
   transparentOverlay: {
+    position  : "absolute",
+    top: 0,
+    left: 0,
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0)",
+   // height: windowHeight,
+    //width: windowWidth,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 999,
+    elevation: 10,
   },
 });
 

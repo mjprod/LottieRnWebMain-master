@@ -1,21 +1,17 @@
 import React from "react";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ImageBackground } from "react-native-web";
 import AlphaView from "./AlphaView";
 
 const lottieAppBackground = require("../assets/image/background_top_nav.png");
 
-const { height: screenHeight, width: screenWidth } = Dimensions.get("window");
-
 const NavLayout = ({ showAlphaView }) => {
-  const isMobile = screenWidth < 768;
-
   return (
     <View style={styles.container}>
       <View
         style={[
           styles.viewBackground,
-          { height: screenHeight * 0.15 },
+          { height: 130 },
         ]}
       >
         <ImageBackground

@@ -2,7 +2,6 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 import './index.css';
-
 export default class App extends React.Component {
     render() {
         return (
@@ -18,13 +17,15 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: 'flex-start',
         alignItems: "center",
         backgroundColor: "#35363A",
+        paddingTop: "10%",
+
     },
     app: {
-        maxWidth: 400,  
-        maxHeight: 720,
+        width: 400,  
+        maxHeight: 650,
         flex: 1,
         backgroundColor: "black",
         borderRadius: 8,

@@ -2,7 +2,6 @@ import React from "react";
 import {
   TouchableOpacity,
   Text,
-  Image,
   View,
   StyleSheet,
   ImageBackground,
@@ -10,30 +9,13 @@ import {
 } from "react-native";
 
 const buttonBackground = require("./../assets/image/button_play_game.png");
-const buttonAutoIcon = require("./../assets/image/icon_auto_fill.png");
-const buttonClaimIcon = require("./../assets/image/icon_currency_joker_coin.png");
-const buttonNextIcon = require("./../assets/image/icon_next_card.png");
 
 const GameButton = ({
   onPress,
   text,
-  type = "AUTO",
   loading = false,
   style = {},
 }) => {
-  let buttonIcon;
-  switch (type) {
-    case "CLAIM":
-      buttonIcon = buttonClaimIcon;
-      break;
-    case "NEXT":
-      buttonIcon = buttonNextIcon;
-      break;
-    case "AUTO":
-    default:
-      buttonIcon = buttonAutoIcon;
-  }
-
   return (
     <TouchableOpacity style={[styles.btn, style]} onPress={onPress}>
       <ImageBackground source={buttonBackground} style={styles.imageBackground}>
@@ -41,7 +23,6 @@ const GameButton = ({
           <ActivityIndicator size="small" color="#000000" />
         ) : (
           <View style={styles.content}>
-            <Image source={buttonIcon} style={styles.img} />
             <Text style={styles.text}>{text}</Text>
           </View>
         )}

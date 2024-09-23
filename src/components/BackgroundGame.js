@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { View, StyleSheet, Dimensions, Text } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import AlphaView from "./AlphaView";
 import NavLayout from "./NavLayout";
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { width: screenWidth } = Dimensions.get("window");
 
 export const BackgroundGame = ({ source, showAlphaView }) => {
   const videoRef = useRef(null);
@@ -59,6 +59,8 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
     flex: 1,
+    maxWidth: 400,  
+    maxHeight: 200,
     width: "100%",
     height: "100%",
   },

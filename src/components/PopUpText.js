@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { View, Text, StyleSheet, Animated } from "react-native";
+import { View, Text, StyleSheet, Animated,Platform } from "react-native";
 
 const PopUpText = ({ value }) => {
 
@@ -14,12 +14,12 @@ const PopUpText = ({ value }) => {
       Animated.timing(scaleValue, {
         toValue: 1.5,
         duration: 500,
-        useNativeDriver: true,
+        useNativeDriver: Platform.OS !== 'web',
       }),
       Animated.timing(opacityValue, {
         toValue: 0,
         duration: 1000,
-        useNativeDriver: true,
+        useNativeDriver: Platform.OS !== 'web',
       }),
     ]).start();
   }, [value]);
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 999,
   },
   containerShape: {
     justifyContent: "center",
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
     padding: 2,
     fontSize: 12,
     color: "#FFFFFF",
+    fontFamily: "Teko-Medium",
   },
 });
 

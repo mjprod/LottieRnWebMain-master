@@ -15,7 +15,7 @@ export const eraserAnimationSteps = 85;
 
 //ScratchCard
 export const simulateScratchTimeOut = 2500;
-export const generateRandomLuckySymbolPercentage = 0.1;
+export const generateRandomLuckySymbolPercentage = 0.9;
 export const finishPopUpToVideoTimer = 1000;
 export const setLuckySymbolCountTimer = 5700;
 export const timerSoundBetweenScratchWithFinger = 300;
@@ -27,7 +27,8 @@ export const totalIcons = 12;
 export const totalPositions = 20;
 export const columns = 4;
 export const maxRepeatedIcons = 3;
-export const heightScratch = 425;
+export const heightScratch = 350;
+export const colorSymbolNotSelected = 'rgba(0, 0, 0, 0.5)';
 
-//Theme 
-export const currentTheme = 'egypt';
+
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import LottieView from "react-native-web-lottie";
 import { gameCenterIcon } from "../global/Assets";
+import LottieLuckySymbolCoinSlot from './LottieLuckySymbolCoinSlot';
 
 const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
 const backgroundTopLayoutRed = require("./../assets/image/background_top_layout_red.png");
@@ -28,10 +29,11 @@ const TopLayout = ({
   timerGame,
   setTimerGame,
   score,
+  luckySymbolCount,
 }) => {
-  const bounceAnim = new Animated.Value(1).current;
-  const fadeAnim = new Animated.Value(1).current;
-  const scaleAnim = new Animated.Value(1.8).current;
+  const bounceAnim = useRef(new Animated.Value(1)).current;
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const scaleAnim = useRef(new Animated.Value(1.8)).current;
 
   const [countdownTimer, setCountdownTimer] = useState(0);
 
@@ -132,6 +134,8 @@ const TopLayout = ({
               />
               <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
             </View>
+          
+            <LottieLuckySymbolCoinSlot luckySymbolCount={luckySymbolCount} />
           </View>
         </View>
 
@@ -270,8 +274,8 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     zIndex: 999,
-    alignItems: "center", // Centraliza horizontalmente
-    justifyContent: "center", // Centraliza verticalmente
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
