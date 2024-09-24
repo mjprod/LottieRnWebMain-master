@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
 import LottieView from "react-native-web-lottie";
 import PopUpText from "./PopUpText";
-import { currentTheme } from "../global/Assets";
 import themes from "../global/themeConfig";
+import { useTheme } from "../hook/useTheme";
 
 const lottieAnimations = {
   lottieScratchieBubbleBlue: require("./../assets/lotties/lottieScratchieBubbleBlue.json"),
@@ -15,6 +15,7 @@ const lottieAnimations = {
 const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
   const selectedBobbleColour = lottieAnimations[bobble];
   const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
+  const { currentTheme} = useTheme();
 
   const handleIconClick = () => {
     if (onClick) {

@@ -8,14 +8,16 @@ import {
   Text,
 } from "react-native";
 import LottieView from "react-native-web-lottie";
-import { updateCurrentTheme } from "../global/Assets";
+//import { useTheme } from "../hook/useTheme";
 
 const colectLuckyCoins = require("./../assets/image/lucky_coin.png");
 const lottieStars = require("./../assets/lotties/lottieStars.json");
 const lottieSymbolsAnim = require("./../assets/lotties/3LuckySymbolsPart01.json");
 const lottieBonusCard = require("./../assets/lotties/lottieBonusCard.json");
 
-const LuckySymbolCollect = ({ setReset,setLuckySymbolCount,setCollectLuckySymbolVideo}) => {
+const LuckySymbolCollect = ({ nextCard,setLuckySymbolCount,setCollectLuckySymbolVideo}) => {
+ //const { goToNextTheme } = useTheme();
+
   const [clicks, setClicks] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [initialAnimationComplete, setInitialAnimationComplete] =
@@ -80,11 +82,12 @@ const LuckySymbolCollect = ({ setReset,setLuckySymbolCount,setCollectLuckySymbol
 
         setTimeout(() => {
         setLuckySymbolCount(0);
-          setReset(true);
+          //setReset(true);
+          nextCard();
     
-          setTimeout(() => {
-            updateCurrentTheme();
-          }, 500);
+          //setTimeout(() => {
+            //goToNextTheme();
+         // }, 500);
         }, 1200);
     }, 1000);
   };

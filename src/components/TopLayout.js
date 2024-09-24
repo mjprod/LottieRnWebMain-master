@@ -8,8 +8,8 @@ import {
   Animated,
 } from "react-native";
 import LottieView from "react-native-web-lottie";
-import { gameCenterIcon } from "../global/Assets";
 import LottieLuckySymbolCoinSlot from './LottieLuckySymbolCoinSlot';
+import { useTheme } from "../hook/useTheme";
 
 const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
 const backgroundTopLayoutRed = require("./../assets/image/background_top_layout_red.png");
@@ -36,6 +36,9 @@ const TopLayout = ({
   const scaleAnim = useRef(new Animated.Value(1.8)).current;
 
   const [countdownTimer, setCountdownTimer] = useState(0);
+
+  const { gameCenterIcon } = useTheme();
+
 
   useEffect(() => {
     let interval;
