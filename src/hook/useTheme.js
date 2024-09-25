@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import themes from '../global/themeConfig';
+import { numberOfCards } from '../global/Settings';
  
 // Enum for different themes
 export const ThemeEnum = Object.freeze({
@@ -27,7 +28,7 @@ const ThemeContext = createContext();
 // The ThemeProvider component will manage and provide the theme data to its children
 export const ThemeProvider = ({ children }) => {
     // State to keep track of the current theme sequence (array of themes)
-    const [themeSequence, setThemeSequence] = useState(getRandomThemesArray(10));
+    const [themeSequence, setThemeSequence] = useState(getRandomThemesArray(numberOfCards));
     const [currentThemeSequence, setCurrentThemeSequence] = useState();
 
       // Log the themeSequence every time it changes
@@ -62,8 +63,6 @@ export const ThemeProvider = ({ children }) => {
 
     // Function to go to the next theme
     const goToNextTheme = () => {
-       // console.log("Going to the next theme");
-        //console.log(`Current theme index: ${currentThemeIndex}`);
         if (currentThemeIndex < themeSequence.length - 1) {
             setCurrentThemeIndex(currentThemeIndex + 1);
             console.log(`New theme index: ${currentThemeIndex + 1}`);
@@ -75,9 +74,6 @@ export const ThemeProvider = ({ children }) => {
     // This effect runs every time the themeSequence or currentThemeIndex changes.
     // It updates the gameCenterIcon and backgroundLoop based on the current theme.
     useEffect(() => {
-        console.log(`Current theme index: ${currentThemeIndex}`);
-        console.log(`Current theme: ${themeSequence[currentThemeIndex]}`);
-
         if (themeSequence.length > 0) {
             setGameCenterIcon(themes[themeSequence[currentThemeIndex]].gameCenterIcon);
             setBackgroundLoop(themes[themeSequence[currentThemeIndex]].backgroundLoop);
@@ -96,7 +92,6 @@ export const ThemeProvider = ({ children }) => {
             currentTheme: themeSequence[currentThemeIndex], // Current theme from the sequence
             gameCenterIcon, // Current game center icon
             backgroundLoop, // Current background loop
-            //soundLoop, // Current sound loop
             updateThemeSequence,
             setCurrentThemeByIndex,  // Function to change the current theme by index
             goToNextTheme,           // Function to go to the next theme

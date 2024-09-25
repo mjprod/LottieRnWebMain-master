@@ -15,10 +15,8 @@ import Video from "../components/Video";
 import GameOverScreen from "../components/GameOverScreen.js";
 import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
 import BrowserDetection from "react-browser-detection";
-import { Howl } from "howler";
 import LottieView from "react-native-web-lottie";
 
-import themes from "../global/themeConfig.js";
 import GameButton from "../components/GameButton.js";
 import { useTheme } from "../hook/useTheme.js";
 import { useSound } from "../hook/useSoundPlayer.js";
@@ -40,7 +38,7 @@ const ScratchLuckyGame = () => {
 
   const [reset, setReset] = useState(false);
   const [scratched, setScratched] = useState(false);
-  const [scratchCardLeft, setScratchCardLeft] = useState(10);
+  const [scratchCardLeft, setScratchCardLeft] = useState(0);
   const [timerGame, setTimerGame] = useState(0);
   const [score, setScore] = useState(0);
   const [scratchStarted, setScratchStarted] = useState(false);
@@ -53,11 +51,12 @@ const ScratchLuckyGame = () => {
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
-  const { backgroundLoop, goToNextTheme } = useTheme();
-  const { setStartPlay } = useSound();
+  const { backgroundLoop, goToNextTheme , themeSequence } = useTheme();
+  const { setStartPlay,switchTrack } = useSound();
 
   const ref = useRef(null);
 
+  // AUTOPLAY
   // useEffect(() => {
   // setStartPlay(true);
   //setTimeout(() => {
@@ -66,12 +65,15 @@ const ScratchLuckyGame = () => {
   //}, []);
 
   useEffect(() => {
-    //const trackKey = trackKeys[currentTrackIndex];
+    setScratchCardLeft(themeSequence.length);
+  }, [themeSequence]);
+
+  useEffect(() => {
     if (countDownStarted) {
       setTimeout(() => {
         ref.current.play();
         setStartPlay(true);
-      }, 100);
+      }, 300);
     }
   }, [countDownStarted]);
 
@@ -174,10 +176,11 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (reset) {
       setTimeout(() => {
-        if (scratchCardLeft > 0) {
+        if (scratchCardLeft - 1 > 0) {
           setScratchCardLeft(scratchCardLeft - 1);
         } else {
           setGameOver(true);
+          switchTrack(1);
         }
       }, 600);
       setTimerGame(0);
@@ -321,7 +324,6 @@ const ScratchLuckyGame = () => {
                 setLuckySymbolCount={setLuckySymbolCount}
                 setScratchStarted={setScratchStarted}
                 scratchCardLeft={scratchCardLeft}
-                setScratchCardLeft={setScratchCardLeft}
                 timerGame={timerGame}
                 score={score}
                 setScore={setScore}

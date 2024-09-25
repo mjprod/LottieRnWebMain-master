@@ -12,7 +12,7 @@ const ScratchCardLeft = ({ scratchCardsLeft }) => {
     setShowLottie(false);
 
     const timeoutId = setTimeout(() => {
-      setDisplayedScratchCardsLeft(scratchCardsLeft);
+      setDisplayedScratchCardsLeft(scratchCardsLeft - 1);
       setShowLottie(true);
     }, 600);
 

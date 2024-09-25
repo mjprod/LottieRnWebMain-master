@@ -236,7 +236,7 @@ const themes = {
             <IconTypeWhiskeyActive  key="11" />,
         ],
     },
-    global: {
+    base: {
         src: require('./../assets/sounds/base_beat.mp3'),
         initial_src: require('./../assets/sounds/321_go_countdown.mp3'),
     }

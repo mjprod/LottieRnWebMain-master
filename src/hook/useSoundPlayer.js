@@ -9,17 +9,16 @@ import { Howl } from "howler";
 import themes from "../global/themeConfig.js";
 import { useTheme } from "./useTheme.js";
 
-// Criação do contexto
+// Creating the sound context
 const SoundContext = createContext();
 
-// Hook para usar o contexto de som
+// Hook to use the sound context
 export const useSound = () => useContext(SoundContext);
 
-// Provedor do contexto de som
+// Sound provider that manages the sound logic
 export const SoundProvider = ({ children }) => {
   const [startPlay, setStartPlay] = useState(false);
   const [introPlayed, setIntroPlayed] = useState(false);
-
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
   const { currentTheme } = useTheme();
@@ -33,83 +32,62 @@ export const SoundProvider = ({ children }) => {
     "cowboy_theme", // 5
   ];
 
-  // Criar as referências de todos os sons e definir volume inicial como 0 para todas as faixas
+  // Create references for all sounds and set initial volume to 0 for all tracks
   const soundRefs = useRef({
     intro: new Howl({
-      src: [themes["global"].initial_src],
+      src: [themes["base"].initial_src],
       preload: true,
       autoplay: false,
       loop: false,
-      volume: 1, // Inicialmente volume 0
+      volume: 1, // Initially volume is 0
       onend: () => initialTrack(),
     }),
     base_beat: new Howl({
-      src: [themes["global"].src],
+      src: [themes["base"].src],
       preload: true,
       loop: true,
-      volume: 0, // Inicialmente volume 0
+      volume: 0, // Initially volume is 0
     }),
     cowboy_theme: new Howl({
       src: [themes["cowboy"].src],
       preload: true,
       loop: true,
-      volume: 0, // Inicialmente volume 0
+      volume: 0, // Initially volume is 0
     }),
     international_theme: new Howl({
       src: [themes["international"].src],
       preload: true,
       loop: true,
-      volume: 0, // Inicialmente volume 0
+      volume: 0, // Initially volume is 0
     }),
     mythology_theme: new Howl({
       src: [themes["mythology"].src],
       preload: true,
       loop: true,
-      volume: 0, // Inicialmente volume 0
+      volume: 0, // Initially volume is 0
     }),
     egypt_theme: new Howl({
       src: [themes["egypt"].src],
       preload: true,
       loop: true,
-      volume: 0, // Inicialmente volume 0
+      volume: 0, // Initially volume is 0
     }),
   });
 
-  const playNextTrack = () => {
-    console.log("Tocando próxima música, playNextTrack " + currentTheme);
-    const theme = currentTheme; // Pega o tema atual
-    switch (theme) {
-      case "egypt":
-        switchTrack(2);
-        break;
-      case "international":
-        switchTrack(3);
-        break;
-      case "mythology":
-        switchTrack(4);
-        break;
-      case "cowboy":
-        switchTrack(5);
-        break;
-      default:
-        switchTrack(1);
-    }
-  };
-
-  // Função para tocar todas as músicas ao mesmo tempo com volume 0 (exceto a atual)
+  // Function to play all sounds at the same time with volume 0 (except the current one)
   const playAllSounds = () => {
     Object.keys(soundRefs.current).forEach((trackKey, index) => {
-      // Pular a faixa "intro"
+      // Skip the "intro" track
       if (trackKey === "intro") return;
-  
+
       const sound = soundRefs.current[trackKey];
-      
+
       if (index === currentTrackIndex) {
-        sound.volume(1); // Tocar a faixa atual com volume normal
+        sound.volume(1); // Play the current track with normal volume
       } else {
-        sound.volume(0); // Outras faixas em volume 0
+        sound.volume(0); // Other tracks at volume 0
       }
-      
+
       sound.play();
     });
   };
@@ -118,92 +96,89 @@ export const SoundProvider = ({ children }) => {
     Object.keys(soundRefs.current).forEach((trackKey) => {
       const sound = soundRefs.current[trackKey];
       if (sound.playing()) {
-        sound.stop(); // Parar a faixa se estiver tocando
+        sound.stop(); // Stop the track if it's playing
       }
     });
   };
 
-  const initialTrack = () => {
-   
-    playAllSounds();
-
-    const theme = currentTheme;
-    let newIndex = 0;
+  const getTrackKey = () => {
+    const theme = currentTheme; // Get the current theme
     switch (theme) {
       case "egypt":
-      newIndex = 2;
-        break;
+        return 2;
       case "international":
-      newIndex = 3;
-        break;
+        return 3;
       case "mythology":
-      newIndex = 4;
-        break;
+        return 4;
       case "cowboy":
-        newIndex = 5;
-        break;
+        return 5;
       default:
-        newIndex = 1;
+        return 1;
     }
+  };
 
+  const initialTrack = () => {
+    playAllSounds();
+
+    const newIndex = getTrackKey();
+   
     const newTrackKey = trackKeys[newIndex];
     const newSound = soundRefs.current[newTrackKey];
-      if (newSound) {
-        newSound.fade(0, 1, 500);
-     }
+    if (newSound) {
+      newSound.fade(0, 1, 500);
+    }
     setIntroPlayed(true);
     setCurrentTrackIndex(newIndex);
   };
 
-const switchTrack = (newIndex) => {
+  const playNextTrack = () => {
+    switchTrack(getTrackKey());
+  };
 
-  if (newIndex === currentTrackIndex) {
-    console.log("Same Theme, don't change sound");
-    return;
-  }
-  const currentTrackKey = trackKeys[currentTrackIndex];
-  const newTrackKey = trackKeys[newIndex];
-
-  const currentSound = soundRefs.current[currentTrackKey];
-  const newSound = soundRefs.current[newTrackKey];
-
-  if (currentSound) {
-    currentSound.fade(1, 0, 2000);
-  }
-
-  setTimeout(() => {
-    if (newSound) {
-      newSound.fade(0, 1, 1000);
+  const switchTrack = (newIndex) => {
+    if (newIndex === currentTrackIndex) {
+      console.log("Same Theme, don't change sound");
+      return;
     }
-  }, 500);
+    const currentTrackKey = trackKeys[currentTrackIndex];
+    const newTrackKey = trackKeys[newIndex];
 
-  setCurrentTrackIndex(newIndex);
-};
+    const currentSound = soundRefs.current[currentTrackKey];
+    const newSound = soundRefs.current[newTrackKey];
 
+    if (currentSound) {
+      currentSound.fade(1, 0, 1000);
+    }
 
+    setTimeout(() => {
+      if (newSound) {
+        newSound.fade(0, 1, 500);
+      }
+    }, 500);
 
-const playSound = (soundKey) => {
-  if (soundRefs.current[soundKey]) {
-    soundRefs.current[soundKey].play();
-  }
-};
+    setCurrentTrackIndex(newIndex);
+  };
+
+  const playSound = (soundKey) => {
+    if (soundRefs.current[soundKey]) {
+      soundRefs.current[soundKey].play();
+    }
+  };
 
   useEffect(() => {
     if (startPlay) {
-      //playAllSounds();
       playSound("intro");
-      //sound.play();
     }
   }, [startPlay]);
 
   useEffect(() => {
     if (introPlayed) {
-      console.log("O tema mudou para, agora muda a musica: ", currentTheme);
-      playNextTrack(); // Toca a faixa correspondente ao novo tema
+      console.log("The theme changed, now change the music: ", currentTheme);
+      playNextTrack(); // Play the track corresponding to the new theme
     }
-  }, [currentTheme]); 
+  }, [currentTheme]);
 
-  // Provedor do contexto
+  // Sound context provider
   return (
     <SoundContext.Provider
       value={{
@@ -212,6 +187,7 @@ const playSound = (soundKey) => {
         playNextTrack,
         setStartPlay,
         soundRefs,
+        switchTrack
       }}
     >
       {children}

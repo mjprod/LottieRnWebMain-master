@@ -23,7 +23,6 @@ const ScratchLayout = ({
   setLuckySymbolCount,
   setScratchStarted,
   scratchCardLeft,
-  setScratchCardLeft,
   timerGame,
   score,
   setScore,
