@@ -34,7 +34,7 @@ const { width } = Dimensions.get("window");
 
 const ScratchLuckyGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
-  const [countDownStarted, setCountDownStarted] = useState(false);
+  const [countDownStarted, setCountDownStarted] = useState(true);
 
   const [gameOver, setGameOver] = useState(false);
 
@@ -54,10 +54,17 @@ const ScratchLuckyGame = () => {
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
 
-  const { currentTheme,backgroundLoop,goToNextTheme} = useTheme();
-  const { playNextTrack} = useSound();
+  const { backgroundLoop,goToNextTheme} = useTheme();
+  const { setStartPlay,playNextTrack} = useSound();
 
   const ref = useRef(null);
+
+  useEffect(() => {
+    setStartPlay(true);
+    setTimeout(() => {
+      ref.current.play();
+    }, 100);
+  }, []);
 
   useEffect(() => {
     //const trackKey = trackKeys[currentTrackIndex];
@@ -97,15 +104,14 @@ const ScratchLuckyGame = () => {
     setSkipToFinishLuckyVideo(false);
     addLuckySymbol();
 
-    //setSoundLopping(false);
-
     setTimeout(() => {
       if (luckySymbolCount < 2) {
         setReset(true);
-
         setTimeout(() => {
           goToNextTheme();
-          playNextTrack();
+        }, 100);
+        setTimeout(() => {
+          //playNextTrack();
         }, 500);
       }
     }, 1200);
@@ -144,7 +150,7 @@ const ScratchLuckyGame = () => {
 
   // Callback function to handle when the video finishes
   const handleVideoEnd = () => {
-    console.log("Video has finished playing.");
+    //console.log("Video has finished playing.");
     nextCard();
   };
 
@@ -257,9 +263,7 @@ const ScratchLuckyGame = () => {
         }}
       >
         <TouchableOpacity
-          style={{ width: "80%" }}
-          //onPress={setCountDownStarted(true)}
-        >
+          style={{ width: "80%" }}>
           {countDownStarted ? (
             <View style={styles.rowCountDown}>
               <LottieView
@@ -277,11 +281,6 @@ const ScratchLuckyGame = () => {
               onPress={() => {
                 console.log("Start Game");  
                 setCountDownStarted(true);
-                //useEffect(() => {
-                setTimeout(() => {
-                  ref.current.play();
-                }, 700); // DELAY INITIAL LOTTIE ANIMATION
-                //}, [])
               }}
             />
           )}

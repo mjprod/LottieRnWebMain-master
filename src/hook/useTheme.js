@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import themes from '../global/themeConfig';
-
+ 
 // Enum for different themes
 export const ThemeEnum = Object.freeze({
     EGYPT: 'egypt',
@@ -28,6 +28,7 @@ const ThemeContext = createContext();
 export const ThemeProvider = ({ children }) => {
     // State to keep track of the current theme sequence (array of themes)
     const [themeSequence, setThemeSequence] = useState(getRandomThemesArray(10));
+    const [currentThemeSequence, setCurrentThemeSequence] = useState();
 
       // Log the themeSequence every time it changes
       useEffect(() => {
@@ -40,7 +41,7 @@ export const ThemeProvider = ({ children }) => {
     // Initialize gameCenterIcon and backgroundLoop based on the current theme
     const [gameCenterIcon, setGameCenterIcon] = useState(themes[themeSequence[currentThemeIndex]].gameCenterIcon);
     const [backgroundLoop, setBackgroundLoop] = useState(themes[themeSequence[currentThemeIndex]].backgroundLoop);
-    const [soundLoop, setSoundLoop] = useState(themes[themeSequence[currentThemeIndex]].src);
+    //const [soundLoop, setSoundLoop] = useState(themes[themeSequence[currentThemeIndex]].src);
 
     // Function to update the sequence of themes dynamically
     const updateThemeSequence = (numberOfCards) => {
@@ -65,7 +66,7 @@ export const ThemeProvider = ({ children }) => {
         //console.log(`Current theme index: ${currentThemeIndex}`);
         if (currentThemeIndex < themeSequence.length - 1) {
             setCurrentThemeIndex(currentThemeIndex + 1);
-            //console.log(`New theme index: ${currentThemeIndex + 1}`);
+            console.log(`New theme index: ${currentThemeIndex + 1}`);
         } else {
             console.log("You are already on the last theme");
         }
@@ -76,10 +77,14 @@ export const ThemeProvider = ({ children }) => {
     useEffect(() => {
         console.log(`Current theme index: ${currentThemeIndex}`);
         console.log(`Current theme: ${themeSequence[currentThemeIndex]}`);
+
         if (themeSequence.length > 0) {
             setGameCenterIcon(themes[themeSequence[currentThemeIndex]].gameCenterIcon);
             setBackgroundLoop(themes[themeSequence[currentThemeIndex]].backgroundLoop);
-            setSoundLoop(themes[themeSequence[currentThemeIndex]].src);
+            setCurrentThemeSequence(themeSequence[currentThemeIndex]);
+
+           // setSoundLoop(themes[themeSequence[currentThemeIndex]].src);
+
 
         }
     }, [currentThemeIndex, themeSequence]); // The effect depends on currentThemeIndex and themeSequence
@@ -91,7 +96,7 @@ export const ThemeProvider = ({ children }) => {
             currentTheme: themeSequence[currentThemeIndex], // Current theme from the sequence
             gameCenterIcon, // Current game center icon
             backgroundLoop, // Current background loop
-            soundLoop, // Current sound loop
+            //soundLoop, // Current sound loop
             updateThemeSequence,
             setCurrentThemeByIndex,  // Function to change the current theme by index
             goToNextTheme,           // Function to go to the next theme
