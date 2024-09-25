@@ -23,7 +23,7 @@ import {
   maxRepeatedIcons,
 } from "../global/Settings";
 import themes from "../global/themeConfig";
-import { currentTheme } from "../global/Assets";
+import { useTheme } from "../hook/useTheme";
 
 
 const scratchBackground = require("./../assets/image/scratch_background.png");
@@ -65,6 +65,7 @@ const ScratchGame = ({
   const [arrayIcon, setArrayIcon] = useState();
 
   const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
+  const { currentTheme } = useTheme();
 
   const soundRefs = useRef({
     sound1: new Howl({ src: [require("./../assets/audio/1_C.mp3")], preload: true }),

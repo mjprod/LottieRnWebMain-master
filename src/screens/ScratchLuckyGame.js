@@ -11,11 +11,6 @@ import {
 import { BackgroundGame } from "../components/BackgroundGame";
 import TopLayout from "../components/TopLayout";
 import ScratchLayout from "../components/ScratchLayout";
-import {
-  updateCurrentTheme,
-  backgroundLoop,
-  currentTheme,
-} from "../global/Assets";
 import Video from "../components/Video";
 import GameOverScreen from "../components/GameOverScreen.js";
 import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
@@ -25,6 +20,8 @@ import LottieView from "react-native-web-lottie";
 
 import themes from "../global/themeConfig.js";
 import GameButton from "../components/GameButton.js";
+import { useTheme } from "../hook/useTheme.js";
+import { useSound } from "../hook/useSoundPlayer.js";
 
 // Importando arquivos de mídia
 const backgroundGame = require("./../assets/image/background_game.png");
@@ -47,7 +44,7 @@ const ScratchLuckyGame = () => {
   const [timerGame, setTimerGame] = useState(0);
   const [score, setScore] = useState(0);
   const [scratchStarted, setScratchStarted] = useState(false);
-  const [luckySymbolCount, setLuckySymbolCount] = useState(2);
+  const [luckySymbolCount, setLuckySymbolCount] = useState(0);
 
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
@@ -56,110 +53,18 @@ const ScratchLuckyGame = () => {
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+
+  const { currentTheme,backgroundLoop,goToNextTheme} = useTheme();
+  const { playNextTrack} = useSound();
 
   const ref = useRef(null);
 
-  const trackKeys = [
-    "intro",
-    "base_beat",
-    "egypt_theme", //2
-    "international_theme", //3
-    "mythology_theme", //4
-    "cowboy_theme", //5
-  ];
-
-  const soundRefs = useRef({
-    intro: new Howl({
-      src: [themes["global"].initial_src],
-      preload: true,
-      autoplay: false,
-      loop: false,
-      onend: () => {
-        playNextTrack();
-        console.log("Intro ended");
-      },
-    }),
-    base_beat: new Howl({
-      src: [themes["global"].src],
-      preload: true,
-      loop: true,
-      onend: () => console.log("Base beat ended"),
-    }),
-    cowboy_theme: new Howl({
-      src: [themes["egypt"].src],
-      preload: true,
-      loop: true,
-      onend: () => console.log("Cowboy theme ended"),
-    }),
-    international_theme: new Howl({
-      src: [themes["mythology"].src],
-      preload: true,
-      loop: true,
-      onend: () => console.log("International theme ended"),
-    }),
-    mythology_theme: new Howl({
-      src: [themes["international"].src],
-      preload: true,
-      loop: true,
-      onend: () => console.log("Mythology theme ended"),
-    }),
-    egypt_theme: new Howl({
-      src: [themes["cowboy"].src],
-      preload: true,
-      loop: true,
-      onend: () => console.log("Egypt theme ended"),
-    }),
-  });
-
   useEffect(() => {
-    return () => {
-      Object.values(soundRefs.current).forEach((sound) => {
-        sound.stop();
-        sound.unload();
-      });
-    };
-  }, []);
-
-  const playNextTrack = () => {
-    if (currentTheme === "egypt") {
-      console.log("Playing next track: egypt");
-      setCurrentTrackIndex(2);
-    } else if (currentTheme === "international") {
-      console.log("Playing next track: international");
-      setCurrentTrackIndex(3);
-    } else if (currentTheme === "mythology") {
-      console.log("Playing next track: mythology");
-      setCurrentTrackIndex(4);
-    } else if (currentTheme === "cowboy") {
-      console.log("Playing next track: cowboy");
-      setCurrentTrackIndex(5);
-    }
-  };
-
-  const playSound = (soundKey) => {
-    if (soundRefs.current[soundKey]) {
-      soundRefs.current[soundKey].play();
-      soundRefs.current[soundKey].once("end", () => {
-        playNextTrack();
-        console.log("Sound ended");
-      });
-    }
-  };
-
-  const stopCurrentTrack = () => {
-    const trackKey = trackKeys[currentTrackIndex];
-    if (soundRefs.current[trackKey]) {
-      soundRefs.current[trackKey].stop();
-    }
-  };
-
-  useEffect(() => {
-    const trackKey = trackKeys[currentTrackIndex];
+    //const trackKey = trackKeys[currentTrackIndex];
     if (countDownStarted) {
-      playSound(trackKey);
+      //playSound(trackKey);
     }
-  }, [currentTrackIndex,countDownStarted]);
+  }, [countDownStarted]);
 
 
   const browserHandler = {
@@ -199,7 +104,8 @@ const ScratchLuckyGame = () => {
         setReset(true);
 
         setTimeout(() => {
-          updateCurrentTheme();
+          goToNextTheme();
+          playNextTrack();
         }, 500);
       }
     }, 1200);
@@ -431,6 +337,7 @@ const ScratchLuckyGame = () => {
       {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen()}
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect
+        nextCard={nextCard}
           setReset={setReset}
           setLuckySymbolCount={setLuckySymbolCount}
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
