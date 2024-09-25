@@ -62,10 +62,6 @@ const LuckySymbolCollect = ({ nextCard,setLuckySymbolCount,setCollectLuckySymbol
         if (nextClickCount === 2) {
           setClicks(0);
           setShowBonusCard(true);
-            //setLuckySymbolCount(3);
-          // Additional logic to handle end game or other actions
-        } else {
-          //triggerVibration('light');
         }
       }
       setTimeout(() => setIsAnimating(false), 100);
@@ -79,20 +75,12 @@ const LuckySymbolCollect = ({ nextCard,setLuckySymbolCount,setCollectLuckySymbol
   const handleBonusCardAnimationComplete = () => {
     setTimeout(() => {
         setCollectLuckySymbolVideo(false);
-
         setTimeout(() => {
         setLuckySymbolCount(0);
-          //setReset(true);
           nextCard();
-    
-          //setTimeout(() => {
-            //goToNextTheme();
-         // }, 500);
         }, 1200);
     }, 1000);
   };
-
- // if (!collectLuckySymbol) return null;
 
   return (
     <View

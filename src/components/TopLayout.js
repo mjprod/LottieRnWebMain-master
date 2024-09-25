@@ -6,9 +6,10 @@ import {
   Image,
   ImageBackground,
   Animated,
+  TouchableWithoutFeedback,
 } from "react-native";
 import LottieView from "react-native-web-lottie";
-import LottieLuckySymbolCoinSlot from './LottieLuckySymbolCoinSlot';
+import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import { useTheme } from "../hook/useTheme";
 
 const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
@@ -20,13 +21,15 @@ const imageLuckySymbol = require("./../assets/image/icon_lucky_symbol.png");
 const imageTicket = require("./../assets/image/icon_ticket.png");
 const lottieCountDownBonus = require("../assets/lotties/lottieCountdownBonus.json");
 
+const lottieCombo1 = require("../assets/lotties/ComboHolderMaxVersion-2x.json");
+const lottieCombo2 = require("../assets/lotties/ComboHolderMaxVersion-3x.json");
+const lottieCombo3 = require("../assets/lotties/ComboHolderMaxVersion-4x.json");
+
 const countdown = 3;
 const showCountDown = true;
 
 const TopLayout = ({
-  scratched,
   scratchStarted,
-  timerGame,
   setTimerGame,
   score,
   luckySymbolCount,
@@ -39,7 +42,32 @@ const TopLayout = ({
 
   const { gameCenterIcon } = useTheme();
 
+  // Animation control
+  const [animationIndex, setAnimationIndex] = useState(0); // Start with the first animation
+  const [playAnimation, setPlayAnimation] = useState(false); // Controls whether to play the animation
+  const animations = [lottieCombo1, lottieCombo2, lottieCombo3];
 
+  const lottieRef = useRef(null);
+
+  // Function triggered on click
+  const handlePress = () => {
+    // Ensure the animation starts from index 0 initially
+    if (!playAnimation) {
+      setAnimationIndex(0);
+      setPlayAnimation(true); // Start the animation if not started
+    } else {
+      // Cycle to the next animation, ensuring it stays within bounds
+      setAnimationIndex((prevIndex) => (prevIndex + 1) % animations.length);
+    }
+
+    // Play the animation manually if the LottieView is available
+    if (lottieRef.current) {
+      lottieRef.current.reset();
+      lottieRef.current.play();
+    }
+  };
+
+  // Countdown control logic
   useEffect(() => {
     let interval;
     if (scratchStarted) {
@@ -57,15 +85,14 @@ const TopLayout = ({
           return newTime;
         });
       }, 1000);
-    }
-    else {
+    } else {
       setCountdownTimer(0);
     }
 
     return () => clearInterval(interval);
   }, [scratchStarted, setTimerGame]);
 
-
+  // Function to determine background based on timer value
   const getBackground = (value) => {
     if (value >= 1 && value <= 2) {
       return backgroundTopLayoutRed;
@@ -78,6 +105,28 @@ const TopLayout = ({
     }
   };
 
+  // Function that renders the central image with Lottie animation
+  const CentralImageWithLottie = () => {
+    return (
+      <TouchableWithoutFeedback onPress={handlePress}>
+        <View style={styles.container}>
+          <Image source={gameCenterIcon} style={styles.centralImage} />
+
+          {playAnimation && (
+            <LottieView
+              ref={lottieRef}
+              key={animationIndex} // Force re-render when animation index changes
+              source={animations[animationIndex]}
+              loop={false}
+              autoPlay={true} // Start animation on play
+              style={styles.lottie}
+            />
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  };
+
   return (
     <View style={{ marginTop: -25 }}>
       <ImageBackground
@@ -87,16 +136,9 @@ const TopLayout = ({
       >
         <View style={styles.textContainer}>
           <View style={styles.textColumn}>
-            {(
-              <Text
-                style={[
-                  styles.textTopLeft,
-                  { color: '#FFFFFF' },
-                ]}
-              >
-                POP POINTS COUNTDOWN
-              </Text>
-            )}
+            <Text style={[styles.textTopLeft, { color: "#FFFFFF" }]}>
+              POP POINTS COUNTDOWN
+            </Text>
             {scratchStarted && (
               <Animated.View
                 style={[
@@ -104,12 +146,7 @@ const TopLayout = ({
                   { transform: [{ scale: scaleAnim }] },
                 ]}
               >
-                <Text
-                  style={[
-                    styles.countDownText,
-                    { color:  '#FFFFFF' },
-                  ]}
-                >
+                <Text style={[styles.countDownText, { color: "#FFFFFF" }]}>
                   {countdownTimer * 100} s
                 </Text>
               </Animated.View>
@@ -137,12 +174,12 @@ const TopLayout = ({
               />
               <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
             </View>
-          
+
             <LottieLuckySymbolCoinSlot luckySymbolCount={luckySymbolCount} />
           </View>
         </View>
 
-        <Image style={styles.centralImage} source={gameCenterIcon} />
+        {CentralImageWithLottie()}
       </ImageBackground>
       <View style={styles.containerBottom}>
         <View style={styles.textWrapper}>
@@ -180,6 +217,7 @@ const TopLayout = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
   },
   image_top: {
     width: "100%",
@@ -276,9 +314,17 @@ const styles = StyleSheet.create({
     marginTop: -110,
     width: 100,
     height: 100,
-    zIndex: 999,
+    zIndex: 998,
     alignItems: "center",
     justifyContent: "center",
+  },
+  lottie: {
+    position: "absolute",
+    width: 150,
+    height: 150,
+    zIndex: 999,
+    left: -30,
+    marginTop: -230,
   },
 });
 
