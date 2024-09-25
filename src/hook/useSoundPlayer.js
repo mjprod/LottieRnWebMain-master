@@ -199,7 +199,7 @@ const playSound = (soundKey) => {
   useEffect(() => {
     if (introPlayed) {
       console.log("O tema mudou para, agora muda a musica: ", currentTheme);
-      //playNextTrack(); // Toca a faixa correspondente ao novo tema
+      playNextTrack(); // Toca a faixa correspondente ao novo tema
     }
   }, [currentTheme]); 
 

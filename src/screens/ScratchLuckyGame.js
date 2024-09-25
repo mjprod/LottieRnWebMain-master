@@ -34,7 +34,7 @@ const { width } = Dimensions.get("window");
 
 const ScratchLuckyGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
-  const [countDownStarted, setCountDownStarted] = useState(true);
+  const [countDownStarted, setCountDownStarted] = useState(false);
 
   const [gameOver, setGameOver] = useState(false);
 
@@ -53,26 +53,27 @@ const ScratchLuckyGame = () => {
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
-
-  const { backgroundLoop,goToNextTheme} = useTheme();
-  const { setStartPlay,playNextTrack} = useSound();
+  const { backgroundLoop, goToNextTheme } = useTheme();
+  const { setStartPlay } = useSound();
 
   const ref = useRef(null);
 
-  useEffect(() => {
-    setStartPlay(true);
-    setTimeout(() => {
-      ref.current.play();
-    }, 100);
-  }, []);
+  // useEffect(() => {
+  // setStartPlay(true);
+  //setTimeout(() => {
+  //ref.current.play();
+  //}, 100);
+  //}, []);
 
   useEffect(() => {
     //const trackKey = trackKeys[currentTrackIndex];
     if (countDownStarted) {
-      //playSound(trackKey);
+      setTimeout(() => {
+        ref.current.play();
+        setStartPlay(true);
+      }, 100);
     }
   }, [countDownStarted]);
-
 
   const browserHandler = {
     chrome: () => (
@@ -217,7 +218,7 @@ const ScratchLuckyGame = () => {
       nextCard();
     }, 500);
   };
-  
+
   // Function to render the win screen with a video overlay
   const renderWinLuckySymbolVideoScreen = () => {
     return (
@@ -262,8 +263,7 @@ const ScratchLuckyGame = () => {
           elevation: 10, // Ensures the overlay has proper visual depth on Android
         }}
       >
-        <TouchableOpacity
-          style={{ width: "80%" }}>
+        <TouchableOpacity style={{ width: "80%" }}>
           {countDownStarted ? (
             <View style={styles.rowCountDown}>
               <LottieView
@@ -279,7 +279,7 @@ const ScratchLuckyGame = () => {
             <GameButton
               text="Start Game"
               onPress={() => {
-                console.log("Start Game");  
+                console.log("Start Game");
                 setCountDownStarted(true);
               }}
             />
@@ -336,7 +336,7 @@ const ScratchLuckyGame = () => {
       {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen()}
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect
-        nextCard={nextCard}
+          nextCard={nextCard}
           setReset={setReset}
           setLuckySymbolCount={setLuckySymbolCount}
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
