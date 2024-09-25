@@ -23,7 +23,7 @@ const LuckySymbolCollect = ({ nextCard,setLuckySymbolCount,setCollectLuckySymbol
   const [initialAnimationComplete, setInitialAnimationComplete] =
     useState(false);
   const [showBonusCard, setShowBonusCard] = useState(false);
-  const [collectLuckySymbol, setCollectShowLuckySymbol] = useState(true);
+ // const [collectLuckySymbol, setCollectShowLuckySymbol] = useState(true);
 
   const bounceAnim = useRef(new Animated.Value(1)).current;
   const lottieAnimRef = useRef(null);
@@ -92,7 +92,7 @@ const LuckySymbolCollect = ({ nextCard,setLuckySymbolCount,setCollectLuckySymbol
     }, 1000);
   };
 
-  if (!collectLuckySymbol) return null;
+ // if (!collectLuckySymbol) return null;
 
   return (
     <View

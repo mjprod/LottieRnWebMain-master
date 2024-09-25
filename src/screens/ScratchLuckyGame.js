@@ -42,7 +42,7 @@ const ScratchLuckyGame = () => {
   const [timerGame, setTimerGame] = useState(0);
   const [score, setScore] = useState(0);
   const [scratchStarted, setScratchStarted] = useState(false);
-  const [luckySymbolCount, setLuckySymbolCount] = useState(0);
+  const [luckySymbolCount, setLuckySymbolCount] = useState(2);
 
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
@@ -55,14 +55,6 @@ const ScratchLuckyGame = () => {
   const { setStartPlay,switchTrack } = useSound();
 
   const ref = useRef(null);
-
-  // AUTOPLAY
-  // useEffect(() => {
-  // setStartPlay(true);
-  //setTimeout(() => {
-  //ref.current.play();
-  //}, 100);
-  //}, []);
 
   useEffect(() => {
     setScratchCardLeft(themeSequence.length);
