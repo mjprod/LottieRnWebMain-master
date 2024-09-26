@@ -104,6 +104,7 @@ const themes = {
         src: require('./../assets/sounds/egypt_theme.mp3'),
         gameCenterIcon: require('./../assets/image/egypt/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/egypt/background_movie_loop.mp4'),
+        backgroundScratchCard: "#EADAC5",
         iconsDefault: [
             <IconTypeAnubisdefault key="0" />,
             <IconTypeAnhkdefault key="1" />,
@@ -138,6 +139,7 @@ const themes = {
         src: require('./../assets/sounds/mythology_theme.mp3'),
         gameCenterIcon: require('./../assets/image/mythology/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/mythology/background_movie_loop.mp4'),
+        backgroundScratchCard: "#BBADC3",
         iconsDefault: [
             <IconTypeCentaurdefault key="0" />,
             <IconTypeHarpdefault key="1" />,
@@ -172,6 +174,7 @@ const themes = {
         src: require('./../assets/sounds/international_theme.mp3'),
         gameCenterIcon: require('./../assets/image/international/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/international/background_movie_loop.mp4'),
+        backgroundScratchCard: "#E0E7F6",
         iconsDefault: [
             <IconTypeBreifcasedefault key="0" />,
             <IconTypeCanyondefault key="1" />,
@@ -206,6 +209,7 @@ const themes = {
         src: require('./../assets/sounds/cowboy_theme.mp3'),
         gameCenterIcon: require('./../assets/image/cowboy/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/cowboy/background_movie_loop.mp4'),
+        backgroundScratchCard: "#BBA58B",
         iconsDefault: [
             <IconTypeBandanadefault key="0" />,
             <IconTypeBootdefault key="1" />,
@@ -239,6 +243,7 @@ const themes = {
     base: {
         src: require('./../assets/sounds/base_beat.mp3'),
         initial_src: require('./../assets/sounds/321_go_countdown.mp3'),
+        backgroundScratchCard: "#EADAC5",
     }
 
 };

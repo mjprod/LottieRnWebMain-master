@@ -48,7 +48,6 @@ const ScratchGame = ({
   setIsLuckySymbolTrue,
   timerGame,
   setWinLuckySymbolVideo,
-  //setCollectLuckySymbolVideo,
   luckySymbolCount,
   setLuckySymbolCount,
 }) => {
@@ -65,7 +64,8 @@ const ScratchGame = ({
   const [arrayIcon, setArrayIcon] = useState();
 
   const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
-  const { currentTheme } = useTheme();
+  const { currentTheme , backgroundScratchCard } = useTheme();
+
 
   const soundRefs = useRef({
     sound1: new Howl({ src: [require("./../assets/audio/1_C.mp3")], preload: true }),
@@ -401,109 +401,8 @@ const ScratchGame = ({
     }
   }, [fadeAnim, onLoading]);
 
-
-  /*
-  const sound1 = new Howl({
-    src: [require("./../assets/audio/1_C.mp3")],
-    preload: true,
-  });
-  const sound2 = new Howl({
-    src: [require("./../assets/audio/2_D.mp3")],
-    preload: true,
-  });
-  const sound3 = new Howl({
-    src: [require("./../assets/audio/3_E.mp3")],
-    preload: true,
-  });
-
-  const sound4 = new Howl({
-    src: [require("./../assets/audio/4_E.mp3")],
-    preload: true,
-  });
-  const sound5 = new Howl({
-    src: [require("./../assets/audio/5_F_.mp3")],
-    preload: true,
-  });
-  const sound6 = new Howl({
-    src: [require("./../assets/audio/6_G_.mp3")],
-    preload: true,
-  });
-  const sound7 = new Howl({
-    src: [require("./../assets/audio/7_G_.mp3")],
-    preload: true,
-  });
-  const sound8 = new Howl({
-    src: [require("./../assets/audio/8_A_.mp3")],
-    preload: true,
-  });
-  const sound9 = new Howl({
-    src: [require("./../assets/audio/9_C_plus.mp3")],
-    preload: true,
-  });
-
-  const sound10 = new Howl({
-    src: [require("./../assets/audio/10_C_plus.mp3")],
-    preload: true,
-  });
-  const sound11 = new Howl({
-    src: [require("./../assets/audio/11_D_plus.mp3")],
-    preload: true,
-  });
-  const sound12 = new Howl({
-    src: [require("./../assets/audio/12_E_plus.mp3")],
-    preload: true,
-  });
-  const error = new Howl({
-    src: [require("./../assets/audio/sfx_autopopup.wav")],
-    preload: true,
-  });
-
-  const playSound1 = () => {
-    sound1.play();
-  };
-  const playSound2 = () => {
-    sound2.play();
-  };
-  const playSound3 = () => {
-    sound3.play();
-  };
-  const playSound4 = () => {
-    sound4.play();
-  };
-  const playSound5 = () => {
-    sound5.play();
-  };
-  const playSound6 = () => {
-    sound6.play();
-  };
-  const playSound7 = () => {
-    sound7.play();
-  };
-  const playSound8 = () => {
-    sound8.play();
-  };
-  const playSound9 = () => {
-    sound9.play();
-  };
-  const playSound10 = () => {
-    sound10.play();
-  };
-  const playSound11 = () => {
-    sound11.play();
-  };
-  const playSound12 = () => {
-    sound12.play();
-  };
-
-  const playSoundError = () => {
-    error.play();
-  };
-  */
-
-
-
   return (
-    <ImageBackground source={scratchBackground} style={styles.background_view}>
+    <ImageBackground style={[styles.background_view, { backgroundColor: backgroundScratchCard }]}>
       <View style={styles.container}>
         <Animated.View style={[styles.gridContainer, { opacity: fadeAnim }]}>
           {iconsArray.map((icon, index) => (
@@ -584,7 +483,6 @@ const styles = StyleSheet.create({
   background_view: {
     width: "100%",
     height: "100%",
-    backgroundColor: "transparent",
     flex: 1,
     resizeMode: "cover",
   },

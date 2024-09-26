@@ -42,7 +42,7 @@ export const ThemeProvider = ({ children }) => {
     // Initialize gameCenterIcon and backgroundLoop based on the current theme
     const [gameCenterIcon, setGameCenterIcon] = useState(themes[themeSequence[currentThemeIndex]].gameCenterIcon);
     const [backgroundLoop, setBackgroundLoop] = useState(themes[themeSequence[currentThemeIndex]].backgroundLoop);
-    //const [soundLoop, setSoundLoop] = useState(themes[themeSequence[currentThemeIndex]].src);
+    const [backgroundScratchCard, setBackgroundScratchCard] = useState(themes[themeSequence[currentThemeIndex]].backgroundScratchCard);
 
     // Function to update the sequence of themes dynamically
     const updateThemeSequence = (numberOfCards) => {
@@ -78,10 +78,7 @@ export const ThemeProvider = ({ children }) => {
             setGameCenterIcon(themes[themeSequence[currentThemeIndex]].gameCenterIcon);
             setBackgroundLoop(themes[themeSequence[currentThemeIndex]].backgroundLoop);
             setCurrentThemeSequence(themeSequence[currentThemeIndex]);
-
-           // setSoundLoop(themes[themeSequence[currentThemeIndex]].src);
-
-
+            setBackgroundScratchCard(themes[themeSequence[currentThemeIndex]].backgroundScratchCard);
         }
     }, [currentThemeIndex, themeSequence]); // The effect depends on currentThemeIndex and themeSequence
 
@@ -92,6 +89,7 @@ export const ThemeProvider = ({ children }) => {
             currentTheme: themeSequence[currentThemeIndex], // Current theme from the sequence
             gameCenterIcon, // Current game center icon
             backgroundLoop, // Current background loop
+            backgroundScratchCard,
             updateThemeSequence,
             setCurrentThemeByIndex,  // Function to change the current theme by index
             goToNextTheme,           // Function to go to the next theme

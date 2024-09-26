@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     right: 18,
-    bottom: 15,
+    bottom: 9,
   },
   lottieLuckyAnimation: {
     width: '45%',
