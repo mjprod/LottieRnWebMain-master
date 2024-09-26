@@ -6,7 +6,6 @@ import {
   Image,
   ImageBackground,
   Animated,
-  TouchableWithoutFeedback,
 } from "react-native";
 import LottieView from "react-native-web-lottie";
 import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
@@ -33,6 +32,7 @@ const TopLayout = ({
   setTimerGame,
   score,
   luckySymbolCount,
+  clickCount,
 }) => {
   const bounceAnim = useRef(new Animated.Value(1)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
@@ -49,15 +49,23 @@ const TopLayout = ({
 
   const lottieRef = useRef(null);
 
-  // Function triggered on click
-  const handlePress = () => {
-    // Ensure the animation starts from index 0 initially
-    if (!playAnimation) {
-      setAnimationIndex(0);
-      setPlayAnimation(true); // Start the animation if not started
-    } else {
-      // Cycle to the next animation, ensuring it stays within bounds
-      setAnimationIndex((prevIndex) => (prevIndex + 1) % animations.length);
+  useEffect(() => {
+    // Animation control logic
+    switch (clickCount) {
+      case 6:
+        setAnimationIndex(0);
+        setPlayAnimation(true);
+        break;
+      case 9:
+        setAnimationIndex(1);
+        setPlayAnimation(true);
+        break;
+      case 12:
+        setAnimationIndex(2);
+        setPlayAnimation(true);
+        break;
+      default:
+        return;
     }
 
     // Play the animation manually if the LottieView is available
@@ -65,7 +73,7 @@ const TopLayout = ({
       lottieRef.current.reset();
       lottieRef.current.play();
     }
-  };
+  }, [clickCount]);
 
   // Countdown control logic
   useEffect(() => {
@@ -108,22 +116,23 @@ const TopLayout = ({
   // Function that renders the central image with Lottie animation
   const CentralImageWithLottie = () => {
     return (
-      <TouchableWithoutFeedback onPress={handlePress}>
-        <View style={styles.container}>
-          <Image source={gameCenterIcon} style={styles.centralImage} />
-
-          {playAnimation && (
-            <LottieView
-              ref={lottieRef}
-              key={animationIndex} // Force re-render when animation index changes
-              source={animations[animationIndex]}
-              loop={false}
-              autoPlay={true} // Start animation on play
-              style={styles.lottie}
-            />
-          )}
-        </View>
-      </TouchableWithoutFeedback>
+      <View style={styles.container}>
+        <Image source={gameCenterIcon} style={styles.centralImage} />
+        {playAnimation && (
+          <LottieView
+            ref={lottieRef}
+            key={animationIndex} // Force re-render when animation index changes
+            source={animations[animationIndex]}
+            loop={false}
+            autoPlay={true} // Start animation on play
+            style={styles.lottie}
+            onAnimationFinish={() => {
+              //console.log("Animation ended");
+              setPlayAnimation(false); // Stop animation when finished
+            }}
+          />
+        )}
+      </View>
     );
   };
 
@@ -217,7 +226,7 @@ const TopLayout = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
+    position: "relative",
   },
   image_top: {
     width: "100%",
@@ -324,7 +333,7 @@ const styles = StyleSheet.create({
     height: 150,
     zIndex: 999,
     left: -30,
-    marginTop: -230,
+    marginTop: -210,
   },
 });
 

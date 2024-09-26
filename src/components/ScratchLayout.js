@@ -28,6 +28,8 @@ const ScratchLayout = ({
   setScore,
   setWinLuckySymbolVideo,
   setCollectLuckySymbolVideo,
+  clickCount,
+  setClickCount,
 }) => {
   const [imageLoading, setImageLoading] = useState(false);
   const [isWinner, setIsWinner] = useState(false);
@@ -114,6 +116,8 @@ const ScratchLayout = ({
           luckySymbolCount={luckySymbolCount}
           setLuckySymbolCount={setLuckySymbolCount}
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
+          clickCount={clickCount}
+          setClickCount={setClickCount}
         />
         {isScratchCardVisible && (
           <View style={styles.scratchCardContainer}>

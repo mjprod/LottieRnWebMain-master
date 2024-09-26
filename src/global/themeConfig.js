@@ -105,6 +105,8 @@ const themes = {
         gameCenterIcon: require('./../assets/image/egypt/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/egypt/background_movie_loop.mp4'),
         backgroundScratchCard: "#EADAC5",
+        intro_chrome: require('./../assets/video/international/intro_chrome.webm'),
+        intro: require('./../assets/video/international/intro.mp4'),
         iconsDefault: [
             <IconTypeAnubisdefault key="0" />,
             <IconTypeAnhkdefault key="1" />,
@@ -140,6 +142,8 @@ const themes = {
         gameCenterIcon: require('./../assets/image/mythology/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/mythology/background_movie_loop.mp4'),
         backgroundScratchCard: "#BBADC3",
+        intro_chrome: require('./../assets/video/international/intro_chrome.webm'),
+        intro_default: require('./../assets/video/international/intro.mp4'),
         iconsDefault: [
             <IconTypeCentaurdefault key="0" />,
             <IconTypeHarpdefault key="1" />,
@@ -175,6 +179,8 @@ const themes = {
         gameCenterIcon: require('./../assets/image/international/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/international/background_movie_loop.mp4'),
         backgroundScratchCard: "#E0E7F6",
+        intro_chrome: require('./../assets/video/international/intro_chrome.webm'),
+        intro_default: require('./../assets/video/international/intro.mp4'),
         iconsDefault: [
             <IconTypeBreifcasedefault key="0" />,
             <IconTypeCanyondefault key="1" />,
@@ -210,6 +216,8 @@ const themes = {
         gameCenterIcon: require('./../assets/image/cowboy/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/cowboy/background_movie_loop.mp4'),
         backgroundScratchCard: "#BBA58B",
+        intro_chrome: require('./../assets/video/international/intro_chrome.webm'),
+        intro_default: require('./../assets/video/international/intro.mp4'),
         iconsDefault: [
             <IconTypeBandanadefault key="0" />,
             <IconTypeBootdefault key="1" />,

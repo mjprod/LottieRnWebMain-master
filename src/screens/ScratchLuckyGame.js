@@ -20,6 +20,7 @@ import LottieView from "react-native-web-lottie";
 import GameButton from "../components/GameButton.js";
 import { useTheme } from "../hook/useTheme.js";
 import { useSound } from "../hook/useSoundPlayer.js";
+import IntroThemeVideo from "../components/IntroThemeVideo.js";
 
 // Importando arquivos de mídia
 const backgroundGame = require("./../assets/image/background_game.png");
@@ -35,6 +36,7 @@ const ScratchLuckyGame = () => {
   const [countDownStarted, setCountDownStarted] = useState(false);
 
   const [gameOver, setGameOver] = useState(false);
+  const [introThemeVideo, setIntroThemeVideo] = useState(false);
 
   const [reset, setReset] = useState(false);
   const [scratched, setScratched] = useState(false);
@@ -42,7 +44,8 @@ const ScratchLuckyGame = () => {
   const [timerGame, setTimerGame] = useState(0);
   const [score, setScore] = useState(0);
   const [scratchStarted, setScratchStarted] = useState(false);
-  const [luckySymbolCount, setLuckySymbolCount] = useState(2);
+  const [luckySymbolCount, setLuckySymbolCount] = useState(0);
+  const [clickCount, setClickCount] = useState(0);
 
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
@@ -149,6 +152,21 @@ const ScratchLuckyGame = () => {
     nextCard();
   };
 
+  const handleVideoIntroEnd = () => {
+    setIntroThemeVideo(false);
+    Animated.timing(translateX, {
+        toValue: -width * 0.1,
+       duration: 300,
+        useNativeDriver: Platform.OS !== "web",
+      }).start(() => {
+        Animated.spring(translateX, {
+          toValue: 0,
+          friction: 5,
+          useNativeDriver: Platform.OS !== "web",
+        }).start();
+      });
+  };
+
   useEffect(() => {
     if (scratchStarted) {
       Animated.timing(marginTopAnim, {
@@ -188,18 +206,19 @@ const ScratchLuckyGame = () => {
           duration: 300,
           useNativeDriver: Platform.OS !== "web",
         }).start(() => {
-          translateX.setValue(width);
-          Animated.timing(translateX, {
-            toValue: -width * 0.1,
-            duration: 300,
-            useNativeDriver: Platform.OS !== "web",
-          }).start(() => {
-            Animated.spring(translateX, {
-              toValue: 0,
-              friction: 5,
-              useNativeDriver: Platform.OS !== "web",
-            }).start();
-          });
+          setIntroThemeVideo(true);
+        //  translateX.setValue(width);
+        //  Animated.timing(translateX, {
+          ///  toValue: -width * 0.1,
+          //  duration: 300,
+           // useNativeDriver: Platform.OS !== "web",
+         // }).start(() => {
+           // Animated.spring(translateX, {
+             // toValue: 0,
+              //friction: 5,
+              //useNativeDriver: Platform.OS !== "web",
+            //}).start();
+          //});
         });
       });
     }
@@ -304,6 +323,7 @@ const ScratchLuckyGame = () => {
                   setTimerGame={setTimerGame}
                   score={score}
                   luckySymbolCount={luckySymbolCount}
+                  clickCount={clickCount}
                 />
               </Animated.View>
 
@@ -321,6 +341,8 @@ const ScratchLuckyGame = () => {
                 setScore={setScore}
                 setWinLuckySymbolVideo={setWinLuckySymbolVideo}
                 setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
+                clickCount={clickCount}
+                setClickCount={setClickCount}
               />
             </View>
           </Animated.View>
@@ -337,6 +359,7 @@ const ScratchLuckyGame = () => {
         />
       )}
       {(!gameStarted || !countDownStarted) && renderInitialScreen()}
+      {introThemeVideo && <IntroThemeVideo handleVideoEnd={handleVideoIntroEnd} />}
     </View>
   );
 };

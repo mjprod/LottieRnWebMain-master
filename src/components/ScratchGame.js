@@ -26,8 +26,6 @@ import themes from "../global/themeConfig";
 import { useTheme } from "../hook/useTheme";
 
 
-const scratchBackground = require("./../assets/image/scratch_background.png");
-
 const lottieAnimations = {
   lottieScratchieBubbleBlue: require("./../assets/lotties/lottieScratchieBubblePopBlue.json"),
   lottieScratchieBubbleGreen: require("./../assets/lotties/lottieScratchieBubblePopGreen.json"),
@@ -49,7 +47,8 @@ const ScratchGame = ({
   timerGame,
   setWinLuckySymbolVideo,
   luckySymbolCount,
-  setLuckySymbolCount,
+  clickCount,
+  setClickCount,
 }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
@@ -57,7 +56,6 @@ const ScratchGame = ({
   const [clickedIcons, setClickedIcons] = useState([]);
   const [clickedCount, setClickedCount] = useState({});
   const [lastClickedIcon, setLastClickedIcon] = useState(null);
-  const [clickCount, setClickCount] = useState(0);
   const [soundShouldPlay, setSoundShouldPlay] = useState(1);
 
   const [arrayBobble, setArrayBobble] = useState();
@@ -295,9 +293,8 @@ const ScratchGame = ({
         lastClickedIcon !== icon &&
         clickedCount[lastClickedIcon] < 3
       ) {
-        //playSoundError();
         playSound("error");
-        setClickCount(1);
+        setClickCount(0);
         setSoundShouldPlay(1);
 
         setClickedIcons([...clickedIcons, index]);
@@ -313,6 +310,10 @@ const ScratchGame = ({
 
       const newClickedIcons = [...clickedIcons, index];
       setClickedIcons(newClickedIcons);
+      console.log("ANTES: ", clickCount);
+      setClickCount(clickCount + 1);
+
+      console.log("DEPOIS: ", clickCount);
       setScore(score + timerGame * 100);
       console.log("SCORE: ", score + timerGame * 100);
       const newClickedCount = {

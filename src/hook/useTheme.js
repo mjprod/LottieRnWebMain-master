@@ -29,7 +29,7 @@ const ThemeContext = createContext();
 export const ThemeProvider = ({ children }) => {
     // State to keep track of the current theme sequence (array of themes)
     const [themeSequence, setThemeSequence] = useState(getRandomThemesArray(numberOfCards));
-    const [currentThemeSequence, setCurrentThemeSequence] = useState();
+    //const [currentThemeSequence, setCurrentThemeSequence] = useState();
 
       // Log the themeSequence every time it changes
       useEffect(() => {
@@ -43,6 +43,8 @@ export const ThemeProvider = ({ children }) => {
     const [gameCenterIcon, setGameCenterIcon] = useState(themes[themeSequence[currentThemeIndex]].gameCenterIcon);
     const [backgroundLoop, setBackgroundLoop] = useState(themes[themeSequence[currentThemeIndex]].backgroundLoop);
     const [backgroundScratchCard, setBackgroundScratchCard] = useState(themes[themeSequence[currentThemeIndex]].backgroundScratchCard);
+    const [introChromeTheme, setIntroChromeTheme] = useState(themes[themeSequence[currentThemeIndex]].intro_chrome);
+    const [introTheme, setIntroTheme] = useState(themes[themeSequence[currentThemeIndex]].intro);
 
     // Function to update the sequence of themes dynamically
     const updateThemeSequence = (numberOfCards) => {
@@ -77,8 +79,10 @@ export const ThemeProvider = ({ children }) => {
         if (themeSequence.length > 0) {
             setGameCenterIcon(themes[themeSequence[currentThemeIndex]].gameCenterIcon);
             setBackgroundLoop(themes[themeSequence[currentThemeIndex]].backgroundLoop);
-            setCurrentThemeSequence(themeSequence[currentThemeIndex]);
+            //setCurrentThemeSequence(themeSequence[currentThemeIndex]);
             setBackgroundScratchCard(themes[themeSequence[currentThemeIndex]].backgroundScratchCard);
+            setIntroChromeTheme(themes[themeSequence[currentThemeIndex]].intro_chrome);
+            setIntroTheme(themes[themeSequence[currentThemeIndex]].intro);
         }
     }, [currentThemeIndex, themeSequence]); // The effect depends on currentThemeIndex and themeSequence
 
@@ -90,6 +94,8 @@ export const ThemeProvider = ({ children }) => {
             gameCenterIcon, // Current game center icon
             backgroundLoop, // Current background loop
             backgroundScratchCard,
+            introChromeTheme,
+            introTheme,
             updateThemeSequence,
             setCurrentThemeByIndex,  // Function to change the current theme by index
             goToNextTheme,           // Function to go to the next theme
