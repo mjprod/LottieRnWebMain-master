@@ -8,11 +8,11 @@ import {
   heightScratch,
   setLuckySymbolCountTimer,
 } from "../global/Settings";
-import { Dimensions } from "react-native-web";
+//import { Dimensions } from "react-native-web";
 
 const scratchForeground = require("./../assets/image/scratch_foreground.jpg");
 
-const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
+//const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 const ScratchLayout = ({
   reset,

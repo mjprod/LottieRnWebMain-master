@@ -33,9 +33,9 @@ const { width } = Dimensions.get("window");
 
 const ScratchLuckyGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
-  const [countDownStarted, setCountDownStarted] = useState(false);
+  const [countDownStarted, setCountDownStarted] = useState(true);
 
-  const [gameOver, setGameOver] = useState(false);
+  const [gameOver, setGameOver] = useState(true);
   const [introThemeVideo, setIntroThemeVideo] = useState(false);
 
   const [reset, setReset] = useState(false);
@@ -206,7 +206,10 @@ const ScratchLuckyGame = () => {
           duration: 300,
           useNativeDriver: Platform.OS !== "web",
         }).start(() => {
-          setIntroThemeVideo(true);
+          if(scratchCardLeft > 1){
+            console.log("Resetting game "+ scratchCardLeft);
+            setIntroThemeVideo(true);
+          }
         //  translateX.setValue(width);
         //  Animated.timing(translateX, {
           ///  toValue: -width * 0.1,
@@ -348,7 +351,7 @@ const ScratchLuckyGame = () => {
           </Animated.View>
         </ImageBackground>
       </View>
-      {gameOver && <GameOverScreen />}
+      {gameOver && <GameOverScreen luckySymbolCount={luckySymbolCount} />}
       {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen()}
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect

@@ -1,5 +1,5 @@
 import React from "react";
-import Svg, { Defs, G, Path, Rect, Stop } from "react-native-svg-web";
+import Svg, { Defs, Path, Stop } from "react-native-svg-web";
 
 export const IconStarResultScreen = () => (
   <Svg
@@ -50,9 +50,9 @@ export const IconStarResultScreen = () => (
         y2="3.38129"
         gradientUnits="userSpaceOnUse"
       >
-        <Stop stop-color="#D6BC9E" />
-        <Stop offset="0.494792" stop-color="#FFEEC0" />
-        <Stop offset="0.994792" stop-color="#D6BC9E" />
+        <Stop stopColor="#D6BC9E" />
+        <Stop offset="0.494792" stopColor="#FFEEC0" />
+        <Stop offset="0.994792" stopColor="#D6BC9E" />
       </linearGradient>
       <linearGradient
         id="paint1_linear_24942_19138"
@@ -62,9 +62,9 @@ export const IconStarResultScreen = () => (
         y2="3.38129"
         gradientUnits="userSpaceOnUse"
       >
-        <Stop stop-color="#D6BC9E" />
-        <Stop offset="0.494792" stop-color="#FFEEC0" />
-        <Stop offset="0.994792" stop-color="#D6BC9E" />
+        <Stop stopColor="#D6BC9E" />
+        <Stop offset="0.494792" stopColor="#FFEEC0" />
+        <Stop offset="0.994792" stopColor="#D6BC9E" />
       </linearGradient>
       <linearGradient
         id="paint2_linear_24942_19138"
@@ -74,9 +74,9 @@ export const IconStarResultScreen = () => (
         y2="3.38129"
         gradientUnits="userSpaceOnUse"
       >
-        <Stop stop-color="#D6BC9E" />
-        <Stop offset="0.494792" stop-color="#FFEEC0" />
-        <Stop offset="0.994792" stop-color="#D6BC9E" />
+        <Stop stopColor="#D6BC9E" />
+        <Stop offset="0.494792" stopColor="#FFEEC0" />
+        <Stop offset="0.994792" stopColor="#D6BC9E" />
       </linearGradient>
       <linearGradient
         id="paint3_linear_24942_19138"
@@ -86,9 +86,9 @@ export const IconStarResultScreen = () => (
         y2="3.38129"
         gradientUnits="userSpaceOnUse"
       >
-        <Stop stop-color="#D6BC9E" />
-        <Stop offset="0.494792" stop-color="#FFEEC0" />
-        <Stop offset="0.994792" stop-color="#D6BC9E" />
+        <Stop stopColor="#D6BC9E" />
+        <Stop offset="0.494792" stopColor="#FFEEC0" />
+        <Stop offset="0.994792" stopColor="#D6BC9E" />
       </linearGradient>
       <linearGradient
         id="paint4_linear_24942_19138"
@@ -98,9 +98,9 @@ export const IconStarResultScreen = () => (
         y2="3.38129"
         gradientUnits="userSpaceOnUse"
       >
-        <Stop stop-color="#D6BC9E" />
-        <Stop offset="0.494792" stop-color="#FFEEC0" />
-        <Stop offset="0.994792" stop-color="#D6BC9E" />
+        <Stop stopColor="#D6BC9E" />
+        <Stop offset="0.494792" stopColor="#FFEEC0" />
+        <Stop offset="0.994792" stopColor="#D6BC9E" />
       </linearGradient>
       <linearGradient
         id="paint5_linear_24942_19138"
@@ -110,9 +110,9 @@ export const IconStarResultScreen = () => (
         y2="3.38129"
         gradientUnits="userSpaceOnUse"
       >
-        <Stop stop-color="#D6BC9E" />
-        <Stop offset="0.494792" stop-color="#FFEEC0" />
-        <Stop offset="0.994792" stop-color="#D6BC9E" />
+        <Stop stopColor="#D6BC9E" />
+        <Stop offset="0.494792" stopColor="#FFEEC0" />
+        <Stop offset="0.994792" stopColor="#D6BC9E" />
       </linearGradient>
       <linearGradient
         id="paint6_linear_24942_19138"
@@ -122,9 +122,9 @@ export const IconStarResultScreen = () => (
         y2="3.38129"
         gradientUnits="userSpaceOnUse"
       >
-        <Stop stop-color="#D6BC9E" />
-        <Stop offset="0.494792" stop-color="#FFEEC0" />
-        <Stop offset="0.994792" stop-color="#D6BC9E" />
+        <Stop stopColor="#D6BC9E" />
+        <Stop offset="0.494792" stopColor="#FFEEC0" />
+        <Stop offset="0.994792" stopColor="#D6BC9E" />
       </linearGradient>
       <linearGradient
         id="paint7_linear_24942_19138"
@@ -134,9 +134,9 @@ export const IconStarResultScreen = () => (
         y2="3.38129"
         gradientUnits="userSpaceOnUse"
       >
-        <Stop stop-color="#D6BC9E" />
-        <Stop offset="0.494792" stop-color="#FFEEC0" />
-        <Stop offset="0.994792" stop-color="#D6BC9E" />
+        <Stop stopColor="#D6BC9E" />
+        <Stop offset="0.494792" stopColor="#FFEEC0" />
+        <Stop offset="0.994792" stopColor="#D6BC9E" />
       </linearGradient>
     </Defs>
   </Svg>

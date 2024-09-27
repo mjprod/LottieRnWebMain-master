@@ -37,11 +37,10 @@ const lottieAnimations = {
 const ScratchGame = ({
   score,
   setScore,
-  isWinner,
   setIsWinner,
   scratched,
   reset,
-  setReset = { setReset },
+  setReset,
   onLoading,
   setIsLuckySymbolTrue,
   timerGame,
@@ -55,6 +54,7 @@ const ScratchGame = ({
   const [winningIcons, setWinningIcons] = useState([]);
   const [clickedIcons, setClickedIcons] = useState([]);
   const [clickedCount, setClickedCount] = useState({});
+
   const [lastClickedIcon, setLastClickedIcon] = useState(null);
   const [soundShouldPlay, setSoundShouldPlay] = useState(1);
 
@@ -272,7 +272,9 @@ const ScratchGame = ({
       winningIcons.length > 0
     ) {
       console.log("ALL ICONS CLIKED");
-      checkResults();
+      setTimeout(() => {
+        checkResults();
+      }, 1000);
     }
   }, [clickedIcons, iconsArray]);
 
@@ -283,6 +285,10 @@ const ScratchGame = ({
       checkResults();
     }
   }, [scratched]);
+
+  useEffect(() => {
+   
+  }, [clickedCount]);
 
   const handleIconClick = (index) => {
     const icon = iconsArray[index];

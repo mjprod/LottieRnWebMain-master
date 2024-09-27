@@ -92,7 +92,8 @@ export const SoundProvider = ({ children }) => {
     });
   };
 
-  const stopAllSounds = () => {
+ /* 
+ const stopAllSounds = () => {
     Object.keys(soundRefs.current).forEach((trackKey) => {
       const sound = soundRefs.current[trackKey];
       if (sound.playing()) {
@@ -100,6 +101,7 @@ export const SoundProvider = ({ children }) => {
       }
     });
   };
+  */
 
   const getTrackKey = () => {
     const theme = currentTheme; // Get the current theme

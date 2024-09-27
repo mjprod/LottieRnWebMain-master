@@ -1,5 +1,5 @@
 import React from "react";
-import Svg, { Defs, G, Path, Rect, Stop } from "react-native-svg-web";
+import Svg, { Defs, Path, Stop } from "react-native-svg-web";
 
 export const IconJokerPlus = () => (
   <Svg  width="31" height="29" viewBox="0 0 31 29" fill="none">
@@ -20,8 +20,8 @@ export const IconJokerPlus = () => (
         y2="9.05401"
         gradientUnits="userSpaceOnUse"
       >
-        <Stop stop-color="#4C3F2D" />
-        <Stop offset="1" stop-color="#6F5C40" />
+        <Stop stopColor="#4C3F2D" />
+        <Stop offset="1" stopColor="#6F5C40" />
       </linearGradient>
       <linearGradient
         id="paint1_linear_24942_19132"
@@ -31,9 +31,9 @@ export const IconJokerPlus = () => (
         y2="19.766"
         gradientUnits="userSpaceOnUse"
       >
-        <Stop stop-color="#CBB48E" />
-        <Stop offset="0.48" stop-color="#FBE7C9" />
-        <Stop offset="1" stop-color="#CBB48E" />
+        <Stop stopColor="#CBB48E" />
+        <Stop offset="0.48" stopColor="#FBE7C9" />
+        <Stop offset="1" stopColor="#CBB48E" />
       </linearGradient>
     </Defs>
   </Svg>

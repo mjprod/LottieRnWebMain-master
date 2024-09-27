@@ -22,9 +22,9 @@ export const IconFourLeafClover = () => (
         y2="3.93296"
         gradientUnits="userSpaceOnUse"
       >
-        <Stop stop-color="#D6BC9E" />
-        <Stop offset="0.494792" stop-color="#FFEEC0" />
-        <Stop offset="0.994792" stop-color="#D6BC9E" />
+        <Stop stopColor="#D6BC9E" />
+        <Stop offset="0.494792" stopColor="#FFEEC0" />
+        <Stop offset="0.994792" stopColor="#D6BC9E" />
       </linearGradient>
     </Defs>
   </Svg>
