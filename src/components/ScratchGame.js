@@ -40,7 +40,7 @@ const ScratchGame = ({
   setIsWinner,
   scratched,
   reset,
-  setReset,
+  nextCard,
   onLoading,
   setIsLuckySymbolTrue,
   timerGame,
@@ -139,12 +139,24 @@ const ScratchGame = ({
     setIsWinner(winners.length > 0); // Determine if it's a winner
   }, [setIsWinner, reset, setIsLuckySymbolTrue]);
 
+  const isValidIcon = (count, index, columnIndex, iconWithMaxCount, winLuckySymbol,columnIconMap) => {
+    return (
+      count < maxCountWin &&
+      count < maxRepeatedIcons &&
+      (iconWithMaxCount === null ||
+        count < maxOtherCount ||
+        index === iconWithMaxCount) &&
+      !columnIconMap[columnIndex].has(index) &&
+      (winLuckySymbol === false || index !== 12) // Lucky symbol can't be repeated
+    );
+  };
   
   const generateIconsArray = (winLuckySymbol) => {
     let iconCounts = Array(totalIcons).fill(0);
     let resultArray = new Array(totalPositions).fill(null);
     let iconWithMaxCount = null;
     let columnIconMap = {};
+
   
     let luckyPosition = -1;
     // Add lucky symbol
@@ -161,23 +173,10 @@ const ScratchGame = ({
       if (!columnIconMap[columnIndex]) {
         columnIconMap[columnIndex] = new Set();
       }
-  
+
       let availableIcons = iconCounts
-        .map((count, index) => {
-          if (
-            count < maxCountWin &&
-            count < maxRepeatedIcons &&
-            (iconWithMaxCount === null ||
-              count < maxOtherCount ||
-              index === iconWithMaxCount) &&
-            !columnIconMap[columnIndex].has(index) &&
-            (winLuckySymbol === false || index !== 12) // Lucky symbol can't be repeated
-          ) {
-            return index;
-          }
-          return null;
-        })
-        .filter((index) => index !== null);
+      .map((count, index) => (isValidIcon(count, index, columnIndex, iconWithMaxCount, winLuckySymbol,columnIconMap) ? index : null))
+      .filter((index) => index !== null);
   
       if (availableIcons.length === 0) {
         break;
@@ -261,7 +260,8 @@ const ScratchGame = ({
         }
       }
       else {
-        setReset(true); //NEXT CARD
+        //setReset(true); //NEXT CARD\
+        nextCard();
       }
     }, 1500);
   };
@@ -316,12 +316,10 @@ const ScratchGame = ({
 
       const newClickedIcons = [...clickedIcons, index];
       setClickedIcons(newClickedIcons);
-      console.log("ANTES: ", clickCount);
       setClickCount(clickCount + 1);
 
-      console.log("DEPOIS: ", clickCount);
       setScore(score + timerGame * 100);
-      console.log("SCORE: ", score + timerGame * 100);
+      //console.log("SCORE: ", score + timerGame * 100);
       const newClickedCount = {
         ...clickedCount,
         [icon]: (clickedCount[icon] || 0) + 1,

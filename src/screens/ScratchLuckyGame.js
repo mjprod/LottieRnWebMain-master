@@ -33,9 +33,9 @@ const { width } = Dimensions.get("window");
 
 const ScratchLuckyGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
-  const [countDownStarted, setCountDownStarted] = useState(true);
+  const [countDownStarted, setCountDownStarted] = useState(false);
 
-  const [gameOver, setGameOver] = useState(true);
+  const [gameOver, setGameOver] = useState(false);
   const [introThemeVideo, setIntroThemeVideo] = useState(false);
 
   const [reset, setReset] = useState(false);
@@ -98,18 +98,17 @@ const ScratchLuckyGame = () => {
   };
 
   const nextCard = () => {
-    setWinLuckySymbolVideo(false);
     setSkipToFinishLuckyVideo(false);
+    setWinLuckySymbolVideo(false);
+
     addLuckySymbol();
 
     setTimeout(() => {
       if (luckySymbolCount < 2) {
         setReset(true);
+      
         setTimeout(() => {
           goToNextTheme();
-        }, 100);
-        setTimeout(() => {
-          //playNextTrack();
         }, 500);
       }
     }, 1200);
@@ -228,12 +227,7 @@ const ScratchLuckyGame = () => {
   }, [reset, setReset]);
 
   const handleClick = () => {
-    setSkipToFinishLuckyVideo(true);
-
-    setWinLuckySymbolVideo(false);
-    setTimeout(() => {
-      nextCard();
-    }, 500);
+    nextCard();
   };
 
   // Function to render the win screen with a video overlay
@@ -346,6 +340,7 @@ const ScratchLuckyGame = () => {
                 setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
                 clickCount={clickCount}
                 setClickCount={setClickCount}
+                nextCard={nextCard}
               />
             </View>
           </Animated.View>

@@ -65,6 +65,7 @@ export const ThemeProvider = ({ children }) => {
 
     // Function to go to the next theme
     const goToNextTheme = () => {
+        console.log("Going to the next theme");
         if (currentThemeIndex < themeSequence.length - 1) {
             setCurrentThemeIndex(currentThemeIndex + 1);
             console.log(`New theme index: ${currentThemeIndex + 1}`);

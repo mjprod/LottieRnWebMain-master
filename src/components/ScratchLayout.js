@@ -30,6 +30,7 @@ const ScratchLayout = ({
   setCollectLuckySymbolVideo,
   clickCount,
   setClickCount,
+  nextCard,
 }) => {
   const [imageLoading, setImageLoading] = useState(false);
   const [isWinner, setIsWinner] = useState(false);
@@ -107,7 +108,7 @@ const ScratchLayout = ({
           //onEndGame={endGame}
           scratched={scratched}
           reset={reset}
-          setReset={setReset}
+          nextCard={nextCard}
           //onLoading={imageLoading}
           //isLuckySymbolTrue={isLuckySymbolTrue}
           setIsLuckySymbolTrue={setIsLuckySymbolTrue}

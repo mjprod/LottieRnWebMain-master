@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Platform, Text } from "react-native";
 import { ImageBackground } from "react-native-web";
 import { IconJokerPlus } from "../assets/icons/IconJokerPlus";
 import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
 import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
 import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
+import Slider from "@react-native-community/slider";
+import GameButton from './GameButton';
 
 const GameOverScreen = ({ luckySymbolCount }) => {
   const backgroundResult = require("./../assets/image/background_result_page.png");
   const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
+  const [progress, setProgress] = useState(12456);
 
   return (
     <View style={styles.container}>
@@ -52,36 +55,7 @@ const GameOverScreen = ({ luckySymbolCount }) => {
                   />
                 </ImageBackground>
                 <View style={styles.luckySymbols}>
-                  {/* 
-
-                 <View style={styles.symbol}>
-                  <LottieView
-                    style={styles.symbolImage}
-                    source={require("./../assets/lotties/lottie3DCoinSlot.json")}
-                    autoPlay
-                    speed={1}
-                    loop={false}
-                  />
-                </View>
-
-                <View style={styles.symbol}>
-                  <LottieView
-                    style={styles.symbolImage}
-                    source={require("./../assets/lotties/lottie3DCoinSlot.json")}
-                    autoPlay
-                    speed={1}
-                    loop={false}
-                  />
-                </View>
-                <View style={styles.symbol}>
-                  <LottieView
-                    style={styles.symbolImage}
-                    source={require("./../assets/lotties/lottie3DCoinSlot.json")}
-                    autoPlay
-                    speed={1}
-                    loop={false}
-                  />
-                </View>*/}
+            
                 </View>
               </View>
             </View>
@@ -89,22 +63,41 @@ const GameOverScreen = ({ luckySymbolCount }) => {
             {/* Total Tickets Earned Section */}
             <View style={styles.ticketsSection}>
               <Text style={styles.ticketTitle}>TOTAL TICKETS EARNED</Text>
+              <View style={{backgroundColor:"#4B595D",height:1,width:'100%',marginVertical:10}}/>
               <View style={styles.containerTotalTicket}>
                 <Text style={styles.nextTicketText}>Next Ticket</Text>
                 <Text style={styles.ticketProgress}>12456 / 20000</Text>
               </View>
 
+              <View style={styles.sliderContainer}> 
+              <Slider
+                style={styles.slider}
+                minimumValue={0}
+                maximumValue={20000}
+                value={progress}
+                onValueChange={(value) => setProgress(value)}
+                minimumTrackTintColor="#FFD89D" // Custom color for the filled track
+                maximumTrackTintColor="#000000" // Custom color for the unfilled track
+                thumbTintColor="#FFD89D" // Custom color for the thumb
+                thumbStyle={styles.thumb} // Style for the thumb
+              />
+      </View>
+             
               <Text style={styles.addedPoints}>+9999</Text>
             </View>
 
             {/* Timer Section */}
             <View style={styles.timerSection}>
+              <View style={styles.backgroundRounded}>
               <Text style={styles.timerTitle}>Time till Next Draw</Text>
+              </View>
               <Text style={styles.timerValue}>
                 88 Days 88 Hrs 88 Mins 88 Secs
               </Text>
             </View>
+            <GameButton text="BACK HOME" onPress={() => console.log("Play Again")} />
           </View>
+
         </View>
       </ImageBackground>
     </View>
@@ -120,20 +113,20 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        //backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background for win screen
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         zIndex: 1000,
       },
       default: {
         ...StyleSheet.absoluteFillObject,
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         zIndex: 1000,
       },
     }),
   },
   margim: {
+    marginTop: 10,
     width: "85%",
   },
   imageBackground: {
@@ -151,6 +144,7 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: "center",
     alignItems: "center",
+    marginVertical: 10,
   },
   headerIcon: {
     width: 50,
@@ -175,6 +169,15 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 8,
   },
+  backgroundRounded:{
+    backgroundColor: "#1D1811",
+    borderRadius: 30,
+    paddingVertical: 8,
+    paddingHorizontal: 25,
+    marginBottom: 10,
+    border: "1px solid #382E23",
+
+  },
   resultTitle: {
     fontSize: 18,
     fontFamily: "Teko-Medium",
@@ -192,9 +195,6 @@ const styles = StyleSheet.create({
   luckySymbols: {
     flexDirection: "row",
   },
-  symbol: {
-    marginHorizontal: 5,
-  },
   symbolImage: {
     width: 50,
     height: 50,
@@ -206,6 +206,8 @@ const styles = StyleSheet.create({
     border: "1px solid #4B595D",
     borderRadius: 12,
     padding: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   ticketTitle: {
     fontFamily: "Teko-Medium",
@@ -227,9 +229,7 @@ const styles = StyleSheet.create({
     fontFamily: "Teko-Medium",
     fontSize: 22,
     color: "#00ff00",
-    textAlign: "end",       // Alinha o texto à direita
-    paddingRight: "10px",   // Adiciona espaço à direita para afastar o texto da borda
-    marginRight: "10px", 
+    textAlign: "end",
   },
   timerSection: {
     marginTop: 20,
@@ -237,9 +237,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   timerTitle: {
-    fontFamily: "Teko-Medium",
-    fontSize: 18,
-    color: "#fff",
+    fontFamily: "Inter-Medium",
+    fontSize: 16,
+    color: "#FFDEA8",
   },
   timerValue: {
     fontFamily: "Teko-Medium",
@@ -265,8 +265,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    marginVertical: 5,
+   
+  },
+  slider: {
+    height: 20,
+  },
+  thumb: {
+    width: 0,
+    height: 0,
+  },
+  sliderContainer: {
+    width: '100%',
+    height: 20,
+    borderRadius: 15,
+    backgroundColor: '#000000',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
   },
 });
 

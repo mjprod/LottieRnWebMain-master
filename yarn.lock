@@ -1795,6 +1795,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/slider@npm:^4.5.3":
+  version: 4.5.3
+  resolution: "@react-native-community/slider@npm:4.5.3"
+  checksum: 4cd70b0e24fedf6152d5316b73266569ef2af83dabc713ed7c68330b7d9844ace131e32dd90919b6189fc9f041c528bf7b48eb5b6b2b6e36fb474ba861c7a9c3
+  languageName: node
+  linkType: hard
+
 "@react-native/assets-registry@npm:0.75.2":
   version: 0.75.2
   resolution: "@react-native/assets-registry@npm:0.75.2"
@@ -15355,6 +15362,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-native-web-starter@workspace:."
   dependencies:
+    "@react-native-community/slider": ^4.5.3
     "@types/jest": ^29.5.12
     "@types/node": ^22.5.0
     "@types/react": ^18.3.4
