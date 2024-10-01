@@ -6,11 +6,14 @@ import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
 import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
 import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import Slider from "@react-native-community/slider";
-import GameButton from './GameButton';
+import GameButton from "./GameButton";
+import RotatingCirclesBackground from "./RotatingCirclesBackground";
 
 const GameOverScreen = ({ luckySymbolCount }) => {
-  const backgroundResult = require("./../assets/image/background_result_page.png");
+  const backgroundResult = require("./../assets/image/background_game.png");
   const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
+  const backgroundTotalTicket = require("./../assets/image/background_total_ticket.png");
+
   const [progress, setProgress] = useState(12456);
 
   return (
@@ -20,6 +23,10 @@ const GameOverScreen = ({ luckySymbolCount }) => {
         source={backgroundResult}
         style={styles.imageBackground}
       >
+        <View style={styles.rotatingBackgroundContainer}>
+          <RotatingCirclesBackground />
+        </View>
+
         <View style={styles.container}>
           <View style={styles.margim}>
             <View style={styles.header}>
@@ -54,50 +61,74 @@ const GameOverScreen = ({ luckySymbolCount }) => {
                     topLayout={false}
                   />
                 </ImageBackground>
-                <View style={styles.luckySymbols}>
-            
-                </View>
+                <View style={styles.luckySymbols}></View>
               </View>
             </View>
 
             {/* Total Tickets Earned Section */}
             <View style={styles.ticketsSection}>
+              <ImageBackground
+                resizeMode="contain"
+                source={backgroundTotalTicket}
+                style={styles.imageBackgroundLuckySymbol}
+              >
+                {/*<LottieLuckySymbolCoinSlot
+                    luckySymbolCount={luckySymbolCount}
+                    topLayout={false}
+                  />*/}
+              </ImageBackground>
               <Text style={styles.ticketTitle}>TOTAL TICKETS EARNED</Text>
-              <View style={{backgroundColor:"#4B595D",height:1,width:'100%',marginVertical:10}}/>
+              <View
+                style={{
+                  backgroundColor: "#4B595D",
+                  height: 1,
+                  width: "100%",
+                  marginVertical: 10,
+                }}
+              />
               <View style={styles.containerTotalTicket}>
                 <Text style={styles.nextTicketText}>Next Ticket</Text>
                 <Text style={styles.ticketProgress}>12456 / 20000</Text>
               </View>
 
-              <View style={styles.sliderContainer}> 
-              <Slider
-                style={styles.slider}
-                minimumValue={0}
-                maximumValue={20000}
-                value={progress}
-                onValueChange={(value) => setProgress(value)}
-                minimumTrackTintColor="#FFD89D" // Custom color for the filled track
-                maximumTrackTintColor="#000000" // Custom color for the unfilled track
-                thumbTintColor="#FFD89D" // Custom color for the thumb
-                thumbStyle={styles.thumb} // Style for the thumb
-              />
-      </View>
-             
+              <View style={styles.sliderContainer}>
+                <Slider
+                  style={styles.slider}
+                  minimumValue={0}
+                  maximumValue={20000}
+                  value={progress}
+                  onValueChange={(value) => setProgress(value)}
+                  minimumTrackTintColor="#FFD89D" // Custom color for the filled track
+                  maximumTrackTintColor="#000000" // Custom color for the unfilled track
+                  thumbTintColor="#FFD89D" // Custom color for the thumb
+                  thumbStyle={styles.thumb} // Style for the thumb
+                />
+              </View>
+
               <Text style={styles.addedPoints}>+9999</Text>
             </View>
 
             {/* Timer Section */}
             <View style={styles.timerSection}>
               <View style={styles.backgroundRounded}>
-              <Text style={styles.timerTitle}>Time till Next Draw</Text>
+                <Text style={styles.timerTitle}>Time till Next Draw</Text>
               </View>
-              <Text style={styles.timerValue}>
-                88 Days 88 Hrs 88 Mins 88 Secs
+              <Text style={styles.timerContainer}>
+                <Text style={styles.timerNumberValue}>88</Text>
+                <Text style={styles.timerStringValue}> Days </Text>
+                <Text style={styles.timerNumberValue}>88</Text>
+                <Text style={styles.timerStringValue}> Hrs </Text>
+                <Text style={styles.timerNumberValue}>88</Text>
+                <Text style={styles.timerStringValue}> Mins </Text>
+                <Text style={styles.timerNumberValue}>88</Text>
+                <Text style={styles.timerStringValue}> Secs</Text>
               </Text>
             </View>
-            <GameButton text="BACK HOME" onPress={() => console.log("Play Again")} />
+            <GameButton
+              text="BACK HOME"
+              onPress={() => console.log("Play Again")}
+            />
           </View>
-
         </View>
       </ImageBackground>
     </View>
@@ -131,10 +162,10 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     width: "100%",
-    height: "96%",
+    height: "100%",
     justifyContent: "flex-end",
     alignItems: "center",
-    marginTop: "12%",
+    marginTop: "8%",
   },
   imageBackgroundLuckySymbol: {
     width: 100,
@@ -169,14 +200,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 8,
   },
-  backgroundRounded:{
+  backgroundRounded: {
     backgroundColor: "#1D1811",
     borderRadius: 30,
     paddingVertical: 8,
     paddingHorizontal: 25,
     marginBottom: 10,
     border: "1px solid #382E23",
-
   },
   resultTitle: {
     fontSize: 18,
@@ -241,14 +271,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#FFDEA8",
   },
-  timerValue: {
-    fontFamily: "Teko-Medium",
-    fontSize: 22,
+  timerNumberValue: {
+    fontFamily: "Inter-SemiBold",
+    fontSize: 18,
     color: "#fff",
+  },
+  timerStringValue: {
+    fontFamily: "Inter-SemiBold",
+    fontSize: 14,
+    color: "#A6A6A6",
   },
   iconWrapper: {
     justifyContent: "center",
     alignItems: "center",
+    marginVertical: 5,
   },
   viewRow: {
     flexDirection: "row",
@@ -265,23 +301,37 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    marginVertical: 5,
-   
   },
   slider: {
-    height: 20,
+    height: 1,
+    maxHeight: 1,
+    transform: [{ scaleY: 4, scaleX: 4 }],
+    zIndex: 999,
+    elevation: 10,
   },
   thumb: {
     width: 0,
     height: 0,
   },
   sliderContainer: {
-    width: '100%',
-    height: 20,
-    borderRadius: 15,
-    backgroundColor: '#000000',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
+    width: "100%",
+    //height: 20,
+    marginVertical: 10,
+    borderRadius: 50,
+    backgroundColor: "#000000",
+    justifyContent: "center",
+    paddingHorizontal: 0,
+  },
+  timerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  rotatingBackgroundContainer: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
   },
 });
 

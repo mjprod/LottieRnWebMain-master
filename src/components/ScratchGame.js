@@ -260,7 +260,6 @@ const ScratchGame = ({
         }
       }
       else {
-        //setReset(true); //NEXT CARD\
         nextCard();
       }
     }, 1500);

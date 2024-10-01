@@ -216,8 +216,8 @@ const themes = {
         gameCenterIcon: require('./../assets/image/cowboy/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/cowboy/background_movie_loop.mp4'),
         backgroundScratchCard: "#BBA58B",
-        intro_chrome: require('./../assets/video/international/intro_chrome.webm'),
-        intro_default: require('./../assets/video/international/intro.mp4'),
+        intro_chrome: require('./../assets/video/cowboy/intro_chrome.webm'),
+        intro_default: require('./../assets/video/cowboy/intro.mp4'),
         iconsDefault: [
             <IconTypeBandanadefault key="0" />,
             <IconTypeBootdefault key="1" />,

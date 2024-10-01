@@ -14,6 +14,7 @@ const IntroThemeVideo = ({ handleVideoEnd }) => {
         source={
           introChromeTheme
         } // Play the win video
+        muted = {false} 
         style={styles.transparentVideo} // Video styling
         onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
         onEnded={handleVideoEnd} // Web: Trigger callback when video ends
@@ -22,8 +23,9 @@ const IntroThemeVideo = ({ handleVideoEnd }) => {
     default: (browser) => (
       <Video
         source={
-          introTheme
+          introChromeTheme
         } // Play the win video
+         muted = {false} 
         style={styles.transparentVideo} // Video styling
         onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
         onEnded={handleVideoEnd} // Web: Trigger callback when video ends

@@ -209,18 +209,6 @@ const ScratchLuckyGame = () => {
             console.log("Resetting game "+ scratchCardLeft);
             setIntroThemeVideo(true);
           }
-        //  translateX.setValue(width);
-        //  Animated.timing(translateX, {
-          ///  toValue: -width * 0.1,
-          //  duration: 300,
-           // useNativeDriver: Platform.OS !== "web",
-         // }).start(() => {
-           // Animated.spring(translateX, {
-             // toValue: 0,
-              //friction: 5,
-              //useNativeDriver: Platform.OS !== "web",
-            //}).start();
-          //});
         });
       });
     }
@@ -302,7 +290,6 @@ const ScratchLuckyGame = () => {
 
   return (
     <View style={styles.fullScreen}>
-      {/* Resto da interface do jogo */}
       <BackgroundGame showAlphaView={scratchStarted} source={backgroundLoop} />
       <View style={styles.containerOverlay}>
         <ImageBackground

@@ -13,13 +13,13 @@ class Video extends Component {
   }
 
   render() {
-    const { source } = this.props;
+    const { source , muted = true } = this.props;
     // Video attributes passed to create the video element
     const attrs = {
       //src: require("./../assets/video/win_safari.mp4"), // Ensure the video path is correct
       src: source, // Use the dynamic source passed via props
       autoPlay: true,  // Enable autoplay
-      muted: true,     // Mute the video for autoplay to work on all browsers
+      muted: muted,     // Mute the video for autoplay to work on all browsers
       loop: false,     // Ensure the video does not loop, plays only once
       playsInline: true, // Ensure inline playback on mobile
       controls: false,  // Hide controls
