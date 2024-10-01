@@ -290,7 +290,7 @@ const ScratchLuckyGame = () => {
 
   return (
     <View style={styles.fullScreen}>
-      <BackgroundGame showAlphaView={scratchStarted} source={backgroundLoop} />
+      <BackgroundGame showAlphaView={scratchStarted || gameOver} source={backgroundLoop} />
       <View style={styles.containerOverlay}>
         <ImageBackground
           source={backgroundGame}

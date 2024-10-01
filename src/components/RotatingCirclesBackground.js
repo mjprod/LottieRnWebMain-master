@@ -6,14 +6,15 @@ const RotatingCirclesBackground = () => {
 
   useEffect(() => {
     const startAnimation = () => {
-      Animated.loop(
-        Animated.timing(rotation, {
-          toValue: 1,
-          duration: 24000,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        })
-      ).start();
+      rotation.setValue(0); // Reset animation value to 0 before starting
+      Animated.timing(rotation, {
+        toValue: 1,
+        duration: 24000,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start(() => {
+        startAnimation(); // Restart animation when it finishes
+      });
     };
     startAnimation();
   }, [rotation]);
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 10,
   },
   absolute: {
     position: 'absolute',
