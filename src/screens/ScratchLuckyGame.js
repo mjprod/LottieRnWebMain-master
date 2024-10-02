@@ -163,7 +163,7 @@ const ScratchLuckyGame = () => {
       setTimeout(() => {
         goToNextTheme();
         //setReset(true);
-      }, 500);
+      }, 100);
     }, 100);
   };
 
