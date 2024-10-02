@@ -113,7 +113,7 @@ const ScratchGame = ({
 
   const generateRandomLuckySymbol = () => {
     const result = Math.random() < generateRandomLuckySymbolPercentage;
-    console.log("Generated result:", result); 
+    //console.log("Generated result:", result); 
     return result;
   };
 

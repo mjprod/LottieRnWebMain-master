@@ -15,11 +15,11 @@ export const eraserAnimationSteps = 85;
 
 //ScratchCard
 export const simulateScratchTimeOut = 2500;
-export const generateRandomLuckySymbolPercentage = 0.9;
+export const generateRandomLuckySymbolPercentage = 0.1;
 export const finishPopUpToVideoTimer = 1000;
 //export const setLuckySymbolCountTimer = 5700;
 export const timerSoundBetweenScratchWithFinger = 300;
-export const numberOfCards = 10;
+export const numberOfCards = 1;
 
 
 //ScratchGame

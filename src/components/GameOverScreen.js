@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Platform, Text } from "react-native";
 import { ImageBackground } from "react-native-web";
 import { IconJokerPlus } from "../assets/icons/IconJokerPlus";
@@ -15,6 +15,50 @@ const GameOverScreen = ({ luckySymbolCount }) => {
   const backgroundTotalTicket = require("./../assets/image/background_total_ticket.png");
 
   const [progress, setProgress] = useState(12456);
+
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      const nextMondayNineAM = new Date();
+
+      // Calculate next Monday
+      const dayOfWeek = now.getDay();
+      const daysUntilNextMonday = (8 - dayOfWeek) % 7; // 0 if today is Monday, else days until next Monday
+
+      // Set the time to 9 AM
+      nextMondayNineAM.setDate(now.getDate() + daysUntilNextMonday);
+      nextMondayNineAM.setHours(9, 0, 0, 0); // Set to 9:00:00 AM
+
+      // If today is Monday but it's after 9 AM, set to the next Monday
+      if (dayOfWeek === 1 && now > nextMondayNineAM) {
+        nextMondayNineAM.setDate(nextMondayNineAM.getDate() + 7);
+      }
+
+      const difference = nextMondayNineAM - now;
+
+      const timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+
+      setTimeLeft(timeLeft);
+    };
+
+    // Update the countdown every second
+    const intervalId = setInterval(calculateTimeLeft, 1000);
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -114,13 +158,13 @@ const GameOverScreen = ({ luckySymbolCount }) => {
                 <Text style={styles.timerTitle}>Time till Next Draw</Text>
               </View>
               <Text style={styles.timerContainer}>
-                <Text style={styles.timerNumberValue}>88</Text>
+                <Text style={styles.timerNumberValue}>{timeLeft.days}</Text>
                 <Text style={styles.timerStringValue}> Days </Text>
-                <Text style={styles.timerNumberValue}>88</Text>
+                <Text style={styles.timerNumberValue}>{timeLeft.hours}</Text>
                 <Text style={styles.timerStringValue}> Hrs </Text>
-                <Text style={styles.timerNumberValue}>88</Text>
+                <Text style={styles.timerNumberValue}>{timeLeft.minutes}</Text>
                 <Text style={styles.timerStringValue}> Mins </Text>
-                <Text style={styles.timerNumberValue}>88</Text>
+                <Text style={styles.timerNumberValue}>{timeLeft.seconds}</Text>
                 <Text style={styles.timerStringValue}> Secs</Text>
               </Text>
             </View>

@@ -97,6 +97,9 @@ export const ThemeProvider = ({ children }) => {
             backgroundScratchCard,
             introChromeTheme,
             introTheme,
+            introThemeNext: (currentThemeIndex + 1 < themeSequence.length) 
+            ? themes[themeSequence[currentThemeIndex + 1]].intro_chrome 
+            : null,
             updateThemeSequence,
             setCurrentThemeByIndex,  // Function to change the current theme by index
             goToNextTheme,           // Function to go to the next theme

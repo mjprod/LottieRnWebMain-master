@@ -6,13 +6,13 @@ import { useTheme } from "../hook/useTheme";
 
 const IntroThemeVideo = ({ handleVideoEnd }) => {
 
-  const { introChromeTheme } = useTheme();
+  const { introThemeNext } = useTheme();
 
   const browserHandler = {
     chrome: () => (
       <Video
         source={
-          introChromeTheme
+          introThemeNext
         } // Play the win video
         muted = {false} 
         style={styles.transparentVideo} // Video styling
@@ -23,7 +23,7 @@ const IntroThemeVideo = ({ handleVideoEnd }) => {
     default: (browser) => (
       <Video
         source={
-          introChromeTheme
+          introThemeNext
         } // Play the win video
          muted = {false} 
         style={styles.transparentVideo} // Video styling

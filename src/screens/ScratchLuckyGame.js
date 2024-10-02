@@ -101,17 +101,20 @@ const ScratchLuckyGame = () => {
     setSkipToFinishLuckyVideo(false);
     setWinLuckySymbolVideo(false);
 
-    //addLuckySymbol();
-
     setTimeout(() => {
       if (luckySymbolCount < 2) {
-        setReset(true);
       
         setTimeout(() => {
-          goToNextTheme();
-        }, 500);
+          if(scratchCardLeft > 1){
+            console.log("Resetting game "+ scratchCardLeft);
+            setIntroThemeVideo(true);
+          }else{
+            setGameOver(true);
+            switchTrack(1);
+          }
+        }, 700);
       }
-    }, 1200);
+    }, 300);
   };
 
   const addLuckySymbol = () => {
@@ -153,17 +156,15 @@ const ScratchLuckyGame = () => {
 
   const handleVideoIntroEnd = () => {
     setIntroThemeVideo(false);
-    Animated.timing(translateX, {
-        toValue: -width * 0.1,
-       duration: 300,
-        useNativeDriver: Platform.OS !== "web",
-      }).start(() => {
-        Animated.spring(translateX, {
-          toValue: 0,
-          friction: 5,
-          useNativeDriver: Platform.OS !== "web",
-        }).start();
-      });
+
+    setTimeout(() => {
+      //goToNextTheme();
+      setReset(true);
+      setTimeout(() => {
+        goToNextTheme();
+        //setReset(true);
+      }, 500);
+    }, 100);
   };
 
   useEffect(() => {
@@ -205,10 +206,18 @@ const ScratchLuckyGame = () => {
           duration: 300,
           useNativeDriver: Platform.OS !== "web",
         }).start(() => {
-          if(scratchCardLeft > 1){
-            console.log("Resetting game "+ scratchCardLeft);
-            setIntroThemeVideo(true);
-          }
+          Animated.timing(translateX, {
+            toValue: -width * 0.1,
+           duration: 300,
+            useNativeDriver: Platform.OS !== "web",
+          }).start(() => {
+            Animated.spring(translateX, {
+              toValue: 0,
+              friction: 5,
+              useNativeDriver: Platform.OS !== "web",
+            }).start();
+          });
+          
         });
       });
     }
@@ -334,7 +343,7 @@ const ScratchLuckyGame = () => {
           </Animated.View>
         </ImageBackground>
       </View>
-      {gameOver && <GameOverScreen luckySymbolCount={luckySymbolCount} />}
+      {gameOver && <GameOverScreen luckySymbolCount={luckySymbolCount} setGameOver={setGameOver} />}
       {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen()}
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect

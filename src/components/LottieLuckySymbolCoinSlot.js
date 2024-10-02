@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   lottieLuckyResultAnimation: {
     width: '55%',
     height: '150%',
-    marginHorizontal: -21,
+    marginHorizontal: -22,
     marginTop: 26,
     marginLeft: 0,
   },

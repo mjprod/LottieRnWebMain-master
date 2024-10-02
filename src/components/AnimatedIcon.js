@@ -50,7 +50,7 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
         </View>
       </TouchableWithoutFeedback>
       {timerGame > 0 && (
-        <View style={styles.centeredTextWrapper} pointerEvents="none">
+        <View style={styles.centeredTextWrapper}>
           <PopUpText value={timerGame} />
         </View>
       )}

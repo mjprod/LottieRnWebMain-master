@@ -105,8 +105,8 @@ const themes = {
         gameCenterIcon: require('./../assets/image/egypt/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/egypt/background_movie_loop.mp4'),
         backgroundScratchCard: "#EADAC5",
-        intro_chrome: require('./../assets/video/international/intro_chrome.webm'),
-        intro: require('./../assets/video/international/intro.mp4'),
+        intro_chrome: require('./../assets/video/egypt/intro_chrome.webm'),
+        intro: require('./../assets/video/egypt/intro_chrome.webm'),
         iconsDefault: [
             <IconTypeAnubisdefault key="0" />,
             <IconTypeAnhkdefault key="1" />,
