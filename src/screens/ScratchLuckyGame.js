@@ -101,7 +101,7 @@ const ScratchLuckyGame = () => {
     setSkipToFinishLuckyVideo(false);
     setWinLuckySymbolVideo(false);
 
-    addLuckySymbol();
+    //addLuckySymbol();
 
     setTimeout(() => {
       if (luckySymbolCount < 2) {
@@ -115,7 +115,6 @@ const ScratchLuckyGame = () => {
   };
 
   const addLuckySymbol = () => {
-    console.log("Adding lucky symbol", luckySymbolCount);
     if (luckySymbolCount > 2) {
       setLuckySymbolCount(0);
     } else if (luckySymbolCount === 2) {
@@ -148,6 +147,7 @@ const ScratchLuckyGame = () => {
   // Callback function to handle when the video finishes
   const handleVideoEnd = () => {
     //console.log("Video has finished playing.");
+    addLuckySymbol();
     nextCard();
   };
 
@@ -215,6 +215,7 @@ const ScratchLuckyGame = () => {
   }, [reset, setReset]);
 
   const handleClick = () => {
+    addLuckySymbol();
     nextCard();
   };
 

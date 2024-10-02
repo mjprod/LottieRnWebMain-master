@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from "react";
 import { View, StyleSheet, Animated, Easing } from "react-native";
-import { Platform } from "react-native";
 
 
 const RotatingCirclesBackground = () => {

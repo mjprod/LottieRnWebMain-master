@@ -6,7 +6,6 @@ import ScratchCard from "./ScratchCard";
 import {
   eraserShouldBeScratched,
   heightScratch,
-  setLuckySymbolCountTimer,
 } from "../global/Settings";
 
 const scratchForeground = require("./../assets/image/scratch_foreground.jpg");
@@ -17,7 +16,6 @@ const ScratchLayout = ({
   scratched,
   setScratched,
   luckySymbolCount,
-  setLuckySymbolCount,
   setScratchStarted,
   scratchCardLeft,
   timerGame,
@@ -39,35 +37,14 @@ const ScratchLayout = ({
 
   const setScratchedCard = () => {
     if (isLuckySymbolTrue) {
-      if (luckySymbolCount === 2) {
-       // setCollectShowLuckySymbol(true);
-      } else {
-        //setShowLuckySymbol(true);
-        //playSong(audioLuckySymbolCoins);
-      }
-
-      setTimeout(() => {
-        //if (skipToFinishLuckyVideo) {
-        //addLuckySymbol();
-        //}
-      }, setLuckySymbolCountTimer);
-
       setIsLuckySymbolTrue(false);
       setTimeout(() => {
-        //if (skipToFinishLuckyVideo) {
-        //setShowLuckySymbol(false);
         setScratched(true);
         setIsScratchCardVisible(false);
-        //}
       }, 5300);
     } else {
       setScratched(true);
       setIsScratchCardVisible(false);
-      if (isWinner) {
-        //setButtonText("AUTO POP");
-      } else {
-        //endGame();
-      }
     }
   };
 
@@ -102,17 +79,13 @@ const ScratchLayout = ({
           isWinner={isWinner}
           setIsWinner={setIsWinner}
           onAutoPop={triggerAutoPop}
-          //onEndGame={endGame}
           scratched={scratched}
           reset={reset}
           nextCard={nextCard}
-          //onLoading={imageLoading}
-          //isLuckySymbolTrue={isLuckySymbolTrue}
           setIsLuckySymbolTrue={setIsLuckySymbolTrue}
           timerGame={timerGame}
           setWinLuckySymbolVideo={setWinLuckySymbolVideo}
           luckySymbolCount={luckySymbolCount}
-          setLuckySymbolCount={setLuckySymbolCount}
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
           clickCount={clickCount}
           setClickCount={setClickCount}
@@ -136,8 +109,7 @@ const ScratchLayout = ({
       <View
         //ref={buttonRef}
         //onLayout={handleLayout}
-        style={{ marginTop: 5, overflow: "hidden", alignSelf: "stretch" }}
-      >
+        style={{ marginTop: 5, overflow: "hidden", alignSelf: "stretch" }}>
         <ScratchCardLeft scratchCardsLeft={scratchCardLeft} />
       </View>
     </View>

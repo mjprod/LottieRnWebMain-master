@@ -50,19 +50,23 @@ const TopLayout = ({
   const lottieRef = useRef(null);
 
   useEffect(() => {
+    //console.log("clickCount", clickCount);
     // Animation control logic
     switch (clickCount) {
       case 6:
         setAnimationIndex(0);
         setPlayAnimation(true);
+        //console.log("play animation x2");
         break;
       case 9:
         setAnimationIndex(1);
         setPlayAnimation(true);
+        //console.log("play animation x3");
         break;
       case 12:
         setAnimationIndex(2);
         setPlayAnimation(true);
+        //console.log("play animation x4");
         break;
       default:
         return;

@@ -48,6 +48,7 @@ const ScratchGame = ({
   luckySymbolCount,
   clickCount,
   setClickCount,
+  
 }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
@@ -150,7 +151,7 @@ const ScratchGame = ({
       (winLuckySymbol === false || index !== 12) // Lucky symbol can't be repeated
     );
   };
-  
+  /*
   const generateIconsArray = (winLuckySymbol) => {
     let iconCounts = Array(totalIcons).fill(0);
     let resultArray = new Array(totalPositions).fill(null);
@@ -196,6 +197,71 @@ const ScratchGame = ({
   
     return resultArray;
   };
+  */
+  const generateIconsArray = (winLuckySymbol) => {
+    let iconCounts = Array(totalIcons).fill(0);
+    let resultArray = new Array(totalPositions).fill(null);
+    let iconWithMaxCount = null;
+    let columnIconMap = {};
+    let maxCombinations = 4;
+    let combinationCount = 0;
+  
+    let luckyPosition = -1;
+   
+    if (winLuckySymbol) {
+      luckyPosition = Math.floor(Math.random() * totalPositions);
+      resultArray[luckyPosition] = 12;
+      iconCounts[12] = 1;
+    }
+  
+    for (let i = 0; i < totalPositions; i++) {
+      if (resultArray[i] !== null) continue;
+  
+      let columnIndex = i % columns;
+      if (!columnIconMap[columnIndex]) {
+        columnIconMap[columnIndex] = new Set();
+      }
+  
+      let availableIcons = iconCounts
+        .map((count, index) =>
+          isValidIcon(count, index, columnIndex, iconWithMaxCount, winLuckySymbol, columnIconMap) ? index : null
+        )
+        .filter((index) => index !== null);
+  
+      if (availableIcons.length === 0) {
+        break;
+      }
+  
+      let selectedIcon;
+  
+      if (combinationCount < maxCombinations) {
+        selectedIcon = availableIcons[Math.floor(Math.random() * availableIcons.length)];
+  
+        if (iconCounts[selectedIcon] === 2) {
+          combinationCount++;
+        }
+      } else {
+        let filteredIcons = availableIcons.filter(icon => iconCounts[icon] < 2);
+  
+        if (filteredIcons.length > 0) {
+          selectedIcon = filteredIcons[Math.floor(Math.random() * filteredIcons.length)];
+        } else {
+          selectedIcon = availableIcons[Math.floor(Math.random() * availableIcons.length)];
+        }
+      }
+  
+      resultArray[i] = selectedIcon;
+      iconCounts[selectedIcon]++;
+      columnIconMap[columnIndex].add(selectedIcon);
+  
+      if (iconCounts[selectedIcon] === maxCountWin) {
+        iconWithMaxCount = selectedIcon;
+      }
+    }
+  
+    return resultArray;
+  };
+  
 
   const findBoobleColor = (arr) => {
 
@@ -253,7 +319,6 @@ const ScratchGame = ({
 
   const checkResults = () => {
     setTimeout(() => {
-        
       if (arrayIcon) {
         if(luckySymbolCount!==3){
           setWinLuckySymbolVideo(true);
@@ -371,9 +436,12 @@ const ScratchGame = ({
           updateSounds();
           break;
         case 12:
-          playSound("sound1");
+          playSound("sound12");
           updateSounds();
-          setClickCount(0);
+          setTimeout (() => {
+            setClickCount(0);
+          }
+          , 1000);
           setSoundShouldPlay(1);
           break;
         default:

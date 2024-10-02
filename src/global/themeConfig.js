@@ -142,8 +142,8 @@ const themes = {
         gameCenterIcon: require('./../assets/image/mythology/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/mythology/background_movie_loop.mp4'),
         backgroundScratchCard: "#BBADC3",
-        intro_chrome: require('./../assets/video/international/intro_chrome.webm'),
-        intro_default: require('./../assets/video/international/intro.mp4'),
+        intro_chrome: require('./../assets/video/mythology/intro_chrome.webm'),
+        intro_default: require('./../assets/video/mythology/intro_chrome.webm'),
         iconsDefault: [
             <IconTypeCentaurdefault key="0" />,
             <IconTypeHarpdefault key="1" />,

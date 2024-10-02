@@ -6,7 +6,7 @@ import { useTheme } from "../hook/useTheme";
 
 const IntroThemeVideo = ({ handleVideoEnd }) => {
 
-  const {  introChromeTheme, introTheme } = useTheme();
+  const { introChromeTheme } = useTheme();
 
   const browserHandler = {
     chrome: () => (
