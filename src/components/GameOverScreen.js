@@ -8,8 +8,9 @@ import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import Slider from "@react-native-community/slider";
 import GameButton from "./GameButton";
 import RotatingCirclesBackground from "./RotatingCirclesBackground";
+import LottieTicketSlot from "./LottieTicketSlot";
 
-const GameOverScreen = ({ luckySymbolCount }) => {
+const GameOverScreen = ({ luckySymbolCount,ticketCount }) => {
   const backgroundResult = require("./../assets/image/background_game.png");
   const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
   const backgroundTotalTicket = require("./../assets/image/background_total_ticket.png");
@@ -116,10 +117,7 @@ const GameOverScreen = ({ luckySymbolCount }) => {
                 source={backgroundTotalTicket}
                 style={styles.imageBackgroundLuckySymbol}
               >
-                {/*<LottieLuckySymbolCoinSlot
-                    luckySymbolCount={luckySymbolCount}
-                    topLayout={false}
-                  />*/}
+                <LottieTicketSlot ticketCount={ticketCount}/>
               </ImageBackground>
               <Text style={styles.ticketTitle}>TOTAL TICKETS EARNED</Text>
               <View

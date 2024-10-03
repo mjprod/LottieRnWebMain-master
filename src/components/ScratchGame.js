@@ -327,7 +327,7 @@ const ScratchGame = ({
       else {
         nextCard();
       }
-    }, 1500);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -338,7 +338,7 @@ const ScratchGame = ({
       console.log("ALL ICONS CLIKED");
       setTimeout(() => {
         checkResults();
-      }, 1000);
+      }, 500);
     }
   }, [clickedIcons, iconsArray]);
 
