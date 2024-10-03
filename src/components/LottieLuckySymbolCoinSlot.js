@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '90%',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     right: 18,
     bottom: 9,
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
   lottieLuckyAnimation: {
     width: '45%',
     height: '45%',
-    marginHorizontal: -18,
+    marginHorizontal: -38,
     marginBottom: 4,
-    marginLeft: 0,
+    marginLeft: 20,
     
   },
   lottieLuckyResultAnimation: {

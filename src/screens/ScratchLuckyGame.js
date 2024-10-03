@@ -44,7 +44,10 @@ const ScratchLuckyGame = () => {
   const [timerGame, setTimerGame] = useState(0);
   const [score, setScore] = useState(0);
   const [scratchStarted, setScratchStarted] = useState(false);
-  const [luckySymbolCount, setLuckySymbolCount] = useState(0);
+
+  const [luckySymbolCount, setLuckySymbolCount] = useState(1);
+  const [ticketCount, setTicketCount] = useState(1);
+
   const [clickCount, setClickCount] = useState(0);
 
   const marginTopAnim = useRef(new Animated.Value(0)).current;
@@ -343,7 +346,7 @@ const ScratchLuckyGame = () => {
           </Animated.View>
         </ImageBackground>
       </View>
-      {gameOver && <GameOverScreen luckySymbolCount={luckySymbolCount} setGameOver={setGameOver} />}
+      {gameOver && <GameOverScreen luckySymbolCount={luckySymbolCount} ticketCount={ticketCount} setGameOver={setGameOver} />}
       {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen()}
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect
