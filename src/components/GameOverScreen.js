@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Platform, Text } from "react-native";
-import { ImageBackground } from "react-native-web";
+import { Animated, ImageBackground } from "react-native-web";
 import { IconJokerPlus } from "../assets/icons/IconJokerPlus";
 import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
 import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
@@ -22,6 +22,22 @@ const GameOverScreen = ({ luckySymbolCount,ticketCount }) => {
     hours: 0,
     minutes: 0,
     seconds: 0,
+  });
+
+  const animatedProgress = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    // Start the animation when the component mounts
+    Animated.timing(animatedProgress, {
+      toValue: progress,
+      duration: 3000, 
+      useNativeDriver: false,
+    }).start();
+  }, []);
+
+  // Update the state to reflect the animated value (for Slider to work properly)
+  animatedProgress.addListener(({ value }) => {
+    setProgress(value); // Sync the animated value with the slider's progress
   });
 
   useEffect(() => {

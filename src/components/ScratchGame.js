@@ -383,7 +383,7 @@ const ScratchGame = ({
       setClickCount(clickCount + 1);
 
       setScore(score + timerGame * 100);
-      //console.log("SCORE: ", score + timerGame * 100);
+
       const newClickedCount = {
         ...clickedCount,
         [icon]: (clickedCount[icon] || 0) + 1,
