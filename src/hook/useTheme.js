@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useMemo } from 'react';
 import themes from '../global/themeConfig';
 import { numberOfCards } from '../global/Settings';
  
@@ -87,24 +87,27 @@ export const ThemeProvider = ({ children }) => {
         }
     }, [currentThemeIndex, themeSequence]); // The effect depends on currentThemeIndex and themeSequence
 
-    // The ThemeContext.Provider provides the current theme, sequence, assets, and update functions to all children
-    return (
-        <ThemeContext.Provider value={{
-            themeSequence,
-            currentTheme: themeSequence[currentThemeIndex], // Current theme from the sequence
-            gameCenterIcon, // Current game center icon
-            backgroundLoop, // Current background loop
-            backgroundScratchCard,
-            introChromeTheme,
-            introTheme,
-            introThemeNext: (currentThemeIndex + 1 < themeSequence.length) 
+    // Memoize the context value to prevent unnecessary re-renders
+    const contextValue = useMemo(() => ({
+        themeSequence,
+        currentTheme: themeSequence[currentThemeIndex], // Current theme from the sequence
+        gameCenterIcon, // Current game center icon
+        backgroundLoop, // Current background loop
+        backgroundScratchCard,
+        introChromeTheme,
+        introTheme,
+        introThemeNext: (currentThemeIndex + 1 < themeSequence.length) 
             ? themes[themeSequence[currentThemeIndex + 1]].intro_chrome 
             : null,
-            updateThemeSequence,
-            setCurrentThemeByIndex,  // Function to change the current theme by index
-            goToNextTheme,           // Function to go to the next theme
-            currentThemeIndex         // Expose the current theme index
-        }}>
+        updateThemeSequence,
+        setCurrentThemeByIndex,  // Function to change the current theme by index
+        goToNextTheme,           // Function to go to the next theme
+        currentThemeIndex         // Expose the current theme index
+    }), [themeSequence, currentThemeIndex, gameCenterIcon, backgroundLoop, backgroundScratchCard, introChromeTheme, introTheme]);
+
+    // The ThemeContext.Provider provides the current theme, sequence, assets, and update functions to all children
+    return (
+        <ThemeContext.Provider value={contextValue}>
             {children}
         </ThemeContext.Provider>
     );

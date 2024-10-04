@@ -15,7 +15,7 @@ const lottieAnimations = {
 const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
   const selectedBobbleColour = lottieAnimations[bobble];
   const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
-  const { currentTheme} = useTheme();
+  const { currentTheme } = useTheme();
 
   const handleIconClick = () => {
     if (onClick) {
@@ -50,9 +50,14 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
         </View>
       </TouchableWithoutFeedback>
       {timerGame > 0 && (
-        <View style={styles.centeredTextWrapper}>
-          <PopUpText value={timerGame} />
-        </View>
+        <TouchableWithoutFeedback
+          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          onPress={handleIconClick}
+        >
+          <View style={styles.centeredTextWrapper}>
+            <PopUpText value={timerGame} />
+          </View>
+        </TouchableWithoutFeedback>
       )}
     </View>
   );

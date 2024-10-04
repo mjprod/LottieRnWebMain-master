@@ -57,8 +57,8 @@ const ScratchLuckyGame = () => {
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
-  const { backgroundLoop, goToNextTheme , themeSequence } = useTheme();
-  const { setStartPlay,switchTrack } = useSound();
+  const { backgroundLoop, goToNextTheme, themeSequence } = useTheme();
+  const { setStartPlay, switchTrack } = useSound();
 
   const ref = useRef(null);
 
@@ -106,12 +106,14 @@ const ScratchLuckyGame = () => {
 
     setTimeout(() => {
       if (luckySymbolCount < 2) {
-      
         setTimeout(() => {
-          if(scratchCardLeft > 1){
-            console.log("Resetting game "+ scratchCardLeft);
+          if (scratchCardLeft > 1) {
+            console.log("Resetting game " + scratchCardLeft);
             setIntroThemeVideo(true);
-          }else{
+            setTimeout(() => {
+              goToNextTheme();
+            }, 100);
+          } else {
             setGameOver(true);
             switchTrack(1);
           }
@@ -161,12 +163,10 @@ const ScratchLuckyGame = () => {
     setIntroThemeVideo(false);
 
     setTimeout(() => {
-      //goToNextTheme();
       setReset(true);
-      setTimeout(() => {
-        goToNextTheme();
-        //setReset(true);
-      }, 100);
+      //setTimeout(() => {
+      //goToNextTheme();
+      //}, 100);
     }, 100);
   };
 
@@ -211,7 +211,7 @@ const ScratchLuckyGame = () => {
         }).start(() => {
           Animated.timing(translateX, {
             toValue: -width * 0.1,
-           duration: 300,
+            duration: 300,
             useNativeDriver: Platform.OS !== "web",
           }).start(() => {
             Animated.spring(translateX, {
@@ -220,7 +220,6 @@ const ScratchLuckyGame = () => {
               useNativeDriver: Platform.OS !== "web",
             }).start();
           });
-          
         });
       });
     }
@@ -303,7 +302,10 @@ const ScratchLuckyGame = () => {
 
   return (
     <View style={styles.fullScreen}>
-      <BackgroundGame showAlphaView={scratchStarted || gameOver} source={backgroundLoop} />
+      <BackgroundGame
+        showAlphaView={scratchStarted || gameOver}
+        source={backgroundLoop}
+      />
       <View style={styles.containerOverlay}>
         <ImageBackground
           source={backgroundGame}
@@ -346,7 +348,13 @@ const ScratchLuckyGame = () => {
           </Animated.View>
         </ImageBackground>
       </View>
-      {gameOver && <GameOverScreen luckySymbolCount={luckySymbolCount} ticketCount={ticketCount} setGameOver={setGameOver} />}
+      {gameOver && (
+        <GameOverScreen
+          luckySymbolCount={luckySymbolCount}
+          ticketCount={ticketCount}
+          setGameOver={setGameOver}
+        />
+      )}
       {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen()}
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect
@@ -357,7 +365,9 @@ const ScratchLuckyGame = () => {
         />
       )}
       {(!gameStarted || !countDownStarted) && renderInitialScreen()}
-      {introThemeVideo && <IntroThemeVideo handleVideoEnd={handleVideoIntroEnd} />}
+      {introThemeVideo && (
+        <IntroThemeVideo handleVideoEnd={handleVideoIntroEnd} />
+      )}
     </View>
   );
 };
