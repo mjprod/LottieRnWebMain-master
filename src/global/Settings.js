@@ -19,7 +19,7 @@ export const generateRandomLuckySymbolPercentage = 0.0;
 export const finishPopUpToVideoTimer = 1000;
 //export const setLuckySymbolCountTimer = 5700;
 export const timerSoundBetweenScratchWithFinger = 300;
-export const numberOfCards = 1;
+export const numberOfCards = 10;
 
 
 //ScratchGame

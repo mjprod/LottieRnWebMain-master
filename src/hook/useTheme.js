@@ -97,6 +97,9 @@ export const ThemeProvider = ({ children }) => {
         introChromeTheme,
         introTheme,
         introThemeNext: (currentThemeIndex + 1 < themeSequence.length) 
+            ? themes[themeSequence[currentThemeIndex + 1]].intro_default 
+            : null,
+        introChromeThemeNext: (currentThemeIndex + 1 < themeSequence.length) 
             ? themes[themeSequence[currentThemeIndex + 1]].intro_chrome 
             : null,
         updateThemeSequence,

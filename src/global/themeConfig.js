@@ -106,7 +106,7 @@ const themes = {
         backgroundLoop: require('./../assets/video/egypt/background_movie_loop.mp4'),
         backgroundScratchCard: "#EADAC5",
         intro_chrome: require('./../assets/video/egypt/intro_chrome.webm'),
-        intro: require('./../assets/video/egypt/intro_chrome.webm'),
+        intro_default: require('./../assets/video/egypt/intro.mp4'),
         iconsDefault: [
             <IconTypeAnubisdefault key="0" />,
             <IconTypeAnhkdefault key="1" />,
@@ -143,7 +143,7 @@ const themes = {
         backgroundLoop: require('./../assets/video/mythology/background_movie_loop.mp4'),
         backgroundScratchCard: "#BBADC3",
         intro_chrome: require('./../assets/video/mythology/intro_chrome.webm'),
-        intro_default: require('./../assets/video/mythology/intro_chrome.webm'),
+        intro_default: require('./../assets/video/mythology/intro.mp4'),
         iconsDefault: [
             <IconTypeCentaurdefault key="0" />,
             <IconTypeHarpdefault key="1" />,

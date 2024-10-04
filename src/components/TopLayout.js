@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   },
   image_top: {
     width: "100%",
-    marginTop: "-10%",
+    marginTop: "-12%",
     marginBottom: "3%",
     justifyContent: "center",
     alignItems: "center",

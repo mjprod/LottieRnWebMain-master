@@ -21,6 +21,7 @@ import GameButton from "../components/GameButton.js";
 import { useTheme } from "../hook/useTheme.js";
 import { useSound } from "../hook/useSoundPlayer.js";
 import IntroThemeVideo from "../components/IntroThemeVideo.js";
+import LauchScreen from "../components/LauchScreen.js";
 
 // Importando arquivos de mídia
 const backgroundGame = require("./../assets/image/background_game.png");
@@ -164,16 +165,13 @@ const ScratchLuckyGame = () => {
 
     setTimeout(() => {
       setReset(true);
-      //setTimeout(() => {
-      //goToNextTheme();
-      //}, 100);
     }, 100);
   };
 
   useEffect(() => {
     if (scratchStarted) {
       Animated.timing(marginTopAnim, {
-        toValue: 10,
+        toValue: 6,
         duration: 300,
         useNativeDriver: Platform.OS !== "web",
       }).start();
@@ -254,6 +252,10 @@ const ScratchLuckyGame = () => {
     setGameStarted(true);
   };
 
+  const startGame = () => {
+    setCountDownStarted(true);
+  };
+  
   // Function to render the win screen with a video overlay
   const renderInitialScreen = () => {
     return (
@@ -266,7 +268,7 @@ const ScratchLuckyGame = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.8)", // Semi-transparent background for win screen
+          backgroundColor: "rgba(0, 0, 0, 0.9)", // Semi-transparent background for win screen
           justifyContent: "center",
           alignItems: "center",
           height: "100%",
@@ -287,13 +289,7 @@ const ScratchLuckyGame = () => {
               />
             </View>
           ) : (
-            <GameButton
-              text="Start Game"
-              onPress={() => {
-                console.log("Start Game");
-                setCountDownStarted(true);
-              }}
-            />
+            <LauchScreen onPress={startGame}/>
           )}
         </TouchableOpacity>
       </View>
