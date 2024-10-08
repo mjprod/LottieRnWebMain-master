@@ -110,7 +110,7 @@ const ScratchLayout = ({
         //ref={buttonRef}
         //onLayout={handleLayout}
         style={{ marginTop: 5, overflow: "hidden", alignSelf: "stretch" }}>
-        <ScratchCardLeft scratchCardsLeft={scratchCardLeft} />
+        <ScratchCardLeft scratchCardLeft={scratchCardLeft} />
       </View>
     </View>
   );

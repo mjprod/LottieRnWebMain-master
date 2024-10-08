@@ -17,7 +17,6 @@ import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
 import BrowserDetection from "react-browser-detection";
 import LottieView from "react-native-web-lottie";
 
-import GameButton from "../components/GameButton.js";
 import { useTheme } from "../hook/useTheme.js";
 import { useSound } from "../hook/useSoundPlayer.js";
 import IntroThemeVideo from "../components/IntroThemeVideo.js";
@@ -46,8 +45,8 @@ const ScratchLuckyGame = () => {
   const [score, setScore] = useState(0);
   const [scratchStarted, setScratchStarted] = useState(false);
 
-  const [luckySymbolCount, setLuckySymbolCount] = useState(1);
-  const [ticketCount, setTicketCount] = useState(1);
+  const [luckySymbolCount, setLuckySymbolCount] = useState(0);
+  const [ticketCount, setTicketCount] = useState(0);
 
   const [clickCount, setClickCount] = useState(0);
 
@@ -62,6 +61,49 @@ const ScratchLuckyGame = () => {
   const { setStartPlay, switchTrack } = useSound();
 
   const ref = useRef(null);
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await fetch('http://3.27.254.35:3001/user_details', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: 1, 
+          }),
+        });
+  
+        if (!response.ok) {
+          throw new Error('error' + response.status);
+        }
+  
+        const data = await response.json();
+        setUser(data.user); 
+
+       
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    fetchUserDetails();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+
+      console.log('User details:', user);
+    
+      setScore(user.score);
+      setTicketCount(user.tickets);
+      setLuckySymbolCount(user.lucky_symbol);
+      setScratchCardLeft(user.cards);
+
+    }
+  }, [user]);
 
   useEffect(() => {
     setScratchCardLeft(themeSequence.length);
@@ -289,7 +331,7 @@ const ScratchLuckyGame = () => {
               />
             </View>
           ) : (
-            <LauchScreen onPress={startGame}/>
+            <LauchScreen luckySymbolCount={luckySymbolCount} ticketCount={ticketCount} score={score} scratchCardLeft={scratchCardLeft} onPress={startGame}/>
           )}
         </TouchableOpacity>
       </View>

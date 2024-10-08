@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import LottieView from "react-native-web-lottie";
 
-const ScratchCardLeft = ({ scratchCardsLeft }) => {
+const ScratchCardLeft = ({ scratchCardLeft }) => {
   const [displayedScratchCardsLeft, setDisplayedScratchCardsLeft] =
-    useState(scratchCardsLeft);
+    useState(scratchCardLeft);
   
   const [showLottie, setShowLottie] = useState(true);
 
@@ -12,12 +12,12 @@ const ScratchCardLeft = ({ scratchCardsLeft }) => {
     setShowLottie(false);
 
     const timeoutId = setTimeout(() => {
-      setDisplayedScratchCardsLeft(scratchCardsLeft - 1);
+      setDisplayedScratchCardsLeft(scratchCardLeft - 1);
       setShowLottie(true);
     }, 600);
 
     return () => clearTimeout(timeoutId);
-  }, [scratchCardsLeft]);
+  }, [scratchCardLeft]);
 
   const renderCounter = () => {
     const counters = [];

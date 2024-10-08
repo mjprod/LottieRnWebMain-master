@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Platform, Text } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { Animated, ImageBackground } from "react-native-web";
 import { IconJokerPlus } from "../assets/icons/IconJokerPlus";
 import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
@@ -7,75 +7,34 @@ import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
 import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import Slider from "@react-native-community/slider";
 import GameButton from "./GameButton";
-import RotatingCirclesBackground from "./RotatingCirclesBackground";
 import LottieTicketSlot from "./LottieTicketSlot";
+import ScratchCardLeft from "./ScratchCardLeft";
 
-const LauchScreen = ({ luckySymbolCount,ticketCount,onPress }) => {
-  const backgroundResult = require("./../assets/image/background_game.png");
+const LauchScreen = ({ luckySymbolCount, ticketCount, score, scratchCardLeft, onPress }) => {
+
   const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
   const backgroundTotalTicket = require("./../assets/image/background_total_ticket.png");
 
-  const [progress, setProgress] = useState(12456);
-
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [progress, setProgress] = useState();
 
   const animatedProgress = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Start the animation when the component mounts
+    console.log("Score: ", score);
+    setProgress(score);
+
     Animated.timing(animatedProgress, {
-      toValue: progress,
+      toValue: score,
       duration: 3000, 
       useNativeDriver: false,
     }).start();
-  }, []);
+
+  }, [score]);
 
   // Update the state to reflect the animated value (for Slider to work properly)
   animatedProgress.addListener(({ value }) => {
     setProgress(value); // Sync the animated value with the slider's progress
   });
-
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const now = new Date();
-      const nextMondayNineAM = new Date();
-
-      // Calculate next Monday
-      const dayOfWeek = now.getDay();
-      const daysUntilNextMonday = (8 - dayOfWeek) % 7; // 0 if today is Monday, else days until next Monday
-
-      // Set the time to 9 AM
-      nextMondayNineAM.setDate(now.getDate() + daysUntilNextMonday);
-      nextMondayNineAM.setHours(9, 0, 0, 0); // Set to 9:00:00 AM
-
-      // If today is Monday but it's after 9 AM, set to the next Monday
-      if (dayOfWeek === 1 && now > nextMondayNineAM) {
-        nextMondayNineAM.setDate(nextMondayNineAM.getDate() + 7);
-      }
-
-      const difference = nextMondayNineAM - now;
-
-      const timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-
-      setTimeLeft(timeLeft);
-    };
-
-    // Update the countdown every second
-    const intervalId = setInterval(calculateTimeLeft, 1000);
-
-    // Cleanup the interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []);
 
   return (
         <View style={styles.container}>
@@ -136,7 +95,7 @@ const LauchScreen = ({ luckySymbolCount,ticketCount,onPress }) => {
               />
               <View style={styles.containerTotalTicket}>
                 <Text style={styles.nextTicketText}>Next Ticket</Text>
-                <Text style={styles.ticketProgress}>12456 / 20000</Text>
+                <Text style={styles.ticketProgress}>{score} / 20000</Text>
               </View>
 
               <View style={styles.sliderContainer}>
@@ -155,13 +114,14 @@ const LauchScreen = ({ luckySymbolCount,ticketCount,onPress }) => {
 
               <Text style={styles.addedPoints}>+9999</Text>
             </View>
-
            
             <GameButton
               text="Play Game"
               onPress={() => onPress()}
             />
           </View>
+          <ScratchCardLeft scratchCardLeft={scratchCardLeft} />
+
         </View>
       );
 };
