@@ -1,9 +1,9 @@
 import React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
-import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 import "./index.css";
 import { ThemeProvider } from "./hook/useTheme";
 import { SoundProvider } from "./hook/useSoundPlayer";
+import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 
 const { height, width } = Dimensions.get("window");
 
