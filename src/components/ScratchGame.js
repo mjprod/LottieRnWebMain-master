@@ -478,7 +478,7 @@ const ScratchGame = ({
   }, [fadeAnim, onLoading]);
 
   return (
-    <ImageBackground style={[styles.background_view, { backgroundColor: backgroundScratchCard }]}>
+    <ImageBackground source={backgroundScratchCard} style={[styles.background_view]}>
       <View style={styles.container}>
         <Animated.View style={[styles.gridContainer, { opacity: fadeAnim }]}>
           {iconsArray.map((icon, index) => (

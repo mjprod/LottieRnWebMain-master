@@ -104,7 +104,7 @@ const themes = {
         src: require('./../assets/sounds/egypt_theme.mp3'),
         gameCenterIcon: require('./../assets/image/egypt/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/egypt/background_movie_loop.mp4'),
-        backgroundScratchCard: "#EADAC5",
+        backgroundScratchCard:  require('./../assets/image/egypt/background_scratch_card.jpg'),
         intro_chrome: require('./../assets/video/egypt/intro_chrome.webm'),
         intro_default: require('./../assets/video/egypt/intro.mp4'),
         iconsDefault: [
@@ -141,7 +141,7 @@ const themes = {
         src: require('./../assets/sounds/mythology_theme.mp3'),
         gameCenterIcon: require('./../assets/image/mythology/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/mythology/background_movie_loop.mp4'),
-        backgroundScratchCard: "#BBADC3",
+        backgroundScratchCard:  require('./../assets/image/mythology/background_scratch_card.jpg'),
         intro_chrome: require('./../assets/video/mythology/intro_chrome.webm'),
         intro_default: require('./../assets/video/mythology/intro.mp4'),
         iconsDefault: [
@@ -178,7 +178,7 @@ const themes = {
         src: require('./../assets/sounds/international_theme.mp3'),
         gameCenterIcon: require('./../assets/image/international/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/international/background_movie_loop.mp4'),
-        backgroundScratchCard: "#E0E7F6",
+        backgroundScratchCard: require('./../assets/image/international/background_scratch_card.jpg'),
         intro_chrome: require('./../assets/video/international/intro_chrome.webm'),
         intro_default: require('./../assets/video/international/intro.mp4'),
         iconsDefault: [
@@ -215,7 +215,7 @@ const themes = {
         src: require('./../assets/sounds/cowboy_theme.mp3'),
         gameCenterIcon: require('./../assets/image/cowboy/game_center_icon.png'),
         backgroundLoop: require('./../assets/video/cowboy/background_movie_loop.mp4'),
-        backgroundScratchCard: "#BBA58B",
+        backgroundScratchCard: require('./../assets/image/cowboy/background_scratch_card.jpg'),
         intro_chrome: require('./../assets/video/cowboy/intro_chrome.webm'),
         intro_default: require('./../assets/video/cowboy/intro.mp4'),
         iconsDefault: [
