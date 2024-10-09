@@ -26,14 +26,6 @@ import themes from "../global/themeConfig";
 import { useTheme } from "../hook/useTheme";
 
 
-const lottieAnimations = {
-  lottieScratchieBubbleBlue: require("./../assets/lotties/lottieScratchieBubblePopBlue.json"),
-  lottieScratchieBubbleGreen: require("./../assets/lotties/lottieScratchieBubblePopGreen.json"),
-  lottieScratchieBubblePink: require("./../assets/lotties/lottieScratchieBubblePopPink.json"),
-  lottieScratchieBubbleOrange: require("./../assets/lotties/lottieScratchieBubblePopOrange.json"),
-  lottieScratchieBubblePopError: require("./../assets/lotties/lottieScratchieBubblePopError.json"),
-};
-
 const ScratchGame = ({
   score,
   setScore,
@@ -64,6 +56,17 @@ const ScratchGame = ({
 
   const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
   const { currentTheme , backgroundScratchCard } = useTheme();
+
+  const { lottiePopBlue } = useTheme();
+
+  const lottieAnimations = {
+    lottieScratchieBubbleBlue: lottiePopBlue ,
+    lottieScratchieBubbleGreen: require("./../assets/lotties/lottieScratchieBubblePopGreen.json"),
+    lottieScratchieBubblePink: require("./../assets/lotties/lottieScratchieBubblePopPink.json"),
+    lottieScratchieBubbleOrange: require("./../assets/lotties/lottieScratchieBubblePopOrange.json"),
+    lottieScratchieBubblePopError: require("./../assets/lotties/lottieScratchieBubblePopError.json"),
+  };
+
 
 
   const soundRefs = useRef({

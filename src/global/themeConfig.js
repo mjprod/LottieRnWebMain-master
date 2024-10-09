@@ -107,6 +107,10 @@ const themes = {
         backgroundScratchCard:  require('./../assets/image/egypt/background_scratch_card.jpg'),
         intro_chrome: require('./../assets/video/egypt/intro_chrome.webm'),
         intro_default: require('./../assets/video/egypt/intro.mp4'),
+        lottieScratchieBubblePopBlue: require('./../assets/lotties/lottieScratchieBubblePopBlue.json'),
+        lottieScratchieBubblePopGreen: require('./../assets/lotties/lottieScratchieBubblePopGreen.json'),
+        lottieScratchieBubblePopOrange: require('./../assets/lotties/lottieScratchieBubblePopOrange.json'),
+        lottieScratchieBubblePopPink: require('./../assets/lotties/lottieScratchieBubblePopPink.json'),
         iconsDefault: [
             <IconTypeAnubisdefault key="0" />,
             <IconTypeAnhkdefault key="1" />,
@@ -144,6 +148,10 @@ const themes = {
         backgroundScratchCard:  require('./../assets/image/mythology/background_scratch_card.jpg'),
         intro_chrome: require('./../assets/video/mythology/intro_chrome.webm'),
         intro_default: require('./../assets/video/mythology/intro.mp4'),
+        lottieScratchieBubblePopBlue: require('./../assets/lotties/mythology/lottieScratchieBubblePopBlue.json'),
+        lottieScratchieBubblePopGreen: require('./../assets/lotties/lottieScratchieBubblePopGreen.json'),
+        lottieScratchieBubblePopOrange: require('./../assets/lotties/lottieScratchieBubblePopOrange.json'),
+        lottieScratchieBubblePopPink: require('./../assets/lotties/lottieScratchieBubblePopPink.json'),
         iconsDefault: [
             <IconTypeCentaurdefault key="0" />,
             <IconTypeHarpdefault key="1" />,
@@ -181,6 +189,10 @@ const themes = {
         backgroundScratchCard: require('./../assets/image/international/background_scratch_card.jpg'),
         intro_chrome: require('./../assets/video/international/intro_chrome.webm'),
         intro_default: require('./../assets/video/international/intro.mp4'),
+        lottieScratchieBubblePopBlue: require('./../assets/lotties/lottieScratchieBubblePopBlue.json'),
+        lottieScratchieBubblePopGreen: require('./../assets/lotties/lottieScratchieBubblePopGreen.json'),
+        lottieScratchieBubblePopOrange: require('./../assets/lotties/lottieScratchieBubblePopOrange.json'),
+        lottieScratchieBubblePopPink: require('./../assets/lotties/lottieScratchieBubblePopPink.json'),
         iconsDefault: [
             <IconTypeBreifcasedefault key="0" />,
             <IconTypeCanyondefault key="1" />,
@@ -218,6 +230,10 @@ const themes = {
         backgroundScratchCard: require('./../assets/image/cowboy/background_scratch_card.jpg'),
         intro_chrome: require('./../assets/video/cowboy/intro_chrome.webm'),
         intro_default: require('./../assets/video/cowboy/intro.mp4'),
+        lottieScratchieBubblePopBlue: require('./../assets/lotties/cowboy/lottieScratchieBubblePopBlue.json'),
+        lottieScratchieBubblePopGreen: require('./../assets/lotties/lottieScratchieBubblePopGreen.json'),
+        lottieScratchieBubblePopOrange: require('./../assets/lotties/lottieScratchieBubblePopOrange.json'),
+        lottieScratchieBubblePopPink: require('./../assets/lotties/lottieScratchieBubblePopPink.json'),
         iconsDefault: [
             <IconTypeBandanadefault key="0" />,
             <IconTypeBootdefault key="1" />,
@@ -252,6 +268,10 @@ const themes = {
         src: require('./../assets/sounds/base_beat.mp3'),
         initial_src: require('./../assets/sounds/321_go_countdown.mp3'),
         backgroundScratchCard: "#EADAC5",
+        lottieScratchieBubblePopBlue: require('./../assets/lotties/lottieScratchieBubblePopBlue.json'),
+        lottieScratchieBubblePopGreen: require('./../assets/lotties/lottieScratchieBubblePopGreen.json'),
+        lottieScratchieBubblePopOrange: require('./../assets/lotties/lottieScratchieBubblePopOrange.json'),
+        lottieScratchieBubblePopPink: require('./../assets/lotties/lottieScratchieBubblePopPink.json'),
     }
 
 };
