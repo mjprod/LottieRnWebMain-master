@@ -320,12 +320,16 @@ const ScratchGame = ({
   const checkResults = () => {
     setTimeout(() => {
       if (arrayIcon) {
+        console.log(arrayIcon);
+        console.log(luckySymbolCount);
         if(luckySymbolCount!==3){
           setWinLuckySymbolVideo(true);
         }
       }
       else {
+        console.log("NO LUCKY SYMBOL");
         nextCard();
+
       }
     }, 500);
   };

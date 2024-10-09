@@ -21,6 +21,8 @@ import { useTheme } from "../hook/useTheme.js";
 import { useSound } from "../hook/useSoundPlayer.js";
 import IntroThemeVideo from "../components/IntroThemeVideo.js";
 import LauchScreen from "../components/LauchScreen.js";
+import useApiRequest from "../hook/useApiRequest.js";
+import { ActivityIndicator, Text } from "react-native-web";
 
 // Importando arquivos de mídia
 const backgroundGame = require("./../assets/image/background_game.png");
@@ -62,36 +64,42 @@ const ScratchLuckyGame = () => {
 
   const ref = useRef(null);
 
+  const { loading, error, response, fetchData, updateLuckySymbol } = useApiRequest();
   const [user, setUser] = useState(null);
 
+  // Trigger the API call when the component mounts
   useEffect(() => {
     const fetchUserDetails = async () => {
-      try {
-        const response = await fetch('http://3.27.254.35:3001/user_details', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            id: 1, 
-          }),
-        });
-  
-        if (!response.ok) {
-          throw new Error('error' + response.status);
-        }
-  
-        const data = await response.json();
-        setUser(data.user); 
+      const config = {
+        url: 'http://3.27.254.35:3001/user_details',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: {
+          id: 1,  // Dynamically set user ID here
+        },
+      };
 
-       
-      } catch (error) {
-        console.error('Error:', error);
-      }
+      await fetchData(config);  // Trigger the API call
     };
+
     fetchUserDetails();
   }, []);
 
+  // Update the user state when the response is received
+  useEffect(() => {
+    if (response && response.user) {
+      setUser(response.user);
+    }
+  }, [response]); 
+
+
+  const saveLuckySymbol = async (luckySymbol) => {
+    setLuckySymbolCount(luckySymbol);
+    updateLuckySymbol(1, luckySymbol);
+  };
+    
   useEffect(() => {
     if (user) {
 
@@ -101,7 +109,6 @@ const ScratchLuckyGame = () => {
       setTicketCount(user.tickets);
       setLuckySymbolCount(user.lucky_symbol);
       setScratchCardLeft(user.cards);
-
     }
   }, [user]);
 
@@ -167,20 +174,20 @@ const ScratchLuckyGame = () => {
 
   const addLuckySymbol = () => {
     if (luckySymbolCount > 2) {
-      setLuckySymbolCount(0);
+      saveLuckySymbol(0);
     } else if (luckySymbolCount === 2) {
-      setLuckySymbolCount(luckySymbolCount + 1);
+      saveLuckySymbol(luckySymbolCount + 1);
       setTimeout(() => {
         decrementLuckySymbol(3);
       }, 300);
     } else {
-      setLuckySymbolCount(luckySymbolCount + 1);
+      saveLuckySymbol(luckySymbolCount + 1);
     }
   };
 
   const decrementLuckySymbol = (count, onComplete) => {
     if (count >= 0) {
-      setLuckySymbolCount(count);
+      saveLuckySymbol(count);
       setTimeout(() => {
         if (count === 0) {
           onCountdownComplete();
@@ -337,6 +344,13 @@ const ScratchLuckyGame = () => {
       </View>
     );
   };
+
+if (loading) return (
+  <View style={styles.loaderContainer}>
+    <ActivityIndicator size="large" color="#FFD89E" />
+  </View>
+);
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <View style={styles.fullScreen}>
@@ -500,6 +514,11 @@ const styles = StyleSheet.create({
   transparentOverlay: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0)",
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

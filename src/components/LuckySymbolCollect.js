@@ -8,6 +8,8 @@ import {
   Text,
 } from "react-native";
 import LottieView from "react-native-web-lottie";
+import useApiRequest from "../hook/useApiRequest";
+import { userId } from "../global/Settings";
 //import { useTheme } from "../hook/useTheme";
 
 const colectLuckyCoins = require("./../assets/image/lucky_coin.png");
@@ -15,15 +17,21 @@ const lottieStars = require("./../assets/lotties/lottieStars.json");
 const lottieSymbolsAnim = require("./../assets/lotties/3LuckySymbolsPart01.json");
 const lottieBonusCard = require("./../assets/lotties/lottieBonusCard.json");
 
-const LuckySymbolCollect = ({ nextCard,setLuckySymbolCount,setCollectLuckySymbolVideo}) => {
- //const { goToNextTheme } = useTheme();
+const LuckySymbolCollect = ({
+  nextCard,
+  setLuckySymbolCount,
+  setCollectLuckySymbolVideo,
+}) => {
+  //const { goToNextTheme } = useTheme();
 
   const [clicks, setClicks] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [initialAnimationComplete, setInitialAnimationComplete] =
-    useState(false);
+  const [initialAnimationComplete, setInitialAnimationComplete] = useState(
+    false
+  );
   const [showBonusCard, setShowBonusCard] = useState(false);
- // const [collectLuckySymbol, setCollectShowLuckySymbol] = useState(true);
+
+  const { updateLuckySymbol } = useApiRequest();
 
   const bounceAnim = useRef(new Animated.Value(1)).current;
   const lottieAnimRef = useRef(null);
@@ -74,11 +82,13 @@ const LuckySymbolCollect = ({ nextCard,setLuckySymbolCount,setCollectLuckySymbol
 
   const handleBonusCardAnimationComplete = () => {
     setTimeout(() => {
-        setCollectLuckySymbolVideo(false);
-        setTimeout(() => {
+      setCollectLuckySymbolVideo(false);
+      setTimeout(() => {
         setLuckySymbolCount(0);
-          nextCard();
-        }, 1200);
+        
+        updateLuckySymbol(userId, 0);
+        nextCard();
+      }, 1200);
     }, 1000);
   };
 
@@ -105,34 +115,33 @@ const LuckySymbolCollect = ({ nextCard,setLuckySymbolCount,setCollectLuckySymbol
       )}
       {initialAnimationComplete && !showBonusCard && (
         <View>
-           <TouchableWithoutFeedback onPress={handlePress}>
-          <Animated.View
-            style={[
-              styles.animatedContainer,
-              { transform: [{ scale: bounceAnim }] },
-            ]}
-          >
-            <View style={styles.overlay}>
-              <Animated.Image
-                source={colectLuckyCoins}
-                style={styles.collectCoin}
-              />
+          <TouchableWithoutFeedback onPress={handlePress}>
+            <Animated.View
+              style={[
+                styles.animatedContainer,
+                { transform: [{ scale: bounceAnim }] },
+              ]}
+            >
+              <View style={styles.overlay}>
+                <Animated.Image
+                  source={colectLuckyCoins}
+                  style={styles.collectCoin}
+                />
 
-              <LottieView
-                key={`lottie-${clicks}`}
-                ref={lottieAnimRef}
-                style={styles.lottieAnimation}
-                source={lottieStars}
-                autoPlay={false}
-                loop={false}
-                speed={2}
-              />
-            </View>
-          </Animated.View>
-        </TouchableWithoutFeedback>
-        <Text style={styles.tapTextFormat}>TAP!</Text>
+                <LottieView
+                  key={`lottie-${clicks}`}
+                  ref={lottieAnimRef}
+                  style={styles.lottieAnimation}
+                  source={lottieStars}
+                  autoPlay={false}
+                  loop={false}
+                  speed={2}
+                />
+              </View>
+            </Animated.View>
+          </TouchableWithoutFeedback>
+          <Text style={styles.tapTextFormat}>TAP!</Text>
         </View>
-       
       )}
       {showBonusCard && (
         <LottieView
