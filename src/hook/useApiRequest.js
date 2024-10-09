@@ -38,18 +38,18 @@ const useApiRequest = () => {
     // Function specifically for updating lucky symbol
     const updateLuckySymbol = async (id, lucky_symbol) => {
         const config = {
-          url: 'http://3.27.254.35:3001/updateLuckySymbol', // Replace with your API endpoint
+          url: 'http://3.27.254.35:3001/updateLuckySymbol',
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: {
             id,
-            lucky_symbol, // Pass the updated lucky symbol value
+            lucky_symbol,
           },
         };
     
-        await fetchData(config); // Use the generic fetchData function to make the API call
+        await fetchData(config);
       };
 
   return { loading, error, response, fetchData , updateLuckySymbol};
