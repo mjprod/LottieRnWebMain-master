@@ -55,9 +55,7 @@ const ScratchGame = ({
   const [arrayIcon, setArrayIcon] = useState();
 
   const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
-  const { currentTheme , backgroundScratchCard } = useTheme();
-
-  const { lottiePopBlue } = useTheme();
+  const { currentTheme , backgroundScratchCard , lottiePopBlue } = useTheme();
 
   const lottieAnimations = {
     lottieScratchieBubbleBlue: lottiePopBlue ,
@@ -66,24 +64,23 @@ const ScratchGame = ({
     lottieScratchieBubbleOrange: require("./../assets/lotties/lottieScratchieBubblePopOrange.json"),
     lottieScratchieBubblePopError: require("./../assets/lotties/lottieScratchieBubblePopError.json"),
   };
-
-
-
+  
   const soundRefs = useRef({
-    sound1: new Howl({ src: [require("./../assets/audio/1_C.mp3")], preload: true }),
-    sound2: new Howl({ src: [require("./../assets/audio/2_D.mp3")], preload: true }),
-    sound3: new Howl({ src: [require("./../assets/audio/3_E.mp3")], preload: true }),
-    sound4: new Howl({ src: [require("./../assets/audio/4_E.mp3")], preload: true }),
-    sound5: new Howl({ src: [require("./../assets/audio/5_F_.mp3")], preload: true }),
-    sound6: new Howl({ src: [require("./../assets/audio/6_G_.mp3")], preload: true }),
-    sound7: new Howl({ src: [require("./../assets/audio/7_G_.mp3")], preload: true }),
-    sound8: new Howl({ src: [require("./../assets/audio/8_A_.mp3")], preload: true }),
-    sound9: new Howl({ src: [require("./../assets/audio/9_C_plus.mp3")], preload: true }),
-    sound10: new Howl({ src: [require("./../assets/audio/10_C_plus.mp3")], preload: true }),
-    sound11: new Howl({ src: [require("./../assets/audio/11_D_plus.mp3")], preload: true }),
-    sound12: new Howl({ src: [require("./../assets/audio/12_E_plus.mp3")], preload: true }),
+    sound1: new Howl({ src: [require(`./../assets/audio/${currentTheme}/1_C.mp3`)], preload: true }),
+    sound2: new Howl({ src: [require(`./../assets/audio/${currentTheme}/2_D.mp3`)], preload: true }),
+    sound3: new Howl({ src: [require(`./../assets/audio/${currentTheme}/3_E.mp3`)], preload: true }),
+    sound4: new Howl({ src: [require(`./../assets/audio/${currentTheme}/4_E.mp3`)], preload: true }),
+    sound5: new Howl({ src: [require(`./../assets/audio/${currentTheme}/5_F_.mp3`)], preload: true }),
+    sound6: new Howl({ src: [require(`./../assets/audio/${currentTheme}/6_G_.mp3`)], preload: true }),
+    sound7: new Howl({ src: [require(`./../assets/audio/${currentTheme}/7_G_.mp3`)], preload: true }),
+    sound8: new Howl({ src: [require(`./../assets/audio/${currentTheme}/8_A_.mp3`)], preload: true }),
+    sound9: new Howl({ src: [require(`./../assets/audio/${currentTheme}/9_C_plus.mp3`)], preload: true }),
+    sound10: new Howl({ src: [require(`./../assets/audio/${currentTheme}/10_C_plus.mp3`)], preload: true }),
+    sound11: new Howl({ src: [require(`./../assets/audio/${currentTheme}/11_D_plus.mp3`)], preload: true }),
+    sound12: new Howl({ src: [require(`./../assets/audio/${currentTheme}/12_E_plus.mp3`)], preload: true }),
     error: new Howl({ src: [require("./../assets/audio/sfx_autopopup.wav")], preload: true }),
   });
+  
 
   useEffect(() => {
     // Clean up sounds when component unmounts
@@ -154,53 +151,8 @@ const ScratchGame = ({
       (winLuckySymbol === false || index !== 12) // Lucky symbol can't be repeated
     );
   };
-  /*
-  const generateIconsArray = (winLuckySymbol) => {
-    let iconCounts = Array(totalIcons).fill(0);
-    let resultArray = new Array(totalPositions).fill(null);
-    let iconWithMaxCount = null;
-    let columnIconMap = {};
-
+ 
   
-    let luckyPosition = -1;
-    // Add lucky symbol
-    if (winLuckySymbol) {
-      luckyPosition = Math.floor(Math.random() * totalPositions);
-      resultArray[luckyPosition] = 12;
-      iconCounts[12] = 1;
-    }
-  
-    for (let i = 0; i < totalPositions; i++) {
-      if (resultArray[i] !== null) continue;
-  
-      let columnIndex = i % columns;
-      if (!columnIconMap[columnIndex]) {
-        columnIconMap[columnIndex] = new Set();
-      }
-
-      let availableIcons = iconCounts
-      .map((count, index) => (isValidIcon(count, index, columnIndex, iconWithMaxCount, winLuckySymbol,columnIconMap) ? index : null))
-      .filter((index) => index !== null);
-  
-      if (availableIcons.length === 0) {
-        break;
-      }
-  
-      let selectedIcon =
-        availableIcons[Math.floor(Math.random() * availableIcons.length)];
-  
-      resultArray[i] = selectedIcon;
-      iconCounts[selectedIcon]++;
-      columnIconMap[columnIndex].add(selectedIcon);
-  
-      if (iconCounts[selectedIcon] === maxCountWin) {
-        iconWithMaxCount = selectedIcon;
-      }
-    }
-  
-    return resultArray;
-  };
-  */
   const generateIconsArray = (winLuckySymbol) => {
     let iconCounts = Array(totalIcons).fill(0);
     let resultArray = new Array(totalPositions).fill(null);

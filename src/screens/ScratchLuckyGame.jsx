@@ -23,6 +23,7 @@ import IntroThemeVideo from "../components/IntroThemeVideo.js";
 import LauchScreen from "../components/LauchScreen.js";
 import useApiRequest from "../hook/useApiRequest.js";
 import { ActivityIndicator, Text } from "react-native-web";
+import { numberOfCards } from "../global/Settings.js";
 
 // Importando arquivos de mídia
 const backgroundGame = require("./../assets/image/background_game.png");
@@ -59,7 +60,7 @@ const ScratchLuckyGame = () => {
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
-  const { backgroundLoop, goToNextTheme, themeSequence } = useTheme();
+  const { backgroundLoop, goToNextTheme, themeSequence, updateThemeSequence } = useTheme();
   const { setStartPlay, switchTrack } = useSound();
 
   const ref = useRef(null);
@@ -108,7 +109,9 @@ const ScratchLuckyGame = () => {
       setScore(user.score);
       setTicketCount(user.tickets);
       setLuckySymbolCount(user.lucky_symbol);
-      setScratchCardLeft(user.cards);
+      setScratchCardLeft(numberOfCards);
+
+      //updateThemeSequence(user.cards);
     }
   }, [user]);
 

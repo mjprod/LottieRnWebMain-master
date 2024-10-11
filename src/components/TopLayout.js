@@ -10,6 +10,8 @@ import {
 import LottieView from "react-native-web-lottie";
 import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import { useTheme } from "../hook/useTheme";
+import NumberTicker from "./NumberTicker";
+import { Howl } from "howler";
 
 const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
 const backgroundTopLayoutRed = require("./../assets/image/background_top_layout_red.png");
@@ -34,52 +36,67 @@ const TopLayout = ({
   luckySymbolCount,
   clickCount,
 }) => {
-  const bounceAnim = useRef(new Animated.Value(1)).current;
-  const fadeAnim = useRef(new Animated.Value(1)).current;
+  
   const scaleAnim = useRef(new Animated.Value(1.8)).current;
-
   const [countdownTimer, setCountdownTimer] = useState(0);
-
-  const { gameCenterIcon } = useTheme();
+  const { currentTheme , gameCenterIcon  } = useTheme();
 
   // Animation control
-  const [animationIndex, setAnimationIndex] = useState(0); // Start with the first animation
-  const [playAnimation, setPlayAnimation] = useState(false); // Controls whether to play the animation
+  const [animationIndex, setAnimationIndex] = useState(0); 
+  const [playAnimation, setPlayAnimation] = useState(false);
   const animations = [lottieCombo1, lottieCombo2, lottieCombo3];
 
   const lottieRef = useRef(null);
 
+  const soundRefs = useRef({
+    x2: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x2_G_.mp3`)], preload: true }),
+    x3: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x3_C_plus.mp3`)], preload: true }),
+    x4: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x4_E_plus.mp3`)], preload: true }),
+  });
+
   useEffect(() => {
-    //console.log("clickCount", clickCount);
-    // Animation control logic
+    // Clean up sounds when component unmounts
+    return () => {
+      Object.values(soundRefs.current).forEach((sound) => {
+        sound.stop();
+        sound.unload();
+      });
+    };
+  }, []);
+
+  const playSound = (soundKey) => {
+    if (soundRefs.current[soundKey]) {
+      soundRefs.current[soundKey].play();
+    }
+  };
+
+  useEffect(() => {
     switch (clickCount) {
       case 6:
         setAnimationIndex(0);
         setPlayAnimation(true);
-        //console.log("play animation x2");
+        playSound("x2");
         break;
       case 9:
         setAnimationIndex(1);
         setPlayAnimation(true);
-        //console.log("play animation x3");
+        playSound("x3");
         break;
       case 12:
         setAnimationIndex(2);
         setPlayAnimation(true);
-        //console.log("play animation x4");
+        playSound("x4");
         break;
       default:
         return;
     }
 
-    // Play the animation manually if the LottieView is available
     if (lottieRef.current) {
       lottieRef.current.reset();
       lottieRef.current.play();
     }
   }, [clickCount]);
 
-  // Countdown control logic
   useEffect(() => {
     let interval;
     if (scratchStarted) {
@@ -87,20 +104,20 @@ const TopLayout = ({
       interval = setInterval(() => {
         setCountdownTimer((prevTimer) => {
           const newTime = prevTimer - 1;
-
-          setTimerGame(newTime <= 0 ? 0 : newTime);
-
-          if (newTime <= 0) {
+          const nextTime = newTime <= 1 ? 1 : newTime;
+  
+          setTimerGame(nextTime);
+  
+          if (nextTime === 1) {
             clearInterval(interval);
-            return 0;
           }
-          return newTime;
+          return nextTime;
         });
       }, 1000);
     } else {
       setCountdownTimer(0);
     }
-
+  
     return () => clearInterval(interval);
   }, [scratchStarted, setTimerGame]);
 
@@ -195,8 +212,8 @@ const TopLayout = ({
         {CentralImageWithLottie()}
       </ImageBackground>
       <View style={styles.containerBottom}>
-        <View style={styles.textWrapper}>
-          <Animated.Text
+        <View style={[styles.textWrapper,styles.textBottomLeft]}>
+          {/*<Animated.Text
             style={[
               styles.textBottomLeft,
               { transform: [{ translateX: bounceAnim }] },
@@ -204,7 +221,15 @@ const TopLayout = ({
             ]}
           >
             {score > 0 ? `+${score}` : "0"}
-          </Animated.Text>
+
+            parseInt(score, 10)
+
+          </Animated.Text>*/}
+
+<NumberTicker number={score} duration={500} textSize={20} />
+
+           {/*<NumberTicker number={parseInt(score, 10) > 0 ? parseInt(score, 10) : 0} duration={3000} textSize={10} />*/}
+            
         </View>
 
         <View
