@@ -25,7 +25,6 @@ import {
 import themes from "../global/themeConfig";
 import { useTheme } from "../hook/useTheme";
 
-
 const ScratchGame = ({
   score,
   setScore,
@@ -40,7 +39,6 @@ const ScratchGame = ({
   luckySymbolCount,
   clickCount,
   setClickCount,
-  
 }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
@@ -55,51 +53,110 @@ const ScratchGame = ({
   const [arrayIcon, setArrayIcon] = useState();
 
   const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
-  const { currentTheme , backgroundScratchCard , lottiePopBlue } = useTheme();
+  const {
+    currentTheme,
+    backgroundScratchCard,
+    lottiePopBlue,
+    lottiePopGreen,
+    lottiePopOrange,
+    lottiePopPink,
+  } = useTheme();
 
   const lottieAnimations = {
-    lottieScratchieBubbleBlue: lottiePopBlue ,
-    lottieScratchieBubbleGreen: require("./../assets/lotties/lottieScratchieBubblePopGreen.json"),
-    lottieScratchieBubblePink: require("./../assets/lotties/lottieScratchieBubblePopPink.json"),
-    lottieScratchieBubbleOrange: require("./../assets/lotties/lottieScratchieBubblePopOrange.json"),
+    lottieScratchieBubbleBlue: lottiePopBlue,
+    lottieScratchieBubbleGreen: lottiePopGreen,
+    lottieScratchieBubblePink: lottiePopPink,
+    lottieScratchieBubbleOrange: lottiePopOrange,
     lottieScratchieBubblePopError: require("./../assets/lotties/lottieScratchieBubblePopError.json"),
   };
-  
-  const soundRefs = useRef({
-    sound1: new Howl({ src: [require(`./../assets/audio/${currentTheme}/1_C.mp3`)], preload: true }),
-    sound2: new Howl({ src: [require(`./../assets/audio/${currentTheme}/2_D.mp3`)], preload: true }),
-    sound3: new Howl({ src: [require(`./../assets/audio/${currentTheme}/3_E.mp3`)], preload: true }),
-    sound4: new Howl({ src: [require(`./../assets/audio/${currentTheme}/4_E.mp3`)], preload: true }),
-    sound5: new Howl({ src: [require(`./../assets/audio/${currentTheme}/5_F_.mp3`)], preload: true }),
-    sound6: new Howl({ src: [require(`./../assets/audio/${currentTheme}/6_G_.mp3`)], preload: true }),
-    sound7: new Howl({ src: [require(`./../assets/audio/${currentTheme}/7_G_.mp3`)], preload: true }),
-    sound8: new Howl({ src: [require(`./../assets/audio/${currentTheme}/8_A_.mp3`)], preload: true }),
-    sound9: new Howl({ src: [require(`./../assets/audio/${currentTheme}/9_C_plus.mp3`)], preload: true }),
-    sound10: new Howl({ src: [require(`./../assets/audio/${currentTheme}/10_C_plus.mp3`)], preload: true }),
-    sound11: new Howl({ src: [require(`./../assets/audio/${currentTheme}/11_D_plus.mp3`)], preload: true }),
-    sound12: new Howl({ src: [require(`./../assets/audio/${currentTheme}/12_E_plus.mp3`)], preload: true }),
-    error: new Howl({ src: [require("./../assets/audio/sfx_autopopup.wav")], preload: true }),
-  });
-  
+
+  const soundRefs = useRef({});
 
   useEffect(() => {
-    // Clean up sounds when component unmounts
+    soundRefs.current = {
+      sound1: new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/1_C.mp3`)],
+        preload: false,
+      }),
+      sound2: new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/2_D.mp3`)],
+        preload: false,
+      }),
+      sound3: new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/3_E.mp3`)],
+        preload: false,
+      }),
+      sound4: new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/4_E.mp3`)],
+        preload: false,
+      }),
+      sound5: new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/5_F_.mp3`)],
+        preload: false,
+      }),
+      sound6: new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/6_G_.mp3`)],
+        preload: false,
+      }),
+      sound7: new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/7_G_.mp3`)],
+        preload: false,
+      }),
+      sound8: new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/8_A_.mp3`)],
+        preload: false,
+      }),
+      sound9: new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/9_C_plus.mp3`)],
+        preload: false,
+      }),
+      sound10: new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/10_C_plus.mp3`)],
+        preload: false,
+      }),
+      sound11: new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/11_D_plus.mp3`)],
+        preload: false,
+      }),
+      sound12: new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/12_E_plus.mp3`)],
+        preload: false,
+      }),
+      error: new Howl({
+        src: [require("./../assets/audio/sfx_autopopup.wav")],
+        preload: true,
+      }),
+    };
+
+    // Clean up the old sounds when the theme changes
     return () => {
       Object.values(soundRefs.current).forEach((sound) => {
         sound.stop();
-        sound.unload();
+        sound.unload(); // Unload sounds to prevent memory leaks
       });
     };
-  }, []);
+  }, [currentTheme]); 
+
+
 
   const playSound = (soundKey) => {
-    if (soundRefs.current[soundKey]) {
-      soundRefs.current[soundKey].play();
+    const sound = soundRefs.current[soundKey];
+  
+    if (sound) {
+      if (!sound._loaded) {
+        sound.once('load', () => {
+          sound.play();
+        });
+        sound.load();
+      } else {
+        sound.play();
+      }
+    } else {
+      console.error(`Sound ${soundKey} not found`);
     }
   };
 
-
-  useEffect(() => {    
+  useEffect(() => {
     if (themes[currentTheme] && themes[currentTheme].iconsDefault) {
       const iconComponentsDefaultNew = themes[currentTheme].iconsDefault;
 
@@ -108,12 +165,11 @@ const ScratchGame = ({
       );
       setIconComponentsDefault(updatedIcons);
     }
-  }, [scratched, currentTheme]); 
-
+  }, [scratched, currentTheme]);
 
   const generateRandomLuckySymbol = () => {
     const result = Math.random() < generateRandomLuckySymbolPercentage;
-    //console.log("Generated result:", result); 
+    //console.log("Generated result:", result);
     return result;
   };
 
@@ -123,24 +179,31 @@ const ScratchGame = ({
     setClickCount(0);
     setLastClickedIcon(null);
     setSoundShouldPlay(1);
-    
+
     // Generate lucky symbol once and use it
     const icons = generateRandomLuckySymbol();
-  
+
     setArrayIcon(icons); // Set the arrayIcon with the result of generateRandomLuckySymbol
     setIsLuckySymbolTrue(icons); // Set if the lucky symbol is true
-  
+
     const generatedArray = generateIconsArray(icons); // Generate icons array based on the result of generateRandomLuckySymbol
     const booblePositions = findBoobleColor(generatedArray); // Find the bubble colors for the array
     setArrayBobble(booblePositions); // Set the bubble positions
-    
+
     setIconsArray(generatedArray); // Set the icons array
     const winners = checkWinCondition(generatedArray); // Check for win condition
     setWinningIcons(winners); // Set the winning icons
     setIsWinner(winners.length > 0); // Determine if it's a winner
   }, [setIsWinner, reset, setIsLuckySymbolTrue]);
 
-  const isValidIcon = (count, index, columnIndex, iconWithMaxCount, winLuckySymbol,columnIconMap) => {
+  const isValidIcon = (
+    count,
+    index,
+    columnIndex,
+    iconWithMaxCount,
+    winLuckySymbol,
+    columnIconMap
+  ) => {
     return (
       count < maxCountWin &&
       count < maxRepeatedIcons &&
@@ -151,8 +214,7 @@ const ScratchGame = ({
       (winLuckySymbol === false || index !== 12) // Lucky symbol can't be repeated
     );
   };
- 
-  
+
   const generateIconsArray = (winLuckySymbol) => {
     let iconCounts = Array(totalIcons).fill(0);
     let resultArray = new Array(totalPositions).fill(null);
@@ -160,100 +222,112 @@ const ScratchGame = ({
     let columnIconMap = {};
     let maxCombinations = 4;
     let combinationCount = 0;
-  
+
     let luckyPosition = -1;
-   
+
     if (winLuckySymbol) {
       luckyPosition = Math.floor(Math.random() * totalPositions);
       resultArray[luckyPosition] = 12;
       iconCounts[12] = 1;
     }
-  
+
     for (let i = 0; i < totalPositions; i++) {
       if (resultArray[i] !== null) continue;
-  
+
       let columnIndex = i % columns;
       if (!columnIconMap[columnIndex]) {
         columnIconMap[columnIndex] = new Set();
       }
-  
+
       let availableIcons = iconCounts
         .map((count, index) =>
-          isValidIcon(count, index, columnIndex, iconWithMaxCount, winLuckySymbol, columnIconMap) ? index : null
+          isValidIcon(
+            count,
+            index,
+            columnIndex,
+            iconWithMaxCount,
+            winLuckySymbol,
+            columnIconMap
+          )
+            ? index
+            : null
         )
         .filter((index) => index !== null);
-  
+
       if (availableIcons.length === 0) {
         break;
       }
-  
+
       let selectedIcon;
-  
+
       if (combinationCount < maxCombinations) {
-        selectedIcon = availableIcons[Math.floor(Math.random() * availableIcons.length)];
-  
+        selectedIcon =
+          availableIcons[Math.floor(Math.random() * availableIcons.length)];
+
         if (iconCounts[selectedIcon] === 2) {
           combinationCount++;
         }
       } else {
-        let filteredIcons = availableIcons.filter(icon => iconCounts[icon] < 2);
-  
+        let filteredIcons = availableIcons.filter(
+          (icon) => iconCounts[icon] < 2
+        );
+
         if (filteredIcons.length > 0) {
-          selectedIcon = filteredIcons[Math.floor(Math.random() * filteredIcons.length)];
+          selectedIcon =
+            filteredIcons[Math.floor(Math.random() * filteredIcons.length)];
         } else {
-          selectedIcon = availableIcons[Math.floor(Math.random() * availableIcons.length)];
+          selectedIcon =
+            availableIcons[Math.floor(Math.random() * availableIcons.length)];
         }
       }
-  
+
       resultArray[i] = selectedIcon;
       iconCounts[selectedIcon]++;
       columnIconMap[columnIndex].add(selectedIcon);
-  
+
       if (iconCounts[selectedIcon] === maxCountWin) {
         iconWithMaxCount = selectedIcon;
       }
     }
-  
+
     return resultArray;
   };
-  
 
   const findBoobleColor = (arr) => {
-
     const cores = [
-    { cor: 'Blue', animacao: 'lottieScratchieBubbleBlue' },
-    { cor: 'Green', animacao: 'lottieScratchieBubbleGreen' },
-    { cor: 'Pink', animacao: 'lottieScratchieBubblePink' },
-    { cor: 'Orange', animacao: 'lottieScratchieBubbleOrange' },
-  ];
-  
-  let contador = {};
-  let corMap = {}; 
-  let animacaoMap = {};
-  let corIndex = 0;
+      { cor: "Blue", animacao: "lottieScratchieBubbleBlue" },
+      { cor: "Green", animacao: "lottieScratchieBubbleGreen" },
+      { cor: "Pink", animacao: "lottieScratchieBubblePink" },
+      { cor: "Orange", animacao: "lottieScratchieBubbleOrange" },
+    ];
 
-  arr.forEach(num => {
-    if (contador[num]) {
-      contador[num]++;
-    } else {
-      contador[num] = 1;
-    }
-  });
+    let contador = {};
+    let corMap = {};
+    let animacaoMap = {};
+    let corIndex = 0;
 
-  Object.keys(contador).forEach(num => {
-    if (contador[num] === 3) {
-      corMap[num] = cores[corIndex].cor;           
-      animacaoMap[num] = cores[corIndex].animacao;
-      corIndex = (corIndex + 1) % cores.length;
-    }
-  });
+    arr.forEach((num) => {
+      if (contador[num]) {
+        contador[num]++;
+      } else {
+        contador[num] = 1;
+      }
+    });
 
-  const arrayAnimacoes = arr.map(num => {
-    return animacaoMap[num] || null;
-  });
+    Object.keys(contador).forEach((num) => {
+      if (contador[num] === 3) {
+        corMap[num] = cores[corIndex].cor;
+        animacaoMap[num] = cores[corIndex].animacao;
+        corIndex = (corIndex + 1) % cores.length;
+      }
+    });
 
-  return arrayAnimacoes;
-};
+    const arrayAnimacoes = arr.map((num) => {
+      return animacaoMap[num] || null;
+    });
+
+    return arrayAnimacoes;
+  };
 
   const checkWinCondition = (array) => {
     const iconCounts = Array(totalIcons).fill(0);
@@ -277,14 +351,12 @@ const ScratchGame = ({
       if (arrayIcon) {
         console.log(arrayIcon);
         console.log(luckySymbolCount);
-        if(luckySymbolCount!==3){
+        if (luckySymbolCount !== 3) {
           setWinLuckySymbolVideo(true);
         }
-      }
-      else {
+      } else {
         console.log("NO LUCKY SYMBOL");
         nextCard();
-
       }
     }, 500);
   };
@@ -302,16 +374,12 @@ const ScratchGame = ({
   }, [clickedIcons, iconsArray]);
 
   useEffect(() => {
-    if (
-      scratched && winningIcons.length === 0
-    ) {
+    if (scratched && winningIcons.length === 0) {
       checkResults();
     }
   }, [scratched]);
 
-  useEffect(() => {
-   
-  }, [clickedCount]);
+  useEffect(() => {}, [clickedCount]);
 
   const handleIconClick = (index) => {
     const icon = iconsArray[index];
@@ -328,7 +396,7 @@ const ScratchGame = ({
 
         setClickedIcons([...clickedIcons, index]);
         setLastClickedIcon(icon);
-        
+
         //Add bobble error
         const newArrayBobble = [...arrayBobble];
         newArrayBobble[index] = "lottieScratchieBubblePopError";
@@ -371,7 +439,7 @@ const ScratchGame = ({
           updateSounds();
           break;
         case 6:
-          playSound("sound6");
+          //playSound("sound6");
           updateSounds();
           break;
         case 7:
@@ -383,7 +451,7 @@ const ScratchGame = ({
           updateSounds();
           break;
         case 9:
-          playSound("sound9");
+          //playSound("sound9");
           updateSounds();
           break;
         case 10:
@@ -395,12 +463,11 @@ const ScratchGame = ({
           updateSounds();
           break;
         case 12:
-          playSound("sound12");
+          //playSound("sound12");
           updateSounds();
-          setTimeout (() => {
+          setTimeout(() => {
             setClickCount(0);
-          }
-          , 1000);
+          }, 1000);
           setSoundShouldPlay(1);
           break;
         default:
@@ -427,13 +494,16 @@ const ScratchGame = ({
         toValue: 1,
         duration: 2400,
         easing: Easing.inOut(Easing.ease),
-        useNativeDriver: Platform.OS !== 'web',
+        useNativeDriver: Platform.OS !== "web",
       }).start();
     }
   }, [fadeAnim, onLoading]);
 
   return (
-    <ImageBackground source={backgroundScratchCard} style={[styles.background_view]}>
+    <ImageBackground
+      source={backgroundScratchCard}
+      style={[styles.background_view]}
+    >
       <View style={styles.container}>
         <Animated.View style={[styles.gridContainer, { opacity: fadeAnim }]}>
           {iconsArray.map((icon, index) => (

@@ -8,8 +8,15 @@
     "development": {
       "plugins": [
         "transform-react-jsx-source",
-        "react-native-reanimated/plugin"
+        "react-native-reanimated/plugin",
+        "no-minify"
       ]
     }
-  }
+  },
+  "overrides": [
+    {
+      "include": ["./node_modules/react-native-svg-web"],
+      "presets": ["@babel/preset-env"]
+    }
+  ]
 }

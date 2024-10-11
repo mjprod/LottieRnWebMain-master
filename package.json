@@ -20,6 +20,8 @@
     "react-native-canvas": "^0.1.40",
     "react-native-cli": "^2.0.1",
     "react-native-gesture-handler": "^2.18.1",
+    "react-native-svg": "^15.7.1",
+    "react-native-svg-transformer": "^1.5.0",
     "react-native-svg-web": "^1.0.9",
     "react-native-web": "^0.19.12",
     "react-native-web-lottie": "^1.4.4",
@@ -53,6 +55,7 @@
     "jest-react-native": "^18.0.0",
     "react-art": "16.5.1",
     "react-scripts": "1.1.4",
+    "react-scripts-plugin-no-minify": "^0.4.0",
     "react-test-renderer": "16.5.1",
     "terser": "^5.34.1",
     "uglifyify": "^5.0.2"

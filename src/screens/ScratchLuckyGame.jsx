@@ -85,7 +85,12 @@ const ScratchLuckyGame = () => {
       await fetchData(config);  // Trigger the API call
     };
 
-    fetchUserDetails();
+    //fetchUserDetails();
+
+    setScore(1200);
+    setTicketCount(1);
+    setLuckySymbolCount(1);
+    setScratchCardLeft(numberOfCards);
   }, []);
 
   // Update the user state when the response is received

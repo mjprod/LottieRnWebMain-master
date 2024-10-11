@@ -22,30 +22,35 @@ const MusicPlayer = ({ startTrackIndex = 0, onSwitchTrack, onFadeOutCurrentTrack
       src: [themes['global'].src], 
       preload: true,
       loop: true,
+      volume: 0.1,
       onend: () => console.log('Base beat ended'),
     }),
     cowboy_theme: new Howl({ 
       src: [themes['egypt'].src], 
       preload: true,
       loop: true,
+      volume: 0.1,
       onend: () => console.log('Cowboy theme ended'),
     }),
     international_theme: new Howl({ 
       src: [themes['mythology'].src], 
       preload: true, 
       loop: true,
+      volume: 0.1,
       onend: () => console.log('International theme ended'),
     }),
     mythology_theme: new Howl({ 
       src: [themes['international'].src], 
       preload: true,
       loop: true,
+      volume: 0.1,
       onend: () => console.log('Mythology theme ended'),
     }),
     egypt_theme: new Howl({ 
       src: [themes['cowboy'].src], 
       preload: true,
       loop: true,
+      volume: 0.1,
       onend: () => console.log('Egypt theme ended'),
     }),
   });
@@ -59,6 +64,7 @@ const MusicPlayer = ({ startTrackIndex = 0, onSwitchTrack, onFadeOutCurrentTrack
 
     if (track) {
       track.play();
+      trackKey.volume(value);
       setIsPlaying(true);
       setCurrentTrack(track); // Set the new track as the current track
     }
