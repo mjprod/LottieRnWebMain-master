@@ -439,7 +439,7 @@ const ScratchGame = ({
           updateSounds();
           break;
         case 6:
-          //playSound("sound6");
+          playSound("sound6");
           updateSounds();
           break;
         case 7:
@@ -451,7 +451,7 @@ const ScratchGame = ({
           updateSounds();
           break;
         case 9:
-          //playSound("sound9");
+          playSound("sound9");
           updateSounds();
           break;
         case 10:
@@ -463,7 +463,7 @@ const ScratchGame = ({
           updateSounds();
           break;
         case 12:
-          //playSound("sound12");
+          playSound("sound12");
           updateSounds();
           setTimeout(() => {
             setClickCount(0);

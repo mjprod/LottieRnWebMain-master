@@ -49,9 +49,12 @@ const TopLayout = ({
   const lottieRef = useRef(null);
 
   const soundRefs = useRef({
-    x2: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x2_G_.mp3`)], preload: true }),
-    x3: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x3_C_plus.mp3`)], preload: true }),
-    x4: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x4_E_plus.mp3`)], preload: true }),
+    //x2: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x2_G_.mp3`)], preload: true }),
+    //x3: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x3_C_plus.mp3`)], preload: true }),
+    //x4: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x4_E_plus.mp3`)], preload: true }),
+    x4: new Howl({ src: [require(`./../assets/sounds/combo.mp3`)], preload: true }),
+    x3: new Howl({ src: [require(`./../assets/sounds/nice_combo.mp3`)], preload: true }),
+    x2: new Howl({ src: [require(`./../assets/sounds/ultra_combo.mp3`)], preload: true }),
   });
 
   useEffect(() => {
