@@ -39,7 +39,7 @@ const TopLayout = ({
   
   const scaleAnim = useRef(new Animated.Value(1.8)).current;
   const [countdownTimer, setCountdownTimer] = useState(0);
-  const { currentTheme , gameCenterIcon  } = useTheme();
+  const { gameCenterIcon } = useTheme();
 
   // Animation control
   const [animationIndex, setAnimationIndex] = useState(0); 

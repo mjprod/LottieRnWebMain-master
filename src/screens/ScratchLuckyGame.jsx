@@ -60,7 +60,7 @@ const ScratchLuckyGame = () => {
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
-  const { backgroundLoop, goToNextTheme, themeSequence, updateThemeSequence } = useTheme();
+  const { backgroundLoop, goToNextTheme, themeSequence,nextTheme,currentTheme} = useTheme();
   const { setStartPlay, switchTrack } = useSound();
 
   const ref = useRef(null);
@@ -166,8 +166,19 @@ const ScratchLuckyGame = () => {
       if (luckySymbolCount < 2) {
         setTimeout(() => {
           if (scratchCardLeft > 1) {
-            console.log("Resetting game " + scratchCardLeft);
-            setIntroThemeVideo(true);
+            console.log(nextTheme[0]);
+            console.log(currentTheme);
+            console.log(currentTheme === nextTheme);
+
+            if(currentTheme === nextTheme){
+              setTimeout(() => {
+                setReset(true);
+              }, 100);
+            }
+            else{
+              setIntroThemeVideo(true);
+            }
+          
             setTimeout(() => {
               goToNextTheme();
             }, 100);

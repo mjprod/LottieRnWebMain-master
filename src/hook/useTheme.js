@@ -15,16 +15,22 @@ export const ThemeEnum = Object.freeze({
   COWBOY: "cowboy",
 });
 
-// Function to get a random theme from the ThemeEnum
-const getRandomTheme = () => {
-  const themeValues = Object.values(ThemeEnum);
-  const randomIndex = Math.floor(Math.random() * themeValues.length);
-  return themeValues[randomIndex];
+// Function to shuffle an array
+const shuffleArray = (array) => {
+  return array
+    .map((value) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
 };
 
-// Function to get an array of random themes (for example, 10 cards)
-const getRandomThemesArray = (numberOfCards) => {
-  return Array.from({ length: numberOfCards }, () => getRandomTheme());
+// Function to generate the sequence with each theme repeated 3 times consecutively
+const getRandomThemesArray = () => {
+  const themeValues = shuffleArray(Object.values(ThemeEnum)); // Shuffle themes
+
+  // Create the sequence with each theme appearing 3 times consecutively
+  const themesArray = themeValues.flatMap((theme) => Array(3).fill(theme));
+
+  return themesArray;
 };
 
 // Creating the theme context
@@ -140,6 +146,9 @@ export const ThemeProvider = ({ children }) => {
     () => ({
       themeSequence,
       currentTheme: themeSequence[currentThemeIndex], // Current theme from the sequence
+      nextTheme: currentThemeIndex + 1 < themeSequence.length
+      ? themeSequence[currentThemeIndex + 1]
+      : null,
       gameCenterIcon, // Current game center icon
       backgroundLoop, // Current background loop
       backgroundScratchCard,
