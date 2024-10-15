@@ -180,7 +180,7 @@ const TopLayout = ({
                 ]}
               >
                 <Text style={[styles.countDownText, { color: "#FFFFFF" }]}>
-                  {countdownTimer * 100} s
+                  {countdownTimer * 100} 
                 </Text>
               </Animated.View>
             )}
@@ -194,7 +194,7 @@ const TopLayout = ({
                   speed={1}
                   loop={false}
                 />
-                <Text style={[styles.countDownText]}>{countdown} s</Text>
+                <Text style={[styles.countDownText]}>{countdown} </Text>
               </View>
             )}
           </View>
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
   },
   rowCountDown: {
     position: "absolute",
-    top: 18.5,
+    top: 22,
     left: -10,
     right: 0,
     flexDirection: "row",
