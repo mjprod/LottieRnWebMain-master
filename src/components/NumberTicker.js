@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Text, View, StyleSheet } from 'react-native';
 
-const NumberTicker = ({ number, duration = 1000, textSize = 40, textStyle }) => {
+const NumberTicker = ({ number, duration = 500, textSize = 40, textStyle }) => {
   const [previousNumber, setPreviousNumber] = useState(number); // Store the previous number
   const animatedValue = useRef(new Animated.Value(0)).current; // Control the animation
 
