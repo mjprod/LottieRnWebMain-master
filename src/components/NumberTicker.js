@@ -36,7 +36,7 @@ const NumberTicker = ({ number, duration = 1000, textSize = 40, textStyle }) => 
   return (
     <View style={[styles.container, { height: textSize }]}>
       {/* Animated previous number sliding out */}
-      <Animated.View style={{ position: 'absolute', transform: [{ translateY }] }}>
+      <Animated.View style={{ position: 'absolute', transform: [{ translateY }], filter: 'blur(1px)', opacity:'0.2' }}>
         <Text style={[styles.text, textStyle, { fontSize: textSize }]}>
           {previousNumber}
         </Text>
@@ -55,13 +55,23 @@ const NumberTicker = ({ number, duration = 1000, textSize = 40, textStyle }) => 
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+    maxWidth: 100,
+    marginTop: -9,
+    
+    minHeight:34,
+    
+   
+    border: "1px solid #5F5F5F",
     alignItems: 'center',
     overflow: 'hidden', // Hide overflow for smooth transitions
     position: 'relative', // Allow positioning for numbers to overlap
   },
   text: {
-    fontWeight: 'bold',
-    color: '#00ff00', // Green color for your number
+    fontFamily: "Teko-Medium",
+    fontSize: 24,
+    color: '#FFFFFF', // Green color for your number
     textAlign: 'center',
   },
 });
