@@ -9,7 +9,6 @@ import Slider from "@react-native-community/slider";
 import GameButton from "./GameButton";
 import LottieTicketSlot from "./LottieTicketSlot";
 import ScratchCardLeft from "./ScratchCardLeft";
-import NumberTicker from "./NumberTicker";
 
 const LauchScreen = ({ luckySymbolCount, ticketCount, score, scratchCardLeft, onPress }) => {
 
@@ -42,8 +41,6 @@ const LauchScreen = ({ luckySymbolCount, ticketCount, score, scratchCardLeft, on
           <View style={styles.margim}>
             <View style={styles.header}>
               <View style={styles.iconWrapper}>
-              <NumberTicker number={score} duration={1000} textSize={40} />
-
                 <IconJokerPlus />
               </View>
               <Text style={styles.title}>TURBO SCRATCH RESULTS</Text>
