@@ -18,6 +18,8 @@
 .env.production.local
 .*.swp
 
+.yarn/*
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

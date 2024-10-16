@@ -83,12 +83,14 @@ const styles = StyleSheet.create({
     marginVertical: -12,
   },
   text: {
+    userSelect: 'none',
     fontFamily: "Inter-Medium",
     color: "#A9A9A9",
     fontSize: 12,
     marginHorizontal: 6,
   },
   number: {
+    userSelect: 'none',
     fontFamily: "Inter-Bold",
     color: "#FFDFAB",
     fontSize: 16,

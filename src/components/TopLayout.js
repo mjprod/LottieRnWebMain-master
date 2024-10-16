@@ -36,13 +36,12 @@ const TopLayout = ({
   luckySymbolCount,
   clickCount,
 }) => {
-  
   const scaleAnim = useRef(new Animated.Value(1.8)).current;
   const [countdownTimer, setCountdownTimer] = useState(0);
   const { gameCenterIcon } = useTheme();
 
   // Animation control
-  const [animationIndex, setAnimationIndex] = useState(0); 
+  const [animationIndex, setAnimationIndex] = useState(0);
   const [playAnimation, setPlayAnimation] = useState(false);
   const animations = [lottieCombo1, lottieCombo2, lottieCombo3];
 
@@ -52,9 +51,18 @@ const TopLayout = ({
     //x2: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x2_G_.mp3`)], preload: true }),
     //x3: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x3_C_plus.mp3`)], preload: true }),
     //x4: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x4_E_plus.mp3`)], preload: true }),
-    x4: new Howl({ src: [require(`./../assets/sounds/combo.mp3`)], preload: true }),
-    x3: new Howl({ src: [require(`./../assets/sounds/nice_combo.mp3`)], preload: true }),
-    x2: new Howl({ src: [require(`./../assets/sounds/ultra_combo.mp3`)], preload: true }),
+    x4: new Howl({
+      src: [require(`./../assets/sounds/combo.mp3`)],
+      preload: true,
+    }),
+    x3: new Howl({
+      src: [require(`./../assets/sounds/nice_combo.mp3`)],
+      preload: true,
+    }),
+    x2: new Howl({
+      src: [require(`./../assets/sounds/ultra_combo.mp3`)],
+      preload: true,
+    }),
   });
 
   useEffect(() => {
@@ -108,9 +116,9 @@ const TopLayout = ({
         setCountdownTimer((prevTimer) => {
           const newTime = prevTimer - 1;
           const nextTime = newTime <= 1 ? 1 : newTime;
-  
+
           setTimerGame(nextTime);
-  
+
           if (nextTime === 1) {
             clearInterval(interval);
           }
@@ -120,7 +128,7 @@ const TopLayout = ({
     } else {
       setCountdownTimer(0);
     }
-  
+
     return () => clearInterval(interval);
   }, [scratchStarted, setTimerGame]);
 
@@ -180,7 +188,7 @@ const TopLayout = ({
                 ]}
               >
                 <Text style={[styles.countDownText, { color: "#FFFFFF" }]}>
-                  {countdownTimer * 100} 
+                  {countdownTimer * 100}
                 </Text>
               </Animated.View>
             )}
@@ -208,31 +216,18 @@ const TopLayout = ({
               <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
             </View>
 
-            <LottieLuckySymbolCoinSlot luckySymbolCount={luckySymbolCount} topLayout={true} />
+            <LottieLuckySymbolCoinSlot
+              luckySymbolCount={luckySymbolCount}
+              topLayout={true}
+            />
           </View>
         </View>
 
         {CentralImageWithLottie()}
       </ImageBackground>
       <View style={styles.containerBottom}>
-        <View style={[styles.textWrapper,styles.textBottomLeft]}>
-          {/*<Animated.Text
-            style={[
-              styles.textBottomLeft,
-              { transform: [{ translateX: bounceAnim }] },
-              { opacity: fadeAnim },
-            ]}
-          >
-            {score > 0 ? `+${score}` : "0"}
-
-            parseInt(score, 10)
-
-          </Animated.Text>*/}
-
-<NumberTicker number={score} duration={500} textSize={20} />
-
-           {/*<NumberTicker number={parseInt(score, 10) > 0 ? parseInt(score, 10) : 0} duration={3000} textSize={10} />*/}
-            
+        <View style={[styles.textWrapper, styles.textBottomLeft]}>
+          <NumberTicker number={score} duration={500} textSize={20} />
         </View>
 
         <View
@@ -292,8 +287,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-end",
     marginTop: 45,
+    userSelect: 'none',
   },
   textTopLeft: {
+    userSelect: 'none',
     color: "#43db47",
     textAlign: "left",
     fontFamily: "Teko-Medium",
@@ -301,6 +298,7 @@ const styles = StyleSheet.create({
     marginBottom: 85,
   },
   textTopRight: {
+    userSelect: 'none',
     color: "white",
     textAlign: "right",
     fontFamily: "Teko-Medium",
@@ -317,12 +315,14 @@ const styles = StyleSheet.create({
     width: "50%",
   },
   textBottomRight: {
+    userSelect: 'none',
     color: "#FFDFAC",
     textAlign: "right",
     fontFamily: "Teko-Medium",
     fontSize: 12,
   },
   textBottomLeft: {
+    userSelect: 'none',
     bottom: 45,
     left: 14,
     color: "#43db47",
@@ -344,6 +344,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   countDownText: {
+    userSelect: 'none',
     fontFamily: "Inter-Bold",
     fontSize: 18,
     color: "blue",

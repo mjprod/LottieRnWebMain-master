@@ -7,24 +7,34 @@ import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 
 const { height, width } = Dimensions.get("window");
 
-export default class App extends React.Component {
-  render() {
-    // Definir os estilos condicionalmente
-    const isSmallScreen = width < 400 || height < 650;
-    const dynamicStyles = isSmallScreen ? smallStyles : styles;
+export default function App() {
+  React.useEffect(() => {
+    // Disable text selection for elements
+    // with class "no-select"
+    const noSelectElements = document.querySelectorAll(".no-select");
+    noSelectElements.forEach((element) => {
+      element.style.webkitUserSelect = "none";
+      element.style.mozUserSelect = "none";
+      element.style.msUserSelect = "none";
+      element.style.userSelect = "none";
+    });
+  }, []);
 
-    return (
-      <View style={styles.container}>
-        <View style={dynamicStyles.app}>
-          <ThemeProvider>
-            <SoundProvider>
-              <ScratchLuckyGame />
-            </SoundProvider>
-          </ThemeProvider>
-        </View>
+  // Definir os estilos condicionalmente
+  const isSmallScreen = width < 400 || height < 650;
+  const dynamicStyles = isSmallScreen ? smallStyles : styles;
+
+  return (
+    <View style={styles.container}>
+      <View style={dynamicStyles.app}>
+        <ThemeProvider>
+          <SoundProvider>
+            <ScratchLuckyGame />
+          </SoundProvider>
+        </ThemeProvider>
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   text: {
+    userSelect: 'none',
     padding: 2,
     fontSize: 12,
     color: "#FFFFFF",
