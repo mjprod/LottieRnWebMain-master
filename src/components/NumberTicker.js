@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Text, View, StyleSheet } from 'react-native';
 
-const DigitTicker = ({ digit, duration = 500, textSize = 40, textStyle }) => {
+const DigitTicker = ({ digit, duration = 100, textSize = 40, textStyle }) => {
   const animatedValue = useRef(new Animated.Value(0)).current;
   const [previousDigit, setPreviousDigit] = useState(digit);
 
@@ -28,7 +28,7 @@ const DigitTicker = ({ digit, duration = 500, textSize = 40, textStyle }) => {
   });
 
   return (
-    <View style={[styles.digitContainer, { height: textSize, minWidth: textSize / 1.5 }]}>
+    <View style={[styles.digitContainer, { height: textSize, minWidth: textSize / 2.5 }]}>
       <Animated.View style={{ position: 'absolute', transform: [{ translateY }] }}>
         <Text style={[styles.text, textStyle, { fontSize: textSize }]}>{previousDigit}</Text>
       </Animated.View>
@@ -40,7 +40,7 @@ const DigitTicker = ({ digit, duration = 500, textSize = 40, textStyle }) => {
   );
 };
 
-const NumberTicker = ({ number, duration = 1000, textSize = 20, textStyle }) => {
+const NumberTicker = ({ number, duration = 100, textSize = 20, textStyle }) => {
   const digits = String(number).split('');
 
   return (
