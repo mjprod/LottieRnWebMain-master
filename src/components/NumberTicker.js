@@ -1,77 +1,91 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Text, View, StyleSheet } from 'react-native';
 
-const NumberTicker = ({ number, duration = 1000, textSize = 40, textStyle }) => {
-  const [previousNumber, setPreviousNumber] = useState(number); // Store the previous number
-  const animatedValue = useRef(new Animated.Value(0)).current; // Control the animation
+const DigitTicker = ({ digit, duration = 500, textSize = 40, textStyle }) => {
+  const animatedValue = useRef(new Animated.Value(0)).current;
+  const [previousDigit, setPreviousDigit] = useState(digit);
 
   useEffect(() => {
-    if (number !== previousNumber) {
-      // Reset animation value before starting
+    if (digit !== previousDigit) {
       animatedValue.setValue(0);
 
-      // Start the animation when the number changes
       Animated.timing(animatedValue, {
-        toValue: 1, // Animate from 0 to 1
-        duration: duration, // Full duration for both numbers
-        useNativeDriver: true, // For performance
-      }).start(() => {
-        // Once animation is complete, update the previous number
-        setPreviousNumber(number);
-      });
+        toValue: 1,
+        duration,
+        useNativeDriver: true,
+      }).start(() => setPreviousDigit(digit));
     }
-  }, [number, previousNumber, duration, animatedValue]);
+  }, [digit, previousDigit, animatedValue, duration]);
 
-  // Interpolating translateY to animate both numbers simultaneously
   const translateY = animatedValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, -textSize], // Move previous number up and out, and new number in
+    outputRange: [0, -textSize],
   });
 
   const nextTranslateY = animatedValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [textSize, 0], // Moves new number in from below
+    outputRange: [textSize, 0],
   });
 
   return (
-    <View style={[styles.container, { height: textSize }]}>
-      {/* Animated previous number sliding out */}
-      <Animated.View style={{ position: 'absolute', transform: [{ translateY }], filter: 'blur(1px)', opacity:'0.2' }}>
-        <Text style={[styles.text, textStyle, { fontSize: textSize }]}>
-          {previousNumber}
-        </Text>
+    <View style={[styles.digitContainer, { height: textSize, minWidth: textSize / 1.5 }]}>
+      <Animated.View style={{ position: 'absolute', transform: [{ translateY }] }}>
+        <Text style={[styles.text, textStyle, { fontSize: textSize }]}>{previousDigit}</Text>
       </Animated.View>
 
-      {/* Animated current number sliding in */}
       <Animated.View style={{ position: 'absolute', transform: [{ translateY: nextTranslateY }] }}>
-        <Text style={[styles.text, textStyle, { fontSize: textSize }]}>
-          {number}
-        </Text>
+        <Text style={[styles.text, textStyle, { fontSize: textSize }]}>{digit}</Text>
       </Animated.View>
+    </View>
+  );
+};
+
+const NumberTicker = ({ number, duration = 1000, textSize = 20, textStyle }) => {
+  const digits = String(number).split('');
+
+  return (
+    <View style={[styles.container, { height: textSize + 10 }]}>
+      {digits.map((digit, index) => (
+        <DigitTicker
+          key={index}
+          digit={digit}
+          duration={duration}
+          textSize={textSize}
+          textStyle={textStyle}
+        />
+      ))}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,
     maxWidth: 100,
-    marginTop: -9,
-    
-    minHeight:34,
-    
-   
-    border: "1px solid #5F5F5F",
+    marginTop: -8,
+    minHeight: 34,
+    borderColor: '#5F5F5F',
+    borderWidth: 1,
+    overflow: 'hidden',
+    position: 'relative',
+    backgroundColor: '#000',
+  },
+  digitContainer: {
+    justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden', // Hide overflow for smooth transitions
-    position: 'relative', // Allow positioning for numbers to overlap
+    overflow: 'hidden',
+    position: 'relative',
+    marginHorizontal: 0, // Remove margem horizontal
+    paddingHorizontal: 0, // Remover padding para compactar
   },
   text: {
-    fontFamily: "Teko-Medium",
+    fontFamily: 'Teko-Medium',
     fontSize: 24,
-    color: '#FFFFFF', // Green color for your number
+    color: '#FFFFFF',
     textAlign: 'center',
   },
 });
