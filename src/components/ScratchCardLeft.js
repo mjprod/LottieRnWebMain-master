@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import LottieView from "react-native-web-lottie";
+import { useSound } from "../hook/useSoundPlayer";
+import { useTheme } from "../hook/useTheme";
 
 const ScratchCardLeft = ({ scratchCardLeft }) => {
-  const [displayedScratchCardsLeft, setDisplayedScratchCardsLeft] =
-    useState(scratchCardLeft);
-  
+  const { soundMuteOnBackground, soundMuteOffBackground } = useTheme();
+
+  const [displayedScratchCardsLeft, setDisplayedScratchCardsLeft] = useState(
+    scratchCardLeft
+  );
+
   const [showLottie, setShowLottie] = useState(true);
+  const { isSoundEnabled, setIsSoundEnabled } = useSound();
 
   useEffect(() => {
     setShowLottie(false);
@@ -19,22 +25,34 @@ const ScratchCardLeft = ({ scratchCardLeft }) => {
     return () => clearTimeout(timeoutId);
   }, [scratchCardLeft]);
 
-  const renderCounter = () => {
-    const counters = [];
-    for (let i = 0; i < 5; i++) {
-      counters.push(
-        <View
-          key={i}
-          style={[
-            styles.counter,
-            i < displayedScratchCardsLeft
-              ? styles.activeCounter
-              : styles.inactiveCounter,
-          ]}
-        />
-      );
+  const toggleSound = async (value) => {
+    try {
+      //await AsyncStorage.setItem("soundPreference", JSON.stringify(value));
+      setIsSoundEnabled(!isSoundEnabled);
+      //console.error(isSoundOn);
+      // Optional: Play or stop sound based on toggle state
+      if (value) {
+        //playSound();
+      } else {
+        //stopSound();
+      }
+    } catch (e) {
+      console.error("Failed to save sound preference", e);
     }
-    return counters;
+  };
+
+  const renderCounter = () => {
+    return (
+      <TouchableOpacity onPress={toggleSound}>
+        <Image
+          resizeMode="contain"
+          source={
+            isSoundEnabled ? soundMuteOnBackground : soundMuteOffBackground
+          }
+          style={{ width: 75, height: 20 }}
+        />
+      </TouchableOpacity>
+    );
   };
 
   return (
@@ -54,10 +72,7 @@ const ScratchCardLeft = ({ scratchCardLeft }) => {
           <Text style={styles.text}>Scratch Cards Left</Text>
         </View>
       </View>
-      <View style={styles.rightContainer}>
-        <View style={styles.firstCounter} />
-        {renderCounter()}
-      </View>
+      <View style={styles.rightContainer}>{renderCounter()}</View>
     </View>
   );
 };
@@ -83,14 +98,14 @@ const styles = StyleSheet.create({
     marginVertical: -12,
   },
   text: {
-    userSelect: 'none',
+    userSelect: "none",
     fontFamily: "Inter-Medium",
     color: "#A9A9A9",
     fontSize: 12,
     marginHorizontal: 6,
   },
   number: {
-    userSelect: 'none',
+    userSelect: "none",
     fontFamily: "Inter-Bold",
     color: "#FFDFAB",
     fontSize: 16,
@@ -104,13 +119,6 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    marginHorizontal: 2,
-  },
-  firstCounter: {
-    width: 30,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: "#FFDEA7",
     marginHorizontal: 2,
   },
   activeCounter: {

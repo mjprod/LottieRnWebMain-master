@@ -111,6 +111,8 @@ const themes = {
         lottieScratchieBubblePopGreen: require('./../assets/lotties/egypt/lottieScratchieBubblePopGreen.json'),
         lottieScratchieBubblePopOrange: require('./../assets/lotties/egypt/lottieScratchieBubblePopOrange.json'),
         lottieScratchieBubblePopPink: require('./../assets/lotties/egypt/lottieScratchieBubblePopPink.json'),
+        soundMuteOnBackground: require('./../assets/image/egypt/background_sound_mute_on.png'),
+        soundMuteOffBackground: require('./../assets/image/egypt/background_sound_mute_off.png'),
         iconsDefault: [
             <IconTypeAnubisdefault key="0" />,
             <IconTypeAnhkdefault key="1" />,
@@ -152,6 +154,8 @@ const themes = {
         lottieScratchieBubblePopGreen: require('./../assets/lotties/mythology/lottieScratchieBubblePopGreen.json'),
         lottieScratchieBubblePopOrange: require('./../assets/lotties/mythology/lottieScratchieBubblePopOrange.json'),
         lottieScratchieBubblePopPink: require('./../assets/lotties/mythology/lottieScratchieBubblePopPink.json'),
+        soundMuteOnBackground: require('./../assets/image/mythology/background_sound_mute_on.png'),
+        soundMuteOffBackground: require('./../assets/image/mythology/background_sound_mute_off.png'),
         iconsDefault: [
             <IconTypeCentaurdefault key="0" />,
             <IconTypeHarpdefault key="1" />,
@@ -193,6 +197,8 @@ const themes = {
         lottieScratchieBubblePopGreen: require('./../assets/lotties/international/lottieScratchieBubblePopGreen.json'),
         lottieScratchieBubblePopOrange: require('./../assets/lotties/international/lottieScratchieBubblePopOrange.json'),
         lottieScratchieBubblePopPink: require('./../assets/lotties/international/lottieScratchieBubblePopPink.json'),
+        soundMuteOnBackground: require('./../assets/image/international/background_sound_mute_on.png'),
+        soundMuteOffBackground: require('./../assets/image/international/background_sound_mute_off.png'),
         iconsDefault: [
             <IconTypeBreifcasedefault key="0" />,
             <IconTypeCanyondefault key="1" />,
@@ -234,6 +240,8 @@ const themes = {
         lottieScratchieBubblePopGreen: require('./../assets/lotties/cowboy/lottieScratchieBubblePopGreen.json'),
         lottieScratchieBubblePopOrange: require('./../assets/lotties/cowboy/lottieScratchieBubblePopOrange.json'),
         lottieScratchieBubblePopPink: require('./../assets/lotties/cowboy/lottieScratchieBubblePopPink.json'),
+        soundMuteOnBackground: require('./../assets/image/cowboy/background_sound_mute_on.png'),
+        soundMuteOffBackground: require('./../assets/image/cowboy/background_sound_mute_off.png'),
         iconsDefault: [
             <IconTypeBandanadefault key="0" />,
             <IconTypeBootdefault key="1" />,

@@ -20,6 +20,7 @@ export const SoundProvider = ({ children }) => {
   const [startPlay, setStartPlay] = useState(false);
   const [introPlayed, setIntroPlayed] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
 
   const { currentTheme } = useTheme();
 
@@ -92,8 +93,7 @@ export const SoundProvider = ({ children }) => {
     });
   };
 
- /* 
- const stopAllSounds = () => {
+  const stopAllSounds = () => {
     Object.keys(soundRefs.current).forEach((trackKey) => {
       const sound = soundRefs.current[trackKey];
       if (sound.playing()) {
@@ -101,7 +101,47 @@ export const SoundProvider = ({ children }) => {
       }
     });
   };
-  */
+
+// Function to mute all sounds (set their volume to 0 and mute them)
+const muteAllSounds = () => {
+  Object.keys(soundRefs.current).forEach((trackKey) => {
+    const sound = soundRefs.current[trackKey];
+    if (sound.playing()) {
+      // Fade out and mute each sound
+      sound.fade(sound.volume(), 0, 1000); // Fade volume to 0 over 1 second
+      sound.mute(true); // Use mute to ensure complete muting
+    }
+  });
+};
+
+// Function to replay all sounds with the current theme at volume 1
+const rePlayAllSounds = () => {
+  Object.keys(soundRefs.current).forEach((trackKey, index) => {
+    const sound = soundRefs.current[trackKey];
+
+    if (trackKey === trackKeys[currentTrackIndex]) {
+      // For the current track
+      if (isSoundEnabled) {
+        // Unmute and fade in the current track if sound is enabled
+        sound.mute(false); // Unmute the current track
+        sound.fade(0, 1, 1000); // Fade in the current track
+      } else {
+        // Mute and set volume to 0 if sound is disabled
+        sound.mute(true); // Mute the track
+        sound.volume(0); // Keep volume at 0 while muted
+      }
+
+      if (!sound.playing()) {
+        sound.play(); // Ensure the sound is playing
+      }
+    } else {
+      // Mute and set volume to 0 for other tracks
+      sound.mute(true); // Mute other tracks
+      sound.volume(0);  // Ensure volume is 0
+    }
+  });
+};
+
 
   const getTrackKey = () => {
     const theme = currentTheme; // Get the current theme
@@ -123,11 +163,13 @@ export const SoundProvider = ({ children }) => {
     playAllSounds();
 
     const newIndex = getTrackKey();
-   
+
     const newTrackKey = trackKeys[newIndex];
     const newSound = soundRefs.current[newTrackKey];
     if (newSound) {
+      //sconst targetVolume = isSoundEnabled ? 1 : 0;
       newSound.fade(0, 1, 500);
+      //newSound.fade(0, 1, 500);
     }
     setIntroPlayed(true);
     setCurrentTrackIndex(newIndex);
@@ -142,24 +184,39 @@ export const SoundProvider = ({ children }) => {
       console.log("Same Theme, don't change sound");
       return;
     }
+  
     const currentTrackKey = trackKeys[currentTrackIndex];
     const newTrackKey = trackKeys[newIndex];
-
+  
     const currentSound = soundRefs.current[currentTrackKey];
     const newSound = soundRefs.current[newTrackKey];
-
+  
+    // Fade out the current track
     if (currentSound) {
-      currentSound.fade(1, 0, 1000);
+      currentSound.fade(1, 0, 1000); // Fade out current track
     }
-
+  
     setTimeout(() => {
       if (newSound) {
-        newSound.fade(0, 1, 500);
+        if (isSoundEnabled) {
+          // If sound is enabled, fade in the new track
+          newSound.mute(false); // Unmute the new track
+          newSound.fade(0, 1, 1000); // Fade in the new track
+        } else {
+          // If sound is disabled, mute the new track and set its volume to 0
+          newSound.mute(true); 
+          newSound.volume(0); // Ensure the volume is 0 while muted
+        }
+  
+        if (!newSound.playing()) {
+          newSound.play(); // Ensure the new sound starts playing
+        }
       }
     }, 500);
-
-    setCurrentTrackIndex(newIndex);
+  
+    setCurrentTrackIndex(newIndex); // Update current track index
   };
+  
 
   const playSound = (soundKey) => {
     if (soundRefs.current[soundKey]) {
@@ -168,8 +225,23 @@ export const SoundProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if(currentTrackIndex === 0) {
+      return;
+    }
+    console.log("Sound enabled: ", isSoundEnabled);
+
+    if (isSoundEnabled) {
+      rePlayAllSounds(); // Unmute and play the current track
+    } else {
+      muteAllSounds(); // Mute all sounds
+    }
+  }, [isSoundEnabled]);
+
+  useEffect(() => {
     if (startPlay) {
       playSound("intro");
+    } else {
+      stopAllSounds();
     }
   }, [startPlay]);
 
@@ -188,8 +260,10 @@ export const SoundProvider = ({ children }) => {
         setCurrentTrackIndex,
         playNextTrack,
         setStartPlay,
+        isSoundEnabled,
+        setIsSoundEnabled,
         soundRefs,
-        switchTrack
+        switchTrack,
       }}
     >
       {children}

@@ -28,7 +28,7 @@ const NavLayout = ({ showAlphaView }) => {
 
 const styles = StyleSheet.create({
   container: {
-    // Não usar flex: 1 aqui
+   
   },
   viewBackground: {
     backgroundColor: "#222021",

@@ -81,6 +81,14 @@ export const ThemeProvider = ({ children }) => {
     themes[themeSequence[currentThemeIndex]].lottieScratchieBubblePopPink
   );
 
+  const [soundMuteOnBackground, setSoundMuteOnBackground] = useState(
+    themes[themeSequence[currentThemeIndex]].soundMuteOnBackground
+  );
+
+  const [soundMuteOffBackground, setSoundMuteOffBackground] = useState(
+    themes[themeSequence[currentThemeIndex]].soundMuteOffBackground
+  );
+
   // Function to update the sequence of themes dynamically
   const updateThemeSequence = (numberOfCards) => {
     console.log(`Updating theme sequence with ${numberOfCards} cards`);
@@ -138,6 +146,12 @@ export const ThemeProvider = ({ children }) => {
       setLottiePopPink(
         themes[themeSequence[currentThemeIndex]].lottieScratchieBubblePopPink
       );
+      setSoundMuteOnBackground(
+        themes[themeSequence[currentThemeIndex]].soundMuteOnBackground
+      );
+      setSoundMuteOffBackground(
+        themes[themeSequence[currentThemeIndex]].soundMuteOffBackground
+      );
     }
   }, [currentThemeIndex, themeSequence]); // The effect depends on currentThemeIndex and themeSequence
 
@@ -166,6 +180,8 @@ export const ThemeProvider = ({ children }) => {
       lottiePopGreen,
       lottiePopOrange,
       lottiePopPink,
+      soundMuteOnBackground,
+      soundMuteOffBackground,
       updateThemeSequence,
       setCurrentThemeByIndex, // Function to change the current theme by index
       goToNextTheme, // Function to go to the next theme
@@ -183,6 +199,8 @@ export const ThemeProvider = ({ children }) => {
       lottiePopGreen,
       lottiePopOrange,
       lottiePopPink,
+      soundMuteOnBackground,
+      soundMuteOffBackground,
     ]
   );
 
