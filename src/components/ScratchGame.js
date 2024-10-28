@@ -24,6 +24,7 @@ import {
 } from "../global/Settings";
 import themes from "../global/themeConfig";
 import { useTheme } from "../hook/useTheme";
+import { useSound } from "../hook/useSoundPlayer";
 
 const ScratchGame = ({
   score,
@@ -53,6 +54,9 @@ const ScratchGame = ({
   const [arrayIcon, setArrayIcon] = useState();
 
   const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
+
+  const { isSoundEnabled } = useSound();
+
   const {
     currentTheme,
     backgroundScratchCard,
@@ -142,7 +146,7 @@ const ScratchGame = ({
   const playSound = (soundKey) => {
     const sound = soundRefs.current[soundKey];
   
-    if (sound) {
+    if (sound && isSoundEnabled) {
       if (!sound._loaded) {
         sound.once('load', () => {
           sound.play();

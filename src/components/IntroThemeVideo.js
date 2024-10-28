@@ -3,10 +3,13 @@ import { View, StyleSheet,Platform } from "react-native";
 import Video from "./Video";
 import BrowserDetection from "react-browser-detection";
 import { useTheme } from "../hook/useTheme";
+import { useSound } from "../hook/useSoundPlayer";
 
 const IntroThemeVideo = ({ handleVideoEnd }) => {
 
   const { introThemeNext,introChromeThemeNext } = useTheme();
+  const { isSoundEnabled } = useSound();
+
 
   const browserHandler = {
     chrome: () => (
@@ -14,7 +17,7 @@ const IntroThemeVideo = ({ handleVideoEnd }) => {
         source={
           introChromeThemeNext
         } // Play the win video
-        muted = {false} 
+        muted = {!isSoundEnabled} 
         style={styles.transparentVideo} // Video styling
         onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
         onEnded={handleVideoEnd} // Web: Trigger callback when video ends
@@ -25,14 +28,13 @@ const IntroThemeVideo = ({ handleVideoEnd }) => {
         source={
           introThemeNext
         } // Play the win video
-         muted = {false} 
+         muted = {isSoundEnabled} 
         style={styles.transparentVideo} // Video styling
         onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
         onEnded={handleVideoEnd} // Web: Trigger callback when video ends
       />
     ),
   };
-
 
   return (
     <View

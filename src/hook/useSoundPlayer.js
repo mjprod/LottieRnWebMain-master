@@ -40,7 +40,7 @@ export const SoundProvider = ({ children }) => {
       preload: true,
       autoplay: false,
       loop: false,
-      volume: 1, // Initially volume is 0
+      volume:  1, // Initially volume is 0
       onend: () => initialTrack(),
     }),
     base_beat: new Howl({

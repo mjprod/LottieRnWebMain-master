@@ -61,7 +61,8 @@ const ScratchLuckyGame = () => {
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
   const { backgroundLoop, goToNextTheme, themeSequence,nextTheme,currentTheme} = useTheme();
-  const { setStartPlay, switchTrack } = useSound();
+  const { setStartPlay, switchTrack , isSoundEnabled } = useSound();
+
 
   const ref = useRef(null);
 
@@ -136,6 +137,7 @@ const ScratchLuckyGame = () => {
   const browserHandler = {
     chrome: () => (
       <Video
+      deo
         source={
           skipToFinishLuckyVideo
             ? videoLuckySymbolFinal

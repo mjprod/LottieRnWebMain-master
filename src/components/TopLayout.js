@@ -12,6 +12,7 @@ import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import { useTheme } from "../hook/useTheme";
 import NumberTicker from "./NumberTicker";
 import { Howl } from "howler";
+import { useSound } from "../hook/useSoundPlayer";
 
 const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
 const backgroundTopLayoutRed = require("./../assets/image/background_top_layout_red.png");
@@ -26,7 +27,6 @@ const lottieCombo1 = require("../assets/lotties/ComboHolderMaxVersion-2x.json");
 const lottieCombo2 = require("../assets/lotties/ComboHolderMaxVersion-3x.json");
 const lottieCombo3 = require("../assets/lotties/ComboHolderMaxVersion-4x.json");
 
-const countdown = 3;
 const showCountDown = true;
 
 const TopLayout = ({
@@ -46,6 +46,9 @@ const TopLayout = ({
   const animations = [lottieCombo1, lottieCombo2, lottieCombo3];
 
   const lottieRef = useRef(null);
+
+  const { isSoundEnabled } = useSound();
+
 
   const soundRefs = useRef({
     //x2: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x2_G_.mp3`)], preload: true }),
@@ -76,10 +79,11 @@ const TopLayout = ({
   }, []);
 
   const playSound = (soundKey) => {
-    if (soundRefs.current[soundKey]) {
+    if (soundRefs.current[soundKey]  &&  isSoundEnabled) {
       soundRefs.current[soundKey].play();
     }
   };
+  
 
   useEffect(() => {
     switch (clickCount) {
@@ -180,31 +184,32 @@ const TopLayout = ({
             <Text style={[styles.textTopLeft, { color: "#FFFFFF" }]}>
               POP POINTS COUNTDOWN
             </Text>
+        
+
             {scratchStarted && (
-              <Animated.View
-                style={[
-                  styles.rowCountDown,
-                  { transform: [{ scale: scaleAnim }] },
-                ]}
-              >
-                <Text style={[styles.countDownText, { color: "#FFFFFF" }]}>
-                  {countdownTimer * 100}
-                </Text>
-              </Animated.View>
+              <View style={styles.rowCountDown}>
+
+              <LottieView
+                style={styles.lottieAnimation}
+                source={lottieCountDownBonus}
+                autoPlay
+                speed={1}
+                loop={false} />
+                <Animated.View
+                  style={[
+                    //styles.rowCountDown,
+                    { transform: [{ scale: scaleAnim }] },
+                  ]}
+                >
+                  <Text style={[styles.countDownText, { color: "#FFFFFF" }]}>
+                    {countdownTimer * 100}
+                  </Text>
+                </Animated.View>
+                </View>
+
             )}
 
-            {!showCountDown && (
-              <View style={styles.rowCountDown}>
-                <LottieView
-                  style={styles.lottieAnimation}
-                  source={lottieCountDownBonus}
-                  autoPlay
-                  speed={1}
-                  loop={false}
-                />
-                <Text style={[styles.countDownText]}>{countdown} </Text>
-              </View>
-            )}
+           
           </View>
 
           <View style={styles.textColumnRigth}>
@@ -331,8 +336,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   lottieAnimation: {
-    width: "40%",
-    height: "40%",
+    width: "30%",
+    height: "30%",
   },
   rowCountDown: {
     position: "absolute",
@@ -350,6 +355,7 @@ const styles = StyleSheet.create({
     color: "blue",
     marginLeft: 10,
     alignItems: "center",
+    justifyContent: "center",
     marginVertical: 10,
   },
   centralImage: {
