@@ -27,8 +27,6 @@ const lottieCombo1 = require("../assets/lotties/ComboHolderMaxVersion-2x.json");
 const lottieCombo2 = require("../assets/lotties/ComboHolderMaxVersion-3x.json");
 const lottieCombo3 = require("../assets/lotties/ComboHolderMaxVersion-4x.json");
 
-const showCountDown = true;
-
 const TopLayout = ({
   scratchStarted,
   setTimerGame,

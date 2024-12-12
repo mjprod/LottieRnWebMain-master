@@ -22,8 +22,10 @@ import { useSound } from "../hook/useSoundPlayer.js";
 import IntroThemeVideo from "../components/IntroThemeVideo.js";
 import LauchScreen from "../components/LauchScreen.js";
 import useApiRequest from "../hook/useApiRequest.js";
-import { ActivityIndicator, Text } from "react-native-web";
+import { ActivityIndicator, Text, useLocaleContext } from "react-native-web";
 import { numberOfCards } from "../global/Settings.js";
+import { useLocation, useNavigate } from "react-router-native";
+import BottomDrawer from "../components/BottomDrawer.js";
 
 // Importando arquivos de mídia
 const backgroundGame = require("./../assets/image/background_game.png");
@@ -36,7 +38,7 @@ const { width } = Dimensions.get("window");
 
 const ScratchLuckyGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
-  const [countDownStarted, setCountDownStarted] = useState(false);
+  const [countDownStarted, setCountDownStarted] = useState(true);
 
   const [gameOver, setGameOver] = useState(false);
   const [introThemeVideo, setIntroThemeVideo] = useState(false);
@@ -61,13 +63,31 @@ const ScratchLuckyGame = () => {
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
 
   const { backgroundLoop, goToNextTheme, themeSequence,nextTheme,currentTheme} = useTheme();
-  const { setStartPlay, switchTrack , isSoundEnabled } = useSound();
+  const { setStartPlay } = useSound();
 
 
   const ref = useRef(null);
 
   const { loading, error, response, fetchData, updateLuckySymbol } = useApiRequest();
   const [user, setUser] = useState(null);
+
+  const location = useLocation();
+  const {
+    initialScore,
+    initialTicketCount,
+    initialLuckySymbolCount,
+    initialScratchCardLeft,
+  } = location.state;
+
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    setScore(initialScore);
+    setTicketCount(initialTicketCount);
+    setLuckySymbolCount(initialLuckySymbolCount);
+    setScratchCardLeft(initialScratchCardLeft);
+  }, [initialScore, initialTicketCount, initialLuckySymbolCount, initialScratchCardLeft]);
 
   // Trigger the API call when the component mounts
   useEffect(() => {
@@ -88,9 +108,9 @@ const ScratchLuckyGame = () => {
 
     //fetchUserDetails();
 
-    setScore(1200);
-    setTicketCount(1);
-    setLuckySymbolCount(1);
+    //setScore(1200);
+    //setTicketCount(1);
+    //setLuckySymbolCount(1);
     setScratchCardLeft(numberOfCards);
   }, []);
 
@@ -130,7 +150,7 @@ const ScratchLuckyGame = () => {
       setTimeout(() => {
         ref.current.play();
         setStartPlay(true);
-      }, 300);
+      }, 1000);
     }
   }, [countDownStarted]);
 
@@ -185,8 +205,9 @@ const ScratchLuckyGame = () => {
               goToNextTheme();
             }, 100);
           } else {
-            setGameOver(true);
-            switchTrack(1);
+            //setGameOver(true);
+            //switchTrack(1);
+            handleGameOver();
           }
         }, 700);
       }
@@ -260,8 +281,9 @@ const ScratchLuckyGame = () => {
         if (scratchCardLeft - 1 > 0) {
           setScratchCardLeft(scratchCardLeft - 1);
         } else {
-          setGameOver(true);
-          switchTrack(1);
+          //setGameOver(true);
+          //switchTrack(1);
+          handleGameOver();
         }
       }, 600);
       setTimerGame(0);
@@ -347,7 +369,7 @@ const ScratchLuckyGame = () => {
         }}
       >
         <TouchableOpacity style={{ width: "80%" }}>
-          {countDownStarted ? (
+          {countDownStarted && (
             <View style={styles.rowCountDown}>
               <LottieView
                 ref={ref}
@@ -358,12 +380,21 @@ const ScratchLuckyGame = () => {
                 onAnimationFinish={handleAnimationFinish}
               />
             </View>
-          ) : (
-            <LauchScreen luckySymbolCount={luckySymbolCount} ticketCount={ticketCount} score={score} scratchCardLeft={scratchCardLeft} onPress={startGame}/>
           )}
         </TouchableOpacity>
       </View>
     );
+  };
+
+  const handleGameOver = () => {
+    setGameOver(true)
+    navigate('/game_over', {
+      state: {
+        luckySymbolCount,
+        ticketCount,
+        // Any other props you want to pass
+      },
+    });
   };
 
 if (loading) return (
@@ -421,6 +452,8 @@ if (loading) return (
           </Animated.View>
         </ImageBackground>
       </View>
+
+      <BottomDrawer />
       {gameOver && (
         <GameOverScreen
           luckySymbolCount={luckySymbolCount}
@@ -480,7 +513,7 @@ const styles = StyleSheet.create({
     top: 130,
     left: 10,
     right: 10,
-    bottom: 10,
+    bottom: 65,
     zIndex: 2,
     justifyContent: "flex-start",
     alignItems: "flex-start",
@@ -541,6 +574,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  
 });
 
 export default ScratchLuckyGame;

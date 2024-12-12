@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Platform, Text } from "react-native";
 import { Animated, ImageBackground } from "react-native-web";
-import { IconJokerPlus } from "../assets/icons/IconJokerPlus";
 import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
 import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
 import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
@@ -9,8 +8,15 @@ import Slider from "@react-native-community/slider";
 import GameButton from "./GameButton";
 import RotatingCirclesBackground from "./RotatingCirclesBackground";
 import LottieTicketSlot from "./LottieTicketSlot";
+import { useSound } from "../hook/useSoundPlayer";
+import { useLocation, useNavigate } from "react-router-native";
+import { IconJokerPlus } from '../assets/icons/IconJokerPlus';
 
-const GameOverScreen = ({ luckySymbolCount,ticketCount }) => {
+const GameOverScreen = () => {
+  const navigate = useNavigate();
+
+  const { switchTrack } = useSound();
+
   const backgroundResult = require("./../assets/image/background_game.png");
   const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
   const backgroundTotalTicket = require("./../assets/image/background_total_ticket.png");
@@ -26,6 +32,13 @@ const GameOverScreen = ({ luckySymbolCount,ticketCount }) => {
 
   const animatedProgress = useRef(new Animated.Value(0)).current;
 
+  const location = useLocation();
+  const {
+    luckySymbolCount = 0, // default value if not provided
+    ticketCount = 0, // default value if not provided
+  } = location.state || {};
+  
+
   useEffect(() => {
     // Start the animation when the component mounts
     Animated.timing(animatedProgress, {
@@ -33,6 +46,8 @@ const GameOverScreen = ({ luckySymbolCount,ticketCount }) => {
       duration: 3000, 
       useNativeDriver: false,
     }).start();
+
+    switchTrack(1);
   }, []);
 
   // Update the state to reflect the animated value (for Slider to work properly)
@@ -92,7 +107,7 @@ const GameOverScreen = ({ luckySymbolCount,ticketCount }) => {
           <View style={styles.margim}>
             <View style={styles.header}>
               <View style={styles.iconWrapper}>
-                <IconJokerPlus />
+                <IconJokerPlus/>
               </View>
               <Text style={styles.title}>TURBO SCRATCH RESULTS</Text>
             </View>
@@ -184,7 +199,21 @@ const GameOverScreen = ({ luckySymbolCount,ticketCount }) => {
             </View>
             <GameButton
               text="BACK HOME"
-              onPress={() => console.log("Play Again")}
+              onPress={() => {
+                const initialScore = 0; // Define the initialScore variable
+                const initialTicketCount = 0; // Define the initialTicketCount variable
+                const initialLuckySymbolCount = 0; // Define the initialLuckySymbolCount variable
+                const initialScratchCardLeft = 0; // Define the initialScratchCardLeft variable
+
+                navigate("/*", {
+                  state: {
+                    initialScore,
+                    initialTicketCount,
+                    initialLuckySymbolCount,
+                    initialScratchCardLeft,
+                  },
+                });
+              }}
             />
           </View>
         </View>
