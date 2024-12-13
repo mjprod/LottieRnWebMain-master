@@ -10,19 +10,15 @@ import {
 import LottieView from "react-native-web-lottie";
 import useApiRequest from "../hook/useApiRequest";
 import { userId } from "../global/Settings";
-//import { useTheme } from "../hook/useTheme";
+import { useGame } from "../context/GameContext";
 
 const colectLuckyCoins = require("./../assets/image/lucky_coin.png");
 const lottieStars = require("./../assets/lotties/lottieStars.json");
 const lottieSymbolsAnim = require("./../assets/lotties/3LuckySymbolsPart01.json");
 const lottieBonusCard = require("./../assets/lotties/lottieBonusCard.json");
 
-const LuckySymbolCollect = ({
-  nextCard,
-  setLuckySymbolCount,
-  setCollectLuckySymbolVideo,
-}) => {
-  //const { goToNextTheme } = useTheme();
+const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo }) => {
+  const { setLuckySymbolCount } = useGame();
 
   const [clicks, setClicks] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -85,7 +81,7 @@ const LuckySymbolCollect = ({
       setCollectLuckySymbolVideo(false);
       setTimeout(() => {
         setLuckySymbolCount(0);
-        
+
         updateLuckySymbol(userId, 0);
         nextCard();
       }, 1200);

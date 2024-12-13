@@ -10,7 +10,7 @@ import RotatingCirclesBackground from "./RotatingCirclesBackground";
 import LottieTicketSlot from "./LottieTicketSlot";
 import { useSound } from "../hook/useSoundPlayer";
 import { useLocation, useNavigate } from "react-router-native";
-import { IconJokerPlus } from '../assets/icons/IconJokerPlus';
+import { IconJokerPlus } from "../assets/icons/IconJokerPlus";
 
 const GameOverScreen = () => {
   const navigate = useNavigate();
@@ -32,18 +32,16 @@ const GameOverScreen = () => {
 
   const animatedProgress = useRef(new Animated.Value(0)).current;
 
-  const location = useLocation();
-  const {
-    luckySymbolCount = 0, // default value if not provided
-    ticketCount = 0, // default value if not provided
-  } = location.state || {};
-  
+  //const location = useLocation();
+  ///const {
+  //ticketCount = 0, // default value if not provided
+  //} = location.state || {};
 
   useEffect(() => {
     // Start the animation when the component mounts
     Animated.timing(animatedProgress, {
       toValue: progress,
-      duration: 3000, 
+      duration: 3000,
       useNativeDriver: false,
     }).start();
 
@@ -107,7 +105,7 @@ const GameOverScreen = () => {
           <View style={styles.margim}>
             <View style={styles.header}>
               <View style={styles.iconWrapper}>
-                <IconJokerPlus/>
+                <IconJokerPlus />
               </View>
               <Text style={styles.title}>TURBO SCRATCH RESULTS</Text>
             </View>
@@ -132,10 +130,7 @@ const GameOverScreen = () => {
                   source={backgroundLuckySymbol}
                   style={styles.imageBackgroundLuckySymbol}
                 >
-                  <LottieLuckySymbolCoinSlot
-                    luckySymbolCount={luckySymbolCount}
-                    topLayout={false}
-                  />
+                  <LottieLuckySymbolCoinSlot topLayout={false} />
                 </ImageBackground>
                 <View style={styles.luckySymbols}></View>
               </View>
@@ -148,7 +143,7 @@ const GameOverScreen = () => {
                 source={backgroundTotalTicket}
                 style={styles.imageBackgroundLuckySymbol}
               >
-                <LottieTicketSlot ticketCount={ticketCount}/>
+                <LottieTicketSlot />
               </ImageBackground>
               <Text style={styles.ticketTitle}>TOTAL TICKETS EARNED</Text>
               <View

@@ -9,7 +9,7 @@ const AlphaView = ({ showAlphaView }) => {
     Animated.timing(fadeAnim, {
       toValue: showAlphaView ? 1 : 0,
       duration: 300,
-      useNativeDriver: Platform.OS !== 'web',
+      useNativeDriver: Platform.OS !== "web",
     }).start();
   }, [showAlphaView]);
 

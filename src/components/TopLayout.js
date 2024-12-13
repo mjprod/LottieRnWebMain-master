@@ -13,6 +13,7 @@ import { useTheme } from "../hook/useTheme";
 import NumberTicker from "./NumberTicker";
 import { Howl } from "howler";
 import { useSound } from "../hook/useSoundPlayer";
+import { useGame } from "../context/GameContext";
 
 const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
 const backgroundTopLayoutRed = require("./../assets/image/background_top_layout_red.png");
@@ -27,13 +28,9 @@ const lottieCombo1 = require("../assets/lotties/ComboHolderMaxVersion-2x.json");
 const lottieCombo2 = require("../assets/lotties/ComboHolderMaxVersion-3x.json");
 const lottieCombo3 = require("../assets/lotties/ComboHolderMaxVersion-4x.json");
 
-const TopLayout = ({
-  scratchStarted,
-  setTimerGame,
-  score,
-  luckySymbolCount,
-  clickCount,
-}) => {
+const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
+  const { score, luckySymbolCount } = useGame();
+
   const scaleAnim = useRef(new Animated.Value(1.8)).current;
   const [countdownTimer, setCountdownTimer] = useState(0);
   const { gameCenterIcon } = useTheme();
@@ -46,7 +43,6 @@ const TopLayout = ({
   const lottieRef = useRef(null);
 
   const { isSoundEnabled } = useSound();
-
 
   const soundRefs = useRef({
     //x2: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x2_G_.mp3`)], preload: true }),
@@ -77,11 +73,10 @@ const TopLayout = ({
   }, []);
 
   const playSound = (soundKey) => {
-    if (soundRefs.current[soundKey]  &&  isSoundEnabled) {
+    if (soundRefs.current[soundKey] && isSoundEnabled) {
       soundRefs.current[soundKey].play();
     }
   };
-  
 
   useEffect(() => {
     switch (clickCount) {
@@ -182,17 +177,16 @@ const TopLayout = ({
             <Text style={[styles.textTopLeft, { color: "#FFFFFF" }]}>
               POP POINTS COUNTDOWN
             </Text>
-        
 
             {scratchStarted && (
               <View style={styles.rowCountDown}>
-
-              <LottieView
-                style={styles.lottieAnimation}
-                source={lottieCountDownBonus}
-                autoPlay
-                speed={1}
-                loop={false} />
+                <LottieView
+                  style={styles.lottieAnimation}
+                  source={lottieCountDownBonus}
+                  autoPlay
+                  speed={1}
+                  loop={false}
+                />
                 <Animated.View
                   style={[
                     //styles.rowCountDown,
@@ -203,11 +197,8 @@ const TopLayout = ({
                     {countdownTimer * 100}
                   </Text>
                 </Animated.View>
-                </View>
-
+              </View>
             )}
-
-           
           </View>
 
           <View style={styles.textColumnRigth}>
@@ -290,10 +281,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-end",
     marginTop: 45,
-    userSelect: 'none',
+    userSelect: "none",
   },
   textTopLeft: {
-    userSelect: 'none',
+    userSelect: "none",
     color: "#43db47",
     textAlign: "left",
     fontFamily: "Teko-Medium",
@@ -301,7 +292,7 @@ const styles = StyleSheet.create({
     marginBottom: 85,
   },
   textTopRight: {
-    userSelect: 'none',
+    userSelect: "none",
     color: "white",
     textAlign: "right",
     fontFamily: "Teko-Medium",
@@ -318,14 +309,14 @@ const styles = StyleSheet.create({
     width: "50%",
   },
   textBottomRight: {
-    userSelect: 'none',
+    userSelect: "none",
     color: "#FFDFAC",
     textAlign: "right",
     fontFamily: "Teko-Medium",
     fontSize: 12,
   },
   textBottomLeft: {
-    userSelect: 'none',
+    userSelect: "none",
     bottom: 45,
     left: 14,
     color: "#43db47",
@@ -347,7 +338,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   countDownText: {
-    userSelect: 'none',
+    userSelect: "none",
     fontFamily: "Inter-Bold",
     fontSize: 18,
     color: "blue",

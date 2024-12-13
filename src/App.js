@@ -7,6 +7,7 @@ import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 import { NativeRouter, Route, Routes } from "react-router-native";
 import LauchScreen from "./components/LauchScreen";
 import GameOverScreen from "./components/GameOverScreen";
+import { GameProvider } from "./context/GameContext";
 
 const { height, width } = Dimensions.get("window");
 
@@ -23,24 +24,25 @@ export default function App() {
     });
   }, []);
 
-  // Definir os estilos condicionalmente
   const isSmallScreen = width < 400 || height < 650;
   const dynamicStyles = isSmallScreen ? smallStyles : styles;
 
   return (
     <View style={styles.container}>
       <View style={dynamicStyles.app}>
-        <ThemeProvider>
-          <SoundProvider>
-            <NativeRouter>
-              <Routes>
-                <Route path="*" element={<LauchScreen />} />
-                <Route path="/game" element={<ScratchLuckyGame />} />
-                <Route path="/game_over" element={<GameOverScreen />} />
-              </Routes>
-            </NativeRouter>
-          </SoundProvider>
-        </ThemeProvider>
+        <GameProvider>
+          <ThemeProvider>
+            <SoundProvider>
+              <NativeRouter>
+                <Routes>
+                  <Route path="*" element={<LauchScreen />} />
+                  <Route path="/game" element={<ScratchLuckyGame />} />
+                  <Route path="/game_over" element={<GameOverScreen />} />
+                </Routes>
+              </NativeRouter>
+            </SoundProvider>
+          </ThemeProvider>
+        </GameProvider>
       </View>
     </View>
   );
@@ -59,7 +61,7 @@ const styles = StyleSheet.create({
     maxHeight: 720,
     flex: 1,
     backgroundColor: "black",
-    borderRadius: 56, 
+    borderRadius: 56,
     overflow: "hidden",
     boxShadow: "0 4px 6px rgba(0,0,0,0.5)",
   },

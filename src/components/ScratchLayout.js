@@ -3,10 +3,8 @@ import { StyleSheet, View, Image } from "react-native";
 import ScratchCardLeft from "./ScratchCardLeft";
 import ScratchGame from "./ScratchGame";
 import ScratchCard from "./ScratchCard";
-import {
-  eraserShouldBeScratched,
-  heightScratch,
-} from "../global/Settings";
+import { eraserShouldBeScratched, heightScratch } from "../global/Settings";
+import { useGame } from "../context/GameContext";
 
 const scratchForeground = require("./../assets/image/scratch_foreground.jpg");
 
@@ -15,18 +13,17 @@ const ScratchLayout = ({
   setReset,
   scratched,
   setScratched,
-  luckySymbolCount,
   setScratchStarted,
   scratchCardLeft,
   timerGame,
-  score,
-  setScore,
   setWinLuckySymbolVideo,
   setCollectLuckySymbolVideo,
   clickCount,
   setClickCount,
   nextCard,
 }) => {
+  const { luckySymbolCount } = useGame();
+
   const [imageLoading, setImageLoading] = useState(false);
   const [isWinner, setIsWinner] = useState(false);
   const [isLuckySymbolTrue, setIsLuckySymbolTrue] = useState(false);
@@ -74,8 +71,8 @@ const ScratchLayout = ({
     <View style={styles.container}>
       <View style={styles.bottomView}>
         <ScratchGame
-          score={score}
-          setScore={setScore}
+          //score={score}
+          //setScore={setScore}
           isWinner={isWinner}
           setIsWinner={setIsWinner}
           onAutoPop={triggerAutoPop}
@@ -109,7 +106,8 @@ const ScratchLayout = ({
       <View
         //ref={buttonRef}
         //onLayout={handleLayout}
-        style={{ marginTop: 5, overflow: "hidden", alignSelf: "stretch" }}>
+        style={{ marginTop: 5, overflow: "hidden", alignSelf: "stretch" }}
+      >
         <ScratchCardLeft scratchCardLeft={scratchCardLeft} />
       </View>
     </View>
@@ -151,22 +149,21 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   transparentVideo: {
-    position  : "absolute",
+    position: "absolute",
     top: 0,
     left: 0,
     //height: windowHeight,
     //width: windowWidth,
     justifyContent: "center",
     alignItems: "center",
-   
   },
   transparentOverlay: {
-    position  : "absolute",
+    position: "absolute",
     top: 0,
     left: 0,
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0)",
-   // height: windowHeight,
+    // height: windowHeight,
     //width: windowWidth,
     justifyContent: "center",
     alignItems: "center",

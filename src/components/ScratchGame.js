@@ -25,10 +25,11 @@ import {
 import themes from "../global/themeConfig";
 import { useTheme } from "../hook/useTheme";
 import { useSound } from "../hook/useSoundPlayer";
+import { useGame } from "../context/GameContext";
 
 const ScratchGame = ({
-  score,
-  setScore,
+  //score,
+  //setScore,
   setIsWinner,
   scratched,
   reset,
@@ -37,10 +38,11 @@ const ScratchGame = ({
   setIsLuckySymbolTrue,
   timerGame,
   setWinLuckySymbolVideo,
-  luckySymbolCount,
   clickCount,
   setClickCount,
 }) => {
+  const { score, setScore, luckySymbolCount } = useGame();
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
   const [winningIcons, setWinningIcons] = useState([]);
@@ -139,16 +141,14 @@ const ScratchGame = ({
         sound.unload(); // Unload sounds to prevent memory leaks
       });
     };
-  }, [currentTheme]); 
-
-
+  }, [currentTheme]);
 
   const playSound = (soundKey) => {
     const sound = soundRefs.current[soundKey];
-  
+
     if (sound && isSoundEnabled) {
       if (!sound._loaded) {
-        sound.once('load', () => {
+        sound.once("load", () => {
           sound.play();
         });
         sound.load();
