@@ -3,7 +3,7 @@ import LottieView from "react-native-web-lottie";
 import { StyleSheet, View } from "react-native";
 import { useGame } from "../context/GameContext";
 
-const LottieTicketSlot = ({ ticketCount }) => {
+const LottieTicketSlot = () => {
   const { ticketCount } = useGame();
 
   const [activeAnimation, setActiveAnimation] = useState(0);
