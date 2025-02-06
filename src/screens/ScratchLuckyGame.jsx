@@ -1,31 +1,31 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import BrowserDetection from "react-browser-detection";
 import {
-  View,
-  StyleSheet,
-  ImageBackground,
   Animated,
   Dimensions,
+  ImageBackground,
   Platform,
+  StyleSheet,
   TouchableOpacity,
+  View,
 } from "react-native";
+import LottieView from "react-native-web-lottie";
 import { BackgroundGame } from "../components/BackgroundGame";
-import TopLayout from "../components/TopLayout";
-import ScratchLayout from "../components/ScratchLayout";
-import Video from "../components/Video";
 import GameOverScreen from "../components/GameOverScreen.js";
 import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
-import BrowserDetection from "react-browser-detection";
-import LottieView from "react-native-web-lottie";
+import ScratchLayout from "../components/ScratchLayout";
+import TopLayout from "../components/TopLayout";
+import Video from "../components/Video";
 
-import { useTheme } from "../hook/useTheme.js";
-import { useSound } from "../hook/useSoundPlayer.js";
-import IntroThemeVideo from "../components/IntroThemeVideo.js";
-import useApiRequest from "../hook/useApiRequest.js";
 import { ActivityIndicator } from "react-native-web";
-import { numberOfCards } from "../global/Settings.js";
 import { useLocation, useNavigate } from "react-router-native";
 import BottomDrawer from "../components/BottomDrawer.js";
+import IntroThemeVideo from "../components/IntroThemeVideo.js";
 import { useGame } from "../context/GameContext.js";
+import { numberOfCards } from "../global/Settings.js";
+import useApiRequest from "../hook/useApiRequest.js";
+import { useSound } from "../hook/useSoundPlayer.js";
+import { useTheme } from "../hook/useTheme.js";
 
 const backgroundGame = require("./../assets/image/background_game.png");
 const videoWinLuckySymbol = require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4");
@@ -50,23 +50,14 @@ const ScratchLuckyGame = () => {
 
   const [gameStarted, setGameStarted] = useState(false);
   const [countDownStarted, setCountDownStarted] = useState(true);
-
   const [introThemeVideo, setIntroThemeVideo] = useState(false);
-
   const [reset, setReset] = useState(false);
   const [scratched, setScratched] = useState(false);
   const [scratchCardLeft, setScratchCardLeft] = useState(0);
   const [timerGame, setTimerGame] = useState(0);
-
-  //const [scratchStarted, setScratchStarted] = useState(false);
-  //const [luckySymbolCount, setLuckySymbolCount] = useState(0);
-  //const [ticketCount, setTicketCount] = useState(0);
-
   const [clickCount, setClickCount] = useState(0);
-
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
-
   const [winLuckySymbolVideo, setWinLuckySymbolVideo] = useState(false);
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
@@ -82,8 +73,7 @@ const ScratchLuckyGame = () => {
 
   const ref = useRef(null);
 
-  const { loading, error, response, fetchData, updateLuckySymbol } =
-    useApiRequest();
+  const { loading, error, response, updateLuckySymbol } = useApiRequest();
   const [user, setUser] = useState(null);
 
   const location = useLocation();
@@ -110,23 +100,7 @@ const ScratchLuckyGame = () => {
 
   // Trigger the API call when the component mounts
   useEffect(() => {
-    const fetchUserDetails = async () => {
-      const config = {
-        url: "http://3.27.254.35:3001/user_details",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: {
-          id: 1, // Dynamically set user ID here
-        },
-      };
-
-      await fetchData(config); // Trigger the API call
-    };
-
     //fetchUserDetails();
-
     //setScore(1200);
     //setTicketCount(1);
     //setLuckySymbolCount(1);
@@ -559,9 +533,9 @@ const styles = StyleSheet.create({
   transparentVideo: {
     ...Platform.select({
       web: {
-        width: "100vw", // Full viewport width for web
-        height: "100vh", // Full viewport height for web
-        objectFit: "cover", // Makes sure the video scales proportionally on web
+        width: "100vw",
+        height: "100vh",
+        objectFit: "cover",
       },
       default: {
         ...StyleSheet.absoluteFillObject, // For mobile, full-screen video scaling

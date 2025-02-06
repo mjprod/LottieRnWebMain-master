@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import LottieView from "react-native-web-lottie";
 import { StyleSheet, View } from "react-native";
+import LottieView from "react-native-web-lottie";
 import { useGame } from "../context/GameContext";
 
 const LottieTicketSlot = () => {
@@ -10,7 +10,6 @@ const LottieTicketSlot = () => {
 
   useEffect(() => {
     if (ticketCount > 0) {
-      // Trigger each animation with a delay of 1 second between them
       for (let i = 0; i < ticketCount; i++) {
         setTimeout(() => {
           setActiveAnimation(i + 1);

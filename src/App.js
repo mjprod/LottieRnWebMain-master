@@ -1,20 +1,18 @@
 import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
-import "./index.css";
-import { ThemeProvider } from "./hook/useTheme";
-import { SoundProvider } from "./hook/useSoundPlayer";
-import ScratchLuckyGame from "./screens/ScratchLuckyGame";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { NativeRouter, Route, Routes } from "react-router-native";
-import LauchScreen from "./components/LauchScreen";
 import GameOverScreen from "./components/GameOverScreen";
+import LauchScreen from "./components/LauchScreen";
 import { GameProvider } from "./context/GameContext";
+import { SoundProvider } from "./hook/useSoundPlayer";
+import { ThemeProvider } from "./hook/useTheme";
+import "./index.css";
+import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 
 const { height, width } = Dimensions.get("window");
 
 export default function App() {
   React.useEffect(() => {
-    // Disable text selection for elements
-    // with class "no-select"
     const noSelectElements = document.querySelectorAll(".no-select");
     noSelectElements.forEach((element) => {
       element.style.webkitUserSelect = "none";
