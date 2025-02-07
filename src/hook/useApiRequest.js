@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { SERVER } from '../util/constants';
 
 // Custom hook for making API requests using fetch
 const useApiRequest = () => {
@@ -36,40 +35,24 @@ const useApiRequest = () => {
     }
   };
 
-  // Function specifically for updating lucky symbol
-  const updateLuckySymbol = async (id, lucky_symbol) => {
-    const config = {
-      url: SERVER + '/updateLuckySymbol',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: {
-        id,
-        lucky_symbol,
-      },
-    };
+    // Function specifically for updating lucky symbol
+    const updateLuckySymbol = async (id, lucky_symbol) => {
+        const config = {
+          url: 'http://3.27.254.35:3001/updateLuckySymbol',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: {
+            id,
+            lucky_symbol,
+          },
+        };
+    
+        await fetchData(config);
+      };
 
-    await fetchData(config);
-  };
-
-  const fetchUserDetails = async () => {
-    const config = {
-      url: SERVER + "/user_details",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        user_id: 1, // Dynamically set user ID here
-        utc_date: "2025-02-15T00:00:00Z"
-      },
-    };
-
-    await fetchData(config); // Trigger the API call
-  };
-
-  return { loading, error, response, fetchData, updateLuckySymbol, fetchUserDetails };
+  return { loading, error, response, fetchData , updateLuckySymbol};
 };
 
 

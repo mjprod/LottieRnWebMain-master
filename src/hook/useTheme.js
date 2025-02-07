@@ -1,13 +1,12 @@
 import React, {
   createContext,
-  useContext,
-  useEffect,
-  useMemo,
   useState,
+  useEffect,
+  useContext,
+  useMemo,
 } from "react";
-import { numberOfCards } from "../global/Settings";
 import themes from "../global/themeConfig";
-
+import { numberOfCards } from "../global/Settings";
 // Enum for different themes
 export const ThemeEnum = Object.freeze({
   EGYPT: "egypt",
@@ -111,7 +110,7 @@ export const ThemeProvider = ({ children }) => {
   const goToNextTheme = () => {
     console.log("Going to the next theme");
     if (currentThemeIndex < themeSequence.length - 1) {
-      setCurrentThemeIndex(currentThemeIndex + 1);
+          setCurrentThemeIndex(currentThemeIndex + 1);
       console.log(`New theme index: ${currentThemeIndex + 1}`);
     } else {
       console.log("You are already on the last theme");
@@ -162,8 +161,8 @@ export const ThemeProvider = ({ children }) => {
       themeSequence,
       currentTheme: themeSequence[currentThemeIndex], // Current theme from the sequence
       nextTheme: currentThemeIndex + 1 < themeSequence.length
-        ? themeSequence[currentThemeIndex + 1]
-        : null,
+      ? themeSequence[currentThemeIndex + 1]
+      : null,
       gameCenterIcon, // Current game center icon
       backgroundLoop, // Current background loop
       backgroundScratchCard,

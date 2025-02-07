@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Linking, Platform, StyleSheet } from "react-native";
-import { ActivityIndicator, Image, ImageBackground, Text, TouchableOpacity, View } from "react-native-web";
-import { useNavigate } from "react-router-native";
+import { Animated, ImageBackground, TouchableOpacity ,View, StyleSheet, Text, Platform, Image,Linking} from "react-native-web";
 import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
-import useApiRequest from "../hook/useApiRequest";
 import GameButton from "./GameButton";
+import { useNavigate } from "react-router-native";
 import RotatingCirclesBackground from "./RotatingCirclesBackground";
 
 const LauchScreen = () => {
@@ -20,12 +18,10 @@ const LauchScreen = () => {
   const [progress, setProgress] = useState();
   const animatedProgress = useRef(new Animated.Value(0)).current;
 
-  const [initialScore, setInitialScore] = useState(0);
-  const [initialTicketCount, setInitialTicketCount] = useState(0);
-  const [initialLuckySymbolCount, setInitialLuckySymbolCount] = useState(0);
-  const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
-
-  const [initialUserData, setInitialUserData] = useState("");
+  const [initialScore, setInitialScore] = useState(1500);
+  const [initialTicketCount, setInitialTicketCount] = useState(2);
+  const [initialLuckySymbolCount, setInitialLuckySymbolCount] = useState(1);
+  const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(2);
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -33,9 +29,6 @@ const LauchScreen = () => {
     minutes: 0,
     seconds: 0,
   });
-
-  const { loading, error, response, fetchUserDetails } = useApiRequest();
-
 
   const handleStartGame = () => {
     navigate("/game", {
@@ -86,21 +79,31 @@ const LauchScreen = () => {
   }, []);
 
   useEffect(() => {
-    fetchUserDetails();
+    // Simulate fetching data from an API
+    const fetchData = async () => {
+      try {
+        // Replace with your actual fetch API request
+        const response = await fetch("http://3.27.254.35:3001/user_details", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: 1 }), // replace with actual user ID if needed
+        });
+        const data = await response.json();
+
+        // Update state with fetched data
+        //setInitialScore(data.initialScore || 1200);
+        //setInitialTicketCount(data.tickets || 1);
+        //setInitialLuckySymbolCount(data.lucky_symbol || 1);
+        //setInitialScratchCardLeft(data.cards || 5);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
-
-
-  useEffect(() => {
-    if (response && response.user) {
-      console.log("Response: ", response);
-
-      setInitialScore(response.user.total_score || 0);
-      setInitialTicketCount(response.user.ticket_balance || 0);
-      setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
-      setInitialScratchCardLeft(response.user.card_balance || 0);
-      setInitialUserData(response.user);
-    }
-  }, [response]);
 
   useEffect(() => {
     console.log("Score: ", initialScore);
@@ -120,14 +123,6 @@ const LauchScreen = () => {
 
   const handlePress = () => {
     Linking.openURL("https://www.google.com"); // This opens Google in the default browser
-  };
-
-  const LoadingView = () => {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="small" color="#00ff00" />
-      </View>
-    );
   };
 
   return (
@@ -152,11 +147,7 @@ const LauchScreen = () => {
             <Text style={styles.title}>Welcome</Text>
           </View>
 
-          <View>
-            {loading ? <LoadingView /> :
-              <Text style={styles.subtitle}>{initialUserData.full_name || error}</Text>
-            }
-          </View>
+          <Text style={styles.subtitle}>Glauco Pereira</Text>
 
           <View style={styles.horizontalDivider} />
 
@@ -175,9 +166,7 @@ const LauchScreen = () => {
                 <IconStarResultScreen />
                 <Text style={styles.resultTitle}>TOTAL POINTS</Text>
               </View>
-              {loading ? <LoadingView /> :
-                <Text style={styles.resultPoints}>{initialScore || 0}</Text>
-              }
+              <Text style={styles.resultPoints}>+9999</Text>
             </View>
 
             <View style={{ width: 10 }} />
@@ -193,9 +182,7 @@ const LauchScreen = () => {
 
                 <Text style={styles.resultTitle}>Lucky Symbols</Text>
               </View>
-              {loading ? <LoadingView /> :
-                <Text style={styles.resultPoints}>{initialLuckySymbolCount || 0}</Text>
-              }
+              <Text style={styles.resultPoints}>+9999</Text>
             </View>
           </View>
 
@@ -211,9 +198,7 @@ const LauchScreen = () => {
                 />
                 <Text style={styles.resultTitle}>Tickets Total</Text>
               </View>
-              {loading ? <LoadingView /> :
-                <Text style={styles.resultPoints}>{initialTicketCount || 0}</Text>
-              }
+              <Text style={styles.resultPoints}>+9999</Text>
             </View>
 
             <View style={{ width: 10 }} />
@@ -228,9 +213,7 @@ const LauchScreen = () => {
                 />
                 <Text style={styles.resultTitle}>Cards Total</Text>
               </View>
-              {loading ? <LoadingView /> :
-                <Text style={styles.resultPoints}>{initialScratchCardLeft || 0}</Text>
-              }
+              <Text style={styles.resultPoints}>+9999</Text>
             </View>
           </View>
 
@@ -493,13 +476,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#A6A6A6", // Adjusted to match the lighter gray color
     textDecorationLine: "underline", // This will underline the text
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 10,
   },
 });
 
