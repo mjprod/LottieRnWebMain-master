@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import { NativeRouter, Route, Routes } from "react-router-native";
 import GameOverScreen from "./components/GameOverScreen";
 import LauchScreen from "./components/LauchScreen";
+import { SnackbarProvider } from "./components/SnackbarContext";
 import { GameProvider } from "./context/GameContext";
 import { SoundProvider } from "./hook/useSoundPlayer";
 import { ThemeProvider } from "./hook/useTheme";
@@ -32,11 +33,13 @@ export default function App() {
           <ThemeProvider>
             <SoundProvider>
               <NativeRouter>
-                <Routes>
-                  <Route path="*" element={<LauchScreen />} />
-                  <Route path="/game" element={<ScratchLuckyGame />} />
-                  <Route path="/game_over" element={<GameOverScreen />} />
-                </Routes>
+                <SnackbarProvider>
+                  <Routes>
+                    <Route path="*" element={<LauchScreen />} />
+                    <Route path="/game" element={<ScratchLuckyGame />} />
+                    <Route path="/game_over" element={<GameOverScreen />} />
+                  </Routes>
+                </SnackbarProvider>
               </NativeRouter>
             </SoundProvider>
           </ThemeProvider>

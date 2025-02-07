@@ -6,6 +6,7 @@ import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
 import useApiRequest from "../hook/useApiRequest";
 import GameButton from "./GameButton";
 import RotatingCirclesBackground from "./RotatingCirclesBackground";
+import { useSnackbar } from "./SnackbarContext";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ const LauchScreen = () => {
   });
 
   const { loading, error, response, fetchUserDetails } = useApiRequest();
+  const { showSnackbar } = useSnackbar();
 
 
   const handleStartGame = () => {
@@ -113,6 +115,11 @@ const LauchScreen = () => {
     }).start();
   }, [initialScore]);
 
+  useEffect(() => {
+    console.log("Error: ", error);
+    showSnackbar(error, 3000);
+  }, [error]);
+
   // Update the state to reflect the animated value (for Slider to work properly)
   animatedProgress.addListener(({ value }) => {
     setProgress(value); // Sync the animated value with the slider's progress
@@ -154,7 +161,7 @@ const LauchScreen = () => {
 
           <View>
             {loading ? <LoadingView /> :
-              <Text style={styles.subtitle}>{initialUserData.full_name || error}</Text>
+              <Text style={styles.subtitle}>{initialUserData.full_name || ""}</Text>
             }
           </View>
 
