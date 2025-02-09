@@ -27,6 +27,7 @@ export default function App() {
   const dynamicStyles = isSmallScreen ? smallStyles : styles;
 
   return (
+
     <View style={styles.container}>
       <View style={dynamicStyles.app}>
         <GameProvider>

@@ -1,19 +1,19 @@
+import { Howl } from "howler";
 import React, { useEffect, useRef, useState } from "react";
 import {
-  StyleSheet,
-  View,
-  Text,
+  Animated,
   Image,
   ImageBackground,
-  Animated,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import LottieView from "react-native-web-lottie";
-import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
-import { useTheme } from "../hook/useTheme";
-import NumberTicker from "./NumberTicker";
-import { Howl } from "howler";
-import { useSound } from "../hook/useSoundPlayer";
 import { useGame } from "../context/GameContext";
+import { useSound } from "../hook/useSoundPlayer";
+import { useTheme } from "../hook/useTheme";
+import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
+import NumberTicker from "./NumberTicker";
 
 const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
 const backgroundTopLayoutRed = require("./../assets/image/background_top_layout_red.png");
@@ -105,6 +105,8 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
     }
   }, [clickCount]);
 
+  /*
+  TODO: Implement countdown timer
   useEffect(() => {
     let interval;
     if (scratchStarted) {
@@ -128,6 +130,33 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
 
     return () => clearInterval(interval);
   }, [scratchStarted, setTimerGame]);
+*/
+
+  useEffect(() => {
+    let interval;
+    if (scratchStarted) {
+      setCountdownTimer(10);
+      interval = setInterval(() => {
+        setCountdownTimer((prevTimer) => {
+          const newTime = prevTimer - 1;
+          const nextTime = newTime <= 1 ? 1 : newTime;
+
+          if (nextTime === 1) {
+            clearInterval(interval);
+          }
+          return nextTime;
+        });
+      }, 1000);
+    } else {
+      setCountdownTimer(0);
+    }
+
+    return () => clearInterval(interval);
+  }, [scratchStarted]);
+
+  useEffect(() => {
+    setTimerGame(countdownTimer);
+  }, [countdownTimer, setTimerGame]);
 
   // Function to determine background based on timer value
   const getBackground = (value) => {

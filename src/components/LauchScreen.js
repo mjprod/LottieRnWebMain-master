@@ -40,6 +40,12 @@ const LauchScreen = () => {
 
 
   const handleStartGame = () => {
+    if (initialUserData.full_name === undefined || initialUserData.full_name === "") {
+      showSnackbar("Please complete your profile to play the game", 3000);
+      fetchUserDetails();
+      return;
+
+    }
     navigate("/game", {
       state: {
         initialScore,
@@ -117,7 +123,9 @@ const LauchScreen = () => {
 
   useEffect(() => {
     console.log("Error: ", error);
-    showSnackbar(error, 3000);
+    if (error && error.length > 0) {
+      showSnackbar(error, 3000);
+    }
   }, [error]);
 
   // Update the state to reflect the animated value (for Slider to work properly)
