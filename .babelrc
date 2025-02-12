@@ -2,7 +2,12 @@
   "presets": [
     "module:metro-react-native-babel-preset",
     "@babel/preset-env",
-    "@babel/preset-react"
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic"
+      }
+    ]
   ],
   "env": {
     "development": {
@@ -15,8 +20,12 @@
   },
   "overrides": [
     {
-      "include": ["./node_modules/react-native-svg-web"],
-      "presets": ["@babel/preset-env"]
+      "include": [
+        "./node_modules/react-native-svg-web"
+      ],
+      "presets": [
+        "@babel/preset-env"
+      ]
     }
   ]
 }

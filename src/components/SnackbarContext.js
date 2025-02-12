@@ -13,7 +13,7 @@ export const SnackbarProvider = ({ children }) => {
   });
 
   // Function to show the snackbar
-  const showSnackbar = useCallback((message, duration = 3000) => {
+  const showSnackbar = useCallback((message, duration = Infinity) => {
     setSnackbar({ visible: true, message, duration });
   }, []);
 

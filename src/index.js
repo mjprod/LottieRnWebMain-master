@@ -5,6 +5,7 @@ import App from './App';
 import './index.css';
 
 import * as ReactDOMLegacy from 'react-dom';
+import AppRoot from './util/AppRoot';
 
 if (!ReactDOMLegacy.findDOMNode) {
   ReactDOMLegacy.findDOMNode = (component) => {
@@ -22,4 +23,9 @@ if (!ReactDOMLegacy.findDOMNode) {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(
+  <AppRoot>
+    <App />
+  </AppRoot>
+
+);

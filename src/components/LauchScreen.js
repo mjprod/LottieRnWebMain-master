@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Linking, Platform, StyleSheet } from "react-native";
 import { ActivityIndicator, Image, ImageBackground, Text, TouchableOpacity, View } from "react-native-web";
-import { useNavigate } from "react-router-native";
+import { useLocation, useNavigate } from "react-router-native";
 import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
 import useApiRequest from "../hook/useApiRequest";
 import GameButton from "./GameButton";
@@ -38,10 +38,21 @@ const LauchScreen = () => {
   const { loading, error, response, fetchUserDetails } = useApiRequest();
   const { showSnackbar } = useSnackbar();
 
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get('id');
+  const username = queryParams.get('username');
+
+  useEffect(() => {
+    if (id && username) {
+      showSnackbar(`ID: ${id}, Username: ${username}`);
+
+    }
+  }, [id, username]);
 
   const handleStartGame = () => {
     if (initialUserData.full_name === undefined || initialUserData.full_name === "") {
-      showSnackbar("Please complete your profile to play the game", 3000);
+      showSnackbar("Please complete your profile to play the game");
       fetchUserDetails();
       return;
 
@@ -97,11 +108,8 @@ const LauchScreen = () => {
     fetchUserDetails();
   }, []);
 
-
   useEffect(() => {
     if (response && response.user) {
-      console.log("Response: ", response);
-
       setInitialScore(response.user.total_score || 0);
       setInitialTicketCount(response.user.ticket_balance || 0);
       setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
@@ -111,7 +119,7 @@ const LauchScreen = () => {
   }, [response]);
 
   useEffect(() => {
-    console.log("Score: ", initialScore);
+    //console.log("Score: ", initialScore);
     setProgress(initialScore);
 
     Animated.timing(animatedProgress, {
@@ -124,13 +132,16 @@ const LauchScreen = () => {
   useEffect(() => {
     console.log("Error: ", error);
     if (error && error.length > 0) {
-      showSnackbar(error, 3000);
+      showSnackbar(error);
     }
   }, [error]);
 
   // Update the state to reflect the animated value (for Slider to work properly)
   animatedProgress.addListener(({ value }) => {
-    setProgress(value); // Sync the animated value with the slider's progress
+    if (value > 0) {
+      setProgress(value);
+    }
+    //setProgress(value); // Sync the animated value with the slider's progress
   });
 
   const handlePress = () => {
