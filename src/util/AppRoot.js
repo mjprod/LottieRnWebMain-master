@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
 
 function AppRoot({ children }) {
   useEffect(() => {
@@ -16,7 +15,7 @@ function AppRoot({ children }) {
     };
   }, []);
 
-  return <BrowserRouter>{children}</BrowserRouter>;
+  return <React.Fragment>{children}</React.Fragment>;
 }
 
 export default AppRoot;

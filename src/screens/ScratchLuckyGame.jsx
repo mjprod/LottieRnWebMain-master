@@ -11,14 +11,14 @@ import {
 } from "react-native";
 import LottieView from "react-native-web-lottie";
 import { BackgroundGame } from "../components/BackgroundGame";
-import GameOverScreen from "../components/GameOverScreen.js";
 import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
 import ScratchLayout from "../components/ScratchLayout";
 import TopLayout from "../components/TopLayout";
 import Video from "../components/Video";
+import GameOverScreen from "./GameOverScreen.js";
 
 import { ActivityIndicator } from "react-native-web";
-import { useLocation, useNavigate } from "react-router-native";
+import { useLocation, useNavigate } from "react-router";
 import BottomDrawer from "../components/BottomDrawer.js";
 import IntroThemeVideo from "../components/IntroThemeVideo.js";
 import { useGame } from "../context/GameContext.js";

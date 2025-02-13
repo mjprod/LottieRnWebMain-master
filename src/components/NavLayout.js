@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { ImageBackground } from "react-native-web";
 import AlphaView from "./AlphaView";
 
-const lottieAppBackground = require("../assets/image/background_top_nav.png");
+const navTopAppBackground = require("../assets/image/background_top_nav.png");
 
 const NavLayout = ({ showAlphaView }) => {
   return (
@@ -15,7 +15,7 @@ const NavLayout = ({ showAlphaView }) => {
         ]}
       >
         <ImageBackground
-          source={lottieAppBackground}
+          source={navTopAppBackground}
           style={styles.imageBackground}
           reziseMode="cover"
         >
@@ -28,7 +28,7 @@ const NavLayout = ({ showAlphaView }) => {
 
 const styles = StyleSheet.create({
   container: {
-   
+
   },
   viewBackground: {
     backgroundColor: "#222021",

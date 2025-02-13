@@ -1,22 +1,22 @@
+import Slider from "@react-native-community/slider";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Linking, Platform, StyleSheet } from "react-native";
+import { Animated, Linking, StyleSheet } from "react-native";
 import { ActivityIndicator, Image, ImageBackground, Text, TouchableOpacity, View } from "react-native-web";
-import { useLocation, useNavigate } from "react-router-native";
+import LottieView from "react-native-web-lottie";
+import { useNavigate, useParams } from "react-router";
+import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
 import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
+import GameButton from "../components/GameButton";
+import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
+import ProfileHeader from "../components/ProfileHeader";
+import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
-import GameButton from "./GameButton";
-import RotatingCirclesBackground from "./RotatingCirclesBackground";
-import { useSnackbar } from "./SnackbarContext";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
 
-  const logo = require("./../assets/image/turbo_scratch_logo.png");
-  const luckySymbol = require("./../assets/image/lucky_coin.png");
-
-  const icon_next_card = require("./../assets/image/icon_left_card.png");
-  const backgroundTotalTicket = require("./../assets/image/icon_ticket.png");
-  const backgroundResult = require("./../assets/image/background_game.png");
+  const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
+  const logo = require("./../assets/image/background_top_nav.png");
 
   const [progress, setProgress] = useState();
   const animatedProgress = useRef(new Animated.Value(0)).current;
@@ -38,24 +38,18 @@ const LauchScreen = () => {
   const { loading, error, response, fetchUserDetails } = useApiRequest();
   const { showSnackbar } = useSnackbar();
 
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const id = queryParams.get('id');
-  const username = queryParams.get('username');
+  const { id, username, email } = useParams();
 
   useEffect(() => {
-    if (id && username) {
-      showSnackbar(`ID: ${id}, Username: ${username}`);
-
-    }
-  }, [id, username]);
+    console.log("Params:", { id, username, email });
+    fetchUserDetails(id, username, email);
+  }, [id]);
 
   const handleStartGame = () => {
-    if (initialUserData.full_name === undefined || initialUserData.full_name === "") {
+    if (initialUserData.name === undefined || initialUserData.name === "") {
       showSnackbar("Please complete your profile to play the game");
-      fetchUserDetails();
+      fetchUserDetails(id, username, email);
       return;
-
     }
     navigate("/game", {
       state: {
@@ -105,28 +99,31 @@ const LauchScreen = () => {
   }, []);
 
   useEffect(() => {
-    fetchUserDetails();
-  }, []);
-
-  useEffect(() => {
-    if (response && response.user) {
-      setInitialScore(response.user.total_score || 0);
-      setInitialTicketCount(response.user.ticket_balance || 0);
-      setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
-      setInitialScratchCardLeft(response.user.card_balance || 0);
-      setInitialUserData(response.user);
+    console.log("Response: ", response);
+    if (response) {
+      if (response.user) {
+        setInitialScore(response.user.total_score || 0);
+        setInitialTicketCount(response.user.ticket_balance || 0);
+        setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
+        setInitialScratchCardLeft(response.user.card_balance || 0);
+        setInitialUserData(response.user);
+      }
+      if (response.daily) {
+        //setDailyData(response.daily);
+      }
     }
   }, [response]);
 
   useEffect(() => {
-    //console.log("Score: ", initialScore);
-    setProgress(initialScore);
+
 
     Animated.timing(animatedProgress, {
       toValue: initialScore,
       duration: 3000,
       useNativeDriver: false,
     }).start();
+
+    setProgress(initialScore);
   }, [initialScore]);
 
   useEffect(() => {
@@ -138,10 +135,7 @@ const LauchScreen = () => {
 
   // Update the state to reflect the animated value (for Slider to work properly)
   animatedProgress.addListener(({ value }) => {
-    if (value > 0) {
-      setProgress(value);
-    }
-    //setProgress(value); // Sync the animated value with the slider's progress
+    setProgress(value);
   });
 
   const handlePress = () => {
@@ -158,164 +152,134 @@ const LauchScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        resizeMode="contain"
-        source={backgroundResult}
-        style={styles.imageBackground}
-      >
-        <View style={styles.rotatingBackgroundContainer}>
-          <RotatingCirclesBackground />
-        </View>
-        <View style={[styles.container, { margin: 18 }]}>
-          <View style={styles.header}>
-            <Image
-              style={styles.tinyLogo}
-              source={{
-                uri: logo,
-              }}
-            />
-
-            <Text style={styles.title}>Welcome</Text>
-          </View>
-
-          <View>
+      <View style={styles.header}>
+        <Image
+          style={styles.tinyLogo}
+          source={{
+            uri: logo,
+          }}
+        />
+        {loading ? <LoadingView /> :
+          <ProfileHeader id={initialUserData.user_id} name={initialUserData.name}></ProfileHeader>
+        }
+      </View>
+      <View style={[styles.container, { marginLeft: 18, marginRight: 18, marginBottom: 10 }]}>
+        <Text
+          style={[
+            styles.subtitle,
+            { textTransform: "uppercase", marginBottom: 10 },
+          ]}
+        >
+          Statistics
+        </Text>
+        <View style={styles.resultRow}>
+          <View style={styles.resultCard}>
+            <View style={styles.viewRow}>
+              <IconStarResultScreen />
+              <Text style={styles.resultTitle}>TOTAL POINTS</Text>
+            </View>
             {loading ? <LoadingView /> :
-              <Text style={styles.subtitle}>{initialUserData.full_name || ""}</Text>
+              <Text style={styles.resultPoints}>{initialScore || 0}</Text>
             }
           </View>
-
-          <View style={styles.horizontalDivider} />
-
-          <Text
-            style={[
-              styles.subtitle,
-              { textTransform: "uppercase", marginBottom: 10 },
-            ]}
-          >
-            total game status
-          </Text>
-
-          <View style={styles.resultRow}>
-            <View style={styles.resultCard}>
-              <View style={styles.viewRow}>
-                <IconStarResultScreen />
-                <Text style={styles.resultTitle}>TOTAL POINTS</Text>
-              </View>
-              {loading ? <LoadingView /> :
-                <Text style={styles.resultPoints}>{initialScore || 0}</Text>
-              }
+          <View style={{ width: 10 }} />
+          <View style={styles.resultCard}>
+            <View style={styles.viewRow}>
+              <IconFourLeafClover />
+              <Text style={styles.resultTitle}>LUCKY SYMBOLS</Text>
             </View>
 
-            <View style={{ width: 10 }} />
-
-            <View style={styles.resultCard}>
-              <View style={styles.viewRow}>
-                <Image
-                  style={{ width: 20, height: 20 }}
-                  source={{
-                    uri: luckySymbol,
-                  }}
-                />
-
-                <Text style={styles.resultTitle}>Lucky Symbols</Text>
-              </View>
-              {loading ? <LoadingView /> :
-                <Text style={styles.resultPoints}>{initialLuckySymbolCount || 0}</Text>
-              }
-            </View>
+            <ImageBackground
+              resizeMode="contain"
+              source={backgroundLuckySymbol}
+              style={styles.imageBackgroundLuckySymbol}
+            >
+              <LottieLuckySymbolCoinSlot topLayout={false} />
+            </ImageBackground>
+            <View style={styles.luckySymbols}></View>
           </View>
-
-          <View style={{ height: 10 }} />
-          <View style={styles.resultRow}>
-            <View style={styles.resultCard}>
-              <View style={styles.viewRow}>
-                <Image
-                  style={{ width: 20, height: 20 }}
-                  source={{
-                    uri: backgroundTotalTicket,
-                  }}
-                />
-                <Text style={styles.resultTitle}>Tickets Total</Text>
-              </View>
-              {loading ? <LoadingView /> :
-                <Text style={styles.resultPoints}>{initialTicketCount || 0}</Text>
-              }
-            </View>
-
-            <View style={{ width: 10 }} />
-
-            <View style={styles.resultCard}>
-              <View style={styles.viewRow}>
-                <Image
-                  style={{ width: 20, height: 20 }}
-                  source={{
-                    uri: icon_next_card,
-                  }}
-                />
-                <Text style={styles.resultTitle}>Cards Total</Text>
-              </View>
-              {loading ? <LoadingView /> :
-                <Text style={styles.resultPoints}>{initialScratchCardLeft || 0}</Text>
-              }
-            </View>
-          </View>
-
-          {/* Timer Section */}
-          <View style={styles.timerSection}>
-            <View style={styles.backgroundRounded}>
-              <Text style={styles.timerTitle}>Time till Next Draw</Text>
-            </View>
-            <Text style={styles.timerContainer}>
-              <Text style={styles.timerNumberValue}>{timeLeft.days}</Text>
-              <Text style={styles.timerStringValue}> Days </Text>
-              <Text style={styles.timerNumberValue}>{timeLeft.hours}</Text>
-              <Text style={styles.timerStringValue}> Hrs </Text>
-              <Text style={styles.timerNumberValue}>{timeLeft.minutes}</Text>
-              <Text style={styles.timerStringValue}> Mins </Text>
-              <Text style={styles.timerNumberValue}>{timeLeft.seconds}</Text>
-              <Text style={styles.timerStringValue}> Secs</Text>
-            </Text>
-          </View>
-
-          <View style={styles.buttonWrapper}>
-            <GameButton text="Play Game" onPress={() => handleStartGame()} />
-          </View>
-
-          <TouchableOpacity onPress={handlePress} style={styles.button}>
-            <Text style={styles.buttonText}>
-              How To Play Turbo Scratch {">"}
-            </Text>
-          </TouchableOpacity>
         </View>
-      </ImageBackground>
+
+        {/* Total Tickets Earned Section */}
+        <View style={styles.ticketsSection}>
+          <View style={styles.containerTotalTicket}>
+            <LottieView
+              style={styles.lottieLuckyResultAnimation}
+              source={require("../assets/lotties/lottieTicketEntry.json")}
+              autoPlay
+              speed={1}
+              loop={false}
+            />
+            <Text style={styles.ticketTitle}>TOTAL RAFFLE TICKETS EARNED</Text>
+            {loading ? <LoadingView /> :
+              <Text style={styles.resultPoints}>{initialScore || 0}</Text>
+            }
+          </View>
+          <View
+            style={{
+              backgroundColor: "#4B595D",
+              height: 1,
+              width: "100%",
+              marginVertical: 8,
+            }}
+          />
+          <View style={styles.containerTotalTicket}>
+            <Text style={styles.nextTicketText}>Next Ticket</Text>
+            <Text style={styles.ticketProgress}>{`${parseInt(progress, 10)} / 20000`} </Text>
+          </View>
+
+          <View style={styles.sliderContainer}>
+            <Slider
+              style={styles.slider}
+              minimumValue={0}
+              maximumValue={20000}
+              value={progress}
+              onValueChange={(value) => setProgress(value)}
+              minimumTrackTintColor="#FFD89D"
+              maximumTrackTintColor="#000000"
+              thumbTintColor="#FFD89D"
+              thumbStyle={styles.thumb}
+            />
+          </View>
+        </View>
+
+        <View style={{ height: 10 }} />
+
+        {/* Timer Section */}
+        <View style={styles.timerSection}>
+          <View style={styles.backgroundRounded}>
+            <Text style={styles.timerTitle}>Time till Next Draw</Text>
+          </View>
+          <Text style={styles.timerContainer}>
+            <Text style={styles.timerNumberValue}>{timeLeft.days}</Text>
+            <Text style={styles.timerStringValue}> Days </Text>
+            <Text style={styles.timerNumberValue}>{timeLeft.hours}</Text>
+            <Text style={styles.timerStringValue}> Hrs </Text>
+            <Text style={styles.timerNumberValue}>{timeLeft.minutes}</Text>
+            <Text style={styles.timerStringValue}> Mins </Text>
+            <Text style={styles.timerNumberValue}>{timeLeft.seconds}</Text>
+            <Text style={styles.timerStringValue}> Secs</Text>
+          </Text>
+        </View>
+
+        <View style={styles.buttonWrapper}>
+          <GameButton text="Play Game" onPress={() => handleStartGame()} />
+        </View>
+
+        <TouchableOpacity onPress={handlePress} style={styles.button}>
+          <Text style={styles.buttonText}>
+            How To Play Turbo Scratch {">"}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    ...Platform.select({
-      web: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        justifyContent: "flex-start",
-        alignItems: "center",
-        zIndex: 1000,
-      },
-      default: {
-        ...StyleSheet.absoluteFillObject,
-        justifyContent: "flex-start",
-        alignItems: "center",
-        zIndex: 1000,
-      },
-    }),
-  },
-  margim: {
-    margin: 10,
-    //width: "85%",
+    flex: 1,
   },
   imageBackground: {
     width: "100%",
@@ -330,9 +294,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 10,
+    //justifyContent: "top",
+    //alignItems: "center",
+    // marginVertical: 10,
   },
   headerIcon: {
     width: 50,
@@ -360,7 +324,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     border: "1px solid #4B595D",
     borderRadius: 12,
-    padding: 8,
+    padding: 4,
   },
   backgroundRounded: {
     backgroundColor: "#1D1811",
@@ -402,6 +366,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   ticketTitle: {
+    flex: 1,
     fontFamily: "Teko-Medium",
     fontSize: 18,
     color: "#fff",
@@ -496,8 +461,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   tinyLogo: {
-    width: 150,
-    height: 50,
+    width: "100%",
+    height: 144,
     resizeMode: "contain",
   },
   horizontalDivider: {
@@ -507,7 +472,6 @@ const styles = StyleSheet.create({
     marginHorizontal: "1%", // centers it horizontally
     marginVertical: 10, // optional vertical margin
   },
-
   buttonWrapper: {
     width: "100%", // Ensure button spans the full width of its container
     alignItems: "center", // Center the button horizontally
@@ -524,8 +488,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
-    marginBottom: 10,
+    marginVertical: 10,
+  },
+  lottieLuckyResultAnimation: {
+    width: 25,
+    height: 25,
+    marginTop: 0,
+    marginLeft: 0,
   },
 });
 

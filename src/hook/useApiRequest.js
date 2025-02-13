@@ -53,20 +53,21 @@ const useApiRequest = () => {
     await fetchData(config);
   };
 
-  const fetchUserDetails = async () => {
+  const fetchUserDetails = async (user_id, name, email) => {
     const config = {
-      url: SERVER + "/user_details",
+      url: SERVER + "/users",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: {
-        user_id: 1, // Dynamically set user ID here
-        utc_date: "2025-02-15T00:00:00Z"
+        user_id,
+        name,
+        email
       },
     };
 
-    await fetchData(config); // Trigger the API call
+    await fetchData(config);
   };
 
   return { loading, error, response, fetchData, updateLuckySymbol, fetchUserDetails };

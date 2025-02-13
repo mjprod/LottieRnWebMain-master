@@ -1,13 +1,14 @@
 import React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import { NativeRouter, Route, Routes } from "react-router-native";
-import GameOverScreen from "./components/GameOverScreen";
-import LauchScreen from "./components/LauchScreen";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { SnackbarProvider } from "./components/SnackbarContext";
 import { GameProvider } from "./context/GameContext";
 import { SoundProvider } from "./hook/useSoundPlayer";
 import { ThemeProvider } from "./hook/useTheme";
 import "./index.css";
+import GameOverScreen from "./screens/GameOverScreen";
+import LauchScreen from "./screens/LauchScreen";
+import NotFoundScreen from "./screens/NotFoundScreen";
 import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 
 const { height, width } = Dimensions.get("window");
@@ -33,15 +34,18 @@ export default function App() {
         <GameProvider>
           <ThemeProvider>
             <SoundProvider>
-              <NativeRouter>
+              <BrowserRouter>
+
                 <SnackbarProvider>
                   <Routes>
-                    <Route path="*" element={<LauchScreen />} />
+                    <Route path="/:id/:username/:email" element={<LauchScreen />} />
+                    <Route path="/*" element={<NotFoundScreen />} />
                     <Route path="/game" element={<ScratchLuckyGame />} />
                     <Route path="/game_over" element={<GameOverScreen />} />
                   </Routes>
                 </SnackbarProvider>
-              </NativeRouter>
+
+              </BrowserRouter>
             </SoundProvider>
           </ThemeProvider>
         </GameProvider>

@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Platform, Text } from "react-native";
-import { Animated, ImageBackground } from "react-native-web";
-import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
-import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
-import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import Slider from "@react-native-community/slider";
-import GameButton from "./GameButton";
-import RotatingCirclesBackground from "./RotatingCirclesBackground";
-import LottieTicketSlot from "./LottieTicketSlot";
-import { useSound } from "../hook/useSoundPlayer";
-import { useLocation, useNavigate } from "react-router-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Animated, Platform, StyleSheet, Text, View } from "react-native";
+import { ImageBackground } from "react-native-web";
+import { useNavigate } from "react-router";
+import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
 import { IconJokerPlus } from "../assets/icons/IconJokerPlus";
+import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
+import GameButton from "../components/GameButton";
+import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
+import LottieTicketSlot from "../components/LottieTicketSlot";
+import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
+import { useSound } from "../hook/useSoundPlayer";
 
 const GameOverScreen = () => {
   const navigate = useNavigate();
