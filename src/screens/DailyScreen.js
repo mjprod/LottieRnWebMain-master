@@ -1,18 +1,12 @@
-import Slider from "@react-native-community/slider";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Linking, StyleSheet } from "react-native";
-import { ActivityIndicator, Image, ImageBackground, Text, TouchableOpacity, View } from "react-native-web";
-import LottieView from "react-native-web-lottie";
+import { ActivityIndicator, Image, View } from "react-native-web";
 import { useNavigate, useParams } from "react-router";
-import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
-import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
-import GameButton from "../components/GameButton";
-import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
 
-const LauchScreen = () => {
+const DailyScreen = () => {
   const navigate = useNavigate();
 
   const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
@@ -42,13 +36,13 @@ const LauchScreen = () => {
 
   useEffect(() => {
     console.log("Params:", { id, username, email });
-    fetchUserDetails(id, username, email);
+    //fetchUserDetails(id, username, email);
   }, [id]);
 
   const handleStartGame = () => {
     if (initialUserData.name === undefined || initialUserData.name === "") {
       showSnackbar("Please complete your profile to play the game");
-      fetchUserDetails(id, username, email);
+      //fetchUserDetails(id, username, email);
       return;
     }
     navigate("/game", {
@@ -110,7 +104,6 @@ const LauchScreen = () => {
       if (response.daily === null || response.daily.length === 0) {
         // response.daily is exactly null, handle accordingly
         console.log("response.daily is null");
-        navigate("/daily");
       } else {
         console.log("response.daily is not null");
         // response.daily is not null (it could be an empty array or have values)
@@ -169,113 +162,8 @@ const LauchScreen = () => {
         }
       </View>
       <View style={[styles.container, { marginLeft: 18, marginRight: 18, marginBottom: 10 }]}>
-        <Text
-          style={[
-            styles.subtitle,
-            { textTransform: "uppercase", marginBottom: 10 },
-          ]}
-        >
-          Statistics
-        </Text>
-        <View style={styles.resultRow}>
-          <View style={styles.resultCard}>
-            <View style={styles.viewRow}>
-              <IconStarResultScreen />
-              <Text style={styles.resultTitle}>TOTAL POINTS</Text>
-            </View>
-            {loading ? <LoadingView /> :
-              <Text style={styles.resultPoints}>{initialScore || 0}</Text>
-            }
-          </View>
-          <View style={{ width: 10 }} />
-          <View style={styles.resultCard}>
-            <View style={styles.viewRow}>
-              <IconFourLeafClover />
-              <Text style={styles.resultTitle}>LUCKY SYMBOLS</Text>
-            </View>
 
-            <ImageBackground
-              resizeMode="contain"
-              source={backgroundLuckySymbol}
-              style={styles.imageBackgroundLuckySymbol}
-            >
-              <LottieLuckySymbolCoinSlot topLayout={false} />
-            </ImageBackground>
-            <View style={styles.luckySymbols}></View>
-          </View>
-        </View>
 
-        {/* Total Tickets Earned Section */}
-        <View style={styles.ticketsSection}>
-          <View style={styles.containerTotalTicket}>
-            <LottieView
-              style={styles.lottieLuckyResultAnimation}
-              source={require("../assets/lotties/lottieTicketEntry.json")}
-              autoPlay
-              speed={1}
-              loop={false}
-            />
-            <Text style={styles.ticketTitle}>TOTAL RAFFLE TICKETS EARNED</Text>
-            {loading ? <LoadingView /> :
-              <Text style={styles.resultPoints}>{initialTicketCount || 0}</Text>
-            }
-          </View>
-          <View
-            style={{
-              backgroundColor: "#4B595D",
-              height: 1,
-              width: "100%",
-              marginVertical: 8,
-            }}
-          />
-          <View style={styles.containerTotalTicket}>
-            <Text style={styles.nextTicketText}>Next Ticket</Text>
-            <Text style={styles.ticketProgress}>{`${parseInt(progress, 10)} / 20000`} </Text>
-          </View>
-
-          <View style={styles.sliderContainer}>
-            <Slider
-              style={styles.slider}
-              minimumValue={0}
-              maximumValue={20000}
-              value={progress}
-              onValueChange={(value) => setProgress(value)}
-              minimumTrackTintColor="#FFD89D"
-              maximumTrackTintColor="#000000"
-              thumbTintColor="#FFD89D"
-              thumbStyle={styles.thumb}
-            />
-          </View>
-        </View>
-
-        <View style={{ height: 10 }} />
-
-        {/* Timer Section */}
-        <View style={styles.timerSection}>
-          <View style={styles.backgroundRounded}>
-            <Text style={styles.timerTitle}>Time till Next Draw</Text>
-          </View>
-          <Text style={styles.timerContainer}>
-            <Text style={styles.timerNumberValue}>{timeLeft.days}</Text>
-            <Text style={styles.timerStringValue}> Days </Text>
-            <Text style={styles.timerNumberValue}>{timeLeft.hours}</Text>
-            <Text style={styles.timerStringValue}> Hrs </Text>
-            <Text style={styles.timerNumberValue}>{timeLeft.minutes}</Text>
-            <Text style={styles.timerStringValue}> Mins </Text>
-            <Text style={styles.timerNumberValue}>{timeLeft.seconds}</Text>
-            <Text style={styles.timerStringValue}> Secs</Text>
-          </Text>
-        </View>
-
-        <View style={styles.buttonWrapper}>
-          <GameButton text="Play Game" onPress={() => handleStartGame()} />
-        </View>
-
-        <TouchableOpacity onPress={handlePress} style={styles.button}>
-          <Text style={styles.buttonText}>
-            How To Play Turbo Scratch {">"}
-          </Text>
-        </TouchableOpacity>
       </View>
 
     </View>
@@ -503,4 +391,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LauchScreen;
+export default DailyScreen;

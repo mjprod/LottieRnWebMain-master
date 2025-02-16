@@ -6,6 +6,7 @@ import { GameProvider } from "./context/GameContext";
 import { SoundProvider } from "./hook/useSoundPlayer";
 import { ThemeProvider } from "./hook/useTheme";
 import "./index.css";
+import DailyScreen from "./screens/DailyScreen";
 import GameOverScreen from "./screens/GameOverScreen";
 import LauchScreen from "./screens/LauchScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
@@ -35,16 +36,15 @@ export default function App() {
           <ThemeProvider>
             <SoundProvider>
               <BrowserRouter>
-
                 <SnackbarProvider>
                   <Routes>
                     <Route path="/:id/:username/:email" element={<LauchScreen />} />
+                    <Route path="/daily" element={<DailyScreen />} />
                     <Route path="/*" element={<NotFoundScreen />} />
                     <Route path="/game" element={<ScratchLuckyGame />} />
                     <Route path="/game_over" element={<GameOverScreen />} />
                   </Routes>
                 </SnackbarProvider>
-
               </BrowserRouter>
             </SoundProvider>
           </ThemeProvider>
