@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 
 const DayCard = ({ cardSet, isActive, day }) => {
     const logo = require("./../assets/image/day_card_background.png");
@@ -16,6 +16,8 @@ const DayCard = ({ cardSet, isActive, day }) => {
                     <Text style={styles.cardSet}>{"Card Set"}</Text>
                 </View>
                 <View style={styles.bottomSection}>
+                    <Image source={require("./../assets/icons/icon_cards_small.svg")}  style={styles.scratchCardIcon}/>
+                    <Text style={styles.scratchCardValue}>{"12"}</Text>
                     <Text style={styles.scratchCard}>{"Scratch Cards"}</Text>
                 </View>
             </ImageBackground>
@@ -61,6 +63,7 @@ const styles = StyleSheet.create({
     },
     bottomSection: {
         flexDirection: 'row',
+        gap: 8,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#00000055',
@@ -108,11 +111,18 @@ const styles = StyleSheet.create({
         elevation: 2,
         lineHeight: 25,
     },
+    scratchCardValue: {
+        color: '#FFDEA8',
+        fontSize: 12,
+    },
     scratchCard: {
         color: '#FFFFFF',
         fontSize: 12,
     },
-
+    scratchCardIcon: {
+        width: 25,
+        height: 20,
+    }
 });
 
 export default DayCard;
