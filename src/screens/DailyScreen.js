@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
-
+import QuestionOfTheDay from "../components/QuestionOfTheDay";
 const DailyScreen = () => {
   const navigate = useNavigate();
 
@@ -36,13 +36,11 @@ const DailyScreen = () => {
 
   useEffect(() => {
     console.log("Params:", { id, username, email });
-    //fetchUserDetails(id, username, email);
   }, [id]);
 
   const handleStartGame = () => {
     if (initialUserData.name === undefined || initialUserData.name === "") {
       showSnackbar("Please complete your profile to play the game");
-      //fetchUserDetails(id, username, email);
       return;
     }
     navigate("/game", {
@@ -162,8 +160,7 @@ const DailyScreen = () => {
         }
       </View>
       <View style={[styles.container, { marginLeft: 18, marginRight: 18, marginBottom: 10 }]}>
-
-
+        <QuestionOfTheDay question={"What sports are you interested in?"}></QuestionOfTheDay>
       </View>
 
     </View>
