@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         alignItems: 'start',
-        padding: 8,
     },
     topTag: {
         color: '#FFFFFF',
@@ -66,11 +65,13 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 8,
     },
     question: {
-        color: '#fff',
+        fontFamily: "Inter-Medium",
+        color: '#A6A6A6',
         fontSize: 16,
         marginBottom: 16
     },
     textInput: {
+        fontFamily: "Inter-Medium",
         color: '#fff',
         fontSize: 16,
         justifyContent: 'top',
@@ -80,9 +81,11 @@ const styles = StyleSheet.create({
         marginTop: 8,
         borderRadius: 8,
         placeholderTextColor: '#5F5F5F',
-        marginBottom: 24
+        marginBottom: 24,
+        backgroundColor: '#212121',
     },
     bottomText: {
+        fontFamily: "Inter-Medium",
         color: '#A6A6A6',
         textAlign: 'center',
         fontSize: 16,
