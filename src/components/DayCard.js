@@ -1,13 +1,13 @@
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 
-const DayCard = ({ cardSet, isActive, day }) => {
-    const logo = require("./../assets/image/day_card_background.png");
+const DayCard = ({ cardSet, isActive, day, cardBackground }) => {
     const cardSetNumberBackground = require("./../assets/icons/card_set_number_background.svg");
+    const cardsInASet = 12;
     return (
-        <View source={{ uri: logo }} style={styles.mainContainer}>
-            <Text style={styles.day}>{`DAY ${day}`}</Text>
-            <ImageBackground source={{ uri: logo }} style={styles.container}>
+        <View style={isActive ? styles.acitveMainContainer : styles.mainContainer}>
+            <Text style={isActive ? styles.activeDay : styles.day}>{`DAY ${day}`}</Text>
+            <ImageBackground source={{ uri: cardBackground }} style={isActive ? styles.activeContainer : styles.container}>
                 <View style={styles.topSection}>
                     <ImageBackground source={{ uri: cardSetNumberBackground }} style={styles.cardSetNumberBackground}>
                         <Text style={styles.cardSetValue}>{`${cardSet}`}</Text>
@@ -17,10 +17,13 @@ const DayCard = ({ cardSet, isActive, day }) => {
                 </View>
                 <View style={styles.bottomSection}>
                     <Image source={require("./../assets/icons/icon_cards_small.svg")}  style={styles.scratchCardIcon}/>
-                    <Text style={styles.scratchCardValue}>{"12"}</Text>
+                    <Text style={styles.scratchCardValue}>{`${cardSet * cardsInASet}`}</Text>
                     <Text style={styles.scratchCard}>{"Scratch Cards"}</Text>
                 </View>
             </ImageBackground>
+            {
+                !isActive && <View style={styles.inactiveOverlay}></View>
+            }
         </View>
     );
 };
@@ -30,14 +33,35 @@ const styles = StyleSheet.create({
         flex: 1,
         overflow: "hidden",
     },
+    inactiveOverlay: {
+        position: 'absolute',
+        backgroundColor: '#1B1B1B66',
+        width: '100%',
+        height: '100%',
+
+    },
     day: {
+        color: "#FFFFFF",
+        fontFamily: "Teko-Medium",
+        fontSize: 18,
+        backgroundColor: '#3D3D3D',
+        flex: 1,
+        borderTopRightRadius: 12,
+        borderTopLeftRadius: 12,
+        textAlign: 'center',
+        paddingTop: 5,
+        lineHeight: 15,
+        borderColor: '#3D3D3D',
+        borderWidth: 1,
+    },
+    activeDay: {
         color: "#382E23",
         fontFamily: "Teko-Medium",
         fontSize: 18,
         backgroundColor: '#FFEEC0',
         flex: 1,
-        borderTopRightRadius: 8,
-        borderTopLeftRadius: 8,
+        borderTopRightRadius: 12,
+        borderTopLeftRadius: 12,
         textAlign: 'center',
         paddingTop: 5,
         lineHeight: 15,
@@ -50,8 +74,18 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         paddingTop: 37,
         borderWidth: 1,
-        borderBottomRightRadius: 8,
-        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 12,
+        borderBottomLeftRadius: 12,
+        borderColor: '#3D3D3D',
+    },
+    activeContainer: {
+        backgroundColor: '#FFDEA8',
+        borderColor: '#FFDEA866',
+        overflow: "hidden",
+        paddingTop: 37,
+        borderWidth: 1,
+        borderBottomRightRadius: 12,
+        borderBottomLeftRadius: 12,
         borderColor: '#FFDEA8',
     },
     topSection: {
@@ -67,10 +101,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#00000055',
-        paddingTop: 14,
+        paddingTop: 18,
         paddingBottom: 14,
-        paddingRight: 16,
-        paddingLeft: 16,
+        paddingRight: 8,
+        paddingLeft: 8,
     },
     cardSetNumberBackground: {
         width: 61,

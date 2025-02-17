@@ -3,14 +3,15 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import DayCard from './DayCard';
 
 const DailyCardsContainer = () => {
+    const logo = require("./../assets/image/day_card_background.png");
     const data = [
-        { id: "1", cardSet: "1" },
-        { id: "2", cardSet: "1" },
-        { id: "3", cardSet: "1" },
-        { id: "4", cardSet: "2" },
-        { id: "5", cardSet: "1" },
-        { id: "6", cardSet: "2" },
-        { id: "7", cardSet: "2" },
+        { id: "1", cardSet: "1", cardBackground: logo, isActive: true, extras: null },
+        { id: "2", cardSet: "1", cardBackground: logo, isActive: false, extras: null},
+        { id: "3", cardSet: "1", cardBackground: logo, isActive: false, extras: null},
+        { id: "4", cardSet: "2", cardBackground: logo, isActive: false, extras: null},
+        { id: "5", cardSet: "1", cardBackground: logo, isActive: false, extras: null},
+        { id: "6", cardSet: "2", cardBackground: logo, isActive: false, extras: null},
+        { id: "7", cardSet: "1", cardBackground: logo, isActive: false, extras: { name: "Gift Card", }},
     ];
     return (
         <View style={styles.container}>
@@ -22,7 +23,7 @@ const DailyCardsContainer = () => {
                 numColumns={2}
                 renderItem={({ item }) => (
                     <View style={styles.item}>
-                        <DayCard cardSet={item.cardSet} day={item.id} isActive />
+                        <DayCard cardSet={item.cardSet} day={item.id} cardBackground={item.cardBackground} isActive={item.isActive} />
                     </View>
                 )}
             />
