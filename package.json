@@ -7,7 +7,7 @@
     "@react-native-community/slider": "^4.5.3",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.5.0",
-    "@types/react": "^19.0.9",
+    "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "@types/react-native": "^0.73.0",
     "@types/react-router-dom": "^5.3.3",
@@ -22,6 +22,8 @@
     "react-native-canvas": "^0.1.40",
     "react-native-cli": "^2.0.1",
     "react-native-gesture-handler": "^2.18.1",
+    "react-native-svg": "^15.7.1",
+    "react-native-svg-transformer": "^1.5.0",
     "react-native-svg-web": "^1.0.9",
     "react-native-web": "^0.19.12",
     "react-native-web-lottie": "^1.4.4",
@@ -29,8 +31,7 @@
     "react-native-webview": "^13.12.0",
     "react-router": "6.3.0",
     "react-router-dom": "6.3.0",
-    "react-router-native": "^6.27.0",
-    "typescript": "^5.5.4"
+    "react-router-native": "^6.27.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -62,7 +63,6 @@
     "react-scripts-plugin-no-minify": "^0.4.0",
     "react-test-renderer": "16.5.1",
     "terser": "^5.34.1",
-    "typescript": "^5.7.3",
     "uglifyify": "^5.0.2"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
