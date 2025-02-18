@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Linking, StyleSheet } from "react-native";
+import { Animated, Linking, ScrollView, StyleSheet, Text} from "react-native";
 import { ActivityIndicator, Image, View } from "react-native-web";
 import { useNavigate, useParams } from "react-router";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
+import QuestionOfTheDay from "../components/QuestionOfTheDay";
+import DailyCardsContainer from "../components/DailyCardsContainer";
 
 const DailyScreen = () => {
   const navigate = useNavigate();
@@ -36,13 +38,11 @@ const DailyScreen = () => {
 
   useEffect(() => {
     console.log("Params:", { id, username, email });
-    //fetchUserDetails(id, username, email);
   }, [id]);
 
   const handleStartGame = () => {
     if (initialUserData.name === undefined || initialUserData.name === "") {
       showSnackbar("Please complete your profile to play the game");
-      //fetchUserDetails(id, username, email);
       return;
     }
     navigate("/game", {
@@ -131,13 +131,12 @@ const DailyScreen = () => {
     }
   }, [error]);
 
-  // Update the state to reflect the animated value (for Slider to work properly)
   animatedProgress.addListener(({ value }) => {
     setProgress(value);
   });
 
   const handlePress = () => {
-    Linking.openURL("https://www.google.com"); // This opens Google in the default browser
+    Linking.openURL("https://www.google.com");
   };
 
   const LoadingView = () => {
@@ -149,7 +148,7 @@ const DailyScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Image
           style={styles.tinyLogo}
@@ -161,12 +160,12 @@ const DailyScreen = () => {
           <ProfileHeader id={initialUserData.user_id} name={initialUserData.name}></ProfileHeader>
         }
       </View>
-      <View style={[styles.container, { marginLeft: 18, marginRight: 18, marginBottom: 10 }]}>
-
-
+      <View style={[styles.container, { marginLeft: 25, marginRight: 30, marginBottom: 10 }]}>
+        <QuestionOfTheDay question={"What sports are you interested in?"}></QuestionOfTheDay>
+        <DailyCardsContainer />
       </View>
 
-    </View>
+    </ScrollView>
   );
 };
 
@@ -185,11 +184,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 45,
     alignItems: "center",
-  },
-  header: {
-    //justifyContent: "top",
-    //alignItems: "center",
-    // marginVertical: 10,
   },
   headerIcon: {
     width: 50,
