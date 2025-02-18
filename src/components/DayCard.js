@@ -1,22 +1,22 @@
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import AssetPack from '../util/AssetsPack';
 
 const DayCard = ({ cardSet, isActive, day, cardBackground }) => {
-    const cardSetNumberBackground = require("./../assets/icons/card_set_number_background.svg");
     const cardsInASet = 12;
     return (
         <View style={isActive ? styles.acitveMainContainer : styles.mainContainer}>
             <Text style={isActive ? styles.activeDay : styles.day}>{`DAY ${day}`}</Text>
             <ImageBackground source={{ uri: cardBackground }} style={isActive ? styles.activeContainer : styles.container}>
                 <View style={styles.topSection}>
-                    <ImageBackground source={{ uri: cardSetNumberBackground }} style={styles.cardSetNumberBackground}>
+                    <ImageBackground source={{ uri: AssetPack.backgrounds.CARD_NUMBER_SET }} style={styles.cardSetNumberBackground}>
                         <Text style={styles.cardSetValue}>{`${cardSet}`}</Text>
                         <Text style={styles.cardSetX}>{"x"}</Text>
                     </ImageBackground>
                     <Text style={styles.cardSet}>{"Card Set"}</Text>
                 </View>
                 <View style={styles.bottomSection}>
-                    <Image source={require("./../assets/icons/icon_cards_small.svg")}  style={styles.scratchCardIcon}/>
+                    <Image source={AssetPack.icons.CARDS_SMALL}  style={styles.scratchCardIcon}/>
                     <Text style={styles.scratchCardValue}>{`${cardSet * cardsInASet}`}</Text>
                     <Text style={styles.scratchCard}>{"Scratch Cards"}</Text>
                 </View>
