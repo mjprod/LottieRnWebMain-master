@@ -4,7 +4,7 @@ import AssetPack from '../util/AssetsPack';
 import { DailyCardStatus } from '../util/constants';
 
 
-const DayCard = ({ cardSet, status, day, cardBackground }) => {
+const DayCard = ({ cardSet, status, day, cardBackground, extras }) => {
     const cardsInASet = 12;
     const getDayTagStyle = () => {
         switch (status) {
@@ -26,10 +26,8 @@ const DayCard = ({ cardSet, status, day, cardBackground }) => {
                 return styles.mainContainer;
         }
     };
-    const getScratchCardIcon = () => {
+    const getCardIcon = () => {
         switch (status) {
-            case DailyCardStatus.active:
-                return AssetPack.icons.CARDS;
             case DailyCardStatus.completed:
                 return AssetPack.icons.CARDS_GREEN;
             default:
@@ -37,7 +35,18 @@ const DayCard = ({ cardSet, status, day, cardBackground }) => {
         }
     };
 
-    const getBottomSection = () => {
+    const getBadgeBackground = () => {
+        switch (status) {
+            case DailyCardStatus.active:
+                return AssetPack.backgrounds.CARD_NUMBER_SET;
+            case DailyCardStatus.completed:
+                return AssetPack.backgrounds.CARD_NUMBER_SET_COMPLETED;
+            default:
+                return AssetPack.backgrounds.CARD_NUMBER_SET_INACTIVE;
+        }
+    }
+
+    const getBottomSection = (number, text) => {
         switch (status) {
             case DailyCardStatus.completed:
                 return <View>
@@ -45,32 +54,47 @@ const DayCard = ({ cardSet, status, day, cardBackground }) => {
                 </View>;
             default:
                 return <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, }}>
-                    <Text style={styles.scratchCardValue}>{`${cardSet * cardsInASet}`}</Text>
-                    <Text style={styles.scratchCard}>{"Scratch Cards"}</Text>
+                    <Text style={styles.scratchCardValue}>{`${number}`}</Text>
+                    <Text style={styles.scratchCard}>{`${text}`}</Text>
                 </View>;
         }
     }
-    const isActive = status === "active" || status === "completed";
-    const cardNumberSetBackground = status !== "completed" ? AssetPack.backgrounds.CARD_NUMBER_SET : AssetPack.backgrounds.CARD_NUMBER_SET_COMPLETED
+
+    const getTopSection = (number, text) => {
+        return <View style={styles.topSection}>
+            <ImageBackground source={{ uri: getBadgeBackground() }} style={styles.cardSetNumberBackground}>
+                <Text style={styles.cardSetValue}>{`${number}`}</Text>
+                <Text style={styles.cardSetX}>{"x"}</Text>
+            </ImageBackground>
+            <Text style={styles.cardSet}>{`${text}`}</Text>
+        </View>;
+    }
+
+    const getSubContent = (number, text, footerNumber, footerText, background) => {
+        return <ImageBackground style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', paddingTop: 30 }}
+            source={{ uri: background }}>
+            {getTopSection(number, text)}
+            <ImageBackground source={{ uri: AssetPack.backgrounds.BOTTOM_GRADIENT }} style={styles.bottomSection}>
+                <Image source={getCardIcon()} style={styles.scratchCardIcon} />
+                {getBottomSection(footerNumber, footerText)}
+            </ImageBackground>
+        </ImageBackground>
+    }
+
+    const getMainContent = () => {
+        return <View style={getMainContainerStyle()}>
+            {getSubContent(cardSet, "Card Set", cardSet * cardsInASet, "Scratch Cards", cardBackground)}
+            {extras !== null && getSubContent(extras.number, extras.name, extras.number, extras.name, extras.background)}
+        </View>;
+    }
+
+    const inactiveOverlayView = status === "active" || status === "completed" ? null : <View style={styles.inactiveOverlay} />;
+
     return (
         <View style={styles.parentContainer}>
             <Text style={getDayTagStyle()}>{`DAY ${day}`}</Text>
-            <ImageBackground source={{ uri: cardBackground }} style={getMainContainerStyle()}>
-                <View style={styles.topSection}>
-                    <ImageBackground source={{ uri: cardNumberSetBackground }} style={styles.cardSetNumberBackground}>
-                        <Text style={styles.cardSetValue}>{`${cardSet}`}</Text>
-                        <Text style={styles.cardSetX}>{"x"}</Text>
-                    </ImageBackground>
-                    <Text style={styles.cardSet}>{"Card Set"}</Text>
-                </View>
-                <ImageBackground source={{ uri: AssetPack.backgrounds.BOTTOM_GRADIENT }} style={styles.bottomSection}>
-                    <Image source={getScratchCardIcon()} style={styles.scratchCardIcon} />
-                    {getBottomSection()}
-                </ImageBackground>
-            </ImageBackground>
-            {
-                !isActive && <View style={styles.inactiveOverlay}></View>
-            }
+            {getMainContent()}
+            {inactiveOverlayView}
         </View>
     );
 };
@@ -130,28 +154,28 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     mainContainer: {
+        flexDirection: 'row',
         backgroundColor: '#FFDEA8',
         borderColor: '#FFDEA866',
         overflow: "hidden",
-        paddingTop: 37,
         borderWidth: 1,
         borderBottomRightRadius: 12,
         borderBottomLeftRadius: 12,
         borderColor: '#3D3D3D',
     },
     mainContainerActive: {
+        flexDirection: 'row',
         backgroundColor: '#FFDEA8',
         overflow: "hidden",
-        paddingTop: 37,
         borderWidth: 1,
         borderBottomRightRadius: 12,
         borderBottomLeftRadius: 12,
         borderColor: '#FFDEA8',
     },
     mainContainerCompleted: {
+        flexDirection: 'row',
         backgroundColor: '#FFDEA8',
         overflow: "hidden",
-        paddingTop: 37,
         borderWidth: 1,
         borderBottomRightRadius: 12,
         borderBottomLeftRadius: 12,
@@ -167,6 +191,8 @@ const styles = StyleSheet.create({
     bottomSection: {
         flex: 1,
         flexDirection: 'row',
+        width: '100%',
+        height: '100%',
         gap: 4,
         justifyContent: 'center',
         alignItems: 'center',
