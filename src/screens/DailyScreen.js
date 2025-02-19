@@ -28,7 +28,7 @@ const DailyScreen = () => {
     seconds: 0,
   });
 
-  const { loading, error, response, getDailyQuestion } = useApiRequest();
+  const { loading, error, response, getDailyQuestion, postDailyAnswer } = useApiRequest();
   const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -85,6 +85,9 @@ const DailyScreen = () => {
       if (response.question) {
         setQuestion(response);
       }
+      if (response.message) {
+        showSnackbar(response.message);
+      }
     }
   }, [response]);
 
@@ -116,8 +119,13 @@ const DailyScreen = () => {
       </View>
     );
   };
+
   const onSubmit = (answer) => {
-    console.log(answer);
+    if(answer !== ""){
+      postDailyAnswer(initialUserData.user_id, question.question_id, answer);
+    }else{
+      showSnackbar("Please enter your answer");
+    }
   };
 
   return (

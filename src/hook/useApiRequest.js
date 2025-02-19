@@ -77,11 +77,26 @@ const useApiRequest = () => {
         user_id,
       },
     };
-
     await fetchData(config);
   }
 
-  return { loading, error, response, fetchData, updateLuckySymbol, fetchUserDetails, getDailyQuestion };
+  const postDailyAnswer = async (user_id, question_id, answer) => {
+    const config = {
+      url: SERVER + "/daily_answer",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        user_id,
+        question_id,
+        answer
+      },
+    };
+    await fetchData(config);
+  }
+
+  return { loading, error, response, fetchData, updateLuckySymbol, fetchUserDetails, getDailyQuestion, postDailyAnswer};
 };
 
 

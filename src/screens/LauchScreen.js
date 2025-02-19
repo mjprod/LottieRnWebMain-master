@@ -142,13 +142,12 @@ const LauchScreen = () => {
     }
   }, [error]);
 
-  // Update the state to reflect the animated value (for Slider to work properly)
   animatedProgress.addListener(({ value }) => {
     setProgress(value);
   });
 
   const handlePress = () => {
-    Linking.openURL("https://www.google.com"); // This opens Google in the default browser
+    Linking.openURL("https://www.google.com");
   };
 
   const LoadingView = () => {
