@@ -1,7 +1,14 @@
 import Slider from "@react-native-community/slider";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Linking, StyleSheet } from "react-native";
-import { ActivityIndicator, Image, ImageBackground, Text, TouchableOpacity, View } from "react-native-web";
+import {
+  ActivityIndicator,
+  Image,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native-web";
 import LottieView from "react-native-web-lottie";
 import { useNavigate, useParams } from "react-router";
 import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
@@ -11,6 +18,7 @@ import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -106,22 +114,18 @@ const LauchScreen = () => {
         setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
         setInitialScratchCardLeft(response.user.card_balance || 0);
         setInitialUserData(response.user);
+        AsyncStorage.setItem("user", JSON.stringify(response.user));
       }
       if (response.daily === null || response.daily.length === 0) {
-        // response.daily is exactly null, handle accordingly
         console.log("response.daily is null");
         navigate("/daily");
       } else {
         console.log("response.daily is not null");
-        // response.daily is not null (it could be an empty array or have values)
-        // setDailyData(response.daily);
       }
     }
   }, [response]);
 
   useEffect(() => {
-
-
     Animated.timing(animatedProgress, {
       toValue: initialScore,
       duration: 3000,
@@ -164,11 +168,21 @@ const LauchScreen = () => {
             uri: logo,
           }}
         />
-        {loading ? <LoadingView /> :
-          <ProfileHeader id={initialUserData.user_id} name={initialUserData.name}></ProfileHeader>
-        }
+        {loading ? (
+          <LoadingView />
+        ) : (
+          <ProfileHeader
+            id={initialUserData.user_id}
+            name={initialUserData.name}
+          ></ProfileHeader>
+        )}
       </View>
-      <View style={[styles.container, { marginLeft: 18, marginRight: 18, marginBottom: 10 }]}>
+      <View
+        style={[
+          styles.container,
+          { marginLeft: 18, marginRight: 18, marginBottom: 10 },
+        ]}
+      >
         <Text
           style={[
             styles.subtitle,
@@ -183,9 +197,11 @@ const LauchScreen = () => {
               <IconStarResultScreen />
               <Text style={styles.resultTitle}>TOTAL POINTS</Text>
             </View>
-            {loading ? <LoadingView /> :
+            {loading ? (
+              <LoadingView />
+            ) : (
               <Text style={styles.resultPoints}>{initialScore || 0}</Text>
-            }
+            )}
           </View>
           <View style={{ width: 10 }} />
           <View style={styles.resultCard}>
@@ -216,9 +232,11 @@ const LauchScreen = () => {
               loop={false}
             />
             <Text style={styles.ticketTitle}>TOTAL RAFFLE TICKETS EARNED</Text>
-            {loading ? <LoadingView /> :
+            {loading ? (
+              <LoadingView />
+            ) : (
               <Text style={styles.resultPoints}>{initialTicketCount || 0}</Text>
-            }
+            )}
           </View>
           <View
             style={{
@@ -230,7 +248,9 @@ const LauchScreen = () => {
           />
           <View style={styles.containerTotalTicket}>
             <Text style={styles.nextTicketText}>Next Ticket</Text>
-            <Text style={styles.ticketProgress}>{`${parseInt(progress, 10)} / 20000`} </Text>
+            <Text style={styles.ticketProgress}>
+              {`${parseInt(progress, 10)} / 20000`}{" "}
+            </Text>
           </View>
 
           <View style={styles.sliderContainer}>
@@ -272,12 +292,9 @@ const LauchScreen = () => {
         </View>
 
         <TouchableOpacity onPress={handlePress} style={styles.button}>
-          <Text style={styles.buttonText}>
-            How To Play Turbo Scratch {">"}
-          </Text>
+          <Text style={styles.buttonText}>How To Play Turbo Scratch {">"}</Text>
         </TouchableOpacity>
       </View>
-
     </View>
   );
 };

@@ -1,17 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Linking, ScrollView, StyleSheet, Text} from "react-native";
+import { Animated, ScrollView, StyleSheet, Text } from "react-native";
 import { ActivityIndicator, Image, View } from "react-native-web";
-import { useNavigate, useParams } from "react-router";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
 import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import DailyCardsContainer from "../components/DailyCardsContainer";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const DailyScreen = () => {
-  const navigate = useNavigate();
-
-  const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
   const logo = require("./../assets/image/background_top_nav.png");
 
   const [progress, setProgress] = useState();
@@ -23,7 +20,7 @@ const DailyScreen = () => {
   const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
 
   const [initialUserData, setInitialUserData] = useState("");
-
+  const [question, setQuestion] = useState("");
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -31,29 +28,20 @@ const DailyScreen = () => {
     seconds: 0,
   });
 
-  const { loading, error, response, fetchUserDetails } = useApiRequest();
+  const { loading, error, response, getDailyQuestion } = useApiRequest();
   const { showSnackbar } = useSnackbar();
 
-  const { id, username, email } = useParams();
+  useEffect(() => {
+    AsyncStorage.getItem("user").then((value) => {
+      setInitialUserData(value ? JSON.parse(value) : null);
+    });
+  }, []);
 
   useEffect(() => {
-    console.log("Params:", { id, username, email });
-  }, [id]);
-
-  const handleStartGame = () => {
-    if (initialUserData.name === undefined || initialUserData.name === "") {
-      showSnackbar("Please complete your profile to play the game");
-      return;
+    if (initialUserData.user_id) {
+      getDailyQuestion(initialUserData.user_id);
     }
-    navigate("/game", {
-      state: {
-        initialScore,
-        initialTicketCount,
-        initialLuckySymbolCount,
-        initialScratchCardLeft,
-      },
-    });
-  };
+  }, [initialUserData]);
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -94,27 +82,13 @@ const DailyScreen = () => {
 
   useEffect(() => {
     if (response) {
-      if (response.user) {
-        setInitialScore(response.user.total_score || 0);
-        setInitialTicketCount(response.user.ticket_balance || 0);
-        setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
-        setInitialScratchCardLeft(response.user.card_balance || 0);
-        setInitialUserData(response.user);
-      }
-      if (response.daily === null || response.daily.length === 0) {
-        // response.daily is exactly null, handle accordingly
-        console.log("response.daily is null");
-      } else {
-        console.log("response.daily is not null");
-        // response.daily is not null (it could be an empty array or have values)
-        // setDailyData(response.daily);
+      if (response.question) {
+        setQuestion(response);
       }
     }
   }, [response]);
 
   useEffect(() => {
-
-
     Animated.timing(animatedProgress, {
       toValue: initialScore,
       duration: 3000,
@@ -135,16 +109,15 @@ const DailyScreen = () => {
     setProgress(value);
   });
 
-  const handlePress = () => {
-    Linking.openURL("https://www.google.com");
-  };
-
   const LoadingView = () => {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="small" color="#00ff00" />
       </View>
     );
+  };
+  const onSubmit = (answer) => {
+    console.log(answer);
   };
 
   return (
@@ -156,15 +129,24 @@ const DailyScreen = () => {
             uri: logo,
           }}
         />
-        {loading ? <LoadingView /> :
-          <ProfileHeader id={initialUserData.user_id} name={initialUserData.name}></ProfileHeader>
-        }
+        {loading ? (
+          <LoadingView />
+        ) : (
+          <ProfileHeader
+            id={initialUserData.user_id}
+            name={initialUserData.name}
+          />
+        )}
       </View>
-      <View style={[styles.container, { marginLeft: 25, marginRight: 30, marginBottom: 10 }]}>
-        <QuestionOfTheDay question={"What sports are you interested in?"}></QuestionOfTheDay>
+      <View
+        style={[
+          styles.container,
+          { marginLeft: 25, marginRight: 30, marginBottom: 10 },
+        ]}
+      >
+        <QuestionOfTheDay question={`${question.question}`} onSubmit={onSubmit}/>
         <DailyCardsContainer />
       </View>
-
     </ScrollView>
   );
 };
@@ -172,18 +154,6 @@ const DailyScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  imageBackground: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    marginTop: "0%",
-  },
-  imageBackgroundLuckySymbol: {
-    width: 100,
-    height: 45,
-    alignItems: "center",
   },
   headerIcon: {
     width: 50,

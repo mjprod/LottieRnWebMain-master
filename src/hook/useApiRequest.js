@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { SERVER } from '../util/constants';
 
-// Custom hook for making API requests using fetch
 const useApiRequest = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -12,12 +11,10 @@ const useApiRequest = () => {
 
     try {
       setLoading(true);
-
-      // Make the fetch request
       const res = await fetch(url, {
         method,
         headers,
-        body: body ? JSON.stringify(body) : null, // If body exists, stringify it
+        body: body ? JSON.stringify(body) : null,
       });
 
       if (!res.ok) {
@@ -36,7 +33,6 @@ const useApiRequest = () => {
     }
   };
 
-  // Function specifically for updating lucky symbol
   const updateLuckySymbol = async (id, lucky_symbol) => {
     const config = {
       url: SERVER + '/updateLuckySymbol',
@@ -70,7 +66,22 @@ const useApiRequest = () => {
     await fetchData(config);
   };
 
-  return { loading, error, response, fetchData, updateLuckySymbol, fetchUserDetails };
+  const getDailyQuestion = async (user_id) => {
+    const config = {
+      url: SERVER + "/daily_question",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        user_id,
+      },
+    };
+
+    await fetchData(config);
+  }
+
+  return { loading, error, response, fetchData, updateLuckySymbol, fetchUserDetails, getDailyQuestion };
 };
 
 
