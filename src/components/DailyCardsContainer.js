@@ -14,7 +14,7 @@ const DailyCardsContainer = () => {
                 numColumns={2}
                 renderItem={({ item }) => (
                     <View style={styles.item}>
-                        <DayCard cardSet={item.cardSet} day={item.id} cardBackground={item.cardBackground} isActive={item.isActive} />
+                        <DayCard cardSet={item.cardSet} day={item.id} cardBackground={item.cardBackground} status={item.status} extras={item.extras} />
                     </View>
                 )}
             />

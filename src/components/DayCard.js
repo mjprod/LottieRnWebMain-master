@@ -1,35 +1,106 @@
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import AssetPack from '../util/AssetsPack';
+import { DailyCardStatus } from '../util/constants';
 
-const DayCard = ({ cardSet, isActive, day, cardBackground }) => {
+
+const DayCard = ({ cardSet, status, day, cardBackground, extras }) => {
     const cardsInASet = 12;
-    return (
-        <View style={isActive ? styles.acitveMainContainer : styles.mainContainer}>
-            <Text style={isActive ? styles.activeDay : styles.day}>{`DAY ${day}`}</Text>
-            <ImageBackground source={{ uri: cardBackground }} style={isActive ? styles.activeContainer : styles.container}>
-                <View style={styles.topSection}>
-                    <ImageBackground source={{ uri: AssetPack.backgrounds.CARD_NUMBER_SET }} style={styles.cardSetNumberBackground}>
-                        <Text style={styles.cardSetValue}>{`${cardSet}`}</Text>
-                        <Text style={styles.cardSetX}>{"x"}</Text>
-                    </ImageBackground>
-                    <Text style={styles.cardSet}>{"Card Set"}</Text>
-                </View>
-                <View style={styles.bottomSection}>
-                    <Image source={AssetPack.icons.CARDS_SMALL}  style={styles.scratchCardIcon}/>
-                    <Text style={styles.scratchCardValue}>{`${cardSet * cardsInASet}`}</Text>
-                    <Text style={styles.scratchCard}>{"Scratch Cards"}</Text>
-                </View>
+    const getDayTagStyle = () => {
+        switch (status) {
+            case DailyCardStatus.active:
+                return styles.dayTextStyleActive;
+            case DailyCardStatus.completed:
+                return styles.dayTextStyleCompleted;
+            default:
+                return styles.dayTextStyle;
+        }
+    };
+    const getMainContainerStyle = () => {
+        switch (status) {
+            case DailyCardStatus.active:
+                return styles.mainContainerActive;
+            case DailyCardStatus.completed:
+                return styles.mainContainerCompleted;
+            default:
+                return styles.mainContainer;
+        }
+    };
+    const getCardIcon = () => {
+        switch (status) {
+            case DailyCardStatus.completed:
+                return AssetPack.icons.CARDS_GREEN;
+            default:
+                return AssetPack.icons.CARDS;
+        }
+    };
+
+    const getBadgeBackground = () => {
+        switch (status) {
+            case DailyCardStatus.active:
+                return AssetPack.backgrounds.CARD_NUMBER_SET;
+            case DailyCardStatus.completed:
+                return AssetPack.backgrounds.CARD_NUMBER_SET_COMPLETED;
+            default:
+                return AssetPack.backgrounds.CARD_NUMBER_SET_INACTIVE;
+        }
+    }
+
+    const getBottomSection = (number, text) => {
+        switch (status) {
+            case DailyCardStatus.completed:
+                return <View>
+                    <Text style={{ color: "#3EDA41" }}>{"Completed"}</Text>
+                </View>;
+            default:
+                return <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, }}>
+                    <Text style={styles.scratchCardValue}>{`${number}`}</Text>
+                    <Text style={styles.scratchCard}>{`${text}`}</Text>
+                </View>;
+        }
+    }
+
+    const getTopSection = (number, text) => {
+        return <View style={styles.topSection}>
+            <ImageBackground source={{ uri: getBadgeBackground() }} style={styles.cardSetNumberBackground}>
+                <Text style={styles.cardSetValue}>{`${number}`}</Text>
+                <Text style={styles.cardSetX}>{"x"}</Text>
             </ImageBackground>
-            {
-                !isActive && <View style={styles.inactiveOverlay}></View>
-            }
+            <Text style={styles.cardSet}>{`${text}`}</Text>
+        </View>;
+    }
+
+    const getSubContent = (number, text, footerNumber, footerText, background) => {
+        return <ImageBackground style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', paddingTop: 30 }}
+            source={{ uri: background }}>
+            {getTopSection(number, text)}
+            <ImageBackground source={{ uri: AssetPack.backgrounds.BOTTOM_GRADIENT }} style={styles.bottomSection}>
+                <Image source={getCardIcon()} style={styles.scratchCardIcon} />
+                {getBottomSection(footerNumber, footerText)}
+            </ImageBackground>
+        </ImageBackground>
+    }
+
+    const getMainContent = () => {
+        return <View style={getMainContainerStyle()}>
+            {getSubContent(cardSet, "Card Set", cardSet * cardsInASet, "Scratch Cards", cardBackground)}
+            {extras !== null && getSubContent(extras.number, extras.name, extras.number, extras.name, extras.background)}
+        </View>;
+    }
+
+    const inactiveOverlayView = status === "active" || status === "completed" ? null : <View style={styles.inactiveOverlay} />;
+
+    return (
+        <View style={styles.parentContainer}>
+            <Text style={getDayTagStyle()}>{`DAY ${day}`}</Text>
+            {getMainContent()}
+            {inactiveOverlayView}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    mainContainer: {
+    parentContainer: {
         flex: 1,
         overflow: "hidden",
     },
@@ -40,7 +111,7 @@ const styles = StyleSheet.create({
         height: '100%',
 
     },
-    day: {
+    dayTextStyle: {
         color: "#FFFFFF",
         fontFamily: "Teko-Medium",
         fontSize: 18,
@@ -54,7 +125,7 @@ const styles = StyleSheet.create({
         borderColor: '#3D3D3D',
         borderWidth: 1,
     },
-    activeDay: {
+    dayTextStyleActive: {
         color: "#382E23",
         fontFamily: "Teko-Medium",
         fontSize: 18,
@@ -68,25 +139,47 @@ const styles = StyleSheet.create({
         borderColor: '#FFDEA8',
         borderWidth: 1,
     },
-    container: {
+    dayTextStyleCompleted: {
+        color: "#382E23",
+        fontFamily: "Teko-Medium",
+        fontSize: 18,
+        backgroundColor: '#3EDA41',
+        flex: 1,
+        borderTopRightRadius: 12,
+        borderTopLeftRadius: 12,
+        textAlign: 'center',
+        paddingTop: 5,
+        lineHeight: 15,
+        borderColor: '#3EDA41',
+        borderWidth: 1,
+    },
+    mainContainer: {
+        flexDirection: 'row',
         backgroundColor: '#FFDEA8',
         borderColor: '#FFDEA866',
         overflow: "hidden",
-        paddingTop: 37,
         borderWidth: 1,
         borderBottomRightRadius: 12,
         borderBottomLeftRadius: 12,
         borderColor: '#3D3D3D',
     },
-    activeContainer: {
+    mainContainerActive: {
+        flexDirection: 'row',
         backgroundColor: '#FFDEA8',
-        borderColor: '#FFDEA866',
         overflow: "hidden",
-        paddingTop: 37,
         borderWidth: 1,
         borderBottomRightRadius: 12,
         borderBottomLeftRadius: 12,
         borderColor: '#FFDEA8',
+    },
+    mainContainerCompleted: {
+        flexDirection: 'row',
+        backgroundColor: '#FFDEA8',
+        overflow: "hidden",
+        borderWidth: 1,
+        borderBottomRightRadius: 12,
+        borderBottomLeftRadius: 12,
+        borderColor: '#3EDA41',
     },
     topSection: {
         flexDirection: 'row',
@@ -96,11 +189,13 @@ const styles = StyleSheet.create({
         paddingLeft: 16,
     },
     bottomSection: {
+        flex: 1,
         flexDirection: 'row',
-        gap: 8,
+        width: '100%',
+        height: '100%',
+        gap: 4,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#00000055',
         paddingTop: 18,
         paddingBottom: 14,
         paddingRight: 8,
@@ -148,6 +243,7 @@ const styles = StyleSheet.create({
     scratchCardValue: {
         color: '#FFDEA8',
         fontSize: 12,
+        fontFamily: "Inter-SemiBold",
     },
     scratchCard: {
         color: '#FFFFFF',
