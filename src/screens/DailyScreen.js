@@ -7,6 +7,7 @@ import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
 import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import DailyCardsContainer from "../components/DailyCardsContainer";
+import GamesAvailableCard from "../components/GamesAvailableCard";
 
 const DailyScreen = () => {
   const navigate = useNavigate();
@@ -171,6 +172,7 @@ const DailyScreen = () => {
       >
         <QuestionOfTheDay question={"What sports are you interested in?"} />
         <DailyCardsContainer />
+        <GamesAvailableCard set={1} />
       </View>
     </ScrollView>
   );
