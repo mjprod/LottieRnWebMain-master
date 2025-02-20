@@ -8,7 +8,7 @@ const NextDrawCard = ({ days, hours, minutes, seconds }) => {
     <View style={styles.container}>
       <ImageBackground
         style={{ width: "100%" }}
-        source={AssetPack.backgrounds.DAILY_CARD_EXTRA_BACKGROUND}
+        source={AssetPack.backgrounds.NEXT_DRAW_CARD}
       >
         <View style={styles.topSection}>
           <View

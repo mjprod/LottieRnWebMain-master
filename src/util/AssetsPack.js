@@ -9,6 +9,7 @@ const AssetPack = {
   backgrounds: {
     DAILY_CARD_BACKGROUND: require("./../assets/image/day_card_background.png"),
     DAILY_CARD_EXTRA_BACKGROUND: require("./../assets/image/day_card_extra_background.png"),
+    NEXT_DRAW_CARD: require("./../assets/image/background_amazon_gift_card.png"),
     CARD_NUMBER_SET: require("./../assets/image/card_set_number_background.svg"),
     CARD_NUMBER_SET_COMPLETED: require("./../assets/image/card_set_number_completed.svg"),
     CARD_NUMBER_SET_INACTIVE: require("./../assets/image/card_set_number_inactive.svg"),
