@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, ScrollView, StyleSheet, Text } from "react-native";
+import { Animated, ScrollView, StyleSheet, Text  } from "react-native";
 import { ActivityIndicator, Image, View } from "react-native-web";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";

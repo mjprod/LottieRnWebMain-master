@@ -19,6 +19,8 @@ import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
 import AsyncStorage from "@react-native-community/async-storage";
+import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
+import TimerComponent from "../components/TimerComponent";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -36,12 +38,7 @@ const LauchScreen = () => {
 
   const [initialUserData, setInitialUserData] = useState("");
 
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [timeLeft] = useTimeLeftForNextDraw();
 
   const { loading, error, response, fetchUserDetails } = useApiRequest();
   const { showSnackbar } = useSnackbar();
@@ -68,43 +65,6 @@ const LauchScreen = () => {
       },
     });
   };
-
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const now = new Date();
-      const nextMondayNineAM = new Date();
-
-      // Calculate next Monday
-      const dayOfWeek = now.getDay();
-      const daysUntilNextMonday = (8 - dayOfWeek) % 7; // 0 if today is Monday, else days until next Monday
-
-      // Set the time to 9 AM
-      nextMondayNineAM.setDate(now.getDate() + daysUntilNextMonday);
-      nextMondayNineAM.setHours(9, 0, 0, 0); // Set to 9:00:00 AM
-
-      // If today is Monday but it's after 9 AM, set to the next Monday
-      if (dayOfWeek === 1 && now > nextMondayNineAM) {
-        nextMondayNineAM.setDate(nextMondayNineAM.getDate() + 7);
-      }
-
-      const difference = nextMondayNineAM - now;
-
-      const timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-
-      setTimeLeft(timeLeft);
-    };
-
-    // Update the countdown every second
-    const intervalId = setInterval(calculateTimeLeft, 1000);
-
-    // Cleanup the interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []);
 
   useEffect(() => {
     if (response) {
@@ -268,23 +228,12 @@ const LauchScreen = () => {
         </View>
 
         <View style={{ height: 10 }} />
-
-        {/* Timer Section */}
-        <View style={styles.timerSection}>
-          <View style={styles.backgroundRounded}>
-            <Text style={styles.timerTitle}>Time till Next Draw</Text>
-          </View>
-          <Text style={styles.timerContainer}>
-            <Text style={styles.timerNumberValue}>{timeLeft.days}</Text>
-            <Text style={styles.timerStringValue}> Days </Text>
-            <Text style={styles.timerNumberValue}>{timeLeft.hours}</Text>
-            <Text style={styles.timerStringValue}> Hrs </Text>
-            <Text style={styles.timerNumberValue}>{timeLeft.minutes}</Text>
-            <Text style={styles.timerStringValue}> Mins </Text>
-            <Text style={styles.timerNumberValue}>{timeLeft.seconds}</Text>
-            <Text style={styles.timerStringValue}> Secs</Text>
-          </Text>
-        </View>
+        <TimerComponent
+          days={timeLeft.days}
+          hours={timeLeft.hours}
+          minutes={timeLeft.minutes}
+          seconds={timeLeft.seconds}
+        />
 
         <View style={styles.buttonWrapper}>
           <GameButton text="Play Game" onPress={() => handleStartGame()} />
