@@ -18,7 +18,6 @@ import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
-import AsyncStorage from "@react-native-community/async-storage";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import TimerComponent from "../components/TimerComponent";
 
@@ -74,11 +73,15 @@ const LauchScreen = () => {
         setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
         setInitialScratchCardLeft(response.user.card_balance || 0);
         setInitialUserData(response.user);
-        AsyncStorage.setItem("user", JSON.stringify(response.user));
       }
+      const userData = response.user
       if (response.daily === null || response.daily.length === 0) {
         console.log("response.daily is null");
-        navigate("/daily");
+        navigate("/daily", {
+          state: {
+            userData,
+          },
+        });
       } else {
         console.log("response.daily is not null");
       }

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, ScrollView, StyleSheet, Text  } from "react-native";
+import { Animated, ScrollView, StyleSheet, Text } from "react-native";
 import { ActivityIndicator, Image, View } from "react-native-web";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
 import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import DailyCardsContainer from "../components/DailyCardsContainer";
-import AsyncStorage from "@react-native-community/async-storage";
+import { useLocation } from "react-router-dom";
 
 const DailyScreen = () => {
   const logo = require("./../assets/image/background_top_nav.png");
@@ -28,14 +28,17 @@ const DailyScreen = () => {
     seconds: 0,
   });
 
-  const { loading, error, response, getDailyQuestion, postDailyAnswer } = useApiRequest();
+  const { userData } = useLocation().state;
+
+  const { loading, error, response, getDailyQuestion, postDailyAnswer } =
+    useApiRequest();
   const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
-    AsyncStorage.getItem("user").then((value) => {
-      setInitialUserData(value ? JSON.parse(value) : null);
-    });
-  }, []);
+    if (userData) {
+      setInitialUserData(userData);
+    }
+  }, [userData]);
 
   useEffect(() => {
     if (initialUserData.user_id) {
@@ -121,9 +124,9 @@ const DailyScreen = () => {
   };
 
   const onSubmit = (answer) => {
-    if(answer !== ""){
+    if (answer !== "") {
       postDailyAnswer(initialUserData.user_id, question.question_id, answer);
-    }else{
+    } else {
       showSnackbar("Please enter your answer");
     }
   };
@@ -152,7 +155,10 @@ const DailyScreen = () => {
           { marginLeft: 25, marginRight: 30, marginBottom: 10 },
         ]}
       >
-        <QuestionOfTheDay question={`${question.question}`} onSubmit={onSubmit}/>
+        <QuestionOfTheDay
+          question={`${question.question}`}
+          onSubmit={onSubmit}
+        />
         <DailyCardsContainer />
       </View>
     </ScrollView>
