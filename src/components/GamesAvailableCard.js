@@ -2,7 +2,7 @@ import React from "react";
 import { Text, Image, StyleSheet, ImageBackground, View } from "react-native";
 import AssetPack from "../util/AssetsPack";
 
-const GamesAvailableCard = ({ set }) => {
+const GamesAvailableCard = ({ numberOfSets, numberOfCardsInSet = 12 }) => {
   return (
     <ImageBackground
       style={styles.backgroundRounded}
@@ -19,7 +19,7 @@ const GamesAvailableCard = ({ set }) => {
       </View>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Text style={styles.valueText}>
-          {12 * set} ({set} set)
+          {numberOfCardsInSet * numberOfSets} ({numberOfSets} set)
         </Text>
       </View>
     </ImageBackground>

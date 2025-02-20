@@ -172,7 +172,7 @@ const DailyScreen = () => {
       >
         <QuestionOfTheDay question={"What sports are you interested in?"} />
         <DailyCardsContainer />
-        <GamesAvailableCard set={1} />
+        <GamesAvailableCard numberOfSets={1} />
       </View>
     </ScrollView>
   );

@@ -77,7 +77,7 @@ const LauchScreen = () => {
       if (response.daily === null || response.daily.length === 0) {
         // response.daily is exactly null, handle accordingly
         console.log("response.daily is null");
-        // navigate("/daily");
+        navigate("/daily");
       } else {
         console.log("response.daily is not null");
         // response.daily is not null (it could be an empty array or have values)
