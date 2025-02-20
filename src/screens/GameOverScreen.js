@@ -11,6 +11,8 @@ import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import LottieTicketSlot from "../components/LottieTicketSlot";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
 import { useSound } from "../hook/useSoundPlayer";
+import TimerComponent from "../components/TimerComponent";
+import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 
 const GameOverScreen = () => {
   const navigate = useNavigate();
@@ -22,13 +24,7 @@ const GameOverScreen = () => {
   const backgroundTotalTicket = require("./../assets/image/background_total_ticket.png");
 
   const [progress, setProgress] = useState(12456);
-
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [timeLeft] = useTimeLeftForNextDraw();
 
   const animatedProgress = useRef(new Animated.Value(0)).current;
 
@@ -52,43 +48,6 @@ const GameOverScreen = () => {
   animatedProgress.addListener(({ value }) => {
     setProgress(value); // Sync the animated value with the slider's progress
   });
-
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const now = new Date();
-      const nextMondayNineAM = new Date();
-
-      // Calculate next Monday
-      const dayOfWeek = now.getDay();
-      const daysUntilNextMonday = (8 - dayOfWeek) % 7; // 0 if today is Monday, else days until next Monday
-
-      // Set the time to 9 AM
-      nextMondayNineAM.setDate(now.getDate() + daysUntilNextMonday);
-      nextMondayNineAM.setHours(9, 0, 0, 0); // Set to 9:00:00 AM
-
-      // If today is Monday but it's after 9 AM, set to the next Monday
-      if (dayOfWeek === 1 && now > nextMondayNineAM) {
-        nextMondayNineAM.setDate(nextMondayNineAM.getDate() + 7);
-      }
-
-      const difference = nextMondayNineAM - now;
-
-      const timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-
-      setTimeLeft(timeLeft);
-    };
-
-    // Update the countdown every second
-    const intervalId = setInterval(calculateTimeLeft, 1000);
-
-    // Cleanup the interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -175,23 +134,12 @@ const GameOverScreen = () => {
 
               <Text style={styles.addedPoints}>+9999</Text>
             </View>
-
-            {/* Timer Section */}
-            <View style={styles.timerSection}>
-              <View style={styles.backgroundRounded}>
-                <Text style={styles.timerTitle}>Time till Next Draw</Text>
-              </View>
-              <Text style={styles.timerContainer}>
-                <Text style={styles.timerNumberValue}>{timeLeft.days}</Text>
-                <Text style={styles.timerStringValue}> Days </Text>
-                <Text style={styles.timerNumberValue}>{timeLeft.hours}</Text>
-                <Text style={styles.timerStringValue}> Hrs </Text>
-                <Text style={styles.timerNumberValue}>{timeLeft.minutes}</Text>
-                <Text style={styles.timerStringValue}> Mins </Text>
-                <Text style={styles.timerNumberValue}>{timeLeft.seconds}</Text>
-                <Text style={styles.timerStringValue}> Secs</Text>
-              </Text>
-            </View>
+            <TimerComponent
+              days={timeLeft.days}
+              hours={timeLeft.hours}
+              minutes={timeLeft.minutes}
+              seconds={timeLeft.seconds}
+            />
             <GameButton
               text="BACK HOME"
               onPress={() => {
@@ -282,14 +230,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 8,
   },
-  backgroundRounded: {
-    backgroundColor: "#1D1811",
-    borderRadius: 30,
-    paddingVertical: 8,
-    paddingHorizontal: 25,
-    marginBottom: 10,
-    border: "1px solid #382E23",
-  },
   resultTitle: {
     fontSize: 18,
     fontFamily: "Teko-Medium",
@@ -342,26 +282,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: "#00ff00",
     textAlign: "end",
-  },
-  timerSection: {
-    marginTop: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  timerTitle: {
-    fontFamily: "Inter-Medium",
-    fontSize: 16,
-    color: "#FFDEA8",
-  },
-  timerNumberValue: {
-    fontFamily: "Inter-SemiBold",
-    fontSize: 18,
-    color: "#fff",
-  },
-  timerStringValue: {
-    fontFamily: "Inter-SemiBold",
-    fontSize: 14,
-    color: "#A6A6A6",
   },
   iconWrapper: {
     justifyContent: "center",

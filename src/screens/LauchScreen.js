@@ -1,7 +1,14 @@
 import Slider from "@react-native-community/slider";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Linking, StyleSheet } from "react-native";
-import { ActivityIndicator, Image, ImageBackground, Text, TouchableOpacity, View } from "react-native-web";
+import {
+  ActivityIndicator,
+  Image,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native-web";
 import LottieView from "react-native-web-lottie";
 import { useNavigate, useParams } from "react-router";
 import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
@@ -11,6 +18,8 @@ import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
+import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
+import TimerComponent from "../components/TimerComponent";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -28,12 +37,7 @@ const LauchScreen = () => {
 
   const [initialUserData, setInitialUserData] = useState("");
 
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [timeLeft] = useTimeLeftForNextDraw();
 
   const { loading, error, response, fetchUserDetails } = useApiRequest();
   const { showSnackbar } = useSnackbar();
@@ -62,43 +66,6 @@ const LauchScreen = () => {
   };
 
   useEffect(() => {
-    const calculateTimeLeft = () => {
-      const now = new Date();
-      const nextMondayNineAM = new Date();
-
-      // Calculate next Monday
-      const dayOfWeek = now.getDay();
-      const daysUntilNextMonday = (8 - dayOfWeek) % 7; // 0 if today is Monday, else days until next Monday
-
-      // Set the time to 9 AM
-      nextMondayNineAM.setDate(now.getDate() + daysUntilNextMonday);
-      nextMondayNineAM.setHours(9, 0, 0, 0); // Set to 9:00:00 AM
-
-      // If today is Monday but it's after 9 AM, set to the next Monday
-      if (dayOfWeek === 1 && now > nextMondayNineAM) {
-        nextMondayNineAM.setDate(nextMondayNineAM.getDate() + 7);
-      }
-
-      const difference = nextMondayNineAM - now;
-
-      const timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-
-      setTimeLeft(timeLeft);
-    };
-
-    // Update the countdown every second
-    const intervalId = setInterval(calculateTimeLeft, 1000);
-
-    // Cleanup the interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
     if (response) {
       if (response.user) {
         setInitialScore(response.user.total_score || 0);
@@ -120,8 +87,6 @@ const LauchScreen = () => {
   }, [response]);
 
   useEffect(() => {
-
-
     Animated.timing(animatedProgress, {
       toValue: initialScore,
       duration: 3000,
@@ -164,11 +129,21 @@ const LauchScreen = () => {
             uri: logo,
           }}
         />
-        {loading ? <LoadingView /> :
-          <ProfileHeader id={initialUserData.user_id} name={initialUserData.name}></ProfileHeader>
-        }
+        {loading ? (
+          <LoadingView />
+        ) : (
+          <ProfileHeader
+            id={initialUserData.user_id}
+            name={initialUserData.name}
+          ></ProfileHeader>
+        )}
       </View>
-      <View style={[styles.container, { marginLeft: 18, marginRight: 18, marginBottom: 10 }]}>
+      <View
+        style={[
+          styles.container,
+          { marginLeft: 18, marginRight: 18, marginBottom: 10 },
+        ]}
+      >
         <Text
           style={[
             styles.subtitle,
@@ -183,9 +158,11 @@ const LauchScreen = () => {
               <IconStarResultScreen />
               <Text style={styles.resultTitle}>TOTAL POINTS</Text>
             </View>
-            {loading ? <LoadingView /> :
+            {loading ? (
+              <LoadingView />
+            ) : (
               <Text style={styles.resultPoints}>{initialScore || 0}</Text>
-            }
+            )}
           </View>
           <View style={{ width: 10 }} />
           <View style={styles.resultCard}>
@@ -216,9 +193,11 @@ const LauchScreen = () => {
               loop={false}
             />
             <Text style={styles.ticketTitle}>TOTAL RAFFLE TICKETS EARNED</Text>
-            {loading ? <LoadingView /> :
+            {loading ? (
+              <LoadingView />
+            ) : (
               <Text style={styles.resultPoints}>{initialTicketCount || 0}</Text>
-            }
+            )}
           </View>
           <View
             style={{
@@ -230,7 +209,9 @@ const LauchScreen = () => {
           />
           <View style={styles.containerTotalTicket}>
             <Text style={styles.nextTicketText}>Next Ticket</Text>
-            <Text style={styles.ticketProgress}>{`${parseInt(progress, 10)} / 20000`} </Text>
+            <Text style={styles.ticketProgress}>
+              {`${parseInt(progress, 10)} / 20000`}{" "}
+            </Text>
           </View>
 
           <View style={styles.sliderContainer}>
@@ -249,35 +230,21 @@ const LauchScreen = () => {
         </View>
 
         <View style={{ height: 10 }} />
-
-        {/* Timer Section */}
-        <View style={styles.timerSection}>
-          <View style={styles.backgroundRounded}>
-            <Text style={styles.timerTitle}>Time till Next Draw</Text>
-          </View>
-          <Text style={styles.timerContainer}>
-            <Text style={styles.timerNumberValue}>{timeLeft.days}</Text>
-            <Text style={styles.timerStringValue}> Days </Text>
-            <Text style={styles.timerNumberValue}>{timeLeft.hours}</Text>
-            <Text style={styles.timerStringValue}> Hrs </Text>
-            <Text style={styles.timerNumberValue}>{timeLeft.minutes}</Text>
-            <Text style={styles.timerStringValue}> Mins </Text>
-            <Text style={styles.timerNumberValue}>{timeLeft.seconds}</Text>
-            <Text style={styles.timerStringValue}> Secs</Text>
-          </Text>
-        </View>
+        <TimerComponent
+          days={timeLeft.days}
+          hours={timeLeft.hours}
+          minutes={timeLeft.minutes}
+          seconds={timeLeft.seconds}
+        />
 
         <View style={styles.buttonWrapper}>
           <GameButton text="Play Game" onPress={() => handleStartGame()} />
         </View>
 
         <TouchableOpacity onPress={handlePress} style={styles.button}>
-          <Text style={styles.buttonText}>
-            How To Play Turbo Scratch {">"}
-          </Text>
+          <Text style={styles.buttonText}>How To Play Turbo Scratch {">"}</Text>
         </TouchableOpacity>
       </View>
-
     </View>
   );
 };

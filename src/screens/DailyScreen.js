@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Linking, ScrollView, StyleSheet, Text} from "react-native";
+import { Animated, Linking, ScrollView, StyleSheet, Text } from "react-native";
 import { ActivityIndicator, Image, View } from "react-native-web";
 import { useNavigate, useParams } from "react-router";
 import ProfileHeader from "../components/ProfileHeader";
@@ -113,8 +113,6 @@ const DailyScreen = () => {
   }, [response]);
 
   useEffect(() => {
-
-
     Animated.timing(animatedProgress, {
       toValue: initialScore,
       duration: 3000,
@@ -156,15 +154,24 @@ const DailyScreen = () => {
             uri: logo,
           }}
         />
-        {loading ? <LoadingView /> :
-          <ProfileHeader id={initialUserData.user_id} name={initialUserData.name}></ProfileHeader>
-        }
+        {loading ? (
+          <LoadingView />
+        ) : (
+          <ProfileHeader
+            id={initialUserData.user_id}
+            name={initialUserData.name}
+          ></ProfileHeader>
+        )}
       </View>
-      <View style={[styles.container, { marginLeft: 25, marginRight: 30, marginBottom: 10 }]}>
-        <QuestionOfTheDay question={"What sports are you interested in?"}></QuestionOfTheDay>
+      <View
+        style={[
+          styles.container,
+          { marginLeft: 25, marginRight: 30, marginBottom: 10 },
+        ]}
+      >
+        <QuestionOfTheDay question={"What sports are you interested in?"} />
         <DailyCardsContainer />
       </View>
-
     </ScrollView>
   );
 };
