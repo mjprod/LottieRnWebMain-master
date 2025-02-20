@@ -7,7 +7,8 @@ const NextDrawCard = ({ days, hours, minutes, seconds }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        style={{ width: "100%" }}
+        style={{flex: 1, flexDirection: "column", justifyContent: "space-between"}}
+        resizeMode="stretch"
         source={AssetPack.backgrounds.NEXT_DRAW_CARD}
       >
         <View style={styles.topSection}>
@@ -50,12 +51,7 @@ const NextDrawCard = ({ days, hours, minutes, seconds }) => {
             Scratch for more chances to win!
           </Text>
         </View>
-        <ImageBackground
-          style={{ width: "100%", height: 50, bottom: 0, position: "absolute" }}
-          source={AssetPack.backgrounds.BOTTOM_GRADIENT_DARKER}
-        />
-      </ImageBackground>
-      <View style={styles.bottomSection}>
+        <View style={styles.bottomSection}>
         <Image
           style={{ width: 145, height: 46 }}
           source={AssetPack.logos.TURBO_SCRATCH}
@@ -67,6 +63,8 @@ const NextDrawCard = ({ days, hours, minutes, seconds }) => {
           seconds={seconds}
         />
       </View>
+      </ImageBackground>
+      
     </View>
   );
 };
@@ -84,14 +82,18 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingLeft: 20,
     paddingRight: 20,
-    paddingBottom: 37,
+    paddingBottom: 20,
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     flexDirection: "column",
   },
   bottomSection: {
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 30,
+    paddingTop: 10,
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 30,
