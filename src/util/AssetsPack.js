@@ -15,8 +15,12 @@ const AssetPack = {
     CARD_NUMBER_SET_INACTIVE: require("./../assets/image/card_set_number_inactive.svg"),
     BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg"),
   },
-  videos: {},
   images: {},
+  videos: {},
+  lotties: {
+    CONFETTI: require("../assets/lotties/lottieConfetti.json"),
+  },
+  sounds: {},
 };
 
 export default AssetPack;
