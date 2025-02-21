@@ -3,7 +3,9 @@ const AssetPack = {
     CARDS: require("./../assets/icons/icon_cards_normal.svg"),
     CARDS_GREEN: require("./../assets/icons/icon_cards_green.svg"),
   },
-  logos: {},
+  logos: {
+    TURBO_SCRATCH: require("./../assets/image/turbo_scratch_logo.png"),
+  },
   backgrounds: {
     DAILY_CARD_BACKGROUND: require("./../assets/image/day_card_background.png"),
     DAILY_CARD_EXTRA_BACKGROUND: require("./../assets/image/day_card_extra_background.png"),

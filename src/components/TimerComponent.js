@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   timerTitle: {
     fontFamily: "Inter-Medium",
-    fontSize: 16,
+    fontSize: 14,
     color: "#FFDEA8",
   },
   timerNumberValue: {

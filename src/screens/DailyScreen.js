@@ -9,6 +9,8 @@ import DailyCardsContainer from "../components/DailyCardsContainer";
 import { useLocation } from "react-router-dom";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
+import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
+import NextDrawCard from "../components/NextDrawCard";
 
 const DailyScreen = () => {
   const logo = require("./../assets/image/background_top_nav.png");
@@ -20,7 +22,8 @@ const DailyScreen = () => {
   const [initialTicketCount, setInitialTicketCount] = useState(0);
   const [initialLuckySymbolCount, setInitialLuckySymbolCount] = useState(0);
   const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
-
+  
+  const [timeLeft] = useTimeLeftForNextDraw();
   const [initialUserData, setInitialUserData] = useState("");
   const [question, setQuestion] = useState("");
   const [isThumbsUpAnimationFinished, setIsThumbsUpAnimationFinished] =
@@ -49,6 +52,7 @@ const DailyScreen = () => {
   const { loading, error, response, getDailyQuestion, postDailyAnswer } =
     useApiRequest();
   const { showSnackbar } = useSnackbar();
+
 
   useEffect(() => {
     if (userData) {
@@ -169,6 +173,12 @@ const DailyScreen = () => {
           </Animated.View>
         )}
         <DailyCardsContainer />
+        <NextDrawCard
+          days={timeLeft.days}
+          hours={timeLeft.hours}
+          minutes={timeLeft.minutes}
+          seconds={timeLeft.seconds}
+        />
       </View>
     </ScrollView>
   );
