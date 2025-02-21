@@ -7,6 +7,8 @@ import useApiRequest from "../hook/useApiRequest";
 import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import DailyCardsContainer from "../components/DailyCardsContainer";
 import { useLocation } from "react-router-dom";
+import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
+import NextDrawCard from "../components/NextDrawCard";
 
 const DailyScreen = () => {
   const logo = require("./../assets/image/background_top_nav.png");
@@ -21,18 +23,14 @@ const DailyScreen = () => {
 
   const [initialUserData, setInitialUserData] = useState("");
   const [question, setQuestion] = useState("");
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [timeLeft] = useTimeLeftForNextDraw()
 
   const { userData } = useLocation().state;
 
   const { loading, error, response, getDailyQuestion, postDailyAnswer } =
     useApiRequest();
   const { showSnackbar } = useSnackbar();
+
 
   useEffect(() => {
     if (userData) {
@@ -45,43 +43,6 @@ const DailyScreen = () => {
       getDailyQuestion(initialUserData.user_id);
     }
   }, [initialUserData]);
-
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const now = new Date();
-      const nextMondayNineAM = new Date();
-
-      // Calculate next Monday
-      const dayOfWeek = now.getDay();
-      const daysUntilNextMonday = (8 - dayOfWeek) % 7; // 0 if today is Monday, else days until next Monday
-
-      // Set the time to 9 AM
-      nextMondayNineAM.setDate(now.getDate() + daysUntilNextMonday);
-      nextMondayNineAM.setHours(9, 0, 0, 0); // Set to 9:00:00 AM
-
-      // If today is Monday but it's after 9 AM, set to the next Monday
-      if (dayOfWeek === 1 && now > nextMondayNineAM) {
-        nextMondayNineAM.setDate(nextMondayNineAM.getDate() + 7);
-      }
-
-      const difference = nextMondayNineAM - now;
-
-      const timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-
-      setTimeLeft(timeLeft);
-    };
-
-    // Update the countdown every second
-    const intervalId = setInterval(calculateTimeLeft, 1000);
-
-    // Cleanup the interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []);
 
   useEffect(() => {
     if (response) {
@@ -160,6 +121,12 @@ const DailyScreen = () => {
           onSubmit={onSubmit}
         />
         <DailyCardsContainer />
+        <NextDrawCard
+          days={timeLeft.days}
+          hours={timeLeft.hours}
+          minutes={timeLeft.minutes}
+          seconds={timeLeft.seconds}
+        />
       </View>
     </ScrollView>
   );
