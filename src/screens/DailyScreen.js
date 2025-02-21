@@ -9,6 +9,7 @@ import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import DailyCardsContainer from "../components/DailyCardsContainer";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import NextDrawCard from "../components/NextDrawCard";
+import LinkButton from "../components/LinkButton";
 
 const DailyScreen = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const DailyScreen = () => {
 
   const [initialUserData, setInitialUserData] = useState("");
 
-  const [timeLeft] = useTimeLeftForNextDraw()
+  const [timeLeft] = useTimeLeftForNextDraw();
 
   const { loading, error, response, fetchUserDetails } = useApiRequest();
   const { showSnackbar } = useSnackbar();
@@ -51,7 +52,6 @@ const DailyScreen = () => {
       },
     });
   };
-
 
   useEffect(() => {
     if (response) {
@@ -132,6 +132,11 @@ const DailyScreen = () => {
       >
         <QuestionOfTheDay question={"What sports are you interested in?"} />
         <DailyCardsContainer />
+        <LinkButton
+          text="How To Play Turbo Scratch >"
+          handlePress={handlePress}
+          style={{ paddingVertical: 10, marginVertical: 20 }}
+        />
         <NextDrawCard
           days={timeLeft.days}
           hours={timeLeft.hours}
