@@ -25,21 +25,29 @@ const DailyScreen = () => {
   const [question, setQuestion] = useState("");
   const [isThumbsUpAnimationFinished, setIsThumbsUpAnimationFinished] =
     useState(false);
+  const slideAnim = useRef(new Animated.Value(270)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
-  const fadeOut = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 900,
-      useNativeDriver: true,
-    }).start(() => setIsThumbsUpAnimationFinished(true));
+  const slideOutAndFade = () => {
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start(() => setIsThumbsUpAnimationFinished(true));
   };
+
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const { userData } = useLocation().state;
 
   const { loading, error, response, getDailyQuestion, postDailyAnswer } =
     useApiRequest();
-    
   const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -110,7 +118,7 @@ const DailyScreen = () => {
   };
 
   const handleThumbsUpAnimationFinish = () => {
-    fadeOut();
+    slideOutAndFade();
   };
 
   return (
@@ -145,9 +153,14 @@ const DailyScreen = () => {
         )}
 
         {isSubmitted && !isThumbsUpAnimationFinished && (
-          <Animated.View style={[styles.box, { opacity: fadeAnim }]}>
+          <Animated.View style={[styles.box, { opacity: fadeAnim, height: slideAnim}]}>
             <LottieView
-              style={{ width: "100%", marginTop: -20 }}
+              style={{
+                width: 258,
+                marginTop: -20,
+                flex: 1,
+                alignSelf: "center",
+              }}
               source={AssetPack.lotties.THUMBS_UP}
               autoPlay
               speed={1}
