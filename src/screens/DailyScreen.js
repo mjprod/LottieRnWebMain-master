@@ -108,10 +108,7 @@ const DailyScreen = () => {
 
   const onSubmit = (answer) => {
     if (answer !== "") {
-      setIsSubmitted(true);
-      {
-        //postDailyAnswer(initialUserData.user_id, question.question_id, answer);
-      }
+      postDailyAnswer(initialUserData.user_id, question.question_id, answer);
     } else {
       showSnackbar("Please enter your answer");
     }
@@ -153,7 +150,9 @@ const DailyScreen = () => {
         )}
 
         {isSubmitted && !isThumbsUpAnimationFinished && (
-          <Animated.View style={[styles.box, { opacity: fadeAnim, height: slideAnim}]}>
+          <Animated.View
+            style={[styles.box, { opacity: fadeAnim, height: slideAnim }]}
+          >
             <LottieView
               style={{
                 width: 258,
