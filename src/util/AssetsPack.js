@@ -17,6 +17,9 @@ const AssetPack = {
   },
   videos: {},
   images: {},
+  lotties: {
+    CTA_BUTTON_FULL_WIDTH: require("./../assets/lotties/buttonCallToActionFullWidth.json"),
+  },
 };
 
 export default AssetPack;
