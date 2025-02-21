@@ -7,6 +7,8 @@ import useApiRequest from "../hook/useApiRequest";
 import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import DailyCardsContainer from "../components/DailyCardsContainer";
 import { useLocation } from "react-router-dom";
+import AssetPack from "../util/AssetsPack";
+import LottieView from "react-native-web-lottie";
 
 const DailyScreen = () => {
   const logo = require("./../assets/image/background_top_nav.png");
@@ -27,6 +29,10 @@ const DailyScreen = () => {
     minutes: 0,
     seconds: 0,
   });
+  const [isThumbsUpAnimationFinished, setIsThumbsUpAnimationFinished] =
+    useState(false);
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const { userData } = useLocation().state;
 
@@ -88,8 +94,12 @@ const DailyScreen = () => {
       if (response.question) {
         setQuestion(response);
       }
-      if (response.message) {
-        showSnackbar(response.message);
+
+      if (response.answer_id) {
+        setIsSubmitted(true);
+        if (response.message) {
+          showSnackbar(response.message);
+        }
       }
     }
   }, [response]);
@@ -125,10 +135,17 @@ const DailyScreen = () => {
 
   const onSubmit = (answer) => {
     if (answer !== "") {
-      postDailyAnswer(initialUserData.user_id, question.question_id, answer);
+      setIsSubmitted(true);
+      {
+        //postDailyAnswer(initialUserData.user_id, question.question_id, answer);
+      }
     } else {
       showSnackbar("Please enter your answer");
     }
+  };
+
+  const handleThumbsUpAnimationFinish = () => {
+    setIsThumbsUpAnimationFinished(true);
   };
 
   return (
@@ -155,10 +172,23 @@ const DailyScreen = () => {
           { marginLeft: 25, marginRight: 30, marginBottom: 10 },
         ]}
       >
-        <QuestionOfTheDay
-          question={`${question.question}`}
-          onSubmit={onSubmit}
-        />
+        {!isSubmitted && (
+          <QuestionOfTheDay
+            question={`${question.question}`}
+            onSubmit={onSubmit}
+          />
+        )}
+
+        {isSubmitted && !isThumbsUpAnimationFinished && (
+          <LottieView
+            style={{ width: "100%", marginTop: -20 }}
+            source={AssetPack.lotties.THUMBS_UP}
+            autoPlay
+            speed={1}
+            loop={false}
+            onAnimationFinish={handleThumbsUpAnimationFinish}
+          />
+        )}
         <DailyCardsContainer />
       </View>
     </ScrollView>

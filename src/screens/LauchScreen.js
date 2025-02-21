@@ -84,6 +84,11 @@ const LauchScreen = () => {
         });
       } else {
         console.log("response.daily is not null");
+        navigate("/daily", {
+          state: {
+            userData,
+          },
+        });
       }
     }
   }, [response]);
