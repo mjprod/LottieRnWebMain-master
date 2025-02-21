@@ -117,7 +117,7 @@ const DailyScreen = () => {
             containerStyle={{ marginTop: -40 }}
             id={initialUserData.user_id}
             name={initialUserData.name}
-          ></ProfileHeader>
+          />
         )}
       </View>
       <View
