@@ -9,6 +9,7 @@ import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import DailyCardsContainer from "../components/DailyCardsContainer";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import NextDrawCard from "../components/NextDrawCard";
+import TopBannerNav from "../components/TopBannerNav";
 
 const DailyScreen = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const DailyScreen = () => {
 
   const [initialUserData, setInitialUserData] = useState("");
 
-  const [timeLeft] = useTimeLeftForNextDraw()
+  const [timeLeft] = useTimeLeftForNextDraw();
 
   const { loading, error, response, fetchUserDetails } = useApiRequest();
   const { showSnackbar } = useSnackbar();
@@ -51,7 +52,6 @@ const DailyScreen = () => {
       },
     });
   };
-
 
   useEffect(() => {
     if (response) {
@@ -109,16 +109,12 @@ const DailyScreen = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Image
-          style={styles.tinyLogo}
-          source={{
-            uri: logo,
-          }}
-        />
+        <TopBannerNav />
         {loading ? (
           <LoadingView />
         ) : (
           <ProfileHeader
+            containerStyle={{ marginTop: -40 }}
             id={initialUserData.user_id}
             name={initialUserData.name}
           ></ProfileHeader>
@@ -146,6 +142,7 @@ const DailyScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#131313",
   },
   imageBackground: {
     width: "100%",
