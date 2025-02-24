@@ -7,6 +7,8 @@ import useApiRequest from "../hook/useApiRequest";
 import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import DailyCardsContainer from "../components/DailyCardsContainer";
 import { useLocation } from "react-router-dom";
+import AssetPack from "../util/AssetsPack";
+import LottieView from "react-native-web-lottie";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import NextDrawCard from "../components/NextDrawCard";
 
@@ -20,10 +22,30 @@ const DailyScreen = () => {
   const [initialTicketCount, setInitialTicketCount] = useState(0);
   const [initialLuckySymbolCount, setInitialLuckySymbolCount] = useState(0);
   const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
-
+  
+  const [timeLeft] = useTimeLeftForNextDraw();
   const [initialUserData, setInitialUserData] = useState("");
   const [question, setQuestion] = useState("");
-  const [timeLeft] = useTimeLeftForNextDraw()
+  const [isThumbsUpAnimationFinished, setIsThumbsUpAnimationFinished] =
+    useState(false);
+  const slideAnim = useRef(new Animated.Value(270)).current;
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const slideOutAndFade = () => {
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start(() => setIsThumbsUpAnimationFinished(true));
+  };
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const { userData } = useLocation().state;
 
@@ -49,8 +71,12 @@ const DailyScreen = () => {
       if (response.question) {
         setQuestion(response);
       }
-      if (response.message) {
-        showSnackbar(response.message);
+
+      if (response.answer_id) {
+        setIsSubmitted(true);
+        if (response.message) {
+          showSnackbar(response.message);
+        }
       }
     }
   }, [response]);
@@ -92,6 +118,10 @@ const DailyScreen = () => {
     }
   };
 
+  const handleThumbsUpAnimationFinish = () => {
+    slideOutAndFade();
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -116,10 +146,32 @@ const DailyScreen = () => {
           { marginLeft: 25, marginRight: 30, marginBottom: 10 },
         ]}
       >
-        <QuestionOfTheDay
-          question={`${question.question}`}
-          onSubmit={onSubmit}
-        />
+        {!isSubmitted && (
+          <QuestionOfTheDay
+            question={`${question.question}`}
+            onSubmit={onSubmit}
+          />
+        )}
+
+        {isSubmitted && !isThumbsUpAnimationFinished && (
+          <Animated.View
+            style={[styles.box, { opacity: fadeAnim, height: slideAnim }]}
+          >
+            <LottieView
+              style={{
+                width: 258,
+                marginTop: -20,
+                flex: 1,
+                alignSelf: "center",
+              }}
+              source={AssetPack.lotties.THUMBS_UP}
+              autoPlay
+              speed={1}
+              loop={false}
+              onAnimationFinish={handleThumbsUpAnimationFinish}
+            />
+          </Animated.View>
+        )}
         <DailyCardsContainer />
         <NextDrawCard
           days={timeLeft.days}

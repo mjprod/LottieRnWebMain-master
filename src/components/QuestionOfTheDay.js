@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import GameButton from "./GameButton";
 
-const QuestionOfTheDay = ({ question, onSubmit }) => {
+const QuestionOfTheDay = ({ question, onSubmit, style}) => {
   const [text, setText] = useState("");
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...style }}>
       <View style={styles.topTag}>
         <Text style={styles.topTagText}>{"Question of the day"}</Text>
       </View>
