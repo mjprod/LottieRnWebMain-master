@@ -21,7 +21,6 @@ const AssetPack = {
     BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg"),
     GOLD_RUSH: require("./../assets/image/gold_rush.png"),
   },
-  images: {},
   videos: {},
   sounds: {},
   images: {
