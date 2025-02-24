@@ -3,6 +3,7 @@ import { Text, Image, StyleSheet, ImageBackground, View } from "react-native";
 import TimerComponent from "./TimerComponent";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
+import PurplePill from "./PurplePill";
 
 const NextDrawCard = ({ days, hours, minutes, seconds }) => {
   return (
@@ -24,29 +25,7 @@ const NextDrawCard = ({ days, hours, minutes, seconds }) => {
               marginBottom: 10,
             }}
           >
-            <Text
-              style={{
-                fontFamily: "Inter-Bold",
-                color: "white",
-                fontSize: 14,
-                textTransform: "uppercase",
-                fontWeight: "bold",
-                paddingRight: 10,
-                paddingLeft: 10,
-                paddingTop: 2,
-                backgroundColor: "#523069",
-                borderRadius: 25,
-                borderColor: "#7F48A7",
-                borderWidth: 1,
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center",
-                flexDirection: "row",
-                flexWrap: "wrap",
-              }}
-            >
-              Beta Competition
-            </Text>
+            <PurplePill text={"Beta Competition"} />
           </View>
 
           <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>

@@ -12,6 +12,7 @@ import LottieView from "react-native-web-lottie";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import NextDrawCard from "../components/NextDrawCard";
+import TopBannerNav from "../components/TopBannerNav";
 import LinkButton from "../components/LinkButton";
 
 const DailyScreen = () => {
@@ -127,16 +128,12 @@ const DailyScreen = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Image
-          style={styles.tinyLogo}
-          source={{
-            uri: logo,
-          }}
-        />
+        <TopBannerNav />
         {loading ? (
           <LoadingView />
         ) : (
           <ProfileHeader
+            containerStyle={{ marginTop: -40 }}
             id={initialUserData.user_id}
             name={initialUserData.name}
           />
@@ -189,6 +186,7 @@ const DailyScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#131313",
   },
   headerIcon: {
     width: 50,
