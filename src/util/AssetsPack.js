@@ -16,6 +16,7 @@ const AssetPack = {
     CARD_NUMBER_SET_INACTIVE: require("./../assets/image/card_set_number_inactive.svg"),
     BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg"),
     BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg"),
+    GOLD_RUSH: require("./../assets/image/gold_rush.png"),
   },
   videos: {},
   images: {

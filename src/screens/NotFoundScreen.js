@@ -3,6 +3,7 @@ import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
 import AssetPack from "../util/AssetsPack";
 import GameButton from "../components/GameButton";
+import TransparentBackground from "../components/TransparentBackground";
 
 const NotFoundScreen = () => {
   return (
@@ -15,20 +16,44 @@ const NotFoundScreen = () => {
           source={AssetPack.images.PHAROAH}
           style={{ width: 250, height: 200, marginBottom: -100, zIndex: 10 }}
         />
-        <View style={styles.container}>
-          <Image
-            style={{ width: 145, height: 46 }}
-            source={AssetPack.logos.TURBO_SCRATCH}
-          />
-          <Image
-            style={{ width: 169, height: 120 }}
-            source={AssetPack.icons.ICON_404}
-            resizeMode="center"
-          />
-          <Text style={styles.message}>
-            Looks like you’ve scratched the wrong spot! This page doesn’t exist!
-          </Text>
-        </View>
+        <TransparentBackground
+          source={AssetPack.backgrounds.GOLD_RUSH}
+          style={{
+            borderColor: "#FFEEC0",
+            borderWidth: 1,
+            borderRadius: 12,
+            marginHorizontal: 35,
+            marginBottom: 30,
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "#00000099",
+              height: "100%",
+              paddingTop: 100,
+              alignItems: "center",
+            }}
+          >
+            <Image
+              style={{ width: 175, height: 46, marginBottom: 35 }}
+              source={AssetPack.logos.TURBO_SCRATCH}
+            />
+            <Image
+              style={{
+                padding: 35,
+                width: "100%",
+                height: 120,
+                marginBottom: 35,
+              }}
+              source={AssetPack.icons.ICON_404}
+              resizeMode="center"
+            />
+            <Text style={styles.message}>
+              Looks like you’ve scratched the wrong spot! This page doesn’t
+              exist!
+            </Text>
+          </View>
+        </TransparentBackground>
         <GameButton style={{ paddingHorizontal: 35 }} text="TAKE ME BACK" />
       </RotatingCirclesBackground>
     </ImageBackground>
@@ -48,7 +73,6 @@ const styles = StyleSheet.create({
     borderColor: "#FFEEC0",
     borderWidth: 1,
     borderRadius: 12,
-    height: "60%",
     marginHorizontal: 35,
     alignItems: "center",
     marginBottom: 30,
