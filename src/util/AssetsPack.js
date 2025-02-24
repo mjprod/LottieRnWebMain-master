@@ -19,7 +19,7 @@ const AssetPack = {
     BLUE_DIAGONAL_GRADIENT: require("./../assets/image/blue_diagonal_gradient.png"),
     GOLDEN_BACKGROUND_GRADIENT: require("./../assets/image/highlightBackgroundGradient.svg"),
     BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg"),
-    GOLD_RUSH: require("./../assets/image/gold_rush.png"),
+    GOLD_RUSH: require("./../assets/image/gold_rush.jpg"),
   },
   videos: {},
   sounds: {},
