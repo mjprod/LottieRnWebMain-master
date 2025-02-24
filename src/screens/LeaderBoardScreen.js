@@ -1,15 +1,16 @@
 import React from "react";
-import { StyleSheet, FlatList } from "react-native";
+import { StyleSheet, FlatList, ScrollView } from "react-native";
 import { ActivityIndicator, Image, View } from "react-native-web";
 import SectionTitle from "../components/SectionTitle";
 import { leaderboardData } from "../data/LeaderBoardData";
 import LeaderBoardItem from "../components/items/LeaderBoardItem";
+import GameButton from "../components/GameButton";
 
 const LeaderBoardScreen = () => {
   const logo = require("./../assets/image/background_top_nav.png");
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Image
           style={styles.tinyLogo}
@@ -30,11 +31,17 @@ const LeaderBoardScreen = () => {
               rank={item.rank}
               username={item.username}
               points={item.points}
+              status={item.status}
+              selected={item.username === "ShirishKoirala"}
             />
           </View>
         )}
       />
-    </View>
+      <GameButton
+        style={{ marginVertical: 30, paddingHorizontal: 25 }}
+        text="Play Now"
+      />
+    </ScrollView>
   );
 };
 

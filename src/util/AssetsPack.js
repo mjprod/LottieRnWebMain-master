@@ -2,8 +2,6 @@ const AssetPack = {
   icons: {
     CARDS: require("./../assets/icons/icon_cards_normal.svg"),
     CARDS_GREEN: require("./../assets/icons/icon_cards_green.svg"),
-    POINTS: require("./../assets/icons/icon_points.svg"),
-    GREEN_ARROW_UP: require("./../assets/icons/leaderboardArrow.svg"),
   },
   logos: {
     TURBO_SCRATCH: require("./../assets/image/turbo_scratch_logo.png"),
@@ -16,6 +14,7 @@ const AssetPack = {
     CARD_NUMBER_SET_COMPLETED: require("./../assets/image/card_set_number_completed.svg"),
     CARD_NUMBER_SET_INACTIVE: require("./../assets/image/card_set_number_inactive.svg"),
     BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg"),
+    GOLDEN_BACKGROUND_GRADIENT: require("./../assets/image/highlightBackgroundGradient.svg"),
   },
   videos: {},
   images: {},
