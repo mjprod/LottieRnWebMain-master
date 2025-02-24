@@ -16,8 +16,12 @@ const AssetPack = {
     BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg"),
     BLUE_DIAGONAL_GRADIENT: require("./../assets/image/blue_diagonal_gradient.png"),
   },
-  videos: {},
   images: {},
+  videos: {},
+  lotties: {
+    CONFETTI: require("../assets/lotties/lottieConfetti.json"),
+  },
+  sounds: {},
 };
 
 export default AssetPack;
