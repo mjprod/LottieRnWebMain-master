@@ -3,10 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { Animated, Linking, StyleSheet } from "react-native";
 import {
   ActivityIndicator,
-  Image,
+  ScrollView,
   ImageBackground,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native-web";
 import LottieView from "react-native-web-lottie";
@@ -21,6 +20,7 @@ import useApiRequest from "../hook/useApiRequest";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import TimerComponent from "../components/TimerComponent";
 import LinkButton from "../components/LinkButton";
+import TopBannerNav from "../components/TopBannerNav";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ const LauchScreen = () => {
         setInitialScratchCardLeft(response.user.card_balance || 0);
         setInitialUserData(response.user);
       }
-      const userData = response.user
+      const userData = response.user;
       if (response.daily === null || response.daily.length === 0) {
         console.log("response.daily is null");
         navigate("/daily", {
@@ -123,21 +123,17 @@ const LauchScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Image
-          style={styles.tinyLogo}
-          source={{
-            uri: logo,
-          }}
-        />
+        <TopBannerNav />
         {loading ? (
           <LoadingView />
         ) : (
           <ProfileHeader
+            containerStyle={{ marginTop: -40 }}
             id={initialUserData.user_id}
             name={initialUserData.name}
-          ></ProfileHeader>
+          />
         )}
       </View>
       <View
@@ -248,7 +244,7 @@ const LauchScreen = () => {
           handlePress={handlePress}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
