@@ -16,6 +16,7 @@ const AssetPack = {
     BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg"),
     TOP_NAV_BACKGROUND: require("./../assets/image/top_nav_background.png"),
     BLUE_DIAGONAL_GRADIENT: require("./../assets/image/blue_diagonal_gradient.png"),
+    GOLDEN_BACKGROUND_GRADIENT: require("./../assets/image/highlightBackgroundGradient.svg"),
   },
   images: {},
   videos: {},
