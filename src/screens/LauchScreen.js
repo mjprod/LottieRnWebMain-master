@@ -20,6 +20,7 @@ import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import TimerComponent from "../components/TimerComponent";
+import LinkButton from "../components/LinkButton";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -74,14 +75,16 @@ const LauchScreen = () => {
         setInitialScratchCardLeft(response.user.card_balance || 0);
         setInitialUserData(response.user);
       }
+      const userData = response.user
       if (response.daily === null || response.daily.length === 0) {
-        // response.daily is exactly null, handle accordingly
         console.log("response.daily is null");
-        navigate("/daily");
+        navigate("/daily", {
+          state: {
+            userData,
+          },
+        });
       } else {
         console.log("response.daily is not null");
-        // response.daily is not null (it could be an empty array or have values)
-        // setDailyData(response.daily);
       }
     }
   }, [response]);
@@ -103,13 +106,12 @@ const LauchScreen = () => {
     }
   }, [error]);
 
-  // Update the state to reflect the animated value (for Slider to work properly)
   animatedProgress.addListener(({ value }) => {
     setProgress(value);
   });
 
   const handlePress = () => {
-    Linking.openURL("https://www.google.com"); // This opens Google in the default browser
+    Linking.openURL("https://www.google.com");
   };
 
   const LoadingView = () => {
@@ -241,9 +243,10 @@ const LauchScreen = () => {
           <GameButton text="Play Game" onPress={() => handleStartGame()} />
         </View>
 
-        <TouchableOpacity onPress={handlePress} style={styles.button}>
-          <Text style={styles.buttonText}>How To Play Turbo Scratch {">"}</Text>
-        </TouchableOpacity>
+        <LinkButton
+          text="How To Play Turbo Scratch >"
+          handlePress={handlePress}
+        />
       </View>
     </View>
   );
