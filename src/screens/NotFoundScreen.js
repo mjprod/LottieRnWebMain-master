@@ -3,7 +3,6 @@ import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
 import AssetPack from "../util/AssetsPack";
 import GameButton from "../components/GameButton";
-import TransparentBackground from "../components/TransparentBackground";
 
 const NotFoundScreen = () => {
   return (
@@ -16,9 +15,15 @@ const NotFoundScreen = () => {
           source={AssetPack.images.PHAROAH}
           style={{ width: 250, height: 200, marginBottom: -100, zIndex: 10 }}
         />
-        <TransparentBackground
+        <ImageBackground
+          blurRadius={10}
+          resizeMode="cover"
           source={AssetPack.backgrounds.GOLD_RUSH}
           style={{
+            flex: 1,
+            justifyContent: "stretch",
+            backgroundColor: "#000",
+            overflow: "hidden",
             borderColor: "#FFEEC0",
             borderWidth: 1,
             borderRadius: 12,
@@ -53,7 +58,7 @@ const NotFoundScreen = () => {
               exist!
             </Text>
           </View>
-        </TransparentBackground>
+        </ImageBackground>
         <GameButton style={{ paddingHorizontal: 35 }} text="TAKE ME BACK" />
       </RotatingCirclesBackground>
     </ImageBackground>
