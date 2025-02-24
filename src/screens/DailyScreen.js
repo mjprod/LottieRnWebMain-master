@@ -12,6 +12,7 @@ import LottieView from "react-native-web-lottie";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import NextDrawCard from "../components/NextDrawCard";
+import LinkButton from "../components/LinkButton";
 
 const DailyScreen = () => {
   const logo = require("./../assets/image/background_top_nav.png");
@@ -174,7 +175,6 @@ const DailyScreen = () => {
           </Animated.View>
         )}
         <DailyCardsContainer />
-        <GamesAvailableCard numberOfSets={1} />
         <NextDrawCard
           days={timeLeft.days}
           hours={timeLeft.hours}
