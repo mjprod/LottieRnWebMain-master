@@ -2,6 +2,7 @@ const AssetPack = {
   icons: {
     CARDS: require("./../assets/icons/icon_cards_normal.svg"),
     CARDS_GREEN: require("./../assets/icons/icon_cards_green.svg"),
+    ICON_404: require("./../assets/icons/404.svg"),
   },
   logos: {
     TURBO_SCRATCH: require("./../assets/image/turbo_scratch_logo.png"),
@@ -14,9 +15,12 @@ const AssetPack = {
     CARD_NUMBER_SET_COMPLETED: require("./../assets/image/card_set_number_completed.svg"),
     CARD_NUMBER_SET_INACTIVE: require("./../assets/image/card_set_number_inactive.svg"),
     BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg"),
+    BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg"),
   },
   videos: {},
-  images: {},
+  images: {
+    PHAROAH: require("./../assets/image/pharoah.png"),
+  },
 };
 
 export default AssetPack;

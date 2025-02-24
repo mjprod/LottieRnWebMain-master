@@ -1,8 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { View, StyleSheet, Animated, Easing } from "react-native";
 
-
-const RotatingCirclesBackground = () => {
+const RotatingCirclesBackground = ({ children }) => {
   const rotation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -37,7 +36,7 @@ const RotatingCirclesBackground = () => {
       {
         rotate: rotation.interpolate({
           inputRange: [0, 1],
-          outputRange: ["180deg", "540deg"], // Offset by 180 degrees
+          outputRange: ["180deg", "540deg"],
         }),
       },
       { translateX: 240 },
@@ -46,30 +45,24 @@ const RotatingCirclesBackground = () => {
 
   return (
     <View style={styles.container}>
-          <View style={styles.container}>
-
-       
-       <Animated.View style={[styles.planet, styles.planet1, planetStyle1]} />
-       <Animated.View style={[styles.planet, styles.planet2, planetStyle2]} />
-
-       </View>
-       <div
-        style={{
-         
-          backdropFilter: `blur(${100}px)`,
-          WebkitBackdropFilter: `blur(${100}px)`, // For Safari
-          position: 'absolute',
-          top: 0,
-          left: -500,
-          right: 0,
-          bottom: 0,
-          width: 1200,
-          height: 1200,
-        }}
-      >
-     
-      </div>
-   
+      <View style={styles.container}>
+        <Animated.View style={[styles.planet, styles.planet1, planetStyle1]} />
+        <Animated.View style={[styles.planet, styles.planet2, planetStyle2]} />
+        <div
+          style={{
+            backdropFilter: `blur(${100}px)`,
+            WebkitBackdropFilter: `blur(${100}px)`,
+            position: "absolute",
+            top: 0,
+            left: -500,
+            right: 0,
+            bottom: 0,
+            width: 1200,
+            height: 1200,
+          }}
+        />
+        {children}
+      </View>
     </View>
   );
 };
@@ -77,14 +70,14 @@ const RotatingCirclesBackground = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    //padding: 10,
   },
   blurView: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)', // Optional fallback for browsers without blur support
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   planet: {
     position: "absolute",
@@ -93,10 +86,10 @@ const styles = StyleSheet.create({
     borderRadius: 150,
   },
   planet1: {
-    backgroundColor: 'rgba(0, 255, 0, 0.1)',
+    backgroundColor: "rgba(0, 255, 0, 0.1)",
   },
   planet2: {
-    backgroundColor: 'rgba(220, 80, 5, 0.2)',
+    backgroundColor: "rgba(220, 80, 5, 0.2)",
   },
 });
 
