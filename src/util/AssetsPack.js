@@ -19,6 +19,7 @@ const AssetPack = {
   videos: {},
   sounds: {},
   lotties: {
+    CTA_BUTTON_FULL_WIDTH: require("./../assets/lotties/buttonCallToActionFullWidth.json"),
     THUMBS_UP: require("./../assets/lotties/lottieThumbsUp.json"),
     CONFETTI: require("../assets/lotties/lottieConfetti.json"),
   },
