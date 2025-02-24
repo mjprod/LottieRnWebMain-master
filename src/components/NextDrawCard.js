@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Text, Image, StyleSheet, ImageBackground, View } from "react-native";
 import TimerComponent from "./TimerComponent";
 import AssetPack from "../util/AssetsPack";
+import LottieView from "react-native-web-lottie";
+import PurplePill from "./PurplePill";
 
 const NextDrawCard = ({ days, hours, minutes, seconds }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        style={{flex: 1, flexDirection: "column", justifyContent: "space-between"}}
+        style={{
+          flex: 1,
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
         resizeMode="stretch"
         source={AssetPack.backgrounds.NEXT_DRAW_CARD}
       >
@@ -19,29 +25,7 @@ const NextDrawCard = ({ days, hours, minutes, seconds }) => {
               marginBottom: 10,
             }}
           >
-            <Text
-              style={{
-                fontFamily: "Inter-Bold",
-                color: "white",
-                fontSize: 14,
-                textTransform: "uppercase",
-                fontWeight: "bold",
-                paddingRight: 10,
-                paddingLeft: 10,
-                paddingTop: 2,
-                backgroundColor: "#523069",
-                borderRadius: 25,
-                borderColor: "#7F48A7",
-                borderWidth: 1,
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center",
-                flexDirection: "row",
-                flexWrap: "wrap",
-              }}
-            >
-              Beta Competition
-            </Text>
+            <PurplePill text={"Beta Competition"} />
           </View>
 
           <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>
@@ -52,19 +36,25 @@ const NextDrawCard = ({ days, hours, minutes, seconds }) => {
           </Text>
         </View>
         <View style={styles.bottomSection}>
-        <Image
-          style={{ width: 145, height: 46 }}
-          source={AssetPack.logos.TURBO_SCRATCH}
+          <Image
+            style={{ width: 145, height: 46 }}
+            source={AssetPack.logos.TURBO_SCRATCH}
+          />
+          <TimerComponent
+            days={days}
+            hours={hours}
+            minutes={minutes}
+            seconds={seconds}
+          />
+        </View>
+        <LottieView
+          style={{ position: "absolute", top: 0, left: 0 }}
+          source={AssetPack.lotties.CONFETTI}
+          speed={1}
+          loop={true}
+          autoPlay={true}
         />
-        <TimerComponent
-          days={days}
-          hours={hours}
-          minutes={minutes}
-          seconds={seconds}
-        />
-      </View>
       </ImageBackground>
-      
     </View>
   );
 };

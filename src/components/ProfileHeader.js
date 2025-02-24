@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const ProfileHeader = ({ id, name }) => {
+const ProfileHeader = ({ id, name, containerStyle }) => {
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, ...containerStyle}}>
       <View style={styles.avatarContainer}>
         <Text style={styles.avatarText}>{name ? name.charAt(0).toUpperCase() : ''}</Text>
       </View>

@@ -4,29 +4,34 @@ import {
   Text,
   View,
   StyleSheet,
-  ImageBackground,
   ActivityIndicator,
 } from "react-native";
+import AssetPack from "../util/AssetsPack";
+import LottieView from "react-native-web-lottie";
 
-const buttonBackground = require("./../assets/image/button_play_game.png");
-
-const GameButton = ({
-  onPress,
-  text,
-  loading = false,
-  style = {},
-}) => {
+const GameButton = ({ onPress, text, loading = false, style = {} }) => {
   return (
     <TouchableOpacity style={[styles.btn, style]} onPress={onPress}>
-      <ImageBackground source={buttonBackground} style={styles.imageBackground}>
-        {loading ? (
-          <ActivityIndicator size="small" color="#000000" />
-        ) : (
-          <View style={styles.content}>
-            <Text style={styles.text}>{text}</Text>
-          </View>
-        )}
-      </ImageBackground>
+      <LottieView
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+        }}
+        source={AssetPack.lotties.CTA_BUTTON_FULL_WIDTH}
+        autoPlay
+        speed={1}
+        loop={true}
+      />
+      {loading ? (
+        <ActivityIndicator size="small" color="#000000" />
+      ) : (
+        <View style={styles.content}>
+          <Text style={styles.text}>{text}</Text>
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
@@ -49,21 +54,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "rgba(0, 0, 0, 0.0)",
   },
-  img: {
-    width: 24,
-    height: 24,
-    marginRight: 8,
-  },
   text: {
     color: "#3E362A",
     fontSize: 22,
     fontFamily: "Teko-Medium",
-  },
-  imageBackground: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    height: 50,
   },
 });
 
