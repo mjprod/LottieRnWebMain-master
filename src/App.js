@@ -1,6 +1,6 @@
 import React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { SnackbarProvider } from "./components/SnackbarContext";
 import { GameProvider } from "./context/GameContext";
 import { SoundProvider } from "./hook/useSoundPlayer";
@@ -11,6 +11,7 @@ import GameOverScreen from "./screens/GameOverScreen";
 import LauchScreen from "./screens/LauchScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import ScratchLuckyGame from "./screens/ScratchLuckyGame";
+import LeaderBoardScreen from "./screens/LeaderBoardScreen";
 
 const { height, width } = Dimensions.get("window");
 
@@ -29,7 +30,6 @@ export default function App() {
   const dynamicStyles = isSmallScreen ? smallStyles : styles;
 
   return (
-
     <View style={styles.container}>
       <View style={dynamicStyles.app}>
         <GameProvider>
@@ -38,11 +38,15 @@ export default function App() {
               <BrowserRouter>
                 <SnackbarProvider>
                   <Routes>
-                    <Route path="/:id/:username/:email" element={<LauchScreen />} />
+                    <Route
+                      path="/:id/:username/:email"
+                      element={<LauchScreen />}
+                    />
                     <Route path="/daily" element={<DailyScreen />} />
                     <Route path="/*" element={<NotFoundScreen />} />
                     <Route path="/game" element={<ScratchLuckyGame />} />
                     <Route path="/game_over" element={<GameOverScreen />} />
+                    <Route path="/leader_board" element={<LeaderBoardScreen />} />
                   </Routes>
                 </SnackbarProvider>
               </BrowserRouter>
