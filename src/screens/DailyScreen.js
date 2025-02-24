@@ -1,20 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Linking, ScrollView, StyleSheet, Text } from "react-native";
+import { Animated, ScrollView, StyleSheet, Text } from "react-native";
 import { ActivityIndicator, Image, View } from "react-native-web";
-import { useNavigate, useParams } from "react-router";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
 import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import DailyCardsContainer from "../components/DailyCardsContainer";
+import { useLocation } from "react-router-dom";
+import AssetPack from "../util/AssetsPack";
+import LottieView from "react-native-web-lottie";
+import GamesAvailableCard from "../components/GamesAvailableCard";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import NextDrawCard from "../components/NextDrawCard";
 import LinkButton from "../components/LinkButton";
 
 const DailyScreen = () => {
-  const navigate = useNavigate();
-
-  const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
   const logo = require("./../assets/image/background_top_nav.png");
 
   const [progress, setProgress] = useState();
@@ -24,51 +24,61 @@ const DailyScreen = () => {
   const [initialTicketCount, setInitialTicketCount] = useState(0);
   const [initialLuckySymbolCount, setInitialLuckySymbolCount] = useState(0);
   const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
-
-  const [initialUserData, setInitialUserData] = useState("");
-
+  
   const [timeLeft] = useTimeLeftForNextDraw();
+  const [initialUserData, setInitialUserData] = useState("");
+  const [question, setQuestion] = useState("");
+  const [isThumbsUpAnimationFinished, setIsThumbsUpAnimationFinished] =
+    useState(false);
+  const slideAnim = useRef(new Animated.Value(270)).current;
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const slideOutAndFade = () => {
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start(() => setIsThumbsUpAnimationFinished(true));
+  };
 
-  const { loading, error, response, fetchUserDetails } = useApiRequest();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const { userData } = useLocation().state;
+
+  const { loading, error, response, getDailyQuestion, postDailyAnswer } =
+    useApiRequest();
   const { showSnackbar } = useSnackbar();
 
-  const { id, username, email } = useParams();
 
   useEffect(() => {
-    console.log("Params:", { id, username, email });
-  }, [id]);
-
-  const handleStartGame = () => {
-    if (initialUserData.name === undefined || initialUserData.name === "") {
-      showSnackbar("Please complete your profile to play the game");
-      return;
+    if (userData) {
+      setInitialUserData(userData);
     }
-    navigate("/game", {
-      state: {
-        initialScore,
-        initialTicketCount,
-        initialLuckySymbolCount,
-        initialScratchCardLeft,
-      },
-    });
-  };
+  }, [userData]);
+
+  useEffect(() => {
+    if (initialUserData.user_id) {
+      getDailyQuestion(initialUserData.user_id);
+    }
+  }, [initialUserData]);
 
   useEffect(() => {
     if (response) {
-      if (response.user) {
-        setInitialScore(response.user.total_score || 0);
-        setInitialTicketCount(response.user.ticket_balance || 0);
-        setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
-        setInitialScratchCardLeft(response.user.card_balance || 0);
-        setInitialUserData(response.user);
+      if (response.question) {
+        setQuestion(response);
       }
-      if (response.daily === null || response.daily.length === 0) {
-        // response.daily is exactly null, handle accordingly
-        console.log("response.daily is null");
-      } else {
-        console.log("response.daily is not null");
-        // response.daily is not null (it could be an empty array or have values)
-        // setDailyData(response.daily);
+
+      if (response.answer_id) {
+        setIsSubmitted(true);
+        if (response.message) {
+          showSnackbar(response.message);
+        }
       }
     }
   }, [response]);
@@ -94,16 +104,24 @@ const DailyScreen = () => {
     setProgress(value);
   });
 
-  const handlePress = () => {
-    Linking.openURL("https://www.google.com");
-  };
-
   const LoadingView = () => {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="small" color="#00ff00" />
       </View>
     );
+  };
+
+  const onSubmit = (answer) => {
+    if (answer !== "") {
+      postDailyAnswer(initialUserData.user_id, question.question_id, answer);
+    } else {
+      showSnackbar("Please enter your answer");
+    }
+  };
+
+  const handleThumbsUpAnimationFinish = () => {
+    slideOutAndFade();
   };
 
   return (
@@ -121,7 +139,7 @@ const DailyScreen = () => {
           <ProfileHeader
             id={initialUserData.user_id}
             name={initialUserData.name}
-          ></ProfileHeader>
+          />
         )}
       </View>
       <View
@@ -130,13 +148,33 @@ const DailyScreen = () => {
           { marginLeft: 25, marginRight: 30, marginBottom: 10 },
         ]}
       >
-        <QuestionOfTheDay question={"What sports are you interested in?"} />
+        {!isSubmitted && (
+          <QuestionOfTheDay
+            question={`${question.question}`}
+            onSubmit={onSubmit}
+          />
+        )}
+
+        {isSubmitted && !isThumbsUpAnimationFinished && (
+          <Animated.View
+            style={[styles.box, { opacity: fadeAnim, height: slideAnim }]}
+          >
+            <LottieView
+              style={{
+                width: 258,
+                marginTop: -20,
+                flex: 1,
+                alignSelf: "center",
+              }}
+              source={AssetPack.lotties.THUMBS_UP}
+              autoPlay
+              speed={1}
+              loop={false}
+              onAnimationFinish={handleThumbsUpAnimationFinish}
+            />
+          </Animated.View>
+        )}
         <DailyCardsContainer />
-        <LinkButton
-          text="How To Play Turbo Scratch >"
-          handlePress={handlePress}
-          style={{ paddingVertical: 10, marginVertical: 20 }}
-        />
         <NextDrawCard
           days={timeLeft.days}
           hours={timeLeft.hours}
@@ -151,18 +189,6 @@ const DailyScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  imageBackground: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    marginTop: "0%",
-  },
-  imageBackgroundLuckySymbol: {
-    width: 100,
-    height: 45,
-    alignItems: "center",
   },
   headerIcon: {
     width: 50,

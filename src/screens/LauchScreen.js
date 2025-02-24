@@ -75,14 +75,16 @@ const LauchScreen = () => {
         setInitialScratchCardLeft(response.user.card_balance || 0);
         setInitialUserData(response.user);
       }
+      const userData = response.user
       if (response.daily === null || response.daily.length === 0) {
-        // response.daily is exactly null, handle accordingly
         console.log("response.daily is null");
-        navigate("/daily");
+        navigate("/daily", {
+          state: {
+            userData,
+          },
+        });
       } else {
         console.log("response.daily is not null");
-        // response.daily is not null (it could be an empty array or have values)
-        // setDailyData(response.daily);
       }
     }
   }, [response]);
