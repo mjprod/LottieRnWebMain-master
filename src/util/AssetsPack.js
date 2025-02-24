@@ -13,11 +13,14 @@ const AssetPack = {
     CARD_NUMBER_SET_COMPLETED: require("./../assets/image/card_set_number_completed.svg"),
     CARD_NUMBER_SET_INACTIVE: require("./../assets/image/card_set_number_inactive.svg"),
     BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg"),
+    BLUE_DIAGONAL_GRADIENT: require("./../assets/image/blue_diagonal_gradient.png"),
   },
-  videos: {},
   images: {},
+  videos: {},
+  sounds: {},
   lotties: {
     THUMBS_UP: require("./../assets/lotties/lottieThumbsUp.json"),
+    CONFETTI: require("../assets/lotties/lottieConfetti.json"),
   },
 };
 
