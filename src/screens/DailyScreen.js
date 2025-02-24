@@ -7,6 +7,7 @@ import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
 import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import DailyCardsContainer from "../components/DailyCardsContainer";
+import GamesAvailableCard from "../components/GamesAvailableCard";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import NextDrawCard from "../components/NextDrawCard";
 
@@ -132,6 +133,7 @@ const DailyScreen = () => {
       >
         <QuestionOfTheDay question={"What sports are you interested in?"} />
         <DailyCardsContainer />
+        <GamesAvailableCard numberOfSets={1} />
         <NextDrawCard
           days={timeLeft.days}
           hours={timeLeft.hours}
