@@ -25,6 +25,7 @@ export default function App() {
       element.style.userSelect = "none";
     });
   }, []);
+
   const isMobileBrowser =
     navigator.userAgent.includes("Mobile") ||
     navigator.userAgent.includes("Android");
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     paddingTop: "10%",
   },
   app: {
-    width: 400, 
+    width: 400,
     maxHeight: 750,
     flex: 1,
     backgroundColor: "black",
@@ -88,12 +89,11 @@ const smallStyles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#35363A",
+    userSelect: "none",
   },
   app: {
     width: "100%",
-    height: "100vh",
-    flex: 1,
-    marginBottom: 50,
+    height: height,
     backgroundColor: "black",
   },
 });
