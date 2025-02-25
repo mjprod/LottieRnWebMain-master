@@ -9,7 +9,7 @@ import {
 import AssetPack from "../util/AssetsPack";
 import PurplePill from "./PurplePill";
 
-const TopBannerNav = ({ onBackPress = {}, hasBackButton = false }) => {
+const TopBannerNav = ({ onBackPress = () => {}, hasBackButton = false }) => {
   return (
     <ImageBackground
       imageStyle={{ resizeMode: "stretch" }}

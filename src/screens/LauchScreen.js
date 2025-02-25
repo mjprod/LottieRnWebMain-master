@@ -120,6 +120,15 @@ const LauchScreen = () => {
     );
   };
 
+  const handleViewAllPress = () => {
+    console.log("handleViewAllPress");
+    navigate("/leader_board", {
+      state: {
+        initialUserData,
+      },
+    });
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -223,7 +232,7 @@ const LauchScreen = () => {
         <SectionTitle
           text="LeaderBard"
           viewAllText="View All"
-          viewAllAction={() => {}}
+          viewAllAction={handleViewAllPress}
         />
         <LeaderBoardList leaderboardData={leaderboardData.slice(0, 5)} />
         <GamesAvailableCard style={{ marginVertical: 24 }} numberOfSets={1} />

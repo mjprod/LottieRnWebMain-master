@@ -1,30 +1,60 @@
-import React from "react";
-import { StyleSheet, FlatList, ScrollView } from "react-native";
-import { Image, View } from "react-native-web";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, ScrollView } from "react-native";
 import SectionTitle from "../components/SectionTitle";
 import { leaderboardData } from "../data/LeaderBoardData";
 import GameButton from "../components/GameButton";
 import LeaderBoardList from "../components/LeaderBoardList";
+import { useLocation, useNavigate } from "react-router-dom";
+import TopBannerNav from "../components/TopBannerNav";
+import LinkButton from "../components/LinkButton";
+import GamesAvailableCard from "../components/GamesAvailableCard";
+import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
+import NextDrawCard from "../components/NextDrawCard";
 
 const LeaderBoardScreen = () => {
-  const logo = require("./../assets/image/background_top_nav.png");
-
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [initialUserData, setInitialUserData] = useState();
+  const [timeLeft] = useTimeLeftForNextDraw();
+  useEffect(() => {
+    if (
+      location.pathname === "/leader_board" &&
+      location.state &&
+      location.state.initialUserData
+    ) {
+      setInitialUserData(location.state.initialUserData);
+    }
+  }, [location]);
+  const handleBackPress = () => {
+    navigate(-1);
+  };
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          style={styles.tinyLogo}
-          source={{
-            uri: logo,
-          }}
+      <TopBannerNav
+        hasBackButton={initialUserData ? true : false}
+        onBackPress={handleBackPress}
+      />
+      <View style={{ marginHorizontal: 25 }}>
+        <SectionTitle text="LeaderBard" style={{ marginBottom: 10 }} />
+        <LeaderBoardList
+          style={{ marginBottom: 30 }}
+          leaderboardData={leaderboardData}
+          username={initialUserData && initialUserData.name}
+        />
+        <GameButton style={{ marginBottom: 30 }} text="Play Now" />
+        <LinkButton
+          style={{ marginBottom: 30 }}
+          text={"How To Play Turbo Scratch >"}
+        />
+        <GamesAvailableCard numberOfSets={1} />
+        <NextDrawCard
+          style={{ marginBottom: 30 }}
+          days={timeLeft.days}
+          hours={timeLeft.hours}
+          minutes={timeLeft.minutes}
+          seconds={timeLeft.seconds}
         />
       </View>
-      <SectionTitle text="LeaderBard" style={{ padding: 20 }} />
-      <LeaderBoardList leaderboardData={leaderboardData} username={"ShirishKoirala"} />
-      <GameButton
-        style={{ marginVertical: 30, paddingHorizontal: 25 }}
-        text="Play Now"
-      />
     </ScrollView>
   );
 };
