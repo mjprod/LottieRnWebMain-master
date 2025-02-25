@@ -61,7 +61,6 @@ const NextDrawCard = ({ days, hours, minutes, seconds, style }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
     borderRadius: 12,
     borderWidth: 1,
     borderColor: "#FFFFFF33",

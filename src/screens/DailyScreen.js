@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, ScrollView, StyleSheet, Text } from "react-native";
-import { ActivityIndicator, Image, View } from "react-native-web";
+import { Animated, ScrollView, StyleSheet } from "react-native";
+import { ActivityIndicator, View } from "react-native-web";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
@@ -9,11 +9,9 @@ import DailyCardsContainer from "../components/DailyCardsContainer";
 import { useLocation } from "react-router-dom";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
-import GamesAvailableCard from "../components/GamesAvailableCard";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import NextDrawCard from "../components/NextDrawCard";
 import TopBannerNav from "../components/TopBannerNav";
-import LinkButton from "../components/LinkButton";
 
 const DailyScreen = () => {
   const [progress, setProgress] = useState();

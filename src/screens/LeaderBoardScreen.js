@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import SectionTitle from "../components/SectionTitle";
 import { leaderboardData } from "../data/LeaderBoardData";
 import GameButton from "../components/GameButton";
 import LeaderBoardList from "../components/LeaderBoardList";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TopBannerNav from "../components/TopBannerNav";
-import { useNavigate } from "react-router-dom";
+import LinkButton from "../components/LinkButton";
+import GamesAvailableCard from "../components/GamesAvailableCard";
+import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
+import NextDrawCard from "../components/NextDrawCard";
 
 const LeaderBoardScreen = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [initialUserData, setInitialUserData] = useState();
-
+  const [timeLeft] = useTimeLeftForNextDraw();
   useEffect(() => {
     if (
       location.pathname === "/leader_board" &&
@@ -31,19 +34,27 @@ const LeaderBoardScreen = () => {
         hasBackButton={initialUserData ? true : false}
         onBackPress={handleBackPress}
       />
-      <SectionTitle
-        text="LeaderBard"
-        style={{ marginVertical: 55, paddingHorizontal: 25 }}
-      />
-      <LeaderBoardList
-        style={{ paddingHorizontal: 25 }}
-        leaderboardData={leaderboardData}
-        username={initialUserData && initialUserData.name}
-      />
-      <GameButton
-        style={{ marginVertical: 30, paddingHorizontal: 25 }}
-        text="Play Now"
-      />
+      <View style={{ marginHorizontal: 25 }}>
+        <SectionTitle text="LeaderBard" style={{ marginBottom: 10 }} />
+        <LeaderBoardList
+          style={{ marginBottom: 30 }}
+          leaderboardData={leaderboardData}
+          username={initialUserData && initialUserData.name}
+        />
+        <GameButton style={{ marginBottom: 30 }} text="Play Now" />
+        <LinkButton
+          style={{ marginBottom: 30 }}
+          text={"How To Play Turbo Scratch >"}
+        />
+        <GamesAvailableCard numberOfSets={1} />
+        <NextDrawCard
+          style={{ marginBottom: 30 }}
+          days={timeLeft.days}
+          hours={timeLeft.hours}
+          minutes={timeLeft.minutes}
+          seconds={timeLeft.seconds}
+        />
+      </View>
     </ScrollView>
   );
 };
