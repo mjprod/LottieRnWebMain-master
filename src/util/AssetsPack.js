@@ -2,6 +2,7 @@ const AssetPack = {
   icons: {
     CARDS: require("./../assets/icons/icon_cards_normal.svg"),
     CARDS_GREEN: require("./../assets/icons/icon_cards_green.svg"),
+    ICON_404: require("./../assets/icons/404.svg"),
     ARROW_LEFT: require("./../assets/icons/icon_back.svg"),
   },
   logos: {
@@ -17,10 +18,14 @@ const AssetPack = {
     TOP_NAV_BACKGROUND: require("./../assets/image/top_nav_background.png"),
     BLUE_DIAGONAL_GRADIENT: require("./../assets/image/blue_diagonal_gradient.png"),
     GOLDEN_BACKGROUND_GRADIENT: require("./../assets/image/highlightBackgroundGradient.svg"),
+    BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg"),
+    GOLD_RUSH: require("./../assets/image/gold_rush.jpg"),
   },
-  images: {},
   videos: {},
   sounds: {},
+  images: {
+    PHAROAH: require("./../assets/image/pharoah.png"),
+  },
   lotties: {
     CTA_BUTTON_FULL_WIDTH: require("./../assets/lotties/buttonCallToActionFullWidth.json"),
     THUMBS_UP: require("./../assets/lotties/lottieThumbsUp.json"),
