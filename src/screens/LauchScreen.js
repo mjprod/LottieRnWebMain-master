@@ -18,9 +18,12 @@ import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
-import TimerComponent from "../components/TimerComponent";
-import LinkButton from "../components/LinkButton";
 import TopBannerNav from "../components/TopBannerNav";
+import SectionTitle from "../components/SectionTitle";
+import GamesAvailableCard from "../components/GamesAvailableCard";
+import LeaderBoardList from "../components/LeaderBoardList";
+import { leaderboardData } from "../data/LeaderBoardData";
+import NextDrawCard from "../components/NextDrawCard";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -110,10 +113,6 @@ const LauchScreen = () => {
     setProgress(value);
   });
 
-  const handlePress = () => {
-    Linking.openURL("https://www.google.com");
-  };
-
   const LoadingView = () => {
     return (
       <View style={styles.loadingContainer}>
@@ -142,14 +141,7 @@ const LauchScreen = () => {
           { marginLeft: 18, marginRight: 18, marginBottom: 10 },
         ]}
       >
-        <Text
-          style={[
-            styles.subtitle,
-            { textTransform: "uppercase", marginBottom: 10 },
-          ]}
-        >
-          Statistics
-        </Text>
+        <SectionTitle text={"Statistics"} />
         <View style={styles.resultRow}>
           <View style={styles.resultCard}>
             <View style={styles.viewRow}>
@@ -179,8 +171,6 @@ const LauchScreen = () => {
             <View style={styles.luckySymbols}></View>
           </View>
         </View>
-
-        {/* Total Tickets Earned Section */}
         <View style={styles.ticketsSection}>
           <View style={styles.containerTotalTicket}>
             <LottieView
@@ -226,22 +216,24 @@ const LauchScreen = () => {
             />
           </View>
         </View>
-
-        <View style={{ height: 10 }} />
-        <TimerComponent
+        <GameButton
+          style={{ marginVertical: 24 }}
+          text="Play Game"
+          onPress={() => handleStartGame()}
+        />
+        <SectionTitle
+          text="LeaderBard"
+          viewAllText="View All"
+          viewAllAction={() => {}}
+        />
+        <LeaderBoardList leaderboardData={leaderboardData.slice(0, 5)} />
+        <GamesAvailableCard style={{ marginVertical: 24 }} numberOfSets={1} />
+        <NextDrawCard
           days={timeLeft.days}
           hours={timeLeft.hours}
           minutes={timeLeft.minutes}
           seconds={timeLeft.seconds}
-        />
-
-        <View style={styles.buttonWrapper}>
-          <GameButton text="Play Game" onPress={() => handleStartGame()} />
-        </View>
-
-        <LinkButton
-          text="How To Play Turbo Scratch >"
-          handlePress={handlePress}
+          style={{ marginVertical: 24 }}
         />
       </View>
     </ScrollView>
@@ -263,11 +255,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 45,
     alignItems: "center",
-  },
-  header: {
-    //justifyContent: "top",
-    //alignItems: "center",
-    // marginVertical: 10,
   },
   headerIcon: {
     width: 50,
@@ -442,18 +429,6 @@ const styles = StyleSheet.create({
     width: "98%", // takes up 90% of the screen width
     marginHorizontal: "1%", // centers it horizontally
     marginVertical: 10, // optional vertical margin
-  },
-  buttonWrapper: {
-    width: "100%", // Ensure button spans the full width of its container
-    alignItems: "center", // Center the button horizontally
-    marginTop: 20, // Optional spacing above the button
-  },
-  buttonText: {
-    fontFamily: "Inter-Regular",
-    fontWeight: 500,
-    fontSize: 18,
-    color: "#A6A6A6", // Adjusted to match the lighter gray color
-    textDecorationLine: "underline", // This will underline the text
   },
   loadingContainer: {
     flex: 1,

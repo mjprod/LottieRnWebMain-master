@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, FlatList, ScrollView } from "react-native";
-import { ActivityIndicator, Image, View } from "react-native-web";
+import { Image, View } from "react-native-web";
 import SectionTitle from "../components/SectionTitle";
 import { leaderboardData } from "../data/LeaderBoardData";
-import LeaderBoardItem from "../components/items/LeaderBoardItem";
 import GameButton from "../components/GameButton";
+import LeaderBoardList from "../components/LeaderBoardList";
 
 const LeaderBoardScreen = () => {
   const logo = require("./../assets/image/background_top_nav.png");
@@ -19,24 +19,8 @@ const LeaderBoardScreen = () => {
           }}
         />
       </View>
-      <SectionTitle style={{ padding: 20 }} />
-      <FlatList
-        style={{ width: "100%", paddingHorizontal: 25 }}
-        data={leaderboardData}
-        keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <LeaderBoardItem
-              rank={item.rank}
-              username={item.username}
-              points={item.points}
-              status={item.status}
-              selected={item.username === "ShirishKoirala"}
-            />
-          </View>
-        )}
-      />
+      <SectionTitle text="LeaderBard" style={{ padding: 20 }} />
+      <LeaderBoardList leaderboardData={leaderboardData} username={"ShirishKoirala"} />
       <GameButton
         style={{ marginVertical: 30, paddingHorizontal: 25 }}
         text="Play Now"

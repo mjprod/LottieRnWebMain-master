@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Text, Image, StyleSheet, ImageBackground, View } from "react-native";
 import TimerComponent from "./TimerComponent";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
 import PurplePill from "./PurplePill";
 
-const NextDrawCard = ({ days, hours, minutes, seconds }) => {
+const NextDrawCard = ({ days, hours, minutes, seconds, style }) => {
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...style }}>
       <ImageBackground
         style={{
           flex: 1,
