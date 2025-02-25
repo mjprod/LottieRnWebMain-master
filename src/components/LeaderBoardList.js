@@ -2,10 +2,10 @@ import React from "react";
 import { View, FlatList } from "react-native-web";
 import LeaderBoardItem from "./items/LeaderBoardItem";
 
-const LeaderBoardList = ({ leaderboardData, username }) => {
+const LeaderBoardList = ({ leaderboardData, username, style }) => {
   return (
     <FlatList
-      style={{ width: "100%" }}
+      style={{ width: "100%", ...style }}
       data={leaderboardData}
       keyExtractor={(item) => item.id}
       ItemSeparatorComponent={() => <View style={{ height: 10 }} />}

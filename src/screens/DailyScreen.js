@@ -16,8 +16,6 @@ import TopBannerNav from "../components/TopBannerNav";
 import LinkButton from "../components/LinkButton";
 
 const DailyScreen = () => {
-  const logo = require("./../assets/image/background_top_nav.png");
-
   const [progress, setProgress] = useState();
   const animatedProgress = useRef(new Animated.Value(0)).current;
 
