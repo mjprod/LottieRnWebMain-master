@@ -29,7 +29,6 @@ const LauchScreen = () => {
   const navigate = useNavigate();
 
   const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
-  const logo = require("./../assets/image/background_top_nav.png");
 
   const [progress, setProgress] = useState();
   const animatedProgress = useRef(new Animated.Value(0)).current;
@@ -218,7 +217,7 @@ const LauchScreen = () => {
         </View>
         <GameButton
           style={{ marginVertical: 24 }}
-          text="Play Game"
+          text="Play Now"
           onPress={() => handleStartGame()}
         />
         <SectionTitle
@@ -256,20 +255,6 @@ const styles = StyleSheet.create({
     height: 45,
     alignItems: "center",
   },
-  headerIcon: {
-    width: 50,
-    height: 50,
-  },
-  title: {
-    color: "#FFDEA8",
-    fontFamily: "Teko-Medium",
-    fontSize: 22,
-  },
-  subtitle: {
-    color: "#FFFFFF",
-    fontFamily: "Teko-Medium",
-    fontSize: 22,
-  },
   resultRow: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -283,14 +268,6 @@ const styles = StyleSheet.create({
     border: "1px solid #4B595D",
     borderRadius: 12,
     padding: 4,
-  },
-  backgroundRounded: {
-    backgroundColor: "#1D1811",
-    borderRadius: 30,
-    paddingVertical: 8,
-    paddingHorizontal: 25,
-    marginBottom: 10,
-    border: "1px solid #382E23",
   },
   resultTitle: {
     fontSize: 18,
