@@ -18,6 +18,7 @@ const AssetPack = {
     TOP_NAV_BACKGROUND: require("./../assets/image/top_nav_background.png"),
     BLUE_DIAGONAL_GRADIENT: require("./../assets/image/blue_diagonal_gradient.png"),
     GOLDEN_BACKGROUND_GRADIENT: require("./../assets/image/highlightBackgroundGradient.svg"),
+    NEXT_DRAW_CARD: require("./../assets/image/next_draw_card_background.png"),
     BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg"),
     GOLD_RUSH: require("./../assets/image/gold_rush.jpg"),
   },

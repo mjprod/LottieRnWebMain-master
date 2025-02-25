@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
   text: {
     color: "#3E362A",
     fontSize: 22,
+    textTransform: "uppercase",
     fontFamily: "Teko-Medium",
   },
 });

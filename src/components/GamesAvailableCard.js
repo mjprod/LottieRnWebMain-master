@@ -2,10 +2,14 @@ import React from "react";
 import { Text, Image, StyleSheet, ImageBackground, View } from "react-native";
 import AssetPack from "../util/AssetsPack";
 
-const GamesAvailableCard = ({ numberOfSets, numberOfCardsInSet = 12 }) => {
+const GamesAvailableCard = ({
+  numberOfSets,
+  numberOfCardsInSet = 12,
+  style,
+}) => {
   return (
     <ImageBackground
-      style={styles.backgroundRounded}
+      style={{ ...styles.backgroundRounded, ...style }}
       source={AssetPack.backgrounds.BLUE_DIAGONAL_GRADIENT}
     >
       <View

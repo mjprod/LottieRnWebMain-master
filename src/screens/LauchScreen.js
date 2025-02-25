@@ -3,10 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { Animated, Linking, StyleSheet } from "react-native";
 import {
   ActivityIndicator,
-  Image,
+  ScrollView,
   ImageBackground,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native-web";
 import LottieView from "react-native-web-lottie";
@@ -19,14 +18,17 @@ import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
-import TimerComponent from "../components/TimerComponent";
-import LinkButton from "../components/LinkButton";
+import TopBannerNav from "../components/TopBannerNav";
+import SectionTitle from "../components/SectionTitle";
+import GamesAvailableCard from "../components/GamesAvailableCard";
+import LeaderBoardList from "../components/LeaderBoardList";
+import { leaderboardData } from "../data/LeaderBoardData";
+import NextDrawCard from "../components/NextDrawCard";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
 
   const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
-  const logo = require("./../assets/image/background_top_nav.png");
 
   const [progress, setProgress] = useState();
   const animatedProgress = useRef(new Animated.Value(0)).current;
@@ -75,7 +77,7 @@ const LauchScreen = () => {
         setInitialScratchCardLeft(response.user.card_balance || 0);
         setInitialUserData(response.user);
       }
-      const userData = response.user
+      const userData = response.user;
       if (response.daily === null || response.daily.length === 0) {
         console.log("response.daily is null");
         navigate("/daily", {
@@ -110,10 +112,6 @@ const LauchScreen = () => {
     setProgress(value);
   });
 
-  const handlePress = () => {
-    Linking.openURL("https://www.google.com");
-  };
-
   const LoadingView = () => {
     return (
       <View style={styles.loadingContainer}>
@@ -123,21 +121,17 @@ const LauchScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Image
-          style={styles.tinyLogo}
-          source={{
-            uri: logo,
-          }}
-        />
+        <TopBannerNav />
         {loading ? (
           <LoadingView />
         ) : (
           <ProfileHeader
+            containerStyle={{ marginTop: -40 }}
             id={initialUserData.user_id}
             name={initialUserData.name}
-          ></ProfileHeader>
+          />
         )}
       </View>
       <View
@@ -146,14 +140,7 @@ const LauchScreen = () => {
           { marginLeft: 18, marginRight: 18, marginBottom: 10 },
         ]}
       >
-        <Text
-          style={[
-            styles.subtitle,
-            { textTransform: "uppercase", marginBottom: 10 },
-          ]}
-        >
-          Statistics
-        </Text>
+        <SectionTitle text={"Statistics"} />
         <View style={styles.resultRow}>
           <View style={styles.resultCard}>
             <View style={styles.viewRow}>
@@ -183,8 +170,6 @@ const LauchScreen = () => {
             <View style={styles.luckySymbols}></View>
           </View>
         </View>
-
-        {/* Total Tickets Earned Section */}
         <View style={styles.ticketsSection}>
           <View style={styles.containerTotalTicket}>
             <LottieView
@@ -230,25 +215,27 @@ const LauchScreen = () => {
             />
           </View>
         </View>
-
-        <View style={{ height: 10 }} />
-        <TimerComponent
+        <GameButton
+          style={{ marginVertical: 24 }}
+          text="Play Now"
+          onPress={() => handleStartGame()}
+        />
+        <SectionTitle
+          text="LeaderBard"
+          viewAllText="View All"
+          viewAllAction={() => {}}
+        />
+        <LeaderBoardList leaderboardData={leaderboardData.slice(0, 5)} />
+        <GamesAvailableCard style={{ marginVertical: 24 }} numberOfSets={1} />
+        <NextDrawCard
           days={timeLeft.days}
           hours={timeLeft.hours}
           minutes={timeLeft.minutes}
           seconds={timeLeft.seconds}
-        />
-
-        <View style={styles.buttonWrapper}>
-          <GameButton text="Play Game" onPress={() => handleStartGame()} />
-        </View>
-
-        <LinkButton
-          text="How To Play Turbo Scratch >"
-          handlePress={handlePress}
+          style={{ marginVertical: 24 }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -268,25 +255,6 @@ const styles = StyleSheet.create({
     height: 45,
     alignItems: "center",
   },
-  header: {
-    //justifyContent: "top",
-    //alignItems: "center",
-    // marginVertical: 10,
-  },
-  headerIcon: {
-    width: 50,
-    height: 50,
-  },
-  title: {
-    color: "#FFDEA8",
-    fontFamily: "Teko-Medium",
-    fontSize: 22,
-  },
-  subtitle: {
-    color: "#FFFFFF",
-    fontFamily: "Teko-Medium",
-    fontSize: 22,
-  },
   resultRow: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -300,14 +268,6 @@ const styles = StyleSheet.create({
     border: "1px solid #4B595D",
     borderRadius: 12,
     padding: 4,
-  },
-  backgroundRounded: {
-    backgroundColor: "#1D1811",
-    borderRadius: 30,
-    paddingVertical: 8,
-    paddingHorizontal: 25,
-    marginBottom: 10,
-    border: "1px solid #382E23",
   },
   resultTitle: {
     fontSize: 18,
@@ -446,18 +406,6 @@ const styles = StyleSheet.create({
     width: "98%", // takes up 90% of the screen width
     marginHorizontal: "1%", // centers it horizontally
     marginVertical: 10, // optional vertical margin
-  },
-  buttonWrapper: {
-    width: "100%", // Ensure button spans the full width of its container
-    alignItems: "center", // Center the button horizontally
-    marginTop: 20, // Optional spacing above the button
-  },
-  buttonText: {
-    fontFamily: "Inter-Regular",
-    fontWeight: 500,
-    fontSize: 18,
-    color: "#A6A6A6", // Adjusted to match the lighter gray color
-    textDecorationLine: "underline", // This will underline the text
   },
   loadingContainer: {
     flex: 1,
