@@ -24,6 +24,7 @@ import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
 import { leaderboardData } from "../data/LeaderBoardData";
 import NextDrawCard from "../components/NextDrawCard";
+import { getCurrentDate } from "../util/constants";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -79,14 +80,29 @@ const LauchScreen = () => {
       }
       const userData = response.user;
       if (response.daily === null || response.daily.length === 0) {
-        console.log("response.daily is null");
         navigate("/daily", {
           state: {
             userData,
           },
         });
       } else {
-        console.log("response.daily is not null");
+        var hasCurrentDate = false;
+        response.daily.forEach((item, index) => {
+          const currentDate = getCurrentDate();
+          console.log("item: ", item, "currentDate: ", currentDate);
+          if (item === currentDate) {
+            hasCurrentDate = true;
+          }
+        });
+        if (!hasCurrentDate) {
+          navigate("/daily", {
+            state: {
+              userData,
+            },
+          });
+        } else {
+          console.log("Daily Question already answered.");
+        }
       }
     }
   }, [response]);
