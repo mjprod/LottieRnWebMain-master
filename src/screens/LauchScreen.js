@@ -81,7 +81,7 @@ const LauchScreen = () => {
 
       const userData = response.user;
       const totalWeeks = response.totalWeeks;
-      const daily = response.daily;
+      var currentWeekDaily = "";
       var currentWeek = 0;
       if (response.daily === null || response.daily.length === 0) {
         navigate("/daily", {
@@ -89,7 +89,7 @@ const LauchScreen = () => {
             userData,
             currentWeek,
             totalWeeks,
-            daily
+            currentWeekDaily
           },
         });
       } else {
@@ -103,16 +103,20 @@ const LauchScreen = () => {
           });
           if (dailyItem.current_week > currentWeek) {
             currentWeek = dailyItem.current_week;
+            currentWeekDaily = dailyItem;
+          } else if (dailyItem.current_week === currentWeek) {
+            currentWeekDaily = dailyItem;
           }
         });
         if (currentWeek != 0) {
           if (!hasCurrentDate) {
+            console.log("Daily Question not answered.", currentWeekDaily);
             navigate("/daily", {
               state: {
                 userData,
                 currentWeek,
                 totalWeeks,
-                daily
+                currentWeekDaily
               },
             });
           } else {

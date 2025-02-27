@@ -9,13 +9,11 @@ import DailyCardsContainer from "../components/DailyCardsContainer";
 import { useLocation } from "react-router-dom";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
-import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
+
 import NextDrawCard from "../components/NextDrawCard";
 import TopBannerNav from "../components/TopBannerNav";
 
 const DailyScreen = () => {
-  const [timeLeft] = useTimeLeftForNextDraw();
-
   const [question, setQuestion] = useState("");
   const [isThumbsUpAnimationFinished, setIsThumbsUpAnimationFinished] =
     useState(false);
@@ -43,7 +41,7 @@ const DailyScreen = () => {
   const [userData, setUserData] = useState("");
   const [currentWeek, setCurrentWeek] = useState("");
   const [totalWeeks, setTotalWeeks] = useState("");
-  const [daily, setDaily] = useState("");
+  const [currentWeekDaily, setCurrentWeekDaily] = useState("");
 
   const { loading, error, response, getDailyQuestion, postDailyAnswer } =
     useApiRequest();
@@ -51,13 +49,13 @@ const DailyScreen = () => {
   const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
-    if (location.state != null) {
+    if (location.state !== null) {
       setUserData(location.state.userData);
       setCurrentWeek(location.state.currentWeek);
       setTotalWeeks(location.state.totalWeeks);
-      setDaily(location.state.daily);
+      setCurrentWeekDaily(location.state.currentWeekDaily);
     }
-  }, []);
+  }, [location]);
 
   useEffect(() => {
     if (userData.user_id) {
@@ -106,7 +104,7 @@ const DailyScreen = () => {
   const handleThumbsUpAnimationFinish = () => {
     slideOutAndFade();
   };
-
+  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -156,14 +154,9 @@ const DailyScreen = () => {
         <DailyCardsContainer
           currentWeek={currentWeek}
           totalWeeks={totalWeeks}
-          daily={daily}
+          currentWeekDaily={currentWeekDaily}
         />
-        <NextDrawCard
-          days={timeLeft.days}
-          hours={timeLeft.hours}
-          minutes={timeLeft.minutes}
-          seconds={timeLeft.seconds}
-        />
+        <NextDrawCard />
       </View>
     </ScrollView>
   );

@@ -4,8 +4,9 @@ import TimerComponent from "./TimerComponent";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
 import PurplePill from "./PurplePill";
-
-const NextDrawCard = ({ days, hours, minutes, seconds, style }) => {
+import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
+const NextDrawCard = ({style }) => {
+  const [timeLeft] = useTimeLeftForNextDraw();
   return (
     <View style={{ ...styles.container, ...style }}>
       <ImageBackground
@@ -41,10 +42,10 @@ const NextDrawCard = ({ days, hours, minutes, seconds, style }) => {
             source={AssetPack.logos.TURBO_SCRATCH}
           />
           <TimerComponent
-            days={days}
-            hours={hours}
-            minutes={minutes}
-            seconds={seconds}
+            days={timeLeft.days}
+            hours={timeLeft.hours}
+            minutes={timeLeft.minutes}
+            seconds={timeLeft.seconds}
           />
         </View>
         <LottieView

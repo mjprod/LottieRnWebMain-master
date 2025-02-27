@@ -23,3 +23,8 @@ export function getCurrentDate() {
   ).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
   return formattedDate;
 }
+
+export function convertUTCToLocal(utcDateStr) {
+  let utcDate = new Date(utcDateStr + "T00:00:00Z"); // Treat as UTC
+  return utcDate.toISOString().split("T")[0]; // Convert to local and return
+}
