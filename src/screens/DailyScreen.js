@@ -12,6 +12,7 @@ import LottieView from "react-native-web-lottie";
 
 import NextDrawCard from "../components/NextDrawCard";
 import TopBannerNav from "../components/TopBannerNav";
+import { getCurrentDate } from "../util/constants";
 
 const DailyScreen = () => {
   const [question, setQuestion] = useState("");
@@ -41,7 +42,7 @@ const DailyScreen = () => {
   const [userData, setUserData] = useState("");
   const [currentWeek, setCurrentWeek] = useState("");
   const [totalWeeks, setTotalWeeks] = useState("");
-  const [currentWeekDaily, setCurrentWeekDaily] = useState("");
+  const [days, setDays] = useState([]);
 
   const { loading, error, response, getDailyQuestion, postDailyAnswer } =
     useApiRequest();
@@ -49,11 +50,15 @@ const DailyScreen = () => {
   const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
+    console.log(days);
+  }, [days]);
+
+  useEffect(() => {
     if (location.state !== null) {
       setUserData(location.state.userData);
       setCurrentWeek(location.state.currentWeek);
       setTotalWeeks(location.state.totalWeeks);
-      setCurrentWeekDaily(location.state.currentWeekDaily);
+      setDays(location.state.currentWeekDaily.days);
     }
   }, [location]);
 
@@ -71,6 +76,7 @@ const DailyScreen = () => {
 
       if (response.answer_id) {
         setIsSubmitted(true);
+        setDays((prevDays) => [...prevDays, getCurrentDate()]);
         if (response.message) {
           showSnackbar(response.message);
         }
@@ -104,7 +110,7 @@ const DailyScreen = () => {
   const handleThumbsUpAnimationFinish = () => {
     slideOutAndFade();
   };
-  
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -154,7 +160,7 @@ const DailyScreen = () => {
         <DailyCardsContainer
           currentWeek={currentWeek}
           totalWeeks={totalWeeks}
-          currentWeekDaily={currentWeekDaily}
+          days={days}
         />
         <NextDrawCard />
       </View>
