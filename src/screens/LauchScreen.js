@@ -78,30 +78,48 @@ const LauchScreen = () => {
         setInitialScratchCardLeft(response.user.card_balance || 0);
         setInitialUserData(response.user);
       }
+
       const userData = response.user;
+      const totalWeeks = response.totalWeeks;
+      const daily = response.daily;
+      var currentWeek = 0;
       if (response.daily === null || response.daily.length === 0) {
         navigate("/daily", {
           state: {
             userData,
+            currentWeek,
+            totalWeeks,
+            daily
           },
         });
       } else {
         var hasCurrentDate = false;
-        response.daily.forEach((item, index) => {
+        response.daily.forEach((dailyItem) => {
           const currentDate = getCurrentDate();
-          console.log("item: ", item, "currentDate: ", currentDate);
-          if (item === currentDate) {
-            hasCurrentDate = true;
+          dailyItem.days.forEach((item) => {
+            if (item === currentDate) {
+              hasCurrentDate = true;
+            }
+          });
+          if (dailyItem.current_week > currentWeek) {
+            currentWeek = dailyItem.current_week;
           }
         });
-        if (!hasCurrentDate) {
-          navigate("/daily", {
-            state: {
-              userData,
-            },
-          });
+        if (currentWeek != 0) {
+          if (!hasCurrentDate) {
+            navigate("/daily", {
+              state: {
+                userData,
+                currentWeek,
+                totalWeeks,
+                daily
+              },
+            });
+          } else {
+            console.log("Daily Question already answered.");
+          }
         } else {
-          console.log("Daily Question already answered.");
+          showSnackbar("Something went wrong. Please try again later.");
         }
       }
     }

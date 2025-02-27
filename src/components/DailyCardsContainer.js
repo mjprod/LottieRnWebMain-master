@@ -2,11 +2,12 @@ import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import DayCard from "./DayCard";
 import DailyCardData from "../data/DailyCardData";
+import SectionTitle from "./SectionTitle";
 
-const DailyCardsContainer = () => {
+const DailyCardsContainer = ({ currentWeek, totalWeeks, daily }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.weekText}>{"Week 1/3"}</Text>
+      <SectionTitle text={`Week ${currentWeek}/${totalWeeks}`} />
       <FlatList
         ItemSeparatorComponent={() => <View style={{ padding: 5 }} />}
         columnWrapperStyle={{ gap: 10 }}
@@ -43,14 +44,6 @@ const styles = StyleSheet.create({
   },
   item: {
     flex: 1,
-  },
-  weekText: {
-    fontFamily: "Teko-Medium",
-    color: "#FFFFFF",
-    fontSize: 20,
-    marginBottom: 16,
-    marginTop: 16,
-    textTransform: "uppercase",
   },
 });
 

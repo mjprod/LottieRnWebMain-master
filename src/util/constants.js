@@ -1,4 +1,4 @@
-export const SERVER = "http://localhost:8083";
+export const SERVER = "http://192.168.128.52:8083";
 
 export const DailyCardStatus = {
   active: "active",
@@ -21,7 +21,5 @@ export function getCurrentDate() {
   const formattedDate = `${currentDate.getFullYear()}-${String(
     currentDate.getMonth() + 1
   ).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
-
-  console.log(formattedDate);
   return formattedDate;
 }

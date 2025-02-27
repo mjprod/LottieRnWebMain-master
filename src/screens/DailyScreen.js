@@ -14,21 +14,15 @@ import NextDrawCard from "../components/NextDrawCard";
 import TopBannerNav from "../components/TopBannerNav";
 
 const DailyScreen = () => {
-  const [progress, setProgress] = useState();
-  const animatedProgress = useRef(new Animated.Value(0)).current;
-
-  const [initialScore, setInitialScore] = useState(0);
-  const [initialTicketCount, setInitialTicketCount] = useState(0);
-  const [initialLuckySymbolCount, setInitialLuckySymbolCount] = useState(0);
-  const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
-  
   const [timeLeft] = useTimeLeftForNextDraw();
-  const [initialUserData, setInitialUserData] = useState("");
+
   const [question, setQuestion] = useState("");
   const [isThumbsUpAnimationFinished, setIsThumbsUpAnimationFinished] =
     useState(false);
+
   const slideAnim = useRef(new Animated.Value(270)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
+
   const slideOutAndFade = () => {
     Animated.parallel([
       Animated.timing(slideAnim, {
@@ -45,25 +39,31 @@ const DailyScreen = () => {
   };
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const { userData } = useLocation().state;
+  const location = useLocation();
+  const [userData, setUserData] = useState("");
+  const [currentWeek, setCurrentWeek] = useState("");
+  const [totalWeeks, setTotalWeeks] = useState("");
+  const [daily, setDaily] = useState("");
 
   const { loading, error, response, getDailyQuestion, postDailyAnswer } =
     useApiRequest();
+
   const { showSnackbar } = useSnackbar();
 
+  useEffect(() => {
+    if (location.state != null) {
+      setUserData(location.state.userData);
+      setCurrentWeek(location.state.currentWeek);
+      setTotalWeeks(location.state.totalWeeks);
+      setDaily(location.state.daily);
+    }
+  }, []);
 
   useEffect(() => {
-    if (userData) {
-      setInitialUserData(userData);
+    if (userData.user_id) {
+      getDailyQuestion(userData.user_id);
     }
   }, [userData]);
-
-  useEffect(() => {
-    if (initialUserData.user_id) {
-      getDailyQuestion(initialUserData.user_id);
-    }
-  }, [initialUserData]);
 
   useEffect(() => {
     if (response) {
@@ -81,25 +81,11 @@ const DailyScreen = () => {
   }, [response]);
 
   useEffect(() => {
-    Animated.timing(animatedProgress, {
-      toValue: initialScore,
-      duration: 3000,
-      useNativeDriver: false,
-    }).start();
-
-    setProgress(initialScore);
-  }, [initialScore]);
-
-  useEffect(() => {
     console.log("Error: ", error);
     if (error && error.length > 0) {
       showSnackbar(error);
     }
   }, [error]);
-
-  animatedProgress.addListener(({ value }) => {
-    setProgress(value);
-  });
 
   const LoadingView = () => {
     return (
@@ -111,7 +97,7 @@ const DailyScreen = () => {
 
   const onSubmit = (answer) => {
     if (answer !== "") {
-      postDailyAnswer(initialUserData.user_id, question.question_id, answer);
+      postDailyAnswer(userData.user_id, question.question_id, answer);
     } else {
       showSnackbar("Please enter your answer");
     }
@@ -130,8 +116,8 @@ const DailyScreen = () => {
         ) : (
           <ProfileHeader
             containerStyle={{ marginTop: -40 }}
-            id={initialUserData.user_id}
-            name={initialUserData.name}
+            id={userData.user_id}
+            name={userData.name}
           />
         )}
       </View>
@@ -167,7 +153,11 @@ const DailyScreen = () => {
             />
           </Animated.View>
         )}
-        <DailyCardsContainer />
+        <DailyCardsContainer
+          currentWeek={currentWeek}
+          totalWeeks={totalWeeks}
+          daily={daily}
+        />
         <NextDrawCard
           days={timeLeft.days}
           hours={timeLeft.hours}
