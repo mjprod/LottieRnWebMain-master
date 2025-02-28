@@ -12,7 +12,7 @@ import LauchScreen from "./screens/LauchScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 import LeaderBoardScreen from "./screens/LeaderBoardScreen";
-
+import HowToPlayScreen from "./screens/HowToPlayScreen";
 const { height, width } = Dimensions.get("window");
 
 export default function App() {
@@ -26,8 +26,10 @@ export default function App() {
     });
   }, []);
 
-  const isSmallScreen = width < 400 || height < 650;
-  const dynamicStyles = isSmallScreen ? smallStyles : styles;
+  const isMobileBrowser =
+navigator.userAgent.includes("Mobile") ||
+navigator.userAgent.includes("Android");
+  const dynamicStyles = isMobileBrowser ? smallStyles : styles;
 
   return (
     <View style={styles.container}>
@@ -46,7 +48,11 @@ export default function App() {
                     <Route path="/*" element={<NotFoundScreen />} />
                     <Route path="/game" element={<ScratchLuckyGame />} />
                     <Route path="/game_over" element={<GameOverScreen />} />
-                    <Route path="/leader_board" element={<LeaderBoardScreen />} />
+                    <Route
+                      path="/leader_board"
+                      element={<LeaderBoardScreen />}
+                    />
+                    <Route path="/how_to_play" element={<HowToPlayScreen />} />
                   </Routes>
                 </SnackbarProvider>
               </BrowserRouter>
@@ -83,17 +89,11 @@ const smallStyles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#35363A",
-    paddingTop: "10%",
+    userSelect: "none",
   },
   app: {
-    width: width * 0.98, // Ajusta a largura para 90% da tela em telas pequenas
-    maxHeight: height * 0.98, // Ajusta a altura para 80% da tela em telas pequenas
-    //flex: 1,
+    width: "100%",
+    height: height,
     backgroundColor: "black",
-    borderRadius: 4,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    overflow: "hidden",
-    boxShadow: "0 4px 6px rgba(0,0,0,0.5)",
   },
 });
