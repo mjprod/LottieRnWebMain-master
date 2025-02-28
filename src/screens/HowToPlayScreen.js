@@ -1,8 +1,9 @@
 import React from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useNavigate } from "react-router-dom";
 import TopBannerNav from "../components/TopBannerNav";
 import AssetPack from "../util/AssetsPack";
+import ShowCaseCarousel from "../components/ShowCaseCarousel";
 
 const HowToPlayScreen = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const HowToPlayScreen = () => {
     },
     {
       description:
-        "Write some text about this stage in the game for users to follow",
+        "Scratch off the symbols to begin your game.",
       image: AssetPack.images.CAROUSEL_ITEM_2,
     },
     {
@@ -28,7 +29,7 @@ const HowToPlayScreen = () => {
     },
   ];
   return (
-    <ScrollView style={styles.container}>
+    <View  style={{backgroundColor: "red", flex:1, paddingBottom:20,}}>
       <TopBannerNav
         title="How to play?"
         subtitle="Learn step-by-step instructions on how to play."
@@ -36,19 +37,13 @@ const HowToPlayScreen = () => {
         hasBackButton={true}
         onBackPress={handleBackPress}
       />
-    </ScrollView>
+      <ShowCaseCarousel slideList={carouselItems} />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  tinyLogo: {
-    width: "100%",
-    height: 144,
-    resizeMode: "contain",
-  },
+ 
 });
 
 export default HowToPlayScreen;

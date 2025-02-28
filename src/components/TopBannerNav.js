@@ -22,7 +22,6 @@ const TopBannerNav = ({
     <ImageBackground
       imageStyle={{ resizeMode: "cover" }}
       style={{
-        flex: 1,
         alignItems: "start",
       }}
       source={backgroundImage}
