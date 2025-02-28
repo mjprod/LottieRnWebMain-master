@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import AssetPack from "../util/AssetsPack";
 import PurplePill from "./PurplePill";
+import LinearGradient from "react-native-web-linear-gradient";
+import { DIMEN_PAGE_MARGIN } from "../util/constants";
 
 const TopBannerNav = ({
   title = "Be in to win Prizes!",
@@ -18,21 +20,33 @@ const TopBannerNav = ({
 }) => {
   return (
     <ImageBackground
-      imageStyle={{ resizeMode: "stretch" }}
-      style={{ flex: 1, padding: 30, alignItems: "start" }}
+      imageStyle={{ resizeMode: "cover" }}
+      style={{
+        flex: 1,
+        alignItems: "start",
+      }}
       source={backgroundImage}
     >
-      {hasBackButton && (
-        <TouchableOpacity onPress={onBackPress}>
-          <Image style={styles.arrowIcon} source={AssetPack.icons.ARROW_LEFT} />
-        </TouchableOpacity>
-      )}
-      <PurplePill
-        text={"Beta Competition"}
-        style={styles.betaCompetitionText}
-      />
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.subtitle}>{subtitle}</Text>
+      <LinearGradient
+        colors={["#00000000", "#00000000", "#000"]}
+        style={styles.linearGradient}
+      >
+        {hasBackButton && (
+          <TouchableOpacity onPress={onBackPress}>
+            <Image
+              style={styles.arrowIcon}
+              source={AssetPack.icons.ARROW_LEFT}
+            />
+          </TouchableOpacity>
+        )}
+        <PurplePill
+          text={"Beta Competition"}
+          style={styles.betaCompetitionText}
+        />
+
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.subtitle}>{subtitle}</Text>
+      </LinearGradient>
     </ImageBackground>
   );
 };
@@ -55,6 +69,14 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "bold",
     marginBottom: 20,
+  },
+  linearGradient: {
+    width: "100%",
+    height: "auto",
+    paddingHorizontal: DIMEN_PAGE_MARGIN,
+    flex: 1,
+    alignItems: "start",
+    paddingVertical: DIMEN_PAGE_MARGIN,
   },
 });
 

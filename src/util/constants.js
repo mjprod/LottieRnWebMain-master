@@ -1,5 +1,7 @@
 export const SERVER = "http://localhost:8083";
 
+export const DIMEN_PAGE_MARGIN = 25;
+
 export const DailyCardStatus = {
   active: "active",
   inactive: "inactive",
