@@ -18,8 +18,7 @@ const HowToPlayScreen = () => {
       image: AssetPack.images.CAROUSEL_ITEM_1,
     },
     {
-      description:
-        "Scratch off the symbols to begin your game.",
+      description: "Scratch off the symbols to begin your game.",
       image: AssetPack.images.CAROUSEL_ITEM_2,
     },
     {
@@ -29,7 +28,7 @@ const HowToPlayScreen = () => {
     },
   ];
   return (
-    <View  style={{backgroundColor: "red", flex:1, paddingBottom:20,}}>
+    <View style={{ flex: 1, paddingBottom: 20 }}>
       <TopBannerNav
         title="How to play?"
         subtitle="Learn step-by-step instructions on how to play."
@@ -37,13 +36,11 @@ const HowToPlayScreen = () => {
         hasBackButton={true}
         onBackPress={handleBackPress}
       />
-      <ShowCaseCarousel slideList={carouselItems} />
+      <ShowCaseCarousel slideList={carouselItems} style={{ marginTop: -30 }} />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
- 
-});
+const styles = StyleSheet.create({});
 
 export default HowToPlayScreen;

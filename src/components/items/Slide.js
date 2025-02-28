@@ -7,7 +7,7 @@ function Slide({ data, height, width }) {
     <Image
       resizeMode="contain"
       source={{ uri: data.image }}
-      style={{ width: width * 0.8, height: height * 0.9 }}
+      style={{ width: width, height: height }}
     />
   );
 }
