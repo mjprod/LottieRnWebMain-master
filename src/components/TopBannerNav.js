@@ -27,7 +27,7 @@ const TopBannerNav = ({
       source={backgroundImage}
     >
       <LinearGradient
-        colors={["#00000000", "#00000000", "#000"]}
+        colors={["#00000000", "#00000000", "#131313"]}
         style={styles.linearGradient}
       >
         {hasBackButton && (

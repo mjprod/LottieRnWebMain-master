@@ -45,6 +45,7 @@ const LeaderBoardScreen = () => {
         <LinkButton
           style={{ marginBottom: 30 }}
           text={"How To Play Turbo Scratch >"}
+          handlePress={() => navigate("/how_to_play")}
         />
         <GamesAvailableCard numberOfSets={1} />
         <NextDrawCard
