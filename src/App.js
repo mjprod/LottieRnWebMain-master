@@ -33,7 +33,7 @@ export default function App() {
   const dynamicStyles = isMobileBrowser ? smallStyles : styles;
 
   return (
-    <View style={styles.container}>
+    <View style={dynamicStyles.container}>
       <View style={dynamicStyles.app}>
         <GameProvider>
           <ThemeProvider>
@@ -67,16 +67,16 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: height,
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#35363A",
     paddingTop: "10%",
   },
   app: {
+    flex: 1,
     width: 400,
     maxHeight: 750,
-    flex: 1,
-    backgroundColor: "black",
     borderRadius: 44,
     overflow: "hidden",
     boxShadow: "0 4px 6px rgba(0,0,0,0.5)",
@@ -88,7 +88,6 @@ const smallStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "#35363A",
     userSelect: "none",
   },
   app: {
