@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { View, StyleSheet, Animated, Easing } from "react-native";
 
-const RotatingCirclesBackground = ({ children }) => {
+const RotatingCirclesBackground = ({ style, children }) => {
   const rotation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const RotatingCirclesBackground = ({ children }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.container}>
+      <View style={{ ...styles.container, ...style }}>
         <Animated.View style={[styles.planet, styles.planet1, planetStyle1]} />
         <Animated.View style={[styles.planet, styles.planet2, planetStyle2]} />
         <div

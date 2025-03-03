@@ -1,16 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
 import AssetPack from "../util/AssetsPack";
 import GameButton from "../components/GameButton";
 
 const NotFoundScreen = () => {
+  const navigate = useNavigate();
   return (
     <ImageBackground
       source={AssetPack.backgrounds.BLUE_BACKGROUND_CARD}
       style={styles.rotatingBackgroundContainer}
     >
-      <RotatingCirclesBackground>
+      <RotatingCirclesBackground style={{ paddingVertical: "20%" }}>
         <Image
           source={AssetPack.images.PHAROAH}
           style={{ width: 250, height: 200, marginBottom: -100, zIndex: 10 }}
@@ -35,12 +37,12 @@ const NotFoundScreen = () => {
             style={{
               backgroundColor: "#00000099",
               height: "100%",
-              paddingTop: 100,
+              paddingTop: 80,
               alignItems: "center",
             }}
           >
             <Image
-              style={{ width: 175, height: 46, marginBottom: 35 }}
+              style={{ width: 175, height: 46, marginBottom: 20 }}
               source={AssetPack.logos.TURBO_SCRATCH}
             />
             <Image
@@ -59,7 +61,13 @@ const NotFoundScreen = () => {
             </Text>
           </View>
         </ImageBackground>
-        <GameButton style={{ paddingHorizontal: 35 }} text="TAKE ME BACK" />
+        <GameButton
+          style={{ paddingHorizontal: 35 }}
+          text="TAKE ME BACK"
+          onPress={() => {
+            navigate("/daily");
+          }}
+        />
       </RotatingCirclesBackground>
     </ImageBackground>
   );
@@ -71,16 +79,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    overflow: "hidden",
-  },
-  container: {
-    paddingTop: 100,
-    borderColor: "#FFEEC0",
-    borderWidth: 1,
-    borderRadius: 12,
-    marginHorizontal: 35,
-    alignItems: "center",
-    marginBottom: 30,
+    overflow: "hidden"
   },
   message: {
     fontFamily: "Inter-SemiBold",
