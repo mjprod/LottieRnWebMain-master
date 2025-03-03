@@ -12,7 +12,7 @@ import LauchScreen from "./screens/LauchScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 import LeaderBoardScreen from "./screens/LeaderBoardScreen";
-
+import HowToPlayScreen from "./screens/HowToPlayScreen";
 const { height, width } = Dimensions.get("window");
 
 export default function App() {
@@ -50,8 +50,12 @@ export default function App() {
                     <Route path="/game" element={<ScratchLuckyGame />} />
                     <Route path="/game_over" element={<GameOverScreen />} />
                     <Route
+                     
                       path="/leader_board"
+                     
                       element={<LeaderBoardScreen />}
+                    />
+                    <Route path="/how_to_play" element={<HowToPlayScreen />}
                     />
                   </Routes>
                 </SnackbarProvider>
