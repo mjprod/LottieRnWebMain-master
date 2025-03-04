@@ -13,6 +13,7 @@ import LottieView from "react-native-web-lottie";
 import NextDrawCard from "../components/NextDrawCard";
 import TopBannerNav from "../components/TopBannerNav";
 import { getCurrentDate } from "../util/constants";
+import { isValidAnswer } from "../util/Validator";
 
 const DailyScreen = () => {
   const [question, setQuestion] = useState("");
@@ -118,10 +119,11 @@ const DailyScreen = () => {
   };
 
   const onSubmit = (answer) => {
-    if (answer !== "") {
+    const { isValid, message } = isValidAnswer(answer);
+    if (isValid) {
       postDailyAnswer(userData.user_id, question.question_id, answer);
     } else {
-      showSnackbar("Please enter your answer");
+      showSnackbar(message);
     }
   };
 
