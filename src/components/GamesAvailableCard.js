@@ -3,8 +3,7 @@ import { Text, Image, StyleSheet, ImageBackground, View } from "react-native";
 import AssetPack from "../util/AssetsPack";
 
 const GamesAvailableCard = ({
-  numberOfSets,
-  numberOfCardsInSet = 12,
+  cardsLeft = 0,
   style,
 }) => {
   return (
@@ -23,7 +22,7 @@ const GamesAvailableCard = ({
       </View>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Text style={styles.valueText}>
-          {numberOfCardsInSet * numberOfSets} ({numberOfSets} set)
+          {cardsLeft} CARDS
         </Text>
       </View>
     </ImageBackground>

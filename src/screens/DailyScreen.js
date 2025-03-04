@@ -12,8 +12,8 @@ import LottieView from "react-native-web-lottie";
 
 import NextDrawCard from "../components/NextDrawCard";
 import TopBannerNav from "../components/TopBannerNav";
-import { getCurrentDate } from "../util/constants";
 import { isValidAnswer } from "../util/Validator";
+import { getCurrentDate } from "../util/Helpers";
 
 const DailyScreen = () => {
   const [question, setQuestion] = useState("");

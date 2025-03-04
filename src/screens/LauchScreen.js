@@ -1,6 +1,6 @@
 import Slider from "@react-native-community/slider";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Linking, StyleSheet } from "react-native";
+import { Animated, StyleSheet } from "react-native";
 import {
   ActivityIndicator,
   ScrollView,
@@ -24,7 +24,8 @@ import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
 import { leaderboardData } from "../data/LeaderBoardData";
 import NextDrawCard from "../components/NextDrawCard";
-import { COLOR_BACKGROUND, getCurrentDate, convertUTCToLocal } from "../util/constants";
+import { COLOR_BACKGROUND } from "../util/constants";
+import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -94,7 +95,9 @@ const LauchScreen = () => {
           (item) => item.currentWeek === currentWeek
         );
         if (currentWeekDaily != null) {
-          const localConvertedDays = currentWeekDaily.days.map((date) => convertUTCToLocal(date));
+          const localConvertedDays = currentWeekDaily.days.map((date) =>
+            convertUTCToLocal(date)
+          );
           const hasCurrentDate = localConvertedDays.some((item) =>
             item.includes(getCurrentDate())
           );
@@ -268,7 +271,10 @@ const LauchScreen = () => {
           viewAllAction={handleViewAllPress}
         />
         <LeaderBoardList leaderboardData={leaderboardData.slice(0, 5)} />
-        <GamesAvailableCard style={{ marginVertical: 24 }} numberOfSets={1} />
+        <GamesAvailableCard
+          style={{ marginVertical: 24 }}
+          cardsLeft={initialScratchCardLeft}
+        />
         <NextDrawCard
           days={timeLeft.days}
           hours={timeLeft.hours}

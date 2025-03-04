@@ -1,6 +1,7 @@
 import React from "react";
-import { Image, Text, View, StyleSheet, ImageBackground } from "react-native";
-import { LeaderBoardStatus, maskString } from "../../util/constants";
+import { Text, StyleSheet, ImageBackground } from "react-native";
+import { LeaderBoardStatus } from "../../util/constants";
+import { maskString } from "../../util/Helpers";
 import { IconTypeLeaderBoardArrow } from "../../assets/icons/ArrowSolid";
 import { PointsIcon } from "../../assets/icons/PointsIcon";
 import AssetPack from "../../util/AssetsPack";
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     overflow: "hidden",
     borderWidth: 1,
-    borderColor: "#FFDEA8"
+    borderColor: "#FFDEA8",
   },
   rankText: {
     fontFamily: "Inter-Medium",
