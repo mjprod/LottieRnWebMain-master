@@ -44,8 +44,14 @@ const DailyScreen = () => {
   const [totalWeeks, setTotalWeeks] = useState("");
   const [days, setDays] = useState([]);
 
-  const { loading, error, response, getDailyQuestion, postDailyAnswer } =
-    useApiRequest();
+  const {
+    loading,
+    error,
+    response,
+    fetchUserDetails,
+    getDailyQuestion,
+    postDailyAnswer,
+  } = useApiRequest();
 
   const { showSnackbar } = useSnackbar();
 
@@ -55,10 +61,11 @@ const DailyScreen = () => {
 
   useEffect(() => {
     if (location.state !== null) {
-      setUserData(location.state.userData);
-      setCurrentWeek(location.state.currentWeek);
-      setTotalWeeks(location.state.totalWeeks);
-      setDays(location.state.currentWeekDaily.days);
+      const id = location.state.user_id;
+      const username = location.state.name;
+      const email = location.state.email;
+
+      fetchUserDetails(id, username, email);
     }
   }, [location]);
 
@@ -70,6 +77,17 @@ const DailyScreen = () => {
 
   useEffect(() => {
     if (response) {
+      if (response.user) {
+        setUserData(response.user);
+        setCurrentWeek(response.currentWeek);
+        setTotalWeeks(response.totalWeeks);
+        const currentWeekDaily = response.daily.find(
+          (item) => item.currentWeek === response.currentWeek
+        );
+        if (currentWeekDaily) {
+          setDays(currentWeekDaily.days);
+        }
+      }
       if (response.question) {
         setQuestion(response);
       }

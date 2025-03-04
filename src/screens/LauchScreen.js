@@ -84,7 +84,11 @@ const LauchScreen = () => {
 
       if (response.daily === null || response.daily.length === 0) {
         navigate("/daily", {
-          state: { userData },
+          state: {
+            user_id: userData.user_id,
+            name: userData.name,
+            email: userData.email,
+          },
         });
       } else {
         const currentWeekDaily = response.daily.find(
@@ -96,12 +100,24 @@ const LauchScreen = () => {
           );
           if (!hasCurrentDate) {
             console.log("Daily Question not answered.", currentWeekDaily);
-            navigate("/daily", { state: { userData } });
+            navigate("/daily", {
+              state: {
+                user_id: userData.user_id,
+                name: userData.name,
+                email: userData.email,
+              },
+            });
           } else {
             console.log("Daily Question already answered.");
           }
         } else {
-          navigate("/daily", { state: { userData } });
+          navigate("/daily", {
+            state: {
+              user_id: userData.user_id,
+              name: userData.name,
+              email: userData.email,
+            },
+          });
         }
       }
     }
