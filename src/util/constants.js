@@ -2,7 +2,7 @@ export const SERVER = "http://192.168.128.52:8083";
 
 export const DIMEN_PAGE_MARGIN = 25;
 
-export const COLOR_BACKGROUND =  "#131313"
+export const COLOR_BACKGROUND = "#131313";
 
 export const DailyCardStatus = {
   active: "active",
@@ -28,11 +28,6 @@ export function getCurrentDate() {
   return formattedDate;
 }
 
-export function convertUTCToLocal(utcDateStr) {
-  let utcDate = new Date(utcDateStr + "T00:00:00Z"); // Treat as UTC
-  return utcDate.toISOString().split("T")[0]; // Convert to local and return
-}
-
 export function getCurrentWeekDates() {
   let today = new Date();
   let dayOfWeek = today.getDay();
@@ -48,4 +43,13 @@ export function getCurrentWeekDates() {
   }
 
   return weekDates;
+}
+
+export function convertUTCToLocal(utcDateTime) {
+  const date = new Date(utcDateTime + "Z");
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 }

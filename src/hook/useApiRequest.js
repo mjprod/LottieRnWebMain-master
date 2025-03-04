@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { SERVER } from '../util/constants';
+import { useState } from "react";
+import { SERVER } from "../util/constants";
 
 const useApiRequest = () => {
   const [loading, setLoading] = useState(false);
@@ -7,7 +7,7 @@ const useApiRequest = () => {
   const [response, setResponse] = useState(null);
 
   const fetchData = async (config) => {
-    const { url, method = 'GET', headers, body } = config;
+    const { url, method = "GET", headers, body } = config;
 
     try {
       setLoading(true);
@@ -35,10 +35,10 @@ const useApiRequest = () => {
 
   const updateLuckySymbol = async (id, lucky_symbol) => {
     const config = {
-      url: SERVER + '/updateLuckySymbol',
-      method: 'POST',
+      url: SERVER + "/updateLuckySymbol",
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: {
         id,
@@ -59,7 +59,7 @@ const useApiRequest = () => {
       body: {
         user_id,
         name,
-        email
+        email,
       },
     };
 
@@ -78,7 +78,7 @@ const useApiRequest = () => {
       },
     };
     await fetchData(config);
-  }
+  };
 
   const postDailyAnswer = async (user_id, question_id, answer) => {
     const config = {
@@ -90,16 +90,22 @@ const useApiRequest = () => {
       body: {
         user_id,
         question_id,
-        answer
+        answer,
       },
     };
     await fetchData(config);
-  }
+  };
 
-  return { loading, error, response, fetchData, updateLuckySymbol, fetchUserDetails, getDailyQuestion, postDailyAnswer};
+  return {
+    loading,
+    error,
+    response,
+    fetchData,
+    updateLuckySymbol,
+    fetchUserDetails,
+    getDailyQuestion,
+    postDailyAnswer,
+  };
 };
 
-
-
 export default useApiRequest;
-
