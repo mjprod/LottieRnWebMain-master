@@ -77,7 +77,6 @@ const DailyScreen = () => {
   }, [userData]);
 
   useEffect(() => {
-    console.log("Response:", response);
     if (response) {
       if (response.user) {
         setUserData(response.user);
@@ -86,7 +85,6 @@ const DailyScreen = () => {
         const currentWeekDaily = response.daily.find(
           (item) => item.current_week === response.currentWeek
         );
-        console.log("Current Week Daily: ", currentWeekDaily);
         if (currentWeekDaily) {
           setDays(currentWeekDaily.days);
         }

@@ -11,8 +11,6 @@ import {
 import AssetPack from "../util/AssetsPack";
 
 const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [] }) => {
-  // console.log("DailyCardsContainer:", days);
-
   const currentWeekDates = getCurrentWeekDates();
   const [dailyCardData, setDailyCardData] = useState([]);
 

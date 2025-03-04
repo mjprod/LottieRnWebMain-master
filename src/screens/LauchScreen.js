@@ -24,7 +24,7 @@ import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
 import { leaderboardData } from "../data/LeaderBoardData";
 import NextDrawCard from "../components/NextDrawCard";
-import { COLOR_BACKGROUND, getCurrentDate } from "../util/constants";
+import { COLOR_BACKGROUND, getCurrentDate, convertUTCToLocal } from "../util/constants";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -80,8 +80,7 @@ const LauchScreen = () => {
       }
 
       const userData = response.user;
-      const currentWeek = response.currentWeek;
-
+      const currentWeek = response.current_week;
       if (response.daily === null || response.daily.length === 0) {
         navigate("/daily", {
           state: {
@@ -95,8 +94,9 @@ const LauchScreen = () => {
           (item) => item.currentWeek === currentWeek
         );
         if (currentWeekDaily != null) {
-          const hasCurrentDate = currentWeekDaily.days.some(
-            (item) => item === getCurrentDate()
+          const localConvertedDays = currentWeekDaily.days.map((date) => convertUTCToLocal(date));
+          const hasCurrentDate = localConvertedDays.some((item) =>
+            item.includes(getCurrentDate())
           );
           if (!hasCurrentDate) {
             console.log("Daily Question not answered.", currentWeekDaily);
