@@ -2,30 +2,13 @@ import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import DayCard from "./DayCard";
 import SectionTitle from "./SectionTitle";
-import { DailyCardStatus, getCurrentDate } from "../util/constants";
+import { DailyCardStatus, getCurrentDate, getCurrentWeekDates} from "../util/constants";
 import AssetPack from "../util/AssetsPack";
 
 const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [] }) => {
   console.log("DailyCardsContainer:", days)
 
-  function getCurrentWeek() {
-    let today = new Date();
-    let dayOfWeek = today.getDay();
-
-    let monday = new Date(today);
-    monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
-
-    let weekDates = [];
-    for (let i = 0; i < 7; i++) {
-      let date = new Date(monday);
-      date.setDate(monday.getDate() + i);
-      weekDates.push(date.toISOString().split("T")[0]);
-    }
-
-    return weekDates;
-  }
-
-  const currentWeekDates = getCurrentWeek();
+  const currentWeekDates = getCurrentWeekDates();
   const [dailyCardData, setDailyCardData] = useState([]);
 
   useEffect(() => {

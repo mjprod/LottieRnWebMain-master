@@ -24,7 +24,7 @@ import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
 import { leaderboardData } from "../data/LeaderBoardData";
 import NextDrawCard from "../components/NextDrawCard";
-import { getCurrentDate } from "../util/constants";
+import { COLOR_BACKGROUND, getCurrentDate } from "../util/constants";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -80,50 +80,28 @@ const LauchScreen = () => {
       }
 
       const userData = response.user;
-      const totalWeeks = response.totalWeeks;
-      var currentWeekDaily = "";
-      var currentWeek = 0;
+      const currentWeek = response.currentWeek;
+
       if (response.daily === null || response.daily.length === 0) {
         navigate("/daily", {
-          state: {
-            userData,
-            currentWeek,
-            totalWeeks,
-            currentWeekDaily
-          },
+          state: { userData },
         });
       } else {
-        var hasCurrentDate = false;
-        response.daily.forEach((dailyItem) => {
-          const currentDate = getCurrentDate();
-          dailyItem.days.forEach((item) => {
-            if (item === currentDate) {
-              hasCurrentDate = true;
-            }
-          });
-          if (dailyItem.current_week > currentWeek) {
-            currentWeek = dailyItem.current_week;
-            currentWeekDaily = dailyItem;
-          } else if (dailyItem.current_week === currentWeek) {
-            currentWeekDaily = dailyItem;
-          }
-        });
-        if (currentWeek != 0) {
+        const currentWeekDaily = response.daily.find(
+          (item) => item.currentWeek === currentWeek
+        );
+        if (currentWeekDaily != null) {
+          const hasCurrentDate = currentWeekDaily.days.some(
+            (item) => item === getCurrentDate()
+          );
           if (!hasCurrentDate) {
             console.log("Daily Question not answered.", currentWeekDaily);
-            navigate("/daily", {
-              state: {
-                userData,
-                currentWeek,
-                totalWeeks,
-                currentWeekDaily
-              },
-            });
+            navigate("/daily", { state: { userData } });
           } else {
             console.log("Daily Question already answered.");
           }
         } else {
-          showSnackbar("Something went wrong. Please try again later.");
+          navigate("/daily", { state: { userData } });
         }
       }
     }
@@ -159,7 +137,6 @@ const LauchScreen = () => {
   };
 
   const handleViewAllPress = () => {
-    console.log("handleViewAllPress");
     navigate("/leader_board", {
       state: {
         initialUserData,
@@ -168,7 +145,9 @@ const LauchScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={{ ...styles.container, backgroundColor: COLOR_BACKGROUND }}
+    >
       <View style={styles.header}>
         <TopBannerNav />
         {loading ? (
