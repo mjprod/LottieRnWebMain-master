@@ -14,6 +14,7 @@ import NextDrawCard from "../components/NextDrawCard";
 import TopBannerNav from "../components/TopBannerNav";
 import { isValidAnswer } from "../util/Validator";
 import { getCurrentDate, convertUTCToLocal, } from "../util/Helpers";
+import { DailySetData } from "../data/DailyCardData";
 
 const DailyScreen = () => {
   const [question, setQuestion] = useState("");
@@ -44,7 +45,8 @@ const DailyScreen = () => {
   const [currentWeek, setCurrentWeek] = useState("");
   const [totalWeeks, setTotalWeeks] = useState("");
   const [days, setDays] = useState([]);
-
+  const [dailySetData, setDailySetData] = useState(DailySetData);
+  
   const {
     loading,
     error,
@@ -124,7 +126,11 @@ const DailyScreen = () => {
   const onSubmit = (answer) => {
     const { isValid, message } = isValidAnswer(answer);
     if (isValid) {
-      postDailyAnswer(userData.user_id, question.question_id, answer);
+      const cardsWon = dailySetData.find((cardSet) => cardSet.week === currentWeek);
+      if (cardsWon) {
+        const { set } = cardsWon;
+        postDailyAnswer(userData.user_id, question.question_id, answer, set * 12);
+      }
     } else {
       showSnackbar(message);
     }

@@ -81,7 +81,7 @@ const useApiRequest = () => {
     await fetchData(config);
   };
 
-  const postDailyAnswer = async (user_id, question_id, answer) => {
+  const postDailyAnswer = async (user_id, question_id, answer, cards_won) => {
     const config = {
       url: SERVER + "/daily_answer",
       method: "POST",
@@ -92,6 +92,7 @@ const useApiRequest = () => {
         user_id,
         question_id,
         answer,
+        cards_won
       },
     };
     await fetchData(config);
