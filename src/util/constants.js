@@ -1,4 +1,4 @@
-export const SERVER = "http://192.168.128.52:8083";
+export const SERVER = "http://localhost:8083";
 
 export const DIMEN_PAGE_MARGIN = 25;
 
