@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SERVER } from "../util/constants";
+import { showConsoleMessage, showConsoleError } from "../util/ConsoleMessage";
 
 const useApiRequest = () => {
   const [loading, setLoading] = useState(false);
@@ -8,7 +9,7 @@ const useApiRequest = () => {
 
   const fetchData = async (config) => {
     const { url, method = "GET", headers, body } = config;
-
+    showConsoleMessage("API Request Config:", config)
     try {
       setLoading(true);
       const res = await fetch(url, {
@@ -16,7 +17,7 @@ const useApiRequest = () => {
         headers,
         body: body ? JSON.stringify(body) : null,
       });
-
+      showConsoleMessage("API Response:", res)
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
@@ -24,10 +25,10 @@ const useApiRequest = () => {
       const data = await res.json();
       setResponse(data);
       setError(null);
-      console.log(data);
+      showConsoleMessage("API Response Data:", data)
     } catch (err) {
       setError(err.message);
-      console.error(err);
+      showConsoleError("API Error:", err)
     } finally {
       setLoading(false);
     }

@@ -75,15 +75,14 @@ const DailyScreen = () => {
   }, [location]);
 
   useEffect(() => {
-    if (userData.user_id) {
+    if (userData.user_id && !isSubmitted) {
       getDailyQuestion(userData.user_id);
     }
-  }, [userData]);
+  }, [userData, isSubmitted]);
 
   useEffect(() => {
     if (response) {
       if (response.user) {
-        setUserData(response.user);
         setCurrentWeek(response.currentWeek);
         setTotalWeeks(response.totalWeeks);
         const currentWeekDaily = response.daily.find(
@@ -92,6 +91,7 @@ const DailyScreen = () => {
         if (currentWeekDaily) {
           setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
         }
+        setUserData(response.user);
       }
       if (response.question) {
         setQuestion(response);
@@ -108,7 +108,6 @@ const DailyScreen = () => {
   }, [response]);
 
   useEffect(() => {
-    console.log("Error: ", error);
     if (error && error.length > 0) {
       showSnackbar(error);
     }

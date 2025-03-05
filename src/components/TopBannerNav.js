@@ -20,7 +20,6 @@ const TopBannerNav = ({
 }) => {
   return (
     <ImageBackground
-      imageStyle={{ resizeMode: "cover" }}
       style={{
         alignItems: "start",
       }}
