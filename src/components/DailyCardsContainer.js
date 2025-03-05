@@ -6,7 +6,6 @@ import { DailyCardStatus } from "../util/constants";
 import {
   getCurrentDate,
   getCurrentWeekDates,
-  convertUTCToLocal,
 } from "../util/Helpers";
 
 import AssetPack from "../util/AssetsPack";
@@ -34,13 +33,12 @@ const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [] }) => {
 
   useEffect(() => {
     const cardData = [];
-    const localConvertedDays = days.map((date) => convertUTCToLocal(date));
     currentWeekDates.forEach((date, index) => {
       let day = index + 1;
-      if (localConvertedDays.includes(date) && date !== getCurrentDate()) {
+      if (days.includes(date) && date !== getCurrentDate()) {
         cardData.push(generateCardSet(day, DailyCardStatus.completed));
       } else if (
-        localConvertedDays.includes(date) &&
+        days.includes(date) &&
         date === getCurrentDate()
       ) {
         cardData.push(generateCardSet(day, DailyCardStatus.active));

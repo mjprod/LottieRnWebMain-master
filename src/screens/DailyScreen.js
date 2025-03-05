@@ -13,7 +13,7 @@ import LottieView from "react-native-web-lottie";
 import NextDrawCard from "../components/NextDrawCard";
 import TopBannerNav from "../components/TopBannerNav";
 import { isValidAnswer } from "../util/Validator";
-import { getCurrentDate } from "../util/Helpers";
+import { getCurrentDate, convertUTCToLocal, } from "../util/Helpers";
 
 const DailyScreen = () => {
   const [question, setQuestion] = useState("");
@@ -57,7 +57,11 @@ const DailyScreen = () => {
   const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
-    console.log(days);
+    if (days.includes(getCurrentDate())) {
+      setIsSubmitted(true)
+    } else {
+      setIsSubmitted(false)
+    }
   }, [days]);
 
   useEffect(() => {
@@ -86,7 +90,7 @@ const DailyScreen = () => {
           (item) => item.current_week === response.currentWeek
         );
         if (currentWeekDaily) {
-          setDays(currentWeekDaily.days);
+          setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
         }
       }
       if (response.question) {
