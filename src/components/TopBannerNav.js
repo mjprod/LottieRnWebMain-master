@@ -9,7 +9,7 @@ import {
 import AssetPack from "../util/AssetsPack";
 import PurplePill from "./PurplePill";
 import LinearGradient from "react-native-web-linear-gradient";
-import { DIMEN_PAGE_MARGIN } from "../util/constants";
+import { DIMEN_PAGE_MARGIN, COLOR_BACKGROUND } from "../util/constants";
 
 const TopBannerNav = ({
   title = "Be in to win Prizes!",
@@ -20,14 +20,13 @@ const TopBannerNav = ({
 }) => {
   return (
     <ImageBackground
-      imageStyle={{ resizeMode: "cover" }}
       style={{
         alignItems: "start",
       }}
       source={backgroundImage}
     >
       <LinearGradient
-        colors={["#00000000", "#00000000", "#131313"]}
+        colors={["#00000000", "#00000000", COLOR_BACKGROUND]}
         style={styles.linearGradient}
       >
         {hasBackButton && (

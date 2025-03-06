@@ -1,6 +1,6 @@
 import Slider from "@react-native-community/slider";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Linking, StyleSheet } from "react-native";
+import { Animated, StyleSheet } from "react-native";
 import {
   ActivityIndicator,
   ScrollView,
@@ -24,7 +24,8 @@ import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
 import { leaderboardData } from "../data/LeaderBoardData";
 import NextDrawCard from "../components/NextDrawCard";
-import { getCurrentDate } from "../util/constants";
+import { COLOR_BACKGROUND } from "../util/constants";
+import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -80,50 +81,46 @@ const LauchScreen = () => {
       }
 
       const userData = response.user;
-      const totalWeeks = response.totalWeeks;
-      var currentWeekDaily = "";
-      var currentWeek = 0;
+      const currentWeek = response.current_week;
       if (response.daily === null || response.daily.length === 0) {
         navigate("/daily", {
           state: {
-            userData,
-            currentWeek,
-            totalWeeks,
-            currentWeekDaily
+            user_id: userData.user_id,
+            name: userData.name,
+            email: userData.email,
           },
         });
       } else {
-        var hasCurrentDate = false;
-        response.daily.forEach((dailyItem) => {
-          const currentDate = getCurrentDate();
-          dailyItem.days.forEach((item) => {
-            if (item === currentDate) {
-              hasCurrentDate = true;
-            }
-          });
-          if (dailyItem.current_week > currentWeek) {
-            currentWeek = dailyItem.current_week;
-            currentWeekDaily = dailyItem;
-          } else if (dailyItem.current_week === currentWeek) {
-            currentWeekDaily = dailyItem;
-          }
-        });
-        if (currentWeek != 0) {
+        const currentWeekDaily = response.daily.find(
+          (item) => item.currentWeek === currentWeek
+        );
+        if (currentWeekDaily != null) {
+          const localConvertedDays = currentWeekDaily.days.map((date) =>
+            convertUTCToLocal(date)
+          );
+          const hasCurrentDate = localConvertedDays.some((item) =>
+            item.includes(getCurrentDate())
+          );
           if (!hasCurrentDate) {
             console.log("Daily Question not answered.", currentWeekDaily);
             navigate("/daily", {
               state: {
-                userData,
-                currentWeek,
-                totalWeeks,
-                currentWeekDaily
+                user_id: userData.user_id,
+                name: userData.name,
+                email: userData.email,
               },
             });
           } else {
             console.log("Daily Question already answered.");
           }
         } else {
-          showSnackbar("Something went wrong. Please try again later.");
+          navigate("/daily", {
+            state: {
+              user_id: userData.user_id,
+              name: userData.name,
+              email: userData.email,
+            },
+          });
         }
       }
     }
@@ -159,7 +156,6 @@ const LauchScreen = () => {
   };
 
   const handleViewAllPress = () => {
-    console.log("handleViewAllPress");
     navigate("/leader_board", {
       state: {
         initialUserData,
@@ -168,7 +164,9 @@ const LauchScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={{ ...styles.container, backgroundColor: COLOR_BACKGROUND }}
+    >
       <View style={styles.header}>
         <TopBannerNav />
         {loading ? (
@@ -273,7 +271,10 @@ const LauchScreen = () => {
           viewAllAction={handleViewAllPress}
         />
         <LeaderBoardList leaderboardData={leaderboardData.slice(0, 5)} />
-        <GamesAvailableCard style={{ marginVertical: 24 }} numberOfSets={1} />
+        <GamesAvailableCard
+          style={{ marginVertical: 24 }}
+          cardsLeft={initialScratchCardLeft}
+        />
         <NextDrawCard
           days={timeLeft.days}
           hours={timeLeft.hours}

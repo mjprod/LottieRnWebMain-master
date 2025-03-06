@@ -2,81 +2,48 @@ import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import DayCard from "./DayCard";
 import SectionTitle from "./SectionTitle";
-import { DailyCardStatus, getCurrentDate } from "../util/constants";
+import { DailyCardStatus } from "../util/constants";
+import {
+  getCurrentDate,
+  getCurrentWeekDates,
+} from "../util/Helpers";
+
 import AssetPack from "../util/AssetsPack";
 
 const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [] }) => {
-  console.log("DailyCardsContainer:", days)
-
-  function getCurrentWeek() {
-    let today = new Date();
-    let dayOfWeek = today.getDay();
-
-    let monday = new Date(today);
-    monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
-
-    let weekDates = [];
-    for (let i = 0; i < 7; i++) {
-      let date = new Date(monday);
-      date.setDate(monday.getDate() + i);
-      weekDates.push(date.toISOString().split("T")[0]);
-    }
-
-    return weekDates;
-  }
-
-  const currentWeekDates = getCurrentWeek();
+  const currentWeekDates = getCurrentWeekDates();
   const [dailyCardData, setDailyCardData] = useState([]);
+
+  const generateCardSet = (day, status = DailyCardStatus.inactive) => {
+    return {
+      id: day,
+      cardSet: day === 4 || day == 6 ? 2 : 1,
+      cardBackground: AssetPack.backgrounds.DAILY_CARD_BACKGROUND,
+      status: status,
+      extras:
+        day == 7
+          ? {
+              name: "Gift Card",
+              number: 1,
+              background: AssetPack.backgrounds.DAILY_CARD_EXTRA_BACKGROUND,
+            }
+          : null,
+    };
+  };
 
   useEffect(() => {
     const cardData = [];
     currentWeekDates.forEach((date, index) => {
       let day = index + 1;
       if (days.includes(date) && date !== getCurrentDate()) {
-        cardData.push({
-          id: day,
-          cardSet: day === 4 || day === 6 ? 2 : 1,
-          cardBackground: AssetPack.backgrounds.DAILY_CARD_BACKGROUND,
-          status: DailyCardStatus.completed,
-          extras:
-            day === 7
-              ? {
-                  name: "Gift Card",
-                  number: 1,
-                  background: AssetPack.backgrounds.DAILY_CARD_EXTRA_BACKGROUND,
-                }
-              : null,
-        });
-      } else if (days.includes(date) && date === getCurrentDate()) {
-        cardData.push({
-          id: day,
-          cardSet: day === 4 || day === 6 ? 2 : 1,
-          cardBackground: AssetPack.backgrounds.DAILY_CARD_BACKGROUND,
-          status: DailyCardStatus.active,
-          extras:
-            day === 7
-              ? {
-                  name: "Gift Card",
-                  number: 1,
-                  background: AssetPack.backgrounds.DAILY_CARD_EXTRA_BACKGROUND,
-                }
-              : null,
-        });
+        cardData.push(generateCardSet(day, DailyCardStatus.completed));
+      } else if (
+        days.includes(date) &&
+        date === getCurrentDate()
+      ) {
+        cardData.push(generateCardSet(day, DailyCardStatus.active));
       } else {
-        cardData.push({
-          id: day,
-          cardSet: day == 4 || day == 6 ? 2 : 1,
-          cardBackground: AssetPack.backgrounds.DAILY_CARD_BACKGROUND,
-          status: DailyCardStatus.inactive,
-          extras:
-            day == 7
-              ? {
-                  name: "Gift Card",
-                  number: 1,
-                  background: AssetPack.backgrounds.DAILY_CARD_EXTRA_BACKGROUND,
-                }
-              : null,
-        });
+        cardData.push(generateCardSet(day));
       }
     });
     setDailyCardData(cardData);

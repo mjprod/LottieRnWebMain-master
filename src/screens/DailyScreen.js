@@ -12,7 +12,9 @@ import LottieView from "react-native-web-lottie";
 
 import NextDrawCard from "../components/NextDrawCard";
 import TopBannerNav from "../components/TopBannerNav";
-import { getCurrentDate } from "../util/constants";
+import { isValidAnswer } from "../util/Validator";
+import { getCurrentDate, convertUTCToLocal, } from "../util/Helpers";
+import { DailySetData } from "../data/DailyCardData";
 
 const DailyScreen = () => {
   const [question, setQuestion] = useState("");
@@ -43,33 +45,56 @@ const DailyScreen = () => {
   const [currentWeek, setCurrentWeek] = useState("");
   const [totalWeeks, setTotalWeeks] = useState("");
   const [days, setDays] = useState([]);
-
-  const { loading, error, response, getDailyQuestion, postDailyAnswer } =
-    useApiRequest();
+  const [dailySetData, setDailySetData] = useState(DailySetData);
+  
+  const {
+    loading,
+    error,
+    response,
+    fetchUserDetails,
+    getDailyQuestion,
+    postDailyAnswer,
+  } = useApiRequest();
 
   const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
-    console.log(days);
+    if (days.includes(getCurrentDate())) {
+      setIsSubmitted(true)
+    } else {
+      setIsSubmitted(false)
+    }
   }, [days]);
 
   useEffect(() => {
     if (location.state !== null) {
-      setUserData(location.state.userData);
-      setCurrentWeek(location.state.currentWeek);
-      setTotalWeeks(location.state.totalWeeks);
-      setDays(location.state.currentWeekDaily.days);
+      const id = location.state.user_id;
+      const username = location.state.name;
+      const email = location.state.email;
+
+      fetchUserDetails(id, username, email);
     }
   }, [location]);
 
   useEffect(() => {
-    if (userData.user_id) {
+    if (userData.user_id && !isSubmitted) {
       getDailyQuestion(userData.user_id);
     }
-  }, [userData]);
+  }, [userData, isSubmitted]);
 
   useEffect(() => {
     if (response) {
+      if (response.user) {
+        setCurrentWeek(response.currentWeek);
+        setTotalWeeks(response.totalWeeks);
+        const currentWeekDaily = response.daily.find(
+          (item) => item.current_week === response.currentWeek
+        );
+        if (currentWeekDaily) {
+          setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
+        }
+        setUserData(response.user);
+      }
       if (response.question) {
         setQuestion(response);
       }
@@ -85,7 +110,6 @@ const DailyScreen = () => {
   }, [response]);
 
   useEffect(() => {
-    console.log("Error: ", error);
     if (error && error.length > 0) {
       showSnackbar(error);
     }
@@ -100,10 +124,15 @@ const DailyScreen = () => {
   };
 
   const onSubmit = (answer) => {
-    if (answer !== "") {
-      postDailyAnswer(userData.user_id, question.question_id, answer);
+    const { isValid, message } = isValidAnswer(answer);
+    if (isValid) {
+      const cardsWon = dailySetData.find((cardSet) => cardSet.week === currentWeek);
+      if (cardsWon) {
+        const { set } = cardsWon;
+        postDailyAnswer(userData.user_id, question.question_id, answer, set * 12);
+      }
     } else {
-      showSnackbar("Please enter your answer");
+      showSnackbar(message);
     }
   };
 
