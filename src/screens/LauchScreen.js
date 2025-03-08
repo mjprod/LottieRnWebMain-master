@@ -288,9 +288,6 @@ const LauchScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   imageBackground: {
     width: "100%",
     height: "100%",

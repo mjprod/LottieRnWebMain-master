@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         border: "1px solid #4B595D",
         borderRadius: 12,
-        padding: 8,
     },
 });
 

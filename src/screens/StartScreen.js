@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Animated, Platform, StyleSheet, Text, View, Image } from "react-native";
 import { ImageBackground } from "react-native-web";
 import { useNavigate } from "react-router";
-import GameButton from "../components/GameButton";
+import GameButton, { ButtonSize } from "../components/GameButton";
 import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import LottieTicketSlot from "../components/LottieTicketSlot";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
@@ -14,6 +14,9 @@ import StatCard from "../components/StatCard";
 import AssetPack from "../util/AssetsPack";
 import LinkButton from "../components/LinkButton";
 import DiagonalGradientCard from "../components/DiagonalGradientCard";
+import GamesAvailableCard from "../components/GamesAvailableCard";
+import RoundedButton from "../components/RoundedButton";
+import { ScrollView } from "react-native";
 
 const GameOverScreen = () => {
     const navigate = useNavigate();
@@ -44,16 +47,14 @@ const GameOverScreen = () => {
     });
 
     return (
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container}>
             <ImageBackground
                 resizeMode="contain"
                 source={backgroundResult}
-                style={styles.imageBackground}
-            >
+                style={styles.imageBackground}>
                 <View style={styles.rotatingBackgroundContainer}>
                     <RotatingCirclesBackground />
                 </View>
-
                 <View style={styles.container}>
                     <View style={styles.margim}>
                         <View style={styles.header}>
@@ -81,79 +82,50 @@ const GameOverScreen = () => {
                                 <View style={styles.luckySymbols}></View>
                             </StatCard>
                         </View>
-
-                        {/* Total Tickets Earned Section */}
-                        <DiagonalGradientCard style={styles.ticketsSection}>
-                            <ImageBackground
-                                resizeMode="contain"
-                                source={backgroundTotalTicket}
-                                style={styles.imageBackgroundLuckySymbol}
-                            >
-                                <LottieTicketSlot />
-                            </ImageBackground>
-                            <Text style={styles.ticketTitle}>TOTAL TICKETS EARNED</Text>
-                            <View
-                                style={{
-                                    backgroundColor: "#4B595D",
-                                    height: 1,
-                                    width: "100%",
-                                    marginVertical: 10,
-                                }}
-                            />
-                            <View style={styles.containerTotalTicket}>
-                                <Text style={styles.nextTicketText}>Next Ticket</Text>
-                                <Text style={styles.ticketProgress}>12456 / 20000</Text>
-                            </View>
-
-                            <View style={styles.sliderContainer}>
-                                <Slider
-                                    style={styles.slider}
-                                    minimumValue={0}
-                                    maximumValue={20000}
-                                    value={progress}
-                                    onValueChange={(value) => setProgress(value)}
-                                    minimumTrackTintColor="#FFD89D" // Custom color for the filled track
-                                    maximumTrackTintColor="#000000" // Custom color for the unfilled track
-                                    thumbTintColor="#FFD89D" // Custom color for the thumb
-                                    thumbStyle={styles.thumb} // Style for the thumb
-                                />
-                            </View>
-
-                            <Text style={styles.addedPoints}>+9999</Text>
-                        </DiagonalGradientCard>
+                        <View style={styles.ticketsSection}>
+                            <GamesAvailableCard style={{ width: "100%" }} cardsLeft={12} />
+                        </View>
                         <TimerComponent
+                            style={{ marginVertical: 30 }}
                             days={timeLeft.days}
                             hours={timeLeft.hours}
                             minutes={timeLeft.minutes}
                             seconds={timeLeft.seconds}
                         />
-                        <GameButton
-                            text="Play Now"
-                            onPress={() => {
-                                const initialScore = 0; // Define the initialScore variable
-                                const initialTicketCount = 0; // Define the initialTicketCount variable
-                                const initialLuckySymbolCount = 0; // Define the initialLuckySymbolCount variable
-                                const initialScratchCardLeft = 0; // Define the initialScratchCardLeft variable
+                        <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column" }}>
+                            <View style={styles.buttonContainer}>
+                                <RoundedButton title="Back" style={{ flex: 0.5 }} />
+                                <GameButton
+                                    style={{ flex: 0.5 }}
+                                    buttonSize={ButtonSize.HALF}
+                                    text="Play Now"
+                                    onPress={() => {
+                                        const initialScore = 0;
+                                        const initialTicketCount = 0;
+                                        const initialLuckySymbolCount = 0;
+                                        const initialScratchCardLeft = 0;
 
-                                navigate("/*", {
-                                    state: {
-                                        initialScore,
-                                        initialTicketCount,
-                                        initialLuckySymbolCount,
-                                        initialScratchCardLeft,
-                                    },
-                                });
-                            }}
-                        />
-                        <LinkButton
-                            style={{ marginBottom: 30 }}
-                            text={"How To Play Turbo Scratch >"}
-                            handlePress={() => navigate("/how_to_play")}
-                        />
+                                        navigate("/*", {
+                                            state: {
+                                                initialScore,
+                                                initialTicketCount,
+                                                initialLuckySymbolCount,
+                                                initialScratchCardLeft,
+                                            },
+                                        });
+                                    }}
+                                />
+                            </View>
+                            <LinkButton
+                                style={{ marginBottom: 30 }}
+                                text={"How To Play Turbo Scratch >"}
+                                handlePress={() => navigate("/how_to_play")}
+                            />
+                        </View>
                     </View>
                 </View>
             </ImageBackground>
-        </View>
+        </ScrollView>
     );
 };
 
@@ -260,14 +232,7 @@ const styles = StyleSheet.create({
         height: 50,
     },
     ticketsSection: {
-        marginTop: 20,
-        justifyContent: "center",
-        alignItems: "center",
-        border: "1px solid #4B595D",
-        borderRadius: 12,
-        padding: 8,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        marginVertical: 20,
     },
     ticketTitle: {
         fontFamily: "Teko-Medium",
@@ -325,7 +290,6 @@ const styles = StyleSheet.create({
     },
     sliderContainer: {
         width: "100%",
-        //height: 20,
         marginVertical: 10,
         borderRadius: 50,
         backgroundColor: "#000000",
@@ -343,6 +307,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         overflow: "hidden",
     },
+    buttonContainer: {
+        flex: 1,
+        marginVertical: 30,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    }
 });
 
 export default GameOverScreen;

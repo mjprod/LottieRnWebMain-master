@@ -1,44 +1,38 @@
 import React from "react";
 import { Text, Image, StyleSheet, ImageBackground, View } from "react-native";
 import AssetPack from "../util/AssetsPack";
+import DiagonalGradientCard from "../components/DiagonalGradientCard";
 
 const GamesAvailableCard = ({
   cardsLeft = 0,
   style,
 }) => {
   return (
-    <ImageBackground
-      style={{ ...styles.backgroundRounded, ...style }}
-      source={AssetPack.backgrounds.BLUE_DIAGONAL_GRADIENT}
-    >
+    <DiagonalGradientCard
+      style={{ ...styles.backgroundRounded, ...style }}>
       <View
-        style={{ flexDirection: "row", alignItems: "center", flex: 1, gap: 8 }}
-      >
+        style={{ flexDirection: "row", alignItems: "center", flex: 1, gap: 8 }}>
         <Image
           style={{ width: 22.25, height: 17 }}
-          source={AssetPack.icons.CARDS}
-        />
-        <Text style={styles.gamesAvailableText}>Games Available</Text>
+          source={AssetPack.icons.CARDS} />
+        <Text style={styles.gamesAvailableText}>Cards Available</Text>
       </View>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View>
         <Text style={styles.valueText}>
           {cardsLeft} CARDS
         </Text>
       </View>
-    </ImageBackground>
+    </DiagonalGradientCard>
   );
 };
 
 const styles = StyleSheet.create({
   backgroundRounded: {
     flexDirection: "row",
-    borderRadius: 12,
-    paddingVertical: 10,
-    paddingHorizontal: 24,
-    marginBottom: 10,
     justifyContent: "space-between",
     alignItems: "center",
-    border: "1px solid #ADADAD33",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
   },
   gamesAvailableText: {
     fontFamily: "Teko-Medium",

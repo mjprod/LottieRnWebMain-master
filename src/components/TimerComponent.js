@@ -1,9 +1,9 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 
-const TimerComponent = ({ days, hours, minutes, seconds }) => {
+const TimerComponent = ({ days, hours, minutes, seconds, style }) => {
   return (
-    <View style={styles.timerSection}>
+    <View style={{...styles.timerSection, ...style}}>
       <View style={styles.backgroundRounded}>
         <Text style={styles.timerTitle}>Time till Next Draw</Text>
       </View>

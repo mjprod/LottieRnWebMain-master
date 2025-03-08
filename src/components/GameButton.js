@@ -9,7 +9,13 @@ import {
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
 
-const GameButton = ({ onPress, text, loading = false, style = {} }) => {
+export const ButtonSize = {
+  FULL: AssetPack.lotties.CTA_BUTTON_FULL_WIDTH,
+  HALF: AssetPack.lotties.CTA_BUTTON_HALF_WIDTH,
+  TWO_THIRD: AssetPack.lotties.CTA_BUTTON_TWO_THIRD,
+};
+
+const GameButton = ({ text, onPress, buttonSize = ButtonSize.FULL, loading = false, style = {} }) => {
   return (
     <TouchableOpacity style={[styles.btn, style]} onPress={onPress}>
       <LottieView
@@ -20,7 +26,7 @@ const GameButton = ({ onPress, text, loading = false, style = {} }) => {
           width: "100%",
           height: "100%",
         }}
-        source={AssetPack.lotties.CTA_BUTTON_FULL_WIDTH}
+        source={buttonSize}
         autoPlay
         speed={1}
         loop={true}
@@ -46,7 +52,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     elevation: 0,
     zIndex: 999,
-    width: "100%",
   },
   content: {
     flexDirection: "row",
