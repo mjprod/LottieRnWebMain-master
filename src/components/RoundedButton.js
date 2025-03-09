@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
         border: "2px solid #212121",
     },
     titleText: {
+        flex: 1,
         fontFamily: "Inter-Medium",
         fontSize: 16,
         color: "#fff",

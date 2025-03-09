@@ -94,27 +94,30 @@ const GameOverScreen = () => {
                         />
                         <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column" }}>
                             <View style={styles.buttonContainer}>
-                                <RoundedButton title="Back" style={{ flex: 0.5 }} />
-                                <GameButton
-                                    style={{ flex: 0.5 }}
-                                    buttonSize={ButtonSize.HALF}
-                                    text="Play Now"
-                                    onPress={() => {
-                                        const initialScore = 0;
-                                        const initialTicketCount = 0;
-                                        const initialLuckySymbolCount = 0;
-                                        const initialScratchCardLeft = 0;
+                                <View style={{ flex: 0.4, justifyContent: "flex-start" }}>
+                                    <RoundedButton title="Back" />
+                                </View>
+                                <View style={{ flex: 0.6, justifyContent: "flex-end" }} >
+                                    <GameButton
+                                        buttonSize={ButtonSize.HALF}
+                                        text="Play Now"
+                                        onPress={() => {
+                                            const initialScore = 0;
+                                            const initialTicketCount = 0;
+                                            const initialLuckySymbolCount = 0;
+                                            const initialScratchCardLeft = 0;
 
-                                        navigate("/*", {
-                                            state: {
-                                                initialScore,
-                                                initialTicketCount,
-                                                initialLuckySymbolCount,
-                                                initialScratchCardLeft,
-                                            },
-                                        });
-                                    }}
-                                />
+                                            navigate("/*", {
+                                                state: {
+                                                    initialScore,
+                                                    initialTicketCount,
+                                                    initialLuckySymbolCount,
+                                                    initialScratchCardLeft,
+                                                },
+                                            });
+                                        }}
+                                    />
+                                </View>
                             </View>
                             <LinkButton
                                 style={{ marginBottom: 30 }}
@@ -125,7 +128,7 @@ const GameOverScreen = () => {
                     </View>
                 </View>
             </ImageBackground>
-        </ScrollView>
+        </ScrollView >
     );
 };
 
@@ -309,6 +312,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flex: 1,
+        gap: 30,
         marginVertical: 30,
         flexDirection: "row",
         justifyContent: "space-between",
