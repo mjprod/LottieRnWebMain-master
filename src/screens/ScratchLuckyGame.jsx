@@ -104,7 +104,7 @@ const ScratchLuckyGame = () => {
     //setScore(1200);
     //setTicketCount(1);
     //setLuckySymbolCount(1);
-    setScratchCardLeft(numberOfCards);
+    // setScratchCardLeft(numberOfCards);
   }, []);
 
   // Update the user state when the response is received
@@ -126,15 +126,15 @@ const ScratchLuckyGame = () => {
       setScore(user.score);
       setTicketCount(user.tickets);
       setLuckySymbolCount(user.lucky_symbol);
-      setScratchCardLeft(numberOfCards);
+      setScratchCardLeft(initialScratchCardLeft);
 
       //updateThemeSequence(user.cards);
     }
   }, [user]);
 
-  useEffect(() => {
-    setScratchCardLeft(themeSequence.length);
-  }, [themeSequence]);
+  // useEffect(() => {
+  //   setScratchCardLeft(themeSequence.length);
+  // }, [themeSequence]);
 
   useEffect(() => {
     if (countDownStarted) {

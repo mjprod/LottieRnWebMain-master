@@ -16,7 +16,7 @@ const TopBannerNav = ({
   title = "Be in to win Prizes!",
   subtitle = "Scratch for more chances to win!",
   backgroundImage = AssetPack.backgrounds.TOP_NAV_BACKGROUND,
-  onBackPress = () => {},
+  onBackPress = () => { },
   hasBackButton = false,
   showAlphaView = false,
 }) => {
@@ -35,6 +35,7 @@ const TopBannerNav = ({
         {hasBackButton && (
           <TouchableOpacity onPress={onBackPress}>
             <Image
+              resizeMode="contain"
               style={styles.arrowIcon}
               source={AssetPack.icons.ARROW_LEFT}
             />
@@ -53,7 +54,7 @@ const TopBannerNav = ({
 };
 
 const styles = StyleSheet.create({
-  arrowIcon: { flex: 1, width: 21, height: 21, resizeMode: "contain" },
+  arrowIcon: { flex: 1, width: 21, height: 21 },
   betaCompetitionText: {
     marginBottom: 20,
     marginTop: 20,
