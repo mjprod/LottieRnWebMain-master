@@ -22,7 +22,7 @@ import TopBannerNav from "../components/TopBannerNav";
 import SectionTitle from "../components/SectionTitle";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
-import { leaderboardData } from "../data/LeaderBoardData";
+import { LeaderBoardStatus } from "../util/constants";
 import NextDrawCard from "../components/NextDrawCard";
 import { COLOR_BACKGROUND } from "../util/constants";
 import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
@@ -41,10 +41,11 @@ const LauchScreen = () => {
   const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
 
   const [initialUserData, setInitialUserData] = useState("");
+  const [leaderBoardData, setLeaderBoardData] = useState();
 
   const [timeLeft] = useTimeLeftForNextDraw();
 
-  const { loading, error, response, fetchUserDetails } = useApiRequest();
+  const { loading, error, response, fetchUserDetails, getLeaderBoard } = useApiRequest();
   const { showSnackbar } = useSnackbar();
 
   const { id, username, email } = useParams();
@@ -52,6 +53,7 @@ const LauchScreen = () => {
   useEffect(() => {
     console.log("Params:", { id, username, email });
     fetchUserDetails(id, username, email);
+    getLeaderBoard(5)
   }, [id]);
 
   const handleStartGame = () => {
@@ -78,42 +80,9 @@ const LauchScreen = () => {
         setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
         setInitialScratchCardLeft(response.user.card_balance || 0);
         setInitialUserData(response.user);
-      }
-
-      const userData = response.user;
-      const currentWeek = response.current_week;
-      if (response.daily === null || response.daily.length === 0) {
-        navigate("/daily", {
-          state: {
-            user_id: userData.user_id,
-            name: userData.name,
-            email: userData.email,
-          },
-        });
-      } else {
-        const currentWeekDaily = response.daily.find(
-          (item) => item.current_week === currentWeek
-        );
-        if (currentWeekDaily != null) {
-          const localConvertedDays = currentWeekDaily.days.map((date) =>
-            convertUTCToLocal(date)
-          );
-          const hasCurrentDate = localConvertedDays.some((item) =>
-            item.includes(getCurrentDate())
-          );
-          if (!hasCurrentDate) {
-            console.log("Daily Question not answered.", currentWeekDaily);
-            navigate("/daily", {
-              state: {
-                user_id: userData.user_id,
-                name: userData.name,
-                email: userData.email,
-              },
-            });
-          } else {
-            console.log("Daily Question already answered.");
-          }
-        } else {
+        const userData = response.user;
+        const currentWeek = response.current_week;
+        if (response.daily === null || response.daily.length === 0) {
           navigate("/daily", {
             state: {
               user_id: userData.user_id,
@@ -121,7 +90,49 @@ const LauchScreen = () => {
               email: userData.email,
             },
           });
+        } else {
+          const currentWeekDaily = response.daily.find(
+            (item) => item.current_week === currentWeek
+          );
+          if (currentWeekDaily != null) {
+            const localConvertedDays = currentWeekDaily.days.map((date) =>
+              convertUTCToLocal(date)
+            );
+            const hasCurrentDate = localConvertedDays.some((item) =>
+              item.includes(getCurrentDate())
+            );
+            if (!hasCurrentDate) {
+              console.log("Daily Question not answered.", currentWeekDaily);
+              navigate("/daily", {
+                state: {
+                  user_id: userData.user_id,
+                  name: userData.name,
+                  email: userData.email,
+                },
+              });
+            } else {
+              console.log("Daily Question already answered.");
+            }
+          } else {
+            navigate("/daily", {
+              state: {
+                user_id: userData.user_id,
+                name: userData.name,
+                email: userData.email,
+              },
+            });
+          }
         }
+      } else {
+        setLeaderBoardData(Object.values(response).map((data) => {
+          return {
+            id: data.user_id,
+            rank: data.rank,
+            username: data.name,
+            points: data.total_score,
+            status: LeaderBoardStatus.up,
+          }
+        }));
       }
     }
   }, [response]);
@@ -270,7 +281,7 @@ const LauchScreen = () => {
           viewAllText="View All"
           viewAllAction={handleViewAllPress}
         />
-        <LeaderBoardList leaderboardData={leaderboardData.slice(0, 5)} />
+        <LeaderBoardList leaderboardData={leaderBoardData} />
         <GamesAvailableCard
           style={{ marginVertical: 24 }}
           cardsLeft={initialScratchCardLeft}
