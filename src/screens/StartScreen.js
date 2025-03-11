@@ -1,11 +1,9 @@
-import Slider from "@react-native-community/slider";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Platform, StyleSheet, Text, View, Image } from "react-native";
 import { ImageBackground } from "react-native-web";
 import { useNavigate } from "react-router";
 import GameButton, { ButtonSize } from "../components/GameButton";
 import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
-import LottieTicketSlot from "../components/LottieTicketSlot";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
 import { useSound } from "../hook/useSoundPlayer";
 import TimerComponent from "../components/TimerComponent";
@@ -13,7 +11,6 @@ import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import StatCard from "../components/StatCard";
 import AssetPack from "../util/AssetsPack";
 import LinkButton from "../components/LinkButton";
-import DiagonalGradientCard from "../components/DiagonalGradientCard";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import RoundedButton from "../components/RoundedButton";
 import { ScrollView } from "react-native";
@@ -25,7 +22,6 @@ const GameOverScreen = () => {
 
     const backgroundResult = require("./../assets/image/background_game.png");
     const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
-    const backgroundTotalTicket = require("./../assets/image/background_total_ticket.png");
 
     const [progress, setProgress] = useState(12456);
     const [timeLeft] = useTimeLeftForNextDraw();

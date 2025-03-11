@@ -2,14 +2,27 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
 import DiagonalGradientCard from "./DiagonalGradientCard";
+import  {ActivityIndicator} from "react-native-web";
 
-const StatCard = ({ title = "Title", titleIcon = <IconStarResultScreen />, stat = "+9999", children }) => {
+const StatCard = ({ title = "Title", titleIcon = <IconStarResultScreen />, stat = "0", loading, children }) => {
+    const LoadingView = () => {
+        return (
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator size="small" color="#00ff00" />
+            </View>
+        );
+    };
     return (<DiagonalGradientCard style={styles.card}>
         <View style={styles.viewRow}>
             {titleIcon}
             <Text style={styles.title}>{title}</Text>
         </View>
-        {!children ? <Text style={styles.statText}>{stat}</Text> : children}
+        {loading ? (
+            <LoadingView />
+        ) : (
+            !children ? <Text style={styles.statText}>{stat}</Text> : children
+        )}
+
     </DiagonalGradientCard>);
 }
 

@@ -26,6 +26,8 @@ import { LeaderBoardStatus } from "../util/constants";
 import NextDrawCard from "../components/NextDrawCard";
 import { COLOR_BACKGROUND } from "../util/constants";
 import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
+import DiagonalGradientCard from "../components/DiagonalGradientCard";
+import StatCard from "../components/StatCard";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
@@ -80,6 +82,7 @@ const LauchScreen = () => {
         setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
         setInitialScratchCardLeft(response.user.card_balance || 0);
         setInitialUserData(response.user);
+
         const userData = response.user;
         const currentWeek = response.current_week;
         if (response.daily === null || response.daily.length === 0) {
@@ -198,24 +201,9 @@ const LauchScreen = () => {
       >
         <SectionTitle text={"Statistics"} />
         <View style={styles.resultRow}>
-          <View style={styles.resultCard}>
-            <View style={styles.viewRow}>
-              <IconStarResultScreen />
-              <Text style={styles.resultTitle}>TOTAL POINTS</Text>
-            </View>
-            {loading ? (
-              <LoadingView />
-            ) : (
-              <Text style={styles.resultPoints}>{initialScore || 0}</Text>
-            )}
-          </View>
+          <StatCard title="Total Points" stat={initialScore} loading={loading} />
           <View style={{ width: 10 }} />
-          <View style={styles.resultCard}>
-            <View style={styles.viewRow}>
-              <IconFourLeafClover />
-              <Text style={styles.resultTitle}>LUCKY SYMBOLS</Text>
-            </View>
-
+          <StatCard title="LUCKY SYMBOLS" loading={loading}>
             <ImageBackground
               resizeMode="contain"
               source={backgroundLuckySymbol}
@@ -224,7 +212,7 @@ const LauchScreen = () => {
               <LottieLuckySymbolCoinSlot topLayout={false} />
             </ImageBackground>
             <View style={styles.luckySymbols}></View>
-          </View>
+          </StatCard>
         </View>
         <View style={styles.ticketsSection}>
           <View style={styles.containerTotalTicket}>
@@ -272,7 +260,7 @@ const LauchScreen = () => {
           </View>
         </View>
         <GameButton
-          style={{ marginVertical: 24 , width: "100%"}}
+          style={{ marginVertical: 24, width: "100%" }}
           text="Play Now"
           onPress={() => handleStartGame()}
         />
