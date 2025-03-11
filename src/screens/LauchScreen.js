@@ -272,7 +272,7 @@ const LauchScreen = () => {
           </View>
         </View>
         <GameButton
-          style={{ marginVertical: 24 }}
+          style={{ marginVertical: 24 , width: "100%"}}
           text="Play Now"
           onPress={() => handleStartGame()}
         />

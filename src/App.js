@@ -14,6 +14,7 @@ import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 import LeaderBoardScreen from "./screens/LeaderBoardScreen";
 import HowToPlayScreen from "./screens/HowToPlayScreen";
 import StartScreen from "./screens/StartScreen";
+import { COLOR_BACKGROUND } from "./util/constants";
 
 const { height, width } = Dimensions.get("window");
 
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     height: height,
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "#35363A",
+    backgroundColor: "#131313",
     paddingTop: "10%",
   },
   app: {
@@ -97,6 +98,7 @@ const smallStyles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     userSelect: "none",
+    backgroundColor: "#131313",
   },
   app: {
     width: "100%",
