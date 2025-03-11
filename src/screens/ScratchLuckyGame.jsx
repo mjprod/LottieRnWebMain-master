@@ -403,8 +403,7 @@ const ScratchLuckyGame = () => {
         <ImageBackground
           source={backgroundGame}
           style={styles.imageBackground}
-          resizeMode="stretch"
-        >
+          resizeMode="stretch">
           <Animated.View style={[{ transform: [{ translateX }] }]}>
             <View style={styles.overlay}>
               <Animated.View style={{ marginTop: marginTopAnim }}>
@@ -414,8 +413,7 @@ const ScratchLuckyGame = () => {
                   timerGame={timerGame}
                   setTimerGame={setTimerGame}
                   luckySymbolCount={luckySymbolCount}
-                  clickCount={clickCount}
-                />
+                  clickCount={clickCount}/>
               </Animated.View>
 
               <ScratchLayout

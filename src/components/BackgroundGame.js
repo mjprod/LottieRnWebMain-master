@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import AlphaView from "./AlphaView";
 import NavLayout from "./NavLayout";
+import TopBannerNav from "./TopBannerNav";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -24,7 +25,7 @@ export const BackgroundGame = ({ source, showAlphaView }) => {
   return (
     <View style={isMobile ? styles.containerMobile : styles.container}>
       {/* NavLayout */}
-      <NavLayout showAlphaView={showAlphaView} />
+      <TopBannerNav showAlphaView={showAlphaView} />
 
       {/* Video */}
       <View style={styles.videoContainer}>

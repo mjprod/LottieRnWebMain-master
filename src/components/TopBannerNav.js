@@ -10,6 +10,7 @@ import AssetPack from "../util/AssetsPack";
 import PurplePill from "./PurplePill";
 import LinearGradient from "react-native-web-linear-gradient";
 import { DIMEN_PAGE_MARGIN, COLOR_BACKGROUND } from "../util/constants";
+import AlphaView from "./AlphaView";
 
 const TopBannerNav = ({
   title = "Be in to win Prizes!",
@@ -17,6 +18,7 @@ const TopBannerNav = ({
   backgroundImage = AssetPack.backgrounds.TOP_NAV_BACKGROUND,
   onBackPress = () => {},
   hasBackButton = false,
+  showAlphaView = false,
 }) => {
   return (
     <ImageBackground
@@ -25,6 +27,7 @@ const TopBannerNav = ({
       }}
       source={backgroundImage}
     >
+      <AlphaView showAlphaView={showAlphaView} />
       <LinearGradient
         colors={["#00000000", "#00000000", COLOR_BACKGROUND]}
         style={styles.linearGradient}
