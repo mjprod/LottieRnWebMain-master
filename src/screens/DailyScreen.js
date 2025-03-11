@@ -6,7 +6,7 @@ import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
 import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import DailyCardsContainer from "../components/DailyCardsContainer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
 
@@ -15,8 +15,10 @@ import TopBannerNav from "../components/TopBannerNav";
 import { isValidAnswer } from "../util/Validator";
 import { getCurrentDate, convertUTCToLocal, } from "../util/Helpers";
 import { DailySetData } from "../data/DailyCardData";
+import { DailyCardStatus } from "../util/constants";
 
 const DailyScreen = () => {
+  const navigate = useNavigate();
   const [question, setQuestion] = useState("");
   const [isThumbsUpAnimationFinished, setIsThumbsUpAnimationFinished] =
     useState(false);
@@ -46,7 +48,7 @@ const DailyScreen = () => {
   const [totalWeeks, setTotalWeeks] = useState("");
   const [days, setDays] = useState([]);
   const [dailySetData, setDailySetData] = useState(DailySetData);
-  
+
   const {
     loading,
     error,
@@ -85,10 +87,10 @@ const DailyScreen = () => {
   useEffect(() => {
     if (response) {
       if (response.user) {
-        setCurrentWeek(response.currentWeek);
-        setTotalWeeks(response.totalWeeks);
+        setCurrentWeek(response.current_week);
+        setTotalWeeks(response.total_weeks);
         const currentWeekDaily = response.daily.find(
-          (item) => item.current_week === response.currentWeek
+          (item) => item.current_week === response.current_week
         );
         if (currentWeekDaily) {
           setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
@@ -140,6 +142,16 @@ const DailyScreen = () => {
     slideOutAndFade();
   };
 
+  const handleCardPressed = (card) => {
+    if (card.status == DailyCardStatus.active) {
+      navigate("/start", {
+        state: {
+          userData,
+        },
+      });
+    }
+  }
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -190,6 +202,7 @@ const DailyScreen = () => {
           currentWeek={currentWeek}
           totalWeeks={totalWeeks}
           days={days}
+          onCardPressed={handleCardPressed}
         />
         <NextDrawCard />
       </View>

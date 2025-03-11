@@ -62,7 +62,7 @@ const NotFoundScreen = () => {
           </View>
         </ImageBackground>
         <GameButton
-          style={{ paddingHorizontal: 35 }}
+          style={{ paddingHorizontal: 35, width: "100%" }}
           text="TAKE ME BACK"
           onPress={() => {
             navigate("/daily");

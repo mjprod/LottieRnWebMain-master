@@ -10,7 +10,7 @@ import {
 
 import AssetPack from "../util/AssetsPack";
 
-const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [] }) => {
+const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [], onCardPressed }) => {
   const currentWeekDates = getCurrentWeekDates();
   const [dailyCardData, setDailyCardData] = useState([]);
 
@@ -23,10 +23,10 @@ const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [] }) => {
       extras:
         day == 7
           ? {
-              name: "Gift Card",
-              number: 1,
-              background: AssetPack.backgrounds.DAILY_CARD_EXTRA_BACKGROUND,
-            }
+            name: "Gift Card",
+            number: 1,
+            background: AssetPack.backgrounds.DAILY_CARD_EXTRA_BACKGROUND,
+          }
           : null,
     };
   };
@@ -67,6 +67,7 @@ const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [] }) => {
               cardBackground={item.cardBackground}
               status={item.status}
               extras={item.extras}
+              onPress={() => onCardPressed(item)}
             />
           </View>
         )}

@@ -92,7 +92,7 @@ const LauchScreen = () => {
         });
       } else {
         const currentWeekDaily = response.daily.find(
-          (item) => item.currentWeek === currentWeek
+          (item) => item.current_week === currentWeek
         );
         if (currentWeekDaily != null) {
           const localConvertedDays = currentWeekDaily.days.map((date) =>

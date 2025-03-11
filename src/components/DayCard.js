@@ -1,10 +1,10 @@
 import React from 'react';
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AssetPack from '../util/AssetsPack';
 import { DailyCardStatus } from '../util/constants';
 
 
-const DayCard = ({ cardSet, status, day, cardBackground, extras }) => {
+const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
     const cardsInASet = 12;
     const getDayTagStyle = () => {
         switch (status) {
@@ -91,11 +91,11 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras }) => {
     const inactiveOverlayView = status === "active" || status === "completed" ? null : <View style={styles.inactiveOverlay} />;
 
     return (
-        <View style={styles.parentContainer}>
+        <TouchableOpacity onPress={onPress} style={styles.parentContainer}>
             <Text style={getDayTagStyle()}>{`DAY ${day}`}</Text>
             {getMainContent()}
             {inactiveOverlayView}
-        </View>
+        </TouchableOpacity>
     );
 };
 
