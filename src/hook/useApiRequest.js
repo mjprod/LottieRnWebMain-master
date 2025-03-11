@@ -98,6 +98,20 @@ const useApiRequest = () => {
     await fetchData(config);
   };
 
+  const getLeaderBoard = async (limit) => {
+    const config = {
+      url: SERVER + "/leader_board",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        limit,
+      },
+    };
+    await fetchData(config);
+  };
+
   return {
     loading,
     error,
@@ -107,6 +121,7 @@ const useApiRequest = () => {
     fetchUserDetails,
     getDailyQuestion,
     postDailyAnswer,
+    getLeaderBoard
   };
 };
 
