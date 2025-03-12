@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from "react-native-web";
-import LottieView from "react-native-web-lottie";
+
 import { useNavigate, useParams } from "react-router";
 import GameButton from "../components/GameButton";
 import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
@@ -24,15 +24,13 @@ import { LeaderBoardStatus } from "../util/constants";
 import NextDrawCard from "../components/NextDrawCard";
 import { COLOR_BACKGROUND } from "../util/constants";
 import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
+import RaffleTicketCard from "../components/RaffleTicketCard";
 import StatCard from "../components/StatCard";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
 
   const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
-
-  const [progress, setProgress] = useState();
-  const animatedProgress = useRef(new Animated.Value(0)).current;
 
   const [initialScore, setInitialScore] = useState(0);
   const [initialTicketCount, setInitialTicketCount] = useState(0);
@@ -137,25 +135,11 @@ const LauchScreen = () => {
   }, [response]);
 
   useEffect(() => {
-    Animated.timing(animatedProgress, {
-      toValue: initialScore,
-      duration: 3000,
-      useNativeDriver: false,
-    }).start();
-
-    setProgress(initialScore);
-  }, [initialScore]);
-
-  useEffect(() => {
     console.log("Error: ", error);
     if (error && error.length > 0) {
       showSnackbar(error);
     }
   }, [error]);
-
-  animatedProgress.addListener(({ value }) => {
-    setProgress(value);
-  });
 
   const LoadingView = () => {
     return (
@@ -203,58 +187,13 @@ const LauchScreen = () => {
             <ImageBackground
               resizeMode="contain"
               source={backgroundLuckySymbol}
-              style={styles.imageBackgroundLuckySymbol}
-            >
+              style={styles.imageBackgroundLuckySymbol}>
               <LottieLuckySymbolCoinSlot topLayout={false} />
             </ImageBackground>
             <View style={styles.luckySymbols}></View>
           </StatCard>
         </View>
-        <View style={styles.ticketsSection}>
-          <View style={styles.containerTotalTicket}>
-            <LottieView
-              style={styles.lottieLuckyResultAnimation}
-              source={require("../assets/lotties/lottieTicketEntry.json")}
-              autoPlay
-              speed={1}
-              loop={false}
-            />
-            <Text style={styles.ticketTitle}>TOTAL RAFFLE TICKETS EARNED</Text>
-            {loading ? (
-              <LoadingView />
-            ) : (
-              <Text style={styles.resultPoints}>{initialTicketCount || 0}</Text>
-            )}
-          </View>
-          <View
-            style={{
-              backgroundColor: "#4B595D",
-              height: 1,
-              width: "100%",
-              marginVertical: 8,
-            }}
-          />
-          <View style={styles.containerTotalTicket}>
-            <Text style={styles.nextTicketText}>Next Ticket</Text>
-            <Text style={styles.ticketProgress}>
-              {`${parseInt(progress, 10)} / 20000`}{" "}
-            </Text>
-          </View>
-
-          <View style={styles.sliderContainer}>
-            <Slider
-              style={styles.slider}
-              minimumValue={0}
-              maximumValue={20000}
-              value={progress}
-              onValueChange={(value) => setProgress(value)}
-              minimumTrackTintColor="#FFD89D"
-              maximumTrackTintColor="#000000"
-              thumbTintColor="#FFD89D"
-              thumbStyle={styles.thumb}
-            />
-          </View>
-        </View>
+        <RaffleTicketCard score={initialScore} ticketCount={initialTicketCount}/>
         <GameButton
           style={{ marginVertical: 24, width: "100%" }}
           text="Play Now"
@@ -330,32 +269,6 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
-  ticketsSection: {
-    marginTop: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    border: "1px solid #4B595D",
-    borderRadius: 12,
-    padding: 8,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-  },
-  ticketTitle: {
-    flex: 1,
-    fontFamily: "Teko-Medium",
-    fontSize: 18,
-    color: "#fff",
-  },
-  nextTicketText: {
-    fontFamily: "Inter-SemiBold",
-    fontSize: 16,
-    color: "#fff",
-  },
-  ticketProgress: {
-    fontFamily: "Inter-SemiBold",
-    fontSize: 16,
-    color: "#fff",
-  },
   addedPoints: {
     width: "100%",
     fontFamily: "Teko-Medium",
@@ -398,31 +311,16 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-end",
   },
-  containerTotalTicket: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-  },
   slider: {
-    height: 1,
-    maxHeight: 1,
-    transform: [{ scaleY: 4, scaleX: 4 }],
+    height: 10,
+    maxHeight: 10,
+    transform: [{ scaleY: 1, scaleX: 1 }],
     zIndex: 999,
     elevation: 10,
   },
   thumb: {
     width: 0,
     height: 0,
-  },
-  sliderContainer: {
-    width: "100%",
-    //height: 20,
-    marginVertical: 10,
-    borderRadius: 50,
-    backgroundColor: "#000000",
-    justifyContent: "center",
-    paddingHorizontal: 0,
   },
   timerContainer: {
     flexDirection: "row",
@@ -452,12 +350,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
-  },
-  lottieLuckyResultAnimation: {
-    width: 25,
-    height: 25,
-    marginTop: 0,
-    marginLeft: 0,
   },
 });
 
