@@ -37,13 +37,15 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, style }) => {
     return (
         <DiagonalGradientCard style={styles.ticketsSection}>
             <View style={styles.containerTotalTicket}>
-                <LottieView
-                    style={styles.lottieLuckyResultAnimation}
-                    source={AssetPack.lotties.TICKET_ENTRY}
-                    autoPlay
-                    speed={1}
-                    loop={false} />
-                <Text style={styles.ticketTitle}>Total Raffle Tickets Earned</Text>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: "flex-start", alignItems: 'center' }}>
+                    <LottieView style={styles.lottieLuckyResultAnimation}
+                        source={AssetPack.lotties.TICKET_ENTRY}
+                        autoPlay
+                        speed={1}
+                        loop={false} />
+                    <Text style={styles.ticketTitle}>Total Raffle Tickets Earned</Text>
+                </View>
+
                 {loading ? (
                     <LoadingView />
                 ) : (
@@ -92,6 +94,7 @@ const styles = StyleSheet.create({
         color: "#fff",
     },
     containerTotalTicket: {
+        justifyContent: "space-between",
         flexDirection: "row",
         alignItems: "center",
         width: "100%",
@@ -114,6 +117,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 7,
         paddingHorizontal: 0,
-    }
+    },
+    resultPoints: {
+        fontFamily: "Teko-Medium",
+        fontSize: 30,
+        color: "#00ff00",
+    },
 });
 export default RaffleTicketCard;

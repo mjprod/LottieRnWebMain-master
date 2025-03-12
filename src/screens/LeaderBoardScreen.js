@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import TopBannerNav from "../components/TopBannerNav";
 import LinkButton from "../components/LinkButton";
 import GamesAvailableCard from "../components/GamesAvailableCard";
-import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import NextDrawCard from "../components/NextDrawCard";
 import useApiRequest from "../hook/useApiRequest";
 import { LeaderBoardStatus } from "../util/constants";
@@ -17,7 +16,6 @@ const LeaderBoardScreen = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [initialUserData, setInitialUserData] = useState();
-  const [timeLeft] = useTimeLeftForNextDraw();
   const { getLeaderBoard, fetchUserDetails, response } = useApiRequest();
   const [leaderBoardData, setLeaderBoardData] = useState();
   const [initialScore, setInitialScore] = useState(0);
@@ -61,7 +59,7 @@ const LeaderBoardScreen = () => {
       }
     }
   }, [response]);
-  
+
   const handlePlayNowButtonPress = () => {
     navigate("/game", {
       state: {
@@ -89,12 +87,7 @@ const LeaderBoardScreen = () => {
           handlePress={() => navigate("/how_to_play")}
         />
         <GamesAvailableCard style={{ marginBottom: 30 }} cardsLeft={initialScratchCardLeft} />
-        <NextDrawCard
-          style={{ marginBottom: 30 }}
-          days={timeLeft.days}
-          hours={timeLeft.hours}
-          minutes={timeLeft.minutes}
-          seconds={timeLeft.seconds} />
+        <NextDrawCard style={{ marginBottom: 30 }} />
       </View>
     </ScrollView>
   );

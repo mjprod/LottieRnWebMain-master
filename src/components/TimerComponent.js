@@ -23,12 +23,11 @@ const TimerComponent = ({ days, hours, minutes, seconds, style }) => {
 
 const styles = StyleSheet.create({
   backgroundRounded: {
-    backgroundColor: "#1D1811",
     borderRadius: 30,
-    paddingVertical: 8,
-    paddingHorizontal: 25,
-    marginBottom: 10,
-    border: "1px solid #382E23",
+    paddingVertical: 13,
+    paddingHorizontal: 43.5,
+    border: "1px solid #FFFFFF4D",
+    marginBottom: 20,
   },
   timerSection: {
     marginTop: 20,
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   timerTitle: {
-    fontFamily: "Inter-Medium",
+    fontFamily: "Inter-Bold",
     fontSize: 14,
     color: "#FFDEA8",
   },

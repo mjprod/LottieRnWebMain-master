@@ -1,11 +1,9 @@
-import Slider from "@react-native-community/slider";
-import React, { useEffect, useRef, useState } from "react";
-import { Animated, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
 import {
   ActivityIndicator,
   ScrollView,
   ImageBackground,
-  Text,
   View,
 } from "react-native-web";
 
@@ -26,11 +24,10 @@ import { COLOR_BACKGROUND } from "../util/constants";
 import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
 import RaffleTicketCard from "../components/RaffleTicketCard";
 import StatCard from "../components/StatCard";
+import AssetPack from "../util/AssetsPack";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
-
-  const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
 
   const [initialScore, setInitialScore] = useState(0);
   const [initialTicketCount, setInitialTicketCount] = useState(0);
@@ -39,8 +36,6 @@ const LauchScreen = () => {
 
   const [initialUserData, setInitialUserData] = useState("");
   const [leaderBoardData, setLeaderBoardData] = useState();
-
-  const [timeLeft] = useTimeLeftForNextDraw();
 
   const { loading, error, response, fetchUserDetails, getLeaderBoard } = useApiRequest();
   const { showSnackbar } = useSnackbar();
@@ -158,9 +153,7 @@ const LauchScreen = () => {
   };
 
   return (
-    <ScrollView
-      style={{ ...styles.container, backgroundColor: COLOR_BACKGROUND }}
-    >
+    <ScrollView style={{ backgroundColor: COLOR_BACKGROUND }}>
       <View style={styles.header}>
         <TopBannerNav />
         {loading ? (
@@ -174,11 +167,7 @@ const LauchScreen = () => {
         )}
       </View>
       <View
-        style={[
-          styles.container,
-          { marginLeft: 18, marginRight: 18, marginBottom: 10 },
-        ]}
-      >
+        style={[styles.container, { marginLeft: 18, marginRight: 18, marginBottom: 10 },]}>
         <SectionTitle text={"Statistics"} />
         <View style={styles.resultRow}>
           <StatCard title="Total Points" stat={initialScore} loading={loading} />
@@ -186,7 +175,7 @@ const LauchScreen = () => {
           <StatCard title="LUCKY SYMBOLS" loading={loading}>
             <ImageBackground
               resizeMode="contain"
-              source={backgroundLuckySymbol}
+              source={AssetPack.backgrounds.LUCKY_SYMBOL}
               style={styles.imageBackgroundLuckySymbol}>
               <LottieLuckySymbolCoinSlot topLayout={false} />
             </ImageBackground>
@@ -197,25 +186,16 @@ const LauchScreen = () => {
         <GameButton
           style={{ marginVertical: 24, width: "100%" }}
           text="Play Now"
-          onPress={() => handleStartGame()}
-        />
+          onPress={() => handleStartGame()} />
         <SectionTitle
           text="LeaderBard"
           viewAllText="View All"
-          viewAllAction={handleViewAllPress}
-        />
+          viewAllAction={handleViewAllPress} />
         <LeaderBoardList leaderboardData={leaderBoardData} />
         <GamesAvailableCard
           style={{ marginVertical: 24 }}
-          cardsLeft={initialScratchCardLeft}
-        />
-        <NextDrawCard
-          days={timeLeft.days}
-          hours={timeLeft.hours}
-          minutes={timeLeft.minutes}
-          seconds={timeLeft.seconds}
-          style={{ marginVertical: 24 }}
-        />
+          cardsLeft={initialScratchCardLeft} />
+        <NextDrawCard style={{ marginVertical: 24 }} />
       </View>
     </ScrollView>
   );
@@ -239,111 +219,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     width: "100%",
   },
-  resultCard: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    border: "1px solid #4B595D",
-    borderRadius: 12,
-    padding: 4,
-  },
-  resultTitle: {
-    fontSize: 18,
-    fontFamily: "Teko-Medium",
-    color: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 5,
-    marginTop: 3,
-  },
-  resultPoints: {
-    fontFamily: "Teko-Medium",
-    fontSize: 30,
-    color: "#00ff00",
-  },
   luckySymbols: {
     flexDirection: "row",
-  },
-  symbolImage: {
-    width: 50,
-    height: 50,
-  },
-  addedPoints: {
-    width: "100%",
-    fontFamily: "Teko-Medium",
-    fontSize: 22,
-    color: "#00ff00",
-    textAlign: "end",
-  },
-  timerSection: {
-    marginTop: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  timerTitle: {
-    fontFamily: "Inter-Medium",
-    fontSize: 16,
-    color: "#FFDEA8",
-  },
-  timerNumberValue: {
-    fontFamily: "Inter-SemiBold",
-    fontSize: 18,
-    color: "#fff",
-  },
-  timerStringValue: {
-    fontFamily: "Inter-SemiBold",
-    fontSize: 14,
-    color: "#A6A6A6",
-  },
-  iconWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 5,
-  },
-  viewRow: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  textColumnRigth: {
-    position: "relative",
-    flexDirection: "column",
-    alignItems: "flex-end",
-  },
-  slider: {
-    height: 10,
-    maxHeight: 10,
-    transform: [{ scaleY: 1, scaleX: 1 }],
-    zIndex: 999,
-    elevation: 10,
-  },
-  thumb: {
-    width: 0,
-    height: 0,
-  },
-  timerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  rotatingBackgroundContainer: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "hidden",
-  },
-  tinyLogo: {
-    width: "100%",
-    height: 144,
-    resizeMode: "contain",
-  },
-  horizontalDivider: {
-    height: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.15)",
-    width: "98%", // takes up 90% of the screen width
-    marginHorizontal: "1%", // centers it horizontally
-    marginVertical: 10, // optional vertical margin
   },
   loadingContainer: {
     flex: 1,

@@ -32,12 +32,7 @@ const TopBannerNav = ({
   };
 
   return (
-    <ImageBackground
-      style={{
-        alignItems: "start",
-      }}
-      source={backgroundImage}
-    >
+    <ImageBackground style={{ alignItems: "start" }} source={backgroundImage} >
       <AlphaView showAlphaView={showAlphaView} />
       <LinearGradient
         colors={["#00000000", "#00000000", COLOR_BACKGROUND]}

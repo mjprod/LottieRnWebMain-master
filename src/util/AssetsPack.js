@@ -21,6 +21,7 @@ const AssetPack = {
     NEXT_DRAW_CARD: require("./../assets/image/next_draw_card_background.png"),
     BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg"),
     GOLD_RUSH: require("./../assets/image/gold_rush.jpg"),
+    LUCKY_SYMBOL: require("./../assets/image/background_result_lucky_symbol.png"),
   },
   videos: {
     WIN_LUCKY_SYMBOL: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4"),
