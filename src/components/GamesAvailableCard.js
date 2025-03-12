@@ -8,10 +8,8 @@ const GamesAvailableCard = ({
   style,
 }) => {
   return (
-    <DiagonalGradientCard
-      style={{ ...styles.backgroundRounded, ...style }}>
-      <View
-        style={{ flexDirection: "row", alignItems: "center", flex: 1, gap: 8 }}>
+    <DiagonalGradientCard style={{ ...styles.backgroundRounded, ...style }}>
+      <View style={{ flexDirection: "row", alignItems: "center", flex: 1, gap: 8 }}>
         <Image
           style={{ width: 22.25, height: 17 }}
           source={AssetPack.icons.CARDS} />
@@ -32,14 +30,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 10,
   },
   gamesAvailableText: {
-    fontFamily: "Teko-Medium",
-    fontSize: 16,
+    fontFamily: "Inter-Medium",
+    fontSize: 18,
     paddingTop: 2,
     color: "#fff",
-    textTransform: "uppercase",
   },
   valueText: {
     fontFamily: "Teko-Medium",

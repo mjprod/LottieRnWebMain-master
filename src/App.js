@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     height: height,
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "#131313",
+    backgroundColor: "rgba(33,33,33,.9)",
     paddingTop: "10%",
   },
   app: {
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     maxHeight: 750,
     borderRadius: 44,
     overflow: "hidden",
+    backgroundColor: "#131313",
     boxShadow: "0 4px 6px rgba(0,0,0,0.5)",
   },
 });
@@ -103,6 +104,6 @@ const smallStyles = StyleSheet.create({
   app: {
     width: "100%",
     height: height,
-    backgroundColor: "black",
+    backgroundColor: "#131313",
   },
 });
