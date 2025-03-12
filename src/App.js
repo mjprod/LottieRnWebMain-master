@@ -44,24 +44,14 @@ export default function App() {
               <BrowserRouter>
                 <SnackbarProvider>
                   <Routes>
-                    <Route
-                      path="/:id/:username/:email"
-                      element={<LauchScreen />}
-                    />
-                    <Route path="/daily" element={<DailyScreen />} />
                     <Route path="/*" element={<NotFoundScreen />} />
+                    <Route path="/daily" element={<DailyScreen />} />
+                    <Route path="/start" element={<StartScreen />} />
                     <Route path="/game" element={<ScratchLuckyGame />} />
                     <Route path="/game_over" element={<GameOverScreen />} />
-                    <Route
-                     
-                      path="/leader_board"
-                     
-                      element={<LeaderBoardScreen />}
-                    />
-                    <Route path="/how_to_play" element={<HowToPlayScreen />}
-                    />
-                    <Route path="/start" element={<StartScreen />}
-                    />
+                    <Route path="/how_to_play" element={<HowToPlayScreen />} />
+                    <Route path="/leader_board" element={<LeaderBoardScreen />} />
+                    <Route path="/:id/:username/:email" element={<LauchScreen />} />
                   </Routes>
                 </SnackbarProvider>
               </BrowserRouter>

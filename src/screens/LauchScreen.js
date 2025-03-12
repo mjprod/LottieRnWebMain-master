@@ -158,13 +158,18 @@ const LauchScreen = () => {
           <LoadingView />
         ) : (
           <ProfileHeader
-            containerStyle={{ marginBottom: Dimentions.sectionMargin, marginTop: -Dimentions.sectionMargin }}
+            containerStyle={{ paddingHorizontal: Dimentions.pageMargin }}
             id={initialUserData.user_id}
             name={initialUserData.name} />
         )}
       </View>
       <View style={{ ...styles.container }}>
-        <View style={{ marginLeft: Dimentions.pageMargin, marginRight: Dimentions.pageMargin, marginBottom: Dimentions.sectionMargin }}>
+        <View style={{
+          marginLeft: Dimentions.pageMargin,
+          marginRight: Dimentions.pageMargin,
+          marginBottom: Dimentions.sectionMargin,
+          marginTop: Dimentions.sectionMargin
+        }}>
           <SectionTitle text={"Statistics"} />
           <View style={styles.resultRow}>
             <StatCard title="Total Points" stat={initialScore} loading={loading} />

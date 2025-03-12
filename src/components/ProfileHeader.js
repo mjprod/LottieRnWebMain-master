@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Fonts } from '../util/constants';
 
 const ProfileHeader = ({ id, name, containerStyle }) => {
   return (
@@ -19,7 +20,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
     borderRadius: 8,
   },
   avatarContainer: {
@@ -29,11 +29,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#212121',
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 8,
+    marginRight: 8,
     borderWidth: 2,
     borderColor: '#3D3D3D',
   },
   avatarText: {
+    fontFamily: Fonts.InterMedium,
     color: '#FFDEA8',
     fontWeight: 'bold',
     justifyContent: 'center',
