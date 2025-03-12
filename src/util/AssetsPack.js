@@ -9,6 +9,7 @@ const AssetPack = {
     TURBO_SCRATCH: require("./../assets/image/turbo_scratch_logo.png"),
   },
   backgrounds: {
+    GAME: require("./../assets/image/background_game.png"),
     DAILY_CARD_BACKGROUND: require("./../assets/image/day_card_background.png"),
     DAILY_CARD_EXTRA_BACKGROUND: require("./../assets/image/day_card_extra_background.png"),
     CARD_NUMBER_SET: require("./../assets/image/card_set_number_background.svg"),
@@ -21,7 +22,11 @@ const AssetPack = {
     BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg"),
     GOLD_RUSH: require("./../assets/image/gold_rush.jpg"),
   },
-  videos: {},
+  videos: {
+    WIN_LUCKY_SYMBOL: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4"),
+    WIN_LUCKY_SYMBOL_CHROME: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_chrome.webm"),
+    LUCKY_SYMBOL_FINAL: require("./../assets/video/lucky_symbol_3d_coin_cut.mp4")
+  },
   sounds: {},
   images: {
     PHAROAH: require("./../assets/image/pharoah.png"),
@@ -35,6 +40,7 @@ const AssetPack = {
     CTA_BUTTON_TWO_THIRD: require("./../assets/lotties/buttonCallToActionTwoThird.json"),
     THUMBS_UP: require("./../assets/lotties/lottieThumbsUp.json"),
     CONFETTI: require("../assets/lotties/lottieConfetti.json"),
+    COUNT_DOWN: require("../assets/lotties/lottieInitialCountdown.json"),
   },
 };
 

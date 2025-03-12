@@ -16,7 +16,6 @@ import ScratchLayout from "../components/ScratchLayout";
 import TopLayout from "../components/TopLayout";
 import Video from "../components/Video";
 import GameOverScreen from "./GameOverScreen.js";
-
 import { ActivityIndicator } from "react-native-web";
 import { useLocation, useNavigate } from "react-router";
 import BottomDrawer from "../components/BottomDrawer.js";
@@ -25,16 +24,29 @@ import { useGame } from "../context/GameContext.js";
 import useApiRequest from "../hook/useApiRequest.js";
 import { useSound } from "../hook/useSoundPlayer.js";
 import { useTheme } from "../hook/useTheme.js";
-
-const backgroundGame = require("./../assets/image/background_game.png");
-const videoWinLuckySymbol = require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4");
-const videoWinLuckySymbolChrome = require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_chrome.webm");
-const videoLuckySymbolFinal = require("./../assets/video/lucky_symbol_3d_coin_cut.mp4");
-const lottieCountDown = require("../assets/lotties/lottieInitialCountdown.json");
+import AssetPack from "../util/AssetsPack.js";
 
 const { width } = Dimensions.get("window");
 
 const ScratchLuckyGame = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const ref = useRef(null);
+
+  const [gameStarted, setGameStarted] = useState(false);
+  const [countDownStarted, setCountDownStarted] = useState(true);
+  const [introThemeVideo, setIntroThemeVideo] = useState(false);
+  const [reset, setReset] = useState(false);
+  const [scratched, setScratched] = useState(false);
+  const [scratchCardLeft, setScratchCardLeft] = useState(0);
+  const [timerGame, setTimerGame] = useState(0);
+  const [clickCount, setClickCount] = useState(0);
+  const [winLuckySymbolVideo, setWinLuckySymbolVideo] = useState(false);
+  const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
+  const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
+  const [user, setUser] = useState(null);
+
+
   const {
     setScore,
     gameOver,
@@ -47,20 +59,6 @@ const ScratchLuckyGame = () => {
     setTicketCount,
   } = useGame();
 
-  const [gameStarted, setGameStarted] = useState(false);
-  const [countDownStarted, setCountDownStarted] = useState(true);
-  const [introThemeVideo, setIntroThemeVideo] = useState(false);
-  const [reset, setReset] = useState(false);
-  const [scratched, setScratched] = useState(false);
-  const [scratchCardLeft, setScratchCardLeft] = useState(0);
-  const [timerGame, setTimerGame] = useState(0);
-  const [clickCount, setClickCount] = useState(0);
-  const marginTopAnim = useRef(new Animated.Value(0)).current;
-  const translateX = useRef(new Animated.Value(0)).current;
-  const [winLuckySymbolVideo, setWinLuckySymbolVideo] = useState(false);
-  const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
-  const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
-
   const {
     backgroundLoop,
     goToNextTheme,
@@ -69,17 +67,13 @@ const ScratchLuckyGame = () => {
     currentTheme,
     updateThemeSequence
   } = useTheme();
-  const { setStartPlay } = useSound();
-
-  const ref = useRef(null);
 
   const { loading, error, response, updateLuckySymbol, fetchUserDetails } = useApiRequest();
-  const [user, setUser] = useState(null);
-
-  const location = useLocation();
   const { username, email, id } = location.state;
+  const { setStartPlay } = useSound();
 
-  const navigate = useNavigate();
+  const marginTopAnim = useRef(new Animated.Value(0)).current;
+  const translateX = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     fetchUserDetails(id, username, email);
@@ -91,14 +85,10 @@ const ScratchLuckyGame = () => {
     }
   }, [response]);
 
-  const saveLuckySymbol = async (luckySymbol) => {
-    setLuckySymbolCount(luckySymbol);
-  };
-
   useEffect(() => {
     if (user) {
       setScore(user.total_score);
-      setTicketCount(user.tickets);
+      setTicketCount(user.ticket_balance);
       setLuckySymbolCount(user.lucky_symbol_balance);
       updateThemeSequence(user.card_balance);
     }
@@ -117,14 +107,18 @@ const ScratchLuckyGame = () => {
     }
   }, [countDownStarted]);
 
+  const saveLuckySymbol = async (luckySymbol) => {
+    setLuckySymbolCount(luckySymbol);
+  };
+
   const browserHandler = {
     chrome: () => (
       <Video
         deo
         source={
           skipToFinishLuckyVideo
-            ? videoLuckySymbolFinal
-            : videoWinLuckySymbolChrome
+            ? AssetPack.videos.LUCKY_SYMBOL_FINAL
+            : AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME
         } // Play the win video
         style={styles.transparentVideo} // Video styling
         onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
@@ -134,7 +128,7 @@ const ScratchLuckyGame = () => {
     default: (browser) => (
       <Video
         source={
-          skipToFinishLuckyVideo ? videoLuckySymbolFinal : videoWinLuckySymbol
+          skipToFinishLuckyVideo ? AssetPack.videos.LUCKY_SYMBOL_FINAL : AssetPack.videos.WIN_LUCKY_SYMBOL
         } // Play the win video
         style={styles.transparentVideo} // Video styling
         onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
@@ -333,7 +327,7 @@ const ScratchLuckyGame = () => {
               <LottieView
                 ref={ref}
                 style={styles.lottieAnimation}
-                source={lottieCountDown}
+                source={AssetPack.lotties.COUNT_DOWN}
                 speed={1}
                 loop={false}
                 onAnimationFinish={handleAnimationFinish}
@@ -373,7 +367,7 @@ const ScratchLuckyGame = () => {
       />
       <View style={styles.containerOverlay}>
         <ImageBackground
-          source={backgroundGame}
+          source={AssetPack.backgrounds.GAME}
           style={styles.imageBackground}
           resizeMode="stretch">
           <Animated.View style={[{ transform: [{ translateX }] }]}>
