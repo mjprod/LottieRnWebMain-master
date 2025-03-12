@@ -68,6 +68,7 @@ const ScratchLuckyGame = () => {
     themeSequence,
     nextTheme,
     currentTheme,
+    updateThemeSequence
   } = useTheme();
   const { setStartPlay } = useSound();
 
@@ -90,7 +91,9 @@ const ScratchLuckyGame = () => {
     setScore(initialScore);
     setTicketCount(initialTicketCount);
     setLuckySymbolCount(initialLuckySymbolCount);
-    setScratchCardLeft(initialScratchCardLeft);
+    console.log("initialScratchCardLeft", initialScratchCardLeft);
+    updateThemeSequence(initialScratchCardLeft);
+    // setScratchCardLeft(initialScratchCardLeft);
   }, [
     initialScore,
     initialTicketCount,
@@ -122,19 +125,17 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (user) {
       console.log("User details:", user);
-
       setScore(user.score);
       setTicketCount(user.tickets);
       setLuckySymbolCount(user.lucky_symbol);
-      setScratchCardLeft(initialScratchCardLeft);
-
-      //updateThemeSequence(user.cards);
+      updateThemeSequence(user.card_balance);
     }
   }, [user]);
 
-  // useEffect(() => {
-  //   setScratchCardLeft(themeSequence.length);
-  // }, [themeSequence]);
+  useEffect(() => {
+    setScratchCardLeft(themeSequence.length);
+    console.log("themeSequence length:", themeSequence.length);
+  }, [themeSequence]);
 
   useEffect(() => {
     if (countDownStarted) {

@@ -10,8 +10,6 @@ import {
 } from "react-native-web";
 import LottieView from "react-native-web-lottie";
 import { useNavigate, useParams } from "react-router";
-import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
-import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
 import GameButton from "../components/GameButton";
 import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import ProfileHeader from "../components/ProfileHeader";
@@ -64,12 +62,11 @@ const LauchScreen = () => {
       fetchUserDetails(id, username, email);
       return;
     }
-    navigate("/game", {
+    navigate("/start", {
       state: {
-        initialScore,
-        initialTicketCount,
-        initialLuckySymbolCount,
-        initialScratchCardLeft,
+        username: initialUserData.name,
+        email: initialUserData.email,
+        id: initialUserData.user_id,
       },
     });
   };

@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Platform, StyleSheet, Text, View, Image } from "react-native";
 import { ImageBackground } from "react-native-web";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import GameButton, { ButtonSize } from "../components/GameButton";
 import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
-import { useSound } from "../hook/useSoundPlayer";
 import TimerComponent from "../components/TimerComponent";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import StatCard from "../components/StatCard";
@@ -14,33 +13,59 @@ import LinkButton from "../components/LinkButton";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import RoundedButton from "../components/RoundedButton";
 import { ScrollView } from "react-native";
+import useApiRequest from "../hook/useApiRequest";
+import { useGame } from "../context/GameContext";
 
 const GameOverScreen = () => {
     const navigate = useNavigate();
-
-    const { switchTrack } = useSound();
+    const game = useGame();
 
     const backgroundResult = require("./../assets/image/background_game.png");
     const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
 
-    const [progress, setProgress] = useState(12456);
-    const [timeLeft] = useTimeLeftForNextDraw();
+    const { fetchUserDetails, response } = useApiRequest();
 
-    const animatedProgress = useRef(new Animated.Value(0)).current;
+    const [timeLeft] = useTimeLeftForNextDraw();
+    const location = useLocation();
+
+    const { username, email, id } = location.state
+    const [initialScore, setInitialScore] = useState(0);
+    const [initialTicketCount, setInitialTicketCount] = useState(0);
+    const [initialLuckySymbolCount, setInitialLuckySymbolCount] = useState(0);
+    const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
+    const [initialUserData, setInitialUserData] = useState("");
 
     useEffect(() => {
-        Animated.timing(animatedProgress, {
-            toValue: progress,
-            duration: 3000,
-            useNativeDriver: false,
-        }).start();
+        console.log("Params:", { id, username, email });
+        fetchUserDetails(id, username, email);
+    }, [id]);
 
-        switchTrack(1);
-    }, []);
+    useEffect(() => {
+        if (response) {
+            if (response.user) {
+                setInitialScore(response.user.total_score || 0);
+                setInitialTicketCount(response.user.ticket_balance || 0);
+                game.luckySymbolCount = response.user.lucky_symbol_balance || 0;
+                setInitialScratchCardLeft(response.user.card_balance || 0);
+                setInitialUserData(response.user);
+            }
+        }
+    }, [response]);
 
-    animatedProgress.addListener(({ value }) => {
-        setProgress(value);
-    });
+    const handleBackPress = () => {
+        navigate(-1);
+    };
+
+    const handlePlayNow = () => {
+        navigate("/game", {
+            state: {
+                initialScore,
+                initialTicketCount,
+                initialLuckySymbolCount,
+                initialScratchCardLeft,
+            },
+        });
+    }
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -61,25 +86,24 @@ const GameOverScreen = () => {
                                 />
                             </View>
                             <Text style={styles.title}>Welcome</Text>
-                            <Text style={styles.userNameText}>Glauco Pereira</Text>
+                            <Text style={styles.userNameText}>{initialUserData.name}</Text>
                         </View>
                         <Text style={styles.statsTitle}>total game stats</Text>
                         <View style={styles.resultRow}>
-                            <StatCard title="Total Points" stat="+9999" />
+                            <StatCard title="Total Points" stat={initialScore} />
                             <View style={{ width: 10 }} />
                             <StatCard title="LUCKY SYMBOLS">
                                 <ImageBackground
                                     resizeMode="contain"
                                     source={backgroundLuckySymbol}
-                                    style={styles.imageBackgroundLuckySymbol}
-                                >
+                                    style={styles.imageBackgroundLuckySymbol}>
                                     <LottieLuckySymbolCoinSlot topLayout={false} />
                                 </ImageBackground>
                                 <View style={styles.luckySymbols}></View>
                             </StatCard>
                         </View>
                         <View style={styles.ticketsSection}>
-                            <GamesAvailableCard style={{ width: "100%" }} cardsLeft={12} />
+                            <GamesAvailableCard style={{ width: "100%" }} cardsLeft={initialScratchCardLeft} />
                         </View>
                         <TimerComponent
                             style={{ marginVertical: 30 }}
@@ -91,27 +115,13 @@ const GameOverScreen = () => {
                         <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column" }}>
                             <View style={styles.buttonContainer}>
                                 <View style={{ flex: 0.4, justifyContent: "flex-start" }}>
-                                    <RoundedButton title="Back" />
+                                    <RoundedButton title="Back" onPress={handleBackPress} />
                                 </View>
                                 <View style={{ flex: 0.6, justifyContent: "flex-end" }} >
                                     <GameButton
                                         buttonSize={ButtonSize.HALF}
                                         text="Play Now"
-                                        onPress={() => {
-                                            const initialScore = 0;
-                                            const initialTicketCount = 0;
-                                            const initialLuckySymbolCount = 0;
-                                            const initialScratchCardLeft = 0;
-
-                                            navigate("/*", {
-                                                state: {
-                                                    initialScore,
-                                                    initialTicketCount,
-                                                    initialLuckySymbolCount,
-                                                    initialScratchCardLeft,
-                                                },
-                                            });
-                                        }}
+                                        onPress={handlePlayNow}
                                     />
                                 </View>
                             </View>
