@@ -22,7 +22,6 @@ import { useLocation, useNavigate } from "react-router";
 import BottomDrawer from "../components/BottomDrawer.js";
 import IntroThemeVideo from "../components/IntroThemeVideo.js";
 import { useGame } from "../context/GameContext.js";
-import { numberOfCards } from "../global/Settings.js";
 import useApiRequest from "../hook/useApiRequest.js";
 import { useSound } from "../hook/useSoundPlayer.js";
 import { useTheme } from "../hook/useTheme.js";
@@ -74,40 +73,17 @@ const ScratchLuckyGame = () => {
 
   const ref = useRef(null);
 
-  const { loading, error, response, updateLuckySymbol } = useApiRequest();
+  const { loading, error, response, updateLuckySymbol, fetchUserDetails } = useApiRequest();
   const [user, setUser] = useState(null);
 
   const location = useLocation();
-  const {
-    initialScore,
-    initialTicketCount,
-    initialLuckySymbolCount,
-    initialScratchCardLeft,
-  } = location.state;
+  const { username, email, id } = location.state;
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    setScore(initialScore);
-    setTicketCount(initialTicketCount);
-    setLuckySymbolCount(initialLuckySymbolCount);
-    updateThemeSequence(initialScratchCardLeft);
-    // setScratchCardLeft(initialScratchCardLeft);
-  }, [
-    initialScore,
-    initialTicketCount,
-    initialLuckySymbolCount,
-    initialScratchCardLeft,
-  ]);
-
-  // Trigger the API call when the component mounts
-  useEffect(() => {
-    //fetchUserDetails();
-    //setScore(1200);
-    //setTicketCount(1);
-    //setLuckySymbolCount(1);
-    // setScratchCardLeft(numberOfCards);
-  }, []);
+    fetchUserDetails(id, username, email);
+  }, [id]);
 
   useEffect(() => {
     if (response && response.user) {
@@ -117,22 +93,19 @@ const ScratchLuckyGame = () => {
 
   const saveLuckySymbol = async (luckySymbol) => {
     setLuckySymbolCount(luckySymbol);
-    updateLuckySymbol(1, luckySymbol);
   };
 
   useEffect(() => {
     if (user) {
-      console.log("User details:", user);
-      setScore(user.score);
+      setScore(user.total_score);
       setTicketCount(user.tickets);
-      setLuckySymbolCount(user.lucky_symbol);
+      setLuckySymbolCount(user.lucky_symbol_balance);
       updateThemeSequence(user.card_balance);
     }
   }, [user]);
 
   useEffect(() => {
     setScratchCardLeft(themeSequence.length);
-    console.log("themeSequence length:", themeSequence.length);
   }, [themeSequence]);
 
   useEffect(() => {
@@ -412,7 +385,7 @@ const ScratchLuckyGame = () => {
                   timerGame={timerGame}
                   setTimerGame={setTimerGame}
                   luckySymbolCount={luckySymbolCount}
-                  clickCount={clickCount}/>
+                  clickCount={clickCount} />
               </Animated.View>
 
               <ScratchLayout

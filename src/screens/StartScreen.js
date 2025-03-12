@@ -36,7 +36,6 @@ const GameOverScreen = () => {
     const [initialUserData, setInitialUserData] = useState("");
 
     useEffect(() => {
-        console.log("Params:", { id, username, email });
         fetchUserDetails(id, username, email);
     }, [id]);
 
@@ -60,10 +59,9 @@ const GameOverScreen = () => {
     const handlePlayNow = () => {
         navigate("/game", {
             state: {
-                initialScore,
-                initialTicketCount,
-                initialLuckySymbolCount,
-                initialScratchCardLeft,
+                username: initialUserData.name,
+                email: initialUserData.email,
+                id: initialUserData.user_id,
             },
         });
     }

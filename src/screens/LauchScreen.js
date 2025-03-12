@@ -24,7 +24,6 @@ import { LeaderBoardStatus } from "../util/constants";
 import NextDrawCard from "../components/NextDrawCard";
 import { COLOR_BACKGROUND } from "../util/constants";
 import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
-import DiagonalGradientCard from "../components/DiagonalGradientCard";
 import StatCard from "../components/StatCard";
 
 const LauchScreen = () => {
