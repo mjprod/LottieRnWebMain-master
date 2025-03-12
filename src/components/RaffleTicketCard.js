@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Text, View, StyleSheet, Animated, ActivityIndicator } from 'react-native';
 import LottieView from "react-native-web-lottie";
 import ProgressBar from './ProgressBar';
+import DiagonalGradientCard from './DiagonalGradientCard';
+import AssetPack from '../util/AssetsPack';
 
 const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, style }) => {
     const nextTicketIn = ticketCount * 20000 + 20000
@@ -33,88 +35,85 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, style }) => {
     };
 
     return (
-        <View style={styles.ticketsSection}>
+        <DiagonalGradientCard style={styles.ticketsSection}>
             <View style={styles.containerTotalTicket}>
                 <LottieView
                     style={styles.lottieLuckyResultAnimation}
-                    source={require("../assets/lotties/lottieTicketEntry.json")}
+                    source={AssetPack.lotties.TICKET_ENTRY}
                     autoPlay
                     speed={1}
-                    loop={false}
-                />
-                <Text style={styles.ticketTitle}>TOTAL RAFFLE TICKETS EARNED</Text>
+                    loop={false} />
+                <Text style={styles.ticketTitle}>Total Raffle Tickets Earned</Text>
                 {loading ? (
                     <LoadingView />
                 ) : (
                     <Text style={styles.resultPoints}>{ticketCount}</Text>
                 )}
             </View>
-            <View
-                style={{
-                    backgroundColor: "#4B595D",
-                    height: 1,
-                    width: "100%",
-                    marginVertical: 8,
-                }}
-            />
-            <View style={styles.containerTotalTicket}>
+            <View style={{
+                backgroundColor: "#4B595D",
+                height: 1,
+                width: "100%",
+                marginVertical: 16,
+            }} />
+            <View style={styles.containerNextTicket}>
                 <Text style={styles.nextTicketText}>Next Ticket</Text>
                 <Text style={styles.ticketProgress}>
                     {`${parseInt(progress, 10)} / ${nextTicketIn}`}{" "}
                 </Text>
             </View>
-
+            <ProgressBar progress={progress / nextTicketIn} color="#FFD89D" trackColor="#131313" style={styles.progressBar} />
             <View style={styles.sliderContainer}>
-                <ProgressBar progress={progress / nextTicketIn} color="#FFD89D" trackColor="#131313" style={styles.progressBar} />
+
             </View>
-        </View>
+        </DiagonalGradientCard>
     );
 };
 
 const styles = StyleSheet.create({
     ticketsSection: {
-        marginTop: 20,
-        justifyContent: "center",
-        alignItems: "center",
-        border: "1px solid #4B595D",
-        borderRadius: 12,
-        padding: 8,
+        marginTop: 24,
         paddingHorizontal: 20,
-        paddingVertical: 10,
+        paddingVertical: 24,
     },
     ticketTitle: {
-        flex: 1,
-        fontFamily: "Teko-Medium",
-        fontSize: 18,
+        fontFamily: "Inter-Medium",
+        fontSize: 16,
         color: "#fff",
     },
     nextTicketText: {
         fontFamily: "Inter-SemiBold",
-        fontSize: 16,
+        fontSize: 12,
         color: "#fff",
     },
     ticketProgress: {
         fontFamily: "Inter-SemiBold",
-        fontSize: 16,
+        fontSize: 12,
         color: "#fff",
     },
     containerTotalTicket: {
         flexDirection: "row",
-        justifyContent: "space-between",
         alignItems: "center",
         width: "100%",
     },
-    sliderContainer: {
+    containerNextTicket: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
         width: "100%",
-        marginVertical: 10,
-        justifyContent: "center",
-        paddingHorizontal: 0,
     },
     lottieLuckyResultAnimation: {
         width: 25,
         height: 25,
         marginTop: 0,
         marginLeft: 0,
+        marginRight: 8,
     },
+    progressBar: {
+        width: "100%",
+        justifyContent: "center",
+        marginTop: 7,
+        paddingHorizontal: 0,
+    }
 });
 export default RaffleTicketCard;

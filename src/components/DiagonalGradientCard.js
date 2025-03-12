@@ -13,8 +13,6 @@ const DiagonalGradientCard = ({ children, style }) => {
 
 const styles = StyleSheet.create({
     card: {
-        flex: 1,
-        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         border: "1px solid #4B595D",

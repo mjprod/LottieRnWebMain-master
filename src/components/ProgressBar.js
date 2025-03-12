@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet, Animated } from 'react-native';
 
 const ProgressBar = ({ progress, style }) => {
-    const width = progress*100 + '%';
+    const width = progress * 100 + '%';
 
     return (
         <View style={{ ...styles.progressBar, ...style }}>
@@ -13,7 +13,7 @@ const ProgressBar = ({ progress, style }) => {
 
 const styles = StyleSheet.create({
     progressBar: {
-        height: 20,
+        height: 15,
         flexDirection: "row",
         width: '100%',
         backgroundColor: '#131313',

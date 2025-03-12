@@ -41,6 +41,7 @@ const AssetPack = {
     THUMBS_UP: require("./../assets/lotties/lottieThumbsUp.json"),
     CONFETTI: require("../assets/lotties/lottieConfetti.json"),
     COUNT_DOWN: require("../assets/lotties/lottieInitialCountdown.json"),
+    TICKET_ENTRY: require("../assets/lotties/lottieTicketEntry.json"),
   },
 };
 

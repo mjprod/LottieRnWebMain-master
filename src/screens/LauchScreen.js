@@ -193,7 +193,7 @@ const LauchScreen = () => {
             <View style={styles.luckySymbols}></View>
           </StatCard>
         </View>
-        <RaffleTicketCard score={initialScore} ticketCount={initialTicketCount}/>
+        <RaffleTicketCard score={initialScore} ticketCount={initialTicketCount} />
         <GameButton
           style={{ marginVertical: 24, width: "100%" }}
           text="Play Now"
