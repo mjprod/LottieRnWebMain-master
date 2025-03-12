@@ -91,7 +91,6 @@ const ScratchLuckyGame = () => {
     setScore(initialScore);
     setTicketCount(initialTicketCount);
     setLuckySymbolCount(initialLuckySymbolCount);
-    console.log("initialScratchCardLeft", initialScratchCardLeft);
     updateThemeSequence(initialScratchCardLeft);
     // setScratchCardLeft(initialScratchCardLeft);
   }, [
@@ -110,7 +109,6 @@ const ScratchLuckyGame = () => {
     // setScratchCardLeft(numberOfCards);
   }, []);
 
-  // Update the user state when the response is received
   useEffect(() => {
     if (response && response.user) {
       setUser(response.user);

@@ -11,15 +11,26 @@ import PurplePill from "./PurplePill";
 import LinearGradient from "react-native-web-linear-gradient";
 import { DIMEN_PAGE_MARGIN, COLOR_BACKGROUND } from "../util/constants";
 import AlphaView from "./AlphaView";
+import { useNavigate } from "react-router";
 
 const TopBannerNav = ({
   title = "Be in to win Prizes!",
   subtitle = "Scratch for more chances to win!",
   backgroundImage = AssetPack.backgrounds.TOP_NAV_BACKGROUND,
-  onBackPress = () => { },
+  onBackPress,
   hasBackButton = false,
   showAlphaView = false,
 }) => {
+  const navigate = useNavigate();
+
+  const onBackPressLocal = () => {
+    if (onBackPress) {
+      onBackPress();
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <ImageBackground
       style={{
@@ -33,7 +44,7 @@ const TopBannerNav = ({
         style={styles.linearGradient}
       >
         {hasBackButton && (
-          <TouchableOpacity onPress={onBackPress}>
+          <TouchableOpacity onPress={onBackPressLocal}>
             <Image
               resizeMode="contain"
               style={styles.arrowIcon}

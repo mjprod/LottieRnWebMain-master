@@ -25,11 +25,20 @@ const shuffleArray = (array) => {
 };
 
 // Function to generate the sequence with each theme repeated 3 times consecutively
-const getRandomThemesArray = () => {
+const getRandomThemesArray = (numberOfCards) => {
   const themeValues = shuffleArray(Object.values(ThemeEnum)); // Shuffle themes
+  let themesArray = [];
 
-  // Create the sequence with each theme appearing 3 times consecutively
-  const themesArray = themeValues.flatMap((theme) => Array(3).fill(theme));
+  while (themesArray.length < numberOfCards) {
+    for (const theme of themeValues) {
+      if (themesArray.length + 3 <= numberOfCards) {
+        themesArray.push(...Array(3).fill(theme));
+      } else {
+        themesArray.push(...Array(numberOfCards - themesArray.length).fill(theme));
+        break;
+      }
+    }
+  }
 
   return themesArray;
 };
@@ -94,6 +103,7 @@ export const ThemeProvider = ({ children }) => {
   const updateThemeSequence = (numberOfCards) => {
     console.log(`Updating theme sequence with ${numberOfCards} cards`);
     const newThemeSequence = getRandomThemesArray(numberOfCards);
+    console.log("New themeSequence:", newThemeSequence);
     setThemeSequence(newThemeSequence);
     setCurrentThemeIndex(0); // Reset to the first theme when the sequence is updated
   };

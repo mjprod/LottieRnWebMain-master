@@ -46,6 +46,7 @@ const GameOverScreen = () => {
                 setInitialScore(response.user.total_score || 0);
                 setInitialTicketCount(response.user.ticket_balance || 0);
                 game.luckySymbolCount = response.user.lucky_symbol_balance || 0;
+                setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
                 setInitialScratchCardLeft(response.user.card_balance || 0);
                 setInitialUserData(response.user);
             }

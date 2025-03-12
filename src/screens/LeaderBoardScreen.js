@@ -40,10 +40,6 @@ const LeaderBoardScreen = () => {
     }
   }, [location]);
 
-  const handleBackPress = () => {
-    navigate(-1);
-  };
-
   useEffect(() => {
     if (response) {
       if (response.user) {
@@ -65,6 +61,7 @@ const LeaderBoardScreen = () => {
       }
     }
   }, [response]);
+  
   const handlePlayNowButtonPress = () => {
     navigate("/game", {
       state: {
@@ -77,10 +74,7 @@ const LeaderBoardScreen = () => {
   }
   return (
     <ScrollView style={styles.container}>
-      <TopBannerNav
-        hasBackButton={initialUserData ? true : false}
-        onBackPress={handleBackPress}
-      />
+      <TopBannerNav hasBackButton={initialUserData ? true : false} />
       <View style={{ marginHorizontal: 25 }}>
         <SectionTitle text="LeaderBard" style={{ marginBottom: 10 }} />
         <LeaderBoardList

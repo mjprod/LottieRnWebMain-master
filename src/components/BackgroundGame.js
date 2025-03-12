@@ -25,7 +25,7 @@ export const BackgroundGame = ({ source, showAlphaView }) => {
   return (
     <View style={isMobile ? styles.containerMobile : styles.container}>
       {/* NavLayout */}
-      <TopBannerNav showAlphaView={showAlphaView} />
+      <TopBannerNav showAlphaView={showAlphaView} hasBackButton />
 
       {/* Video */}
       <View style={styles.videoContainer}>
