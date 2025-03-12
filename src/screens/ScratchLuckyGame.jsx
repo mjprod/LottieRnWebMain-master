@@ -25,6 +25,7 @@ import useApiRequest from "../hook/useApiRequest.js";
 import { useSound } from "../hook/useSoundPlayer.js";
 import { useTheme } from "../hook/useTheme.js";
 import AssetPack from "../util/AssetsPack.js";
+import { userId } from "../global/Settings.js";
 
 const { width } = Dimensions.get("window");
 
@@ -45,9 +46,10 @@ const ScratchLuckyGame = () => {
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
   const [user, setUser] = useState(null);
-
+  const [betaBlockId, setBetaBlockId] = useState(null);
 
   const {
+    score,
     setScore,
     gameOver,
     setGameOver,
@@ -68,7 +70,16 @@ const ScratchLuckyGame = () => {
     updateThemeSequence
   } = useTheme();
 
-  const { loading, error, response, updateLuckySymbol, fetchUserDetails } = useApiRequest();
+  const {
+    loading,
+    error,
+    response,
+    updateLuckySymbol,
+    updateCardPlayed,
+    fetchUserDetails,
+    updateScore
+  } = useApiRequest();
+
   const { username, email, id } = location.state;
   const { setStartPlay } = useSound();
 
@@ -91,6 +102,7 @@ const ScratchLuckyGame = () => {
       setTicketCount(user.ticket_balance);
       setLuckySymbolCount(user.lucky_symbol_balance);
       updateThemeSequence(user.card_balance);
+      setBetaBlockId(user.current_beta_block);
     }
   }, [user]);
 
@@ -141,6 +153,7 @@ const ScratchLuckyGame = () => {
     setSkipToFinishLuckyVideo(false);
     setWinLuckySymbolVideo(false);
 
+    updateScore(user.user_id, score)
     setTimeout(() => {
       if (luckySymbolCount < 2) {
         setTimeout(() => {
@@ -148,7 +161,7 @@ const ScratchLuckyGame = () => {
             console.log(nextTheme[0]);
             console.log(currentTheme);
             console.log(currentTheme === nextTheme);
-
+            
             if (currentTheme === nextTheme) {
               setTimeout(() => {
                 setReset(true);
@@ -268,6 +281,12 @@ const ScratchLuckyGame = () => {
       });
     }
   }, [reset, setReset]);
+
+  useEffect(() => {
+    if (user) {
+      updateCardPlayed(user.user_id, betaBlockId)
+    }
+  }, [scratched]);
 
   const handleClick = () => {
     addLuckySymbol();

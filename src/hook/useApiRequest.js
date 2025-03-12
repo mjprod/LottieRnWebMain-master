@@ -34,6 +34,27 @@ const useApiRequest = () => {
     }
   };
 
+  const silentFetchData = async (config) => {
+    const { url, method = "GET", headers, body } = config;
+    showConsoleMessage("API Request Config:", config)
+    try {
+      const res = await fetch(url, {
+        method,
+        headers,
+        body: body ? JSON.stringify(body) : null,
+      });
+      showConsoleMessage("API Response:", res)
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json();
+      showConsoleMessage("API Response Data:", data)
+    } catch (err) {
+      showConsoleError("API Error:", err)
+    } finally {
+    }
+  };
+
   const updateLuckySymbol = async (id, lucky_symbol) => {
     const config = {
       url: SERVER + "/updateLuckySymbol",
@@ -112,6 +133,36 @@ const useApiRequest = () => {
     await fetchData(config);
   };
 
+  const updateCardPlayed = async (user_id, beta_block_id) => {
+    const config = {
+      url: SERVER + "/update_card_played",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        user_id,
+        beta_block_id,
+      },
+    };
+    await silentFetchData(config);
+  };
+
+  const updateScore = async (user_id, score) => {
+    const config = {
+      url: SERVER + "/update_score",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        user_id,
+        score,
+      },
+    };
+    await silentFetchData(config);
+  };
+
   return {
     loading,
     error,
@@ -121,7 +172,9 @@ const useApiRequest = () => {
     fetchUserDetails,
     getDailyQuestion,
     postDailyAnswer,
-    getLeaderBoard
+    getLeaderBoard,
+    updateCardPlayed,
+    updateScore
   };
 };
 
