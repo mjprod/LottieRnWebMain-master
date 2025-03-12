@@ -9,7 +9,7 @@ import {
 import AssetPack from "../util/AssetsPack";
 import PurplePill from "./PurplePill";
 import LinearGradient from "react-native-web-linear-gradient";
-import { DIMEN_PAGE_MARGIN, COLOR_BACKGROUND } from "../util/constants";
+import { COLOR_BACKGROUND, Colors, Dimentions, Fonts } from "../util/constants";
 import AlphaView from "./AlphaView";
 import { useNavigate } from "react-router";
 
@@ -35,9 +35,8 @@ const TopBannerNav = ({
     <ImageBackground style={{ alignItems: "start" }} source={backgroundImage} >
       <AlphaView showAlphaView={showAlphaView} />
       <LinearGradient
-        colors={["#00000000", "#00000000", COLOR_BACKGROUND]}
-        style={styles.linearGradient}
-      >
+        colors={[Colors.transparent, Colors.transparent, Colors.background]}
+        style={styles.linearGradient}>
         {hasBackButton && (
           <TouchableOpacity onPress={onBackPressLocal}>
             <Image
@@ -49,9 +48,7 @@ const TopBannerNav = ({
         )}
         <PurplePill
           text={"Beta Competition"}
-          style={styles.betaCompetitionText}
-        />
-
+          style={styles.betaCompetitionText} />
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subtitle}>{subtitle}</Text>
       </LinearGradient>
@@ -62,29 +59,31 @@ const TopBannerNav = ({
 const styles = StyleSheet.create({
   arrowIcon: { flex: 1, width: 21, height: 21 },
   betaCompetitionText: {
-    marginBottom: 20,
+    marginBottom: Dimentions.pageMargin,
     marginTop: 20,
     letterSpacing: 1,
   },
   title: {
-    fontFamily: "Inter-Bold",
+    fontFamily: Fonts.TekoMedium,
     color: "#fff",
-    fontSize: 20,
-    marginBottom: 10,
+    fontSize: 28,
+    textTransform: "uppercase",
   },
   subtitle: {
+    fontFamily: Fonts.InterRegular,
     color: "white",
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: "bold",
     marginBottom: 20,
   },
   linearGradient: {
     width: "100%",
     height: "auto",
-    paddingHorizontal: DIMEN_PAGE_MARGIN,
+    paddingHorizontal: Dimentions.pageMargin,
     flex: 1,
     alignItems: "start",
-    paddingVertical: DIMEN_PAGE_MARGIN,
+    paddingBottom: Dimentions.sectionMargin,
+    paddingTop: Dimentions.pageMargin,
   },
 });
 

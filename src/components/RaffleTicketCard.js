@@ -5,7 +5,7 @@ import ProgressBar from './ProgressBar';
 import DiagonalGradientCard from './DiagonalGradientCard';
 import AssetPack from '../util/AssetsPack';
 
-const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, style }) => {
+const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle }) => {
     const nextTicketIn = ticketCount * 20000 + 20000
     const [progress, setProgress] = useState(0);
 
@@ -35,7 +35,7 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, style }) => {
     };
 
     return (
-        <DiagonalGradientCard style={styles.ticketsSection}>
+        <DiagonalGradientCard style={{ ...styles.ticketsSection, ...containerStyle }}>
             <View style={styles.containerTotalTicket}>
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: "flex-start", alignItems: 'center' }}>
                     <LottieView style={styles.lottieLuckyResultAnimation}

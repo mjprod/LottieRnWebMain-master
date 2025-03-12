@@ -9,13 +9,14 @@ import DailyCardsContainer from "../components/DailyCardsContainer";
 import { useLocation, useNavigate } from "react-router-dom";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
-
+import LinkButton from "../components/LinkButton";
 import NextDrawCard from "../components/NextDrawCard";
 import TopBannerNav from "../components/TopBannerNav";
 import { isValidAnswer } from "../util/Validator";
 import { getCurrentDate, convertUTCToLocal, } from "../util/Helpers";
 import { DailySetData } from "../data/DailyCardData";
-import { DailyCardStatus } from "../util/constants";
+import { DailyCardStatus, Dimentions } from "../util/constants";
+import GamesAvailableCard from "../components/GamesAvailableCard";
 
 const DailyScreen = () => {
   const navigate = useNavigate();
@@ -160,29 +161,22 @@ const DailyScreen = () => {
           <LoadingView />
         ) : (
           <ProfileHeader
-            containerStyle={{ marginTop: -40 }}
+            containerStyle={{ marginTop: -30, marginBottom: Dimentions.pageMargin }}
             id={userData.user_id}
             name={userData.name}
           />
         )}
       </View>
-      <View
-        style={[
-          styles.container,
-          { marginLeft: 25, marginRight: 30, marginBottom: 10 },
-        ]}
-      >
+      <View style={[styles.container, { marginLeft: Dimentions.pageMargin, marginRight: Dimentions.pageMargin, marginBottom: Dimentions.sectionMargin }]}>
         {!isSubmitted && (
           <QuestionOfTheDay
+            style={{ marginBottom: Dimentions.sectionMargin }}
             question={`${question.question}`}
-            onSubmit={onSubmit}
-          />
+            onSubmit={onSubmit} />
         )}
-
         {isSubmitted && !isThumbsUpAnimationFinished && (
           <Animated.View
-            style={[styles.box, { opacity: fadeAnim, height: slideAnim }]}
-          >
+            style={[styles.box, { opacity: fadeAnim, height: slideAnim }]}>
             <LottieView
               style={{
                 width: 258,
@@ -194,16 +188,21 @@ const DailyScreen = () => {
               autoPlay
               speed={1}
               loop={false}
-              onAnimationFinish={handleThumbsUpAnimationFinish}
-            />
+              onAnimationFinish={handleThumbsUpAnimationFinish} />
           </Animated.View>
         )}
         <DailyCardsContainer
           currentWeek={currentWeek}
           totalWeeks={totalWeeks}
           days={days}
-          onCardPressed={handleCardPressed}
-        />
+          onCardPressed={handleCardPressed} />
+        <LinkButton
+          style={{ marginVertical: Dimentions.sectionMargin }}
+          text={"How To Play Turbo Scratch >"}
+          handlePress={() => navigate("/how_to_play")} />
+        <GamesAvailableCard
+          style={{ marginVertical: 24 }}
+          cardsLeft={userData.card_balance} />
         <NextDrawCard />
       </View>
     </ScrollView>

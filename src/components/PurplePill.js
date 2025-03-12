@@ -1,31 +1,32 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
+import { Fonts } from "../util/constants";
+import LinearGradient from 'react-native-web-linear-gradient';
 
 const PurplePill = ({ text, style }) => {
   return (
-    <Text style={{ ...styles.betaCompetitionText, ...style }}>{text}</Text>
+    <LinearGradient colors={["#533166", "#613D7B", "#614176"]}
+      locations={[0, 0.50, 1]}
+      start={{ x: 0.0, y: 1 }}
+      end={{ x: 0.0, y: 1.0 }}
+      style={{ ...styles.background, ...style }}>
+      <Text style={{ ...styles.betaCompetitionText }}>{text}</Text>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
-  betaCompetitionText: {
-    fontFamily: "Teko-Medium",
-    color: "white",
-    fontSize: 14,
-    textTransform: "uppercase",
-    paddingRight: 10,
-    paddingLeft: 10,
-    paddingTop: 2,
-    backgroundColor: "#523069",
-    borderRadius: 25,
+  background: {
+    borderRadius: 63,
     borderColor: "#7F48A7",
     borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    letterSpacing: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 17,
+  },
+  betaCompetitionText: {
+    fontFamily: Fonts.InterRegular,
+    color: "white",
+    fontSize: 14,
   },
 });
 

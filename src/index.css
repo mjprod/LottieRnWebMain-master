@@ -13,26 +13,46 @@
 }
 
 @font-face {
-  font-family: 'Teko-Medium';
-  src: url('./assets/fonts/Teko-Medium.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Inter-Medium';
-  src: url('./assets/fonts/Inter-Medium.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Inter-Medium';
-  src: url('./assets/fonts/Inter-Medium.ttf') format('truetype');
-}
-
-@font-face {
   font-family: 'Inter-Bold';
   src: url('./assets/fonts/Inter-Bold.ttf') format('truetype');
 }
 
 @font-face {
+  font-family: 'Inter-ExtraBold';
+  src: url('./assets/fonts/Inter-ExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter-Medium';
+  src: url('./assets/fonts/Inter-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter-Regular-Italic';
+  src: url('./assets/fonts/Inter-Regular-Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter-Regular';
+  src: url('./assets/fonts/Inter-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter-SemiBold-Italic';
+  src: url('./assets/fonts/Inter-SemiBold-Italic.ttf') format('truetype');
+}
+
+@font-face {
   font-family: 'Inter-SemiBold';
   src: url('./assets/fonts/Inter-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Teko-Medium';
+  src: url('./assets/fonts/Teko-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Teko-Regular';
+  src: url('./assets/fonts/Teko-Regular.ttf') format('truetype');
 }

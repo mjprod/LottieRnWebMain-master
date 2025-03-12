@@ -13,14 +13,12 @@ import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
-import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import TopBannerNav from "../components/TopBannerNav";
 import SectionTitle from "../components/SectionTitle";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
-import { LeaderBoardStatus } from "../util/constants";
+import { Colors, Dimentions, LeaderBoardStatus } from "../util/constants";
 import NextDrawCard from "../components/NextDrawCard";
-import { COLOR_BACKGROUND } from "../util/constants";
 import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
 import RaffleTicketCard from "../components/RaffleTicketCard";
 import StatCard from "../components/StatCard";
@@ -153,49 +151,57 @@ const LauchScreen = () => {
   };
 
   return (
-    <ScrollView style={{ backgroundColor: COLOR_BACKGROUND }}>
+    <ScrollView style={{ backgroundColor: Colors.background }}>
       <View style={styles.header}>
         <TopBannerNav />
         {loading ? (
           <LoadingView />
         ) : (
           <ProfileHeader
-            containerStyle={{ marginTop: -40 }}
+            containerStyle={{ marginBottom: Dimentions.sectionMargin, marginTop: -Dimentions.sectionMargin }}
             id={initialUserData.user_id}
-            name={initialUserData.name}
-          />
+            name={initialUserData.name} />
         )}
       </View>
-      <View
-        style={[styles.container, { marginLeft: 18, marginRight: 18, marginBottom: 10 },]}>
-        <SectionTitle text={"Statistics"} />
-        <View style={styles.resultRow}>
-          <StatCard title="Total Points" stat={initialScore} loading={loading} />
-          <View style={{ width: 10 }} />
-          <StatCard title="LUCKY SYMBOLS" loading={loading}>
-            <ImageBackground
-              resizeMode="contain"
-              source={AssetPack.backgrounds.LUCKY_SYMBOL}
-              style={styles.imageBackgroundLuckySymbol}>
-              <LottieLuckySymbolCoinSlot topLayout={false} />
-            </ImageBackground>
-            <View style={styles.luckySymbols}></View>
-          </StatCard>
+      <View style={{ ...styles.container }}>
+        <View style={{ marginLeft: Dimentions.pageMargin, marginRight: Dimentions.pageMargin, marginBottom: Dimentions.sectionMargin }}>
+          <SectionTitle text={"Statistics"} />
+          <View style={styles.resultRow}>
+            <StatCard title="Total Points" stat={initialScore} loading={loading} />
+            <View style={{ width: 10 }} />
+            <StatCard title="LUCKY SYMBOLS" loading={loading}>
+              <ImageBackground
+                resizeMode="contain"
+                source={AssetPack.backgrounds.LUCKY_SYMBOL}
+                style={styles.imageBackgroundLuckySymbol}>
+                <LottieLuckySymbolCoinSlot topLayout={false} />
+              </ImageBackground>
+              <View style={styles.luckySymbols}></View>
+            </StatCard>
+          </View>
+          <RaffleTicketCard score={initialScore} ticketCount={initialTicketCount} />
+          <GameButton
+            style={{ marginTop: Dimentions.pageMargin, width: "100%" }}
+            text="Play Now"
+            onPress={() => handleStartGame()} />
         </View>
-        <RaffleTicketCard score={initialScore} ticketCount={initialTicketCount} />
-        <GameButton
-          style={{ marginVertical: 24, width: "100%" }}
-          text="Play Now"
-          onPress={() => handleStartGame()} />
-        <SectionTitle
-          text="LeaderBard"
-          viewAllText="View All"
-          viewAllAction={handleViewAllPress} />
-        <LeaderBoardList leaderboardData={leaderBoardData} />
-        <GamesAvailableCard
-          style={{ marginVertical: 24 }}
-          cardsLeft={initialScratchCardLeft} />
-        <NextDrawCard style={{ marginVertical: 24 }} />
+        <View style={{
+          paddingTop: Dimentions.sectionMargin,
+          paddingHorizontal:
+            Dimentions.pageMargin,
+          paddingBottom: Dimentions.sectionMargin,
+          borderRadius: 16
+        }}>
+          <SectionTitle
+            text="LeaderBard"
+            viewAllText="View All"
+            viewAllAction={handleViewAllPress} />
+          <LeaderBoardList leaderboardData={leaderBoardData} />
+          <GamesAvailableCard
+            style={{ marginVertical: 24 }}
+            cardsLeft={initialScratchCardLeft} />
+          <NextDrawCard style={{ marginVertical: 24 }} />
+        </View>
       </View>
     </ScrollView>
   );
