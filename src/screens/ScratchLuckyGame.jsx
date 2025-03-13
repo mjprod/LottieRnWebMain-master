@@ -155,7 +155,7 @@ const ScratchLuckyGame = () => {
 
     updateScore(user.user_id, score)
     setTimeout(() => {
-      if (luckySymbolCount < 2) {
+      if (luckySymbolCount <= 2) {
         setTimeout(() => {
           if (scratchCardLeft > 1) {
             console.log(nextTheme[0]);
