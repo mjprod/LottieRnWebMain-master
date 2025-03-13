@@ -14,7 +14,6 @@ import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 import LeaderBoardScreen from "./screens/LeaderBoardScreen";
 import HowToPlayScreen from "./screens/HowToPlayScreen";
 import StartScreen from "./screens/StartScreen";
-import { COLOR_BACKGROUND } from "./util/constants";
 
 const { height, width } = Dimensions.get("window");
 

@@ -121,7 +121,6 @@ const ScratchLuckyGame = () => {
 
   const saveLuckySymbol = async (luckySymbol) => {
     setLuckySymbolCount(luckySymbol);
-    updateLuckySymbol(user.user_id, luckySymbol);
   };
 
   const browserHandler = {
@@ -185,15 +184,19 @@ const ScratchLuckyGame = () => {
   };
 
   const addLuckySymbol = () => {
+    console.log("User ID:", user.user_id)
     if (luckySymbolCount > 2) {
+      updateLuckySymbol(user.user_id, 0)
       saveLuckySymbol(0);
     } else if (luckySymbolCount === 2) {
       saveLuckySymbol(luckySymbolCount + 1);
       setTimeout(() => {
         decrementLuckySymbol(3);
       }, 300);
+      updateLuckySymbol(user.user_id, 0)
     } else {
       saveLuckySymbol(luckySymbolCount + 1);
+      updateLuckySymbol(user.user_id, luckySymbolCount + 1)
     }
   };
 

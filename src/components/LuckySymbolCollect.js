@@ -27,8 +27,6 @@ const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo }) => {
   );
   const [showBonusCard, setShowBonusCard] = useState(false);
 
-  const { updateLuckySymbol } = useApiRequest();
-
   const bounceAnim = useRef(new Animated.Value(1)).current;
   const lottieAnimRef = useRef(null);
 
@@ -81,8 +79,6 @@ const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo }) => {
       setCollectLuckySymbolVideo(false);
       setTimeout(() => {
         setLuckySymbolCount(0);
-
-        updateLuckySymbol(userId, 0);
         nextCard();
       }, 1200);
     }, 1000);

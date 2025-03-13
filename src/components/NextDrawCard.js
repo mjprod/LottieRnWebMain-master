@@ -4,7 +4,7 @@ import TimerComponent from "./TimerComponent";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
 import PurplePill from "./PurplePill";
-import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
+
 const NextDrawCard = ({ style }) => {
   return (
     <View style={{ ...styles.container, ...style }}>
@@ -15,16 +15,14 @@ const NextDrawCard = ({ style }) => {
           justifyContent: "space-between",
         }}
         resizeMode="stretch"
-        source={AssetPack.backgrounds.NEXT_DRAW_CARD}
-      >
+        source={AssetPack.backgrounds.NEXT_DRAW_CARD}>
         <View style={styles.topSection}>
           <View
             style={{
               flexDirection: "row",
               flexWrap: "wrap",
               marginBottom: 10,
-            }}
-          >
+            }}>
             <PurplePill text={"Beta Competition"} />
           </View>
 
@@ -38,8 +36,7 @@ const NextDrawCard = ({ style }) => {
         <View style={styles.bottomSection}>
           <Image
             style={{ width: 145, height: 46 }}
-            source={AssetPack.logos.TURBO_SCRATCH}
-          />
+            source={AssetPack.logos.TURBO_SCRATCH} />
           <TimerComponent />
         </View>
         <LottieView
@@ -47,8 +44,7 @@ const NextDrawCard = ({ style }) => {
           source={AssetPack.lotties.CONFETTI}
           speed={1}
           loop={true}
-          autoPlay={true}
-        />
+          autoPlay={true} />
       </ImageBackground>
     </View>
   );
