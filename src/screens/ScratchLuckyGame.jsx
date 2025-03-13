@@ -121,6 +121,7 @@ const ScratchLuckyGame = () => {
 
   const saveLuckySymbol = async (luckySymbol) => {
     setLuckySymbolCount(luckySymbol);
+    updateLuckySymbol(user.user_id, luckySymbol);
   };
 
   const browserHandler = {
@@ -161,7 +162,7 @@ const ScratchLuckyGame = () => {
             console.log(nextTheme[0]);
             console.log(currentTheme);
             console.log(currentTheme === nextTheme);
-            
+
             if (currentTheme === nextTheme) {
               setTimeout(() => {
                 setReset(true);
@@ -382,8 +383,7 @@ const ScratchLuckyGame = () => {
     <View style={styles.fullScreen}>
       <BackgroundGame
         showAlphaView={scratchStarted || gameOver}
-        source={backgroundLoop}
-      />
+        source={backgroundLoop} />
       <View style={styles.containerOverlay}>
         <ImageBackground
           source={AssetPack.backgrounds.GAME}

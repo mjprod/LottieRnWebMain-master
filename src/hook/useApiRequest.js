@@ -55,20 +55,20 @@ const useApiRequest = () => {
     }
   };
 
-  const updateLuckySymbol = async (id, lucky_symbol) => {
+  const updateLuckySymbol = async (user_id, lucky_symbol) => {
     const config = {
-      url: SERVER + "/updateLuckySymbol",
+      url: SERVER + "/update_lucky_symbol",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: {
-        id,
+        user_id,
         lucky_symbol,
       },
     };
 
-    await fetchData(config);
+    await silentFetchData(config);
   };
 
   const fetchUserDetails = async (user_id, name, email) => {
