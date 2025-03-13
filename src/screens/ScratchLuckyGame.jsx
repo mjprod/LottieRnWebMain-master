@@ -25,7 +25,6 @@ import useApiRequest from "../hook/useApiRequest.js";
 import { useSound } from "../hook/useSoundPlayer.js";
 import { useTheme } from "../hook/useTheme.js";
 import AssetPack from "../util/AssetsPack.js";
-import { userId } from "../global/Settings.js";
 
 const { width } = Dimensions.get("window");
 

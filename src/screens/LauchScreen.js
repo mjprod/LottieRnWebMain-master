@@ -23,9 +23,11 @@ import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
 import RaffleTicketCard from "../components/RaffleTicketCard";
 import StatCard from "../components/StatCard";
 import AssetPack from "../util/AssetsPack";
+import { useGame } from "../context/GameContext";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
+  const {setLuckySymbolCount} = useGame();
 
   const [initialScore, setInitialScore] = useState(0);
   const [initialTicketCount, setInitialTicketCount] = useState(0);
@@ -69,6 +71,7 @@ const LauchScreen = () => {
         setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
         setInitialScratchCardLeft(response.user.card_balance || 0);
         setInitialUserData(response.user);
+        setLuckySymbolCount(response.user.lucky_symbol_balance);
 
         const userData = response.user;
         const currentWeek = response.current_week;
