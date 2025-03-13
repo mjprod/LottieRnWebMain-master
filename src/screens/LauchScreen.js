@@ -27,7 +27,7 @@ import { useGame } from "../context/GameContext";
 
 const LauchScreen = () => {
   const navigate = useNavigate();
-  const {setLuckySymbolCount} = useGame();
+  const { setLuckySymbolCount } = useGame();
 
   const [initialScore, setInitialScore] = useState(0);
   const [initialTicketCount, setInitialTicketCount] = useState(0);
@@ -54,13 +54,17 @@ const LauchScreen = () => {
       fetchUserDetails(id, username, email);
       return;
     }
-    navigate("/start", {
-      state: {
-        username: initialUserData.name,
-        email: initialUserData.email,
-        id: initialUserData.user_id,
-      },
-    });
+    if (initialScratchCardLeft === 0) {
+      showSnackbar("You don't have any cards left. Please wait till next day to play the game!")
+    } else {
+      navigate("/start", {
+        state: {
+          username: initialUserData.name,
+          email: initialUserData.email,
+          id: initialUserData.user_id,
+        },
+      });
+    }
   };
 
   useEffect(() => {
