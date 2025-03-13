@@ -14,19 +14,7 @@ import { useSound } from "../hook/useSoundPlayer";
 import { useTheme } from "../hook/useTheme";
 import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import NumberTicker from "./NumberTicker";
-
-const backgroundTopLayout = require("./../assets/image/background_top_layout.png");
-const backgroundTopLayoutRed = require("./../assets/image/background_top_layout_red.png");
-const backgroundTopLayoutYellow = require("./../assets/image/background_top_layout_yellow.png");
-const backgroundTopLayoutGreen = require("./../assets/image/background_top_layout_green.png");
-
-const imageLuckySymbol = require("./../assets/image/icon_lucky_symbol.png");
-const imageTicket = require("./../assets/image/icon_ticket.png");
-const lottieCountDownBonus = require("../assets/lotties/lottieCountdownBonus.json");
-
-const lottieCombo1 = require("../assets/lotties/ComboHolderMaxVersion-2x.json");
-const lottieCombo2 = require("../assets/lotties/ComboHolderMaxVersion-3x.json");
-const lottieCombo3 = require("../assets/lotties/ComboHolderMaxVersion-4x.json");
+import AssetPack from "../util/AssetsPack";
 
 const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
   const { score, luckySymbolCount } = useGame();
@@ -35,29 +23,25 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
   const [countdownTimer, setCountdownTimer] = useState(0);
   const { gameCenterIcon } = useTheme();
 
-  // Animation control
   const [animationIndex, setAnimationIndex] = useState(0);
   const [playAnimation, setPlayAnimation] = useState(false);
-  const animations = [lottieCombo1, lottieCombo2, lottieCombo3];
+  const animations = [AssetPack.lotties.COMBO_2X, AssetPack.lotties.COMBO_3X, AssetPack.lotties.COMBO_4X];
 
   const lottieRef = useRef(null);
 
   const { isSoundEnabled } = useSound();
 
   const soundRefs = useRef({
-    //x2: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x2_G_.mp3`)], preload: true }),
-    //x3: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x3_C_plus.mp3`)], preload: true }),
-    //x4: new Howl({ src: [require(`./../assets/audio/${currentTheme}/x4_E_plus.mp3`)], preload: true }),
     x4: new Howl({
-      src: [require(`./../assets/sounds/combo.mp3`)],
+      src: [AssetPack.sounds.COMBO],
       preload: true,
     }),
     x3: new Howl({
-      src: [require(`./../assets/sounds/nice_combo.mp3`)],
+      src: [AssetPack.sounds.NICE_COMBO],
       preload: true,
     }),
     x2: new Howl({
-      src: [require(`./../assets/sounds/ultra_combo.mp3`)],
+      src: [AssetPack.sounds.ULTRA_COMBO],
       preload: true,
     }),
   });
@@ -161,13 +145,13 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
   // Function to determine background based on timer value
   const getBackground = (value) => {
     if (value >= 1 && value <= 2) {
-      return backgroundTopLayoutRed;
+      return AssetPack.backgrounds.GAME_TOP_LAYOUT_RED;
     } else if (value >= 3 && value <= 4) {
-      return backgroundTopLayoutYellow;
+      return AssetPack.backgrounds.GAME_TOP_LAYOUT_YELLOW;
     } else if (value >= 5 && value <= 10) {
-      return backgroundTopLayoutGreen;
+      return AssetPack.backgrounds.GAME_TOP_LAYOUT_GREEN;
     } else {
-      return backgroundTopLayout;
+      return AssetPack.backgrounds.GAME_TOP_LAYOUT;
     }
   };
 
@@ -211,7 +195,7 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
               <View style={styles.rowCountDown}>
                 <LottieView
                   style={styles.lottieAnimation}
-                  source={lottieCountDownBonus}
+                  source={AssetPack.lotties.COUNT_DOWN_BONUS}
                   autoPlay
                   speed={1}
                   loop={false}
@@ -234,7 +218,7 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
             <View style={styles.viewRow}>
               <Image
                 style={{ width: 12, height: 12, marginBottom: 4 }}
-                source={imageLuckySymbol}
+                source={AssetPack.icons.LUCKY_SYMBOL}
               />
               <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
             </View>
@@ -265,7 +249,7 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
           <Text style={styles.textBottomRight}>3x Symbols = 1x</Text>
           <Image
             style={{ marginLeft: 3, width: 22, height: 22 }}
-            source={imageTicket}
+            source={AssetPack.icons.TICKET}
           />
         </View>
       </View>
