@@ -36,21 +36,21 @@ const useApiRequest = () => {
 
   const silentFetchData = async (config) => {
     const { url, method = "GET", headers, body } = config;
-    showConsoleMessage("API Request Config:", config)
+    showConsoleMessage("Silent API Request Config:", config)
     try {
       const res = await fetch(url, {
         method,
         headers,
         body: body ? JSON.stringify(body) : null,
       });
-      showConsoleMessage("API Response:", res)
+      showConsoleMessage("Silent API Response:", res)
       if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
+        throw new Error(`Silent HTTP error! status: ${JSON.stringify(res)}`);
       }
       const data = await res.json();
-      showConsoleMessage("API Response Data:", data)
+      showConsoleMessage("Silent API Response Data:", data)
     } catch (err) {
-      showConsoleError("API Error:", err)
+      showConsoleError("Silent API Error:", err)
     } finally {
     }
   };

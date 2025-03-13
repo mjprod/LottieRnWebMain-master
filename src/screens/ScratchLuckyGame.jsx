@@ -44,10 +44,11 @@ const ScratchLuckyGame = () => {
   const [winLuckySymbolVideo, setWinLuckySymbolVideo] = useState(false);
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
-  const [user, setUser] = useState(null);
   const [betaBlockId, setBetaBlockId] = useState(null);
 
   const {
+    user,
+    setUser,
     score,
     setScore,
     gameOver,
@@ -230,6 +231,7 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (scratchStarted) {
+      updateCardPlayed(user.user_id, user.current_beta_block)
       Animated.timing(marginTopAnim, {
         toValue: 6,
         duration: 300,
@@ -281,12 +283,6 @@ const ScratchLuckyGame = () => {
       });
     }
   }, [reset, setReset]);
-
-  useEffect(() => {
-    if (user) {
-      updateCardPlayed(user.user_id, betaBlockId)
-    }
-  }, [scratched]);
 
   const handleClick = () => {
     addLuckySymbol();

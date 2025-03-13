@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState } from "react";
 const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
+  const [user, setUser] = useState(null)
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [scratchStarted, setScratchStarted] = useState(false);
@@ -12,6 +13,8 @@ export const GameProvider = ({ children }) => {
   return (
     <GameContext.Provider
       value={{
+        user,
+        setUser,
         score,
         setScore,
         gameOver,
@@ -22,8 +25,7 @@ export const GameProvider = ({ children }) => {
         setLuckySymbolCount,
         ticketCount,
         setTicketCount,
-      }}
-    >
+      }}>
       {children}
     </GameContext.Provider>
   );

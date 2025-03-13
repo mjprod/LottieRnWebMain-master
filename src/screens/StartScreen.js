@@ -18,14 +18,13 @@ import { useGame } from "../context/GameContext";
 
 const GameOverScreen = () => {
     const navigate = useNavigate();
-    const game = useGame();
+    const { setUser, setLuckySymbolCount } = useGame();
 
     const backgroundResult = require("./../assets/image/background_game.png");
     const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
 
     const { fetchUserDetails, response } = useApiRequest();
 
-    const [timeLeft] = useTimeLeftForNextDraw();
     const location = useLocation();
 
     const { username, email, id } = location.state
@@ -42,9 +41,10 @@ const GameOverScreen = () => {
     useEffect(() => {
         if (response) {
             if (response.user) {
+                setUser(response.user)
                 setInitialScore(response.user.total_score || 0);
                 setInitialTicketCount(response.user.ticket_balance || 0);
-                game.luckySymbolCount = response.user.lucky_symbol_balance || 0;
+                setLuckySymbolCount(response.user.lucky_symbol_balance);
                 setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
                 setInitialScratchCardLeft(response.user.card_balance || 0);
                 setInitialUserData(response.user);
@@ -104,13 +104,7 @@ const GameOverScreen = () => {
                         <View style={styles.ticketsSection}>
                             <GamesAvailableCard style={{ width: "100%" }} cardsLeft={initialScratchCardLeft} />
                         </View>
-                        <TimerComponent
-                            style={{ marginVertical: 30 }}
-                            days={timeLeft.days}
-                            hours={timeLeft.hours}
-                            minutes={timeLeft.minutes}
-                            seconds={timeLeft.seconds}
-                        />
+                        <TimerComponent style={{ marginVertical: 30 }} />
                         <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column" }}>
                             <View style={styles.buttonContainer}>
                                 <View style={{ flex: 0.4, justifyContent: "flex-start" }}>
