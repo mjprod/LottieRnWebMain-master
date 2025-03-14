@@ -28,13 +28,12 @@ const LeaderBoardScreen = () => {
   }, []);
 
   useEffect(() => {
-    if (
-      location.pathname === "/leader_board" &&
-      location.state &&
-      location.state.initialUserData
-    ) {
-      setInitialUserData(location.state.initialUserData);
-      fetchUserDetails(location.state.initialUserData.user_id, location.state.initialUserData.name, location.state.initialUserData.email)
+    if (location.state) {
+      const id = location.state.user_id;
+      const username = location.state.name;
+      const email = location.state.email;
+
+      fetchUserDetails(id, username, email);
     }
   }, [location]);
 

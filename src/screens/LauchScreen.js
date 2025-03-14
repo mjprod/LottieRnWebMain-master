@@ -24,9 +24,11 @@ import RaffleTicketCard from "../components/RaffleTicketCard";
 import StatCard from "../components/StatCard";
 import AssetPack from "../util/AssetsPack";
 import { useGame } from "../context/GameContext";
+import useAppNavigation from "../hook/useAppNavigation";
 
 const LauchScreen = () => {
-  const navigate = useNavigate();
+  const appNavigation = useAppNavigation();
+
   const { setLuckySymbolCount } = useGame();
 
   const [initialScore, setInitialScore] = useState(0);
@@ -57,13 +59,7 @@ const LauchScreen = () => {
     if (initialScratchCardLeft === 0) {
       showSnackbar("You don't have any cards left. Please wait till next day to play the game!")
     } else {
-      navigate("/start", {
-        state: {
-          username: initialUserData.name,
-          email: initialUserData.email,
-          id: initialUserData.user_id,
-        },
-      });
+      appNavigation.goToStartPage(id, username, email);
     }
   };
 
@@ -80,13 +76,7 @@ const LauchScreen = () => {
         const userData = response.user;
         const currentWeek = response.current_week;
         if (response.daily === null || response.daily.length === 0) {
-          navigate("/daily", {
-            state: {
-              user_id: userData.user_id,
-              name: userData.name,
-              email: userData.email,
-            },
-          });
+          appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
         } else {
           const currentWeekDaily = response.daily.find(
             (item) => item.current_week === currentWeek
@@ -100,24 +90,12 @@ const LauchScreen = () => {
             );
             if (!hasCurrentDate) {
               console.log("Daily Question not answered.", currentWeekDaily);
-              navigate("/daily", {
-                state: {
-                  user_id: userData.user_id,
-                  name: userData.name,
-                  email: userData.email,
-                },
-              });
+              appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
             } else {
               console.log("Daily Question already answered.");
             }
           } else {
-            navigate("/daily", {
-              state: {
-                user_id: userData.user_id,
-                name: userData.name,
-                email: userData.email,
-              },
-            });
+            appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
           }
         }
       } else {
@@ -150,11 +128,7 @@ const LauchScreen = () => {
   };
 
   const handleViewAllPress = () => {
-    navigate("/leader_board", {
-      state: {
-        initialUserData,
-      },
-    });
+    appNavigation.goToLeaderBoardPage(initialUserData.user_id, initialUserData.name, initialUserData.email)
   };
 
   return (

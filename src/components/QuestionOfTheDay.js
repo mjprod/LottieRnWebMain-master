@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import GameButton from "./GameButton";
 
-const QuestionOfTheDay = ({ question, onSubmit, style}) => {
+const QuestionOfTheDay = ({ question, onSubmit, style, numberOfSets, numberOfCardsInSet }) => {
   const [text, setText] = useState("");
 
   return (
@@ -22,7 +22,7 @@ const QuestionOfTheDay = ({ question, onSubmit, style}) => {
         />
         <GameButton text="Submit" onPress={() => onSubmit(text)} />
         <Text style={styles.bottomText}>
-          {"Reward 1 Set (12) of scratch cards"}
+          {`Reward ${numberOfSets} Set (${numberOfCardsInSet}) of scratch cards`}
         </Text>
       </View>
     </View>

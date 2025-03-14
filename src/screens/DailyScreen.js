@@ -17,9 +17,11 @@ import { getCurrentDate, convertUTCToLocal, } from "../util/Helpers";
 import { DailySetData } from "../data/DailyCardData";
 import { DailyCardStatus, Dimentions } from "../util/constants";
 import GamesAvailableCard from "../components/GamesAvailableCard";
+import useAppNavigation from "../hook/useAppNavigation";
 
 const DailyScreen = () => {
-  const navigate = useNavigate();
+  const appNavigation = useAppNavigation()
+
   const [question, setQuestion] = useState("");
   const [isThumbsUpAnimationFinished, setIsThumbsUpAnimationFinished] =
     useState(false);
@@ -48,7 +50,10 @@ const DailyScreen = () => {
   const [currentWeek, setCurrentWeek] = useState("");
   const [totalWeeks, setTotalWeeks] = useState("");
   const [days, setDays] = useState([]);
+
   const [dailySetData, setDailySetData] = useState(DailySetData);
+  const [noOfCardsInSet, setNumberOfCardsInSet] = useState(12);
+  const [numberOfSetsInCurrentWeek, setNumberOfSetsInCurrentWeek] = useState(1);
 
   const {
     loading,
@@ -84,6 +89,15 @@ const DailyScreen = () => {
       getDailyQuestion(userData.user_id);
     }
   }, [userData, isSubmitted]);
+
+  useEffect(() => {
+    setNumberOfCardsInSet(dailySetData.noOfCardsInSet)
+    const cardsWon = dailySetData.weeklyRewards.find((cardSet) => cardSet.week === currentWeek);
+    if (cardsWon) {
+      const { set } = cardsWon;
+      setNumberOfSetsInCurrentWeek(set);
+    }
+  }, [dailySetData])
 
   useEffect(() => {
     if (response) {
@@ -129,11 +143,7 @@ const DailyScreen = () => {
   const onSubmit = (answer) => {
     const { isValid, message } = isValidAnswer(answer);
     if (isValid) {
-      const cardsWon = dailySetData.find((cardSet) => cardSet.week === currentWeek);
-      if (cardsWon) {
-        const { set } = cardsWon;
-        postDailyAnswer(userData.user_id, question.question_id, answer, set * 12);
-      }
+      postDailyAnswer(userData.user_id, question.question_id, answer, noOfCardsInSet * numberOfSetsInCurrentWeek);
     } else {
       showSnackbar(message);
     }
@@ -145,11 +155,7 @@ const DailyScreen = () => {
 
   const handleCardPressed = (card) => {
     if (card.status == DailyCardStatus.active) {
-      navigate("/start", {
-        state: {
-          userData,
-        },
-      });
+      appNavigation.goToStartPage(userData.user_id, userData.name, userData.email)
     }
   }
 
@@ -161,7 +167,7 @@ const DailyScreen = () => {
           <LoadingView />
         ) : (
           <ProfileHeader
-            containerStyle={{ marginTop: -30, marginBottom: Dimentions.pageMargin }}
+            containerStyle={{ marginTop: -25, marginHorizontal: Dimentions.pageMargin, marginBottom: Dimentions.sectionMargin }}
             id={userData.user_id}
             name={userData.name}
           />
@@ -170,6 +176,8 @@ const DailyScreen = () => {
       <View style={[styles.container, { marginLeft: Dimentions.pageMargin, marginRight: Dimentions.pageMargin, marginBottom: Dimentions.sectionMargin }]}>
         {!isSubmitted && (
           <QuestionOfTheDay
+            numberOfCardsInSet={noOfCardsInSet}
+            numberOfSets={numberOfSetsInCurrentWeek}
             style={{ marginBottom: Dimentions.sectionMargin }}
             question={`${question.question}`}
             onSubmit={onSubmit} />
@@ -199,7 +207,7 @@ const DailyScreen = () => {
         <LinkButton
           style={{ marginVertical: Dimentions.sectionMargin }}
           text={"How To Play Turbo Scratch >"}
-          handlePress={() => navigate("/how_to_play")} />
+          handlePress={appNavigation.goToHowToPlayPage()} />
         <GamesAvailableCard
           style={{ marginVertical: 24 }}
           cardsLeft={userData.card_balance} />

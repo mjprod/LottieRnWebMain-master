@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Animated, Platform, StyleSheet, Text, View, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Platform, StyleSheet, Text, View, Image } from "react-native";
 import { ImageBackground } from "react-native-web";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation } from "react-router";
 import GameButton, { ButtonSize } from "../components/GameButton";
 import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
 import TimerComponent from "../components/TimerComponent";
-import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import StatCard from "../components/StatCard";
 import AssetPack from "../util/AssetsPack";
 import LinkButton from "../components/LinkButton";
@@ -15,9 +14,10 @@ import RoundedButton from "../components/RoundedButton";
 import { ScrollView } from "react-native";
 import useApiRequest from "../hook/useApiRequest";
 import { useGame } from "../context/GameContext";
+import useAppNavigation from "../hook/useAppNavigation";
 
 const GameOverScreen = () => {
-    const navigate = useNavigate();
+    const appNavigation = useAppNavigation();
     const { setUser, setLuckySymbolCount } = useGame();
 
     const backgroundResult = require("./../assets/image/background_game.png");
@@ -29,8 +29,6 @@ const GameOverScreen = () => {
 
     const { username, email, id } = location.state
     const [initialScore, setInitialScore] = useState(0);
-    const [initialTicketCount, setInitialTicketCount] = useState(0);
-    const [initialLuckySymbolCount, setInitialLuckySymbolCount] = useState(0);
     const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
     const [initialUserData, setInitialUserData] = useState("");
 
@@ -43,9 +41,7 @@ const GameOverScreen = () => {
             if (response.user) {
                 setUser(response.user)
                 setInitialScore(response.user.total_score || 0);
-                setInitialTicketCount(response.user.ticket_balance || 0);
                 setLuckySymbolCount(response.user.lucky_symbol_balance);
-                setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
                 setInitialScratchCardLeft(response.user.card_balance || 0);
                 setInitialUserData(response.user);
             }
@@ -53,17 +49,11 @@ const GameOverScreen = () => {
     }, [response]);
 
     const handleBackPress = () => {
-        navigate(-1);
+        appNavigation.goBack();
     };
 
     const handlePlayNow = () => {
-        navigate("/game", {
-            state: {
-                username: initialUserData.name,
-                email: initialUserData.email,
-                id: initialUserData.user_id,
-            },
-        });
+        appNavigation.goToGamePage(initialUserData.user_id, initialUserData.name, initialUserData.email)
     }
 
     return (
@@ -121,7 +111,7 @@ const GameOverScreen = () => {
                             <LinkButton
                                 style={{ marginBottom: 30 }}
                                 text={"How To Play Turbo Scratch >"}
-                                handlePress={() => navigate("/how_to_play")}
+                                handlePress={appNavigation.goToHowToPlayPage()}
                             />
                         </View>
                     </View>
