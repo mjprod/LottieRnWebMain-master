@@ -48,6 +48,7 @@ const useApiRequest = () => {
         throw new Error(`Silent HTTP error! status: ${JSON.stringify(res)}`);
       }
       const data = await res.json();
+      setResponse(data);
       showConsoleMessage("Silent API Response Data:", data)
     } catch (err) {
       showConsoleError("Silent API Error:", err)
@@ -150,7 +151,7 @@ const useApiRequest = () => {
     await silentFetchData(config);
   };
 
-  const updateScore = async (user_id, score) => {
+  const updateScore = async (user_id, score, game_id, combo_played) => {
     const config = {
       url: SERVER + "/update_score",
       method: "POST",
@@ -160,30 +161,8 @@ const useApiRequest = () => {
       body: {
         user_id,
         score,
-      },
-    };
-    await silentFetchData(config);
-  };
-
-  const createGame = async (
-    beta_block_id,
-    user_id,
-    lucky_symbol_won,
-    number_combination_total,
-    number_combination_user_played) => {
-
-    const config = {
-      url: SERVER + "/game",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        beta_block_id,
-        user_id,
-        lucky_symbol_won,
-        number_combination_total,
-        number_combination_user_played
+        game_id,
+        combo_played
       },
     };
     await silentFetchData(config);
@@ -201,7 +180,6 @@ const useApiRequest = () => {
     getLeaderBoard,
     updateCardPlayed,
     updateScore,
-    createGame
   };
 };
 

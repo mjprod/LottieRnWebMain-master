@@ -46,7 +46,7 @@ const ScratchLuckyGame = () => {
   const [winLuckySymbolVideo, setWinLuckySymbolVideo] = useState(false);
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
-  const [betaBlockId, setBetaBlockId] = useState(null);
+  const [gameId, setGameId] = useState(null);
 
   const [luckySymbolWon, setLuckySymbolWon] = useState(0)
   const [totalComboCount, setTotalComboCount] = useState(0)
@@ -98,8 +98,12 @@ const ScratchLuckyGame = () => {
   }, [location]);
 
   useEffect(() => {
-    if (response && response.user) {
-      setUser(response.user);
+    if (response) {
+      if (response.user) {
+        setUser(response.user);
+      } else if (response.gameId) {
+        setGameId(response.gameId);
+      }
     }
   }, [response]);
 
@@ -109,7 +113,6 @@ const ScratchLuckyGame = () => {
       setTicketCount(user.ticket_balance);
       setLuckySymbolCount(user.lucky_symbol_balance);
       updateThemeSequence(user.card_balance);
-      setBetaBlockId(user.current_beta_block);
     }
   }, [user]);
 
@@ -160,7 +163,8 @@ const ScratchLuckyGame = () => {
     setSkipToFinishLuckyVideo(false);
     setWinLuckySymbolVideo(false);
 
-    updateScore(user.user_id, score)
+    updateScore(user.user_id, score, gameId, { 6: 1, 9: 2, 12: 3 }[clickCount] || 0)
+
     setTimeout(() => {
       if (luckySymbolCount <= 2) {
         setTimeout(() => {

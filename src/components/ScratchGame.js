@@ -200,9 +200,14 @@ const ScratchGame = ({
     const winners = checkWinCondition(generatedArray); // Check for win condition
     setWinningIcons(winners); // Set the winning icons
     setIsWinner(winners.length > 0); // Determine if it's a winner
-    
+
     setLuckySymbolWon(!!icons)
-    setTotalComboCount(winners.length)
+    if (winners.length > 0) {
+      setTotalComboCount(winners.length - 1)
+    } else {
+      setTotalComboCount(0)
+    }
+
   }, [setIsWinner, reset, setIsLuckySymbolTrue]);
 
   const isValidIcon = (
