@@ -111,7 +111,7 @@ const GameOverScreen = () => {
                             <LinkButton
                                 style={{ marginBottom: 30 }}
                                 text={"How To Play Turbo Scratch >"}
-                                handlePress={appNavigation.goToHowToPlayPage()}
+                                handlePress={appNavigation.goToHowToPlayPage}
                             />
                         </View>
                     </View>

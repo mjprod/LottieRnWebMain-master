@@ -33,7 +33,6 @@ const LauchScreen = () => {
 
   const [initialScore, setInitialScore] = useState(0);
   const [initialTicketCount, setInitialTicketCount] = useState(0);
-  const [initialLuckySymbolCount, setInitialLuckySymbolCount] = useState(0);
   const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
 
   const [initialUserData, setInitialUserData] = useState("");
@@ -68,7 +67,6 @@ const LauchScreen = () => {
       if (response.user) {
         setInitialScore(response.user.total_score || 0);
         setInitialTicketCount(response.user.ticket_balance || 0);
-        setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
         setInitialScratchCardLeft(response.user.card_balance || 0);
         setInitialUserData(response.user);
         setLuckySymbolCount(response.user.lucky_symbol_balance);
@@ -128,7 +126,7 @@ const LauchScreen = () => {
   };
 
   const handleViewAllPress = () => {
-    appNavigation.goToLeaderBoardPage(initialUserData.user_id, initialUserData.name, initialUserData.email)
+    appNavigation.goToLeaderBoardPage(id, username, email)
   };
 
   return (

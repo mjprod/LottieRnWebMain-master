@@ -11,10 +11,12 @@ import NextDrawCard from "../components/NextDrawCard";
 import useApiRequest from "../hook/useApiRequest";
 import { LeaderBoardStatus } from "../util/constants";
 import { COLOR_BACKGROUND } from "../util/constants";
+import useAppNavigation from "../hook/useAppNavigation";
 
 const LeaderBoardScreen = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+  const appNavigation = useAppNavigation()
+
   const [initialUserData, setInitialUserData] = useState();
   const { getLeaderBoard, fetchUserDetails, response } = useApiRequest();
   const [leaderBoardData, setLeaderBoardData] = useState();
@@ -60,14 +62,7 @@ const LeaderBoardScreen = () => {
   }, [response]);
 
   const handlePlayNowButtonPress = () => {
-    navigate("/game", {
-      state: {
-        initialScore,
-        initialTicketCount,
-        initialLuckySymbolCount,
-        initialScratchCardLeft,
-      },
-    });
+    appNavigation.goToGamePage(initialUserData.user_id, initialUserData.name, initialUserData.email)
   }
   return (
     <ScrollView style={styles.container}>
@@ -83,7 +78,7 @@ const LeaderBoardScreen = () => {
         <LinkButton
           style={{ marginBottom: 30 }}
           text={"How To Play Turbo Scratch >"}
-          handlePress={() => navigate("/how_to_play")}
+          handlePress={appNavigation.goToHowToPlayPage}
         />
         <GamesAvailableCard style={{ marginBottom: 30 }} cardsLeft={initialScratchCardLeft} />
         <NextDrawCard style={{ marginBottom: 30 }} />

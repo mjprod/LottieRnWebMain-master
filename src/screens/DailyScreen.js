@@ -207,7 +207,7 @@ const DailyScreen = () => {
         <LinkButton
           style={{ marginVertical: Dimentions.sectionMargin }}
           text={"How To Play Turbo Scratch >"}
-          handlePress={appNavigation.goToHowToPlayPage()} />
+          handlePress={appNavigation.goToHowToPlayPage} />
         <GamesAvailableCard
           style={{ marginVertical: 24 }}
           cardsLeft={userData.card_balance} />
