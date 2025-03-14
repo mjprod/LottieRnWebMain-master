@@ -5,9 +5,6 @@ const settings = {
 
 export default settings;
 
-//User ID
-export const userId = 1;
-
 //Eraser settings
 export const eraserRadius = 45;
 export const eraserShouldBeScratched = 88;

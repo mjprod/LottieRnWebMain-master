@@ -32,6 +32,7 @@ const { width } = Dimensions.get("window");
 const ScratchLuckyGame = () => {
   const appNavigation = useAppNavigation();
   const location = useLocation();
+
   const ref = useRef(null);
 
   const [gameStarted, setGameStarted] = useState(false);
@@ -46,6 +47,9 @@ const ScratchLuckyGame = () => {
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
   const [betaBlockId, setBetaBlockId] = useState(null);
+
+  const [luckySymbolWon, setLuckySymbolWon] = useState(0)
+  const [totalComboCount, setTotalComboCount] = useState(0)
 
   const {
     user,
@@ -81,15 +85,17 @@ const ScratchLuckyGame = () => {
     updateScore
   } = useApiRequest();
 
-  const { username, email, id } = location.state;
   const { setStartPlay } = useSound();
 
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    fetchUserDetails(id, username, email);
-  }, [id]);
+    if (location.state) {
+      const { username, email, id } = location.state;
+      fetchUserDetails(id, username, email);
+    }
+  }, [location]);
 
   useEffect(() => {
     if (response && response.user) {
@@ -175,8 +181,6 @@ const ScratchLuckyGame = () => {
               goToNextTheme();
             }, 100);
           } else {
-            //setGameOver(true);
-            //switchTrack(1);
             handleGameOver();
           }
         }, 700);
@@ -218,9 +222,7 @@ const ScratchLuckyGame = () => {
     setCollectLuckySymbolVideo(true);
   };
 
-  // Callback function to handle when the video finishes
   const handleVideoEnd = () => {
-    //console.log("Video has finished playing.");
     addLuckySymbol();
     nextCard();
   };
@@ -235,7 +237,7 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (scratchStarted) {
-      updateCardPlayed(user.user_id, user.current_beta_block)
+      updateCardPlayed(user.current_beta_block, user.user_id, luckySymbolWon, totalComboCount)
       Animated.timing(marginTopAnim, {
         toValue: 6,
         duration: 300,
@@ -361,13 +363,6 @@ const ScratchLuckyGame = () => {
   const handleGameOver = () => {
     setGameOver(true);
     appNavigation.goToGameOverPage(user.user_id, user.name, user.email)
-    // {
-    //state: {
-    //luckySymbolCount,
-    //ticketCount,
-    // Any other props you want to pass
-    //},
-    // });
   };
 
   if (loading)
@@ -415,6 +410,8 @@ const ScratchLuckyGame = () => {
                 clickCount={clickCount}
                 setClickCount={setClickCount}
                 nextCard={nextCard}
+                setLuckySymbolWon={setLuckySymbolWon}
+                setTotalComboCount={setTotalComboCount}
               />
             </View>
           </Animated.View>

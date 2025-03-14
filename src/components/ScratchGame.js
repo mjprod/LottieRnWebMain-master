@@ -40,6 +40,8 @@ const ScratchGame = ({
   setWinLuckySymbolVideo,
   clickCount,
   setClickCount,
+  setLuckySymbolWon,
+  setTotalComboCount,
 }) => {
   const { score, setScore, luckySymbolCount } = useGame();
 
@@ -198,6 +200,9 @@ const ScratchGame = ({
     const winners = checkWinCondition(generatedArray); // Check for win condition
     setWinningIcons(winners); // Set the winning icons
     setIsWinner(winners.length > 0); // Determine if it's a winner
+    
+    setLuckySymbolWon(!!icons)
+    setTotalComboCount(winners.length)
   }, [setIsWinner, reset, setIsLuckySymbolTrue]);
 
   const isValidIcon = (
@@ -383,7 +388,7 @@ const ScratchGame = ({
     }
   }, [scratched]);
 
-  useEffect(() => {}, [clickedCount]);
+  useEffect(() => { }, [clickedCount]);
 
   const handleIconClick = (index) => {
     const icon = iconsArray[index];
@@ -479,7 +484,7 @@ const ScratchGame = ({
       }
 
       if (newClickedCount[icon] === 3) {
-        setTimeout(() => {}, finishPopUpToVideoTimer);
+        setTimeout(() => { }, finishPopUpToVideoTimer);
       }
 
       setLastClickedIcon(icon);
@@ -515,8 +520,8 @@ const ScratchGame = ({
               {icon !== null && (
                 <View style={styles.iconWrapper}>
                   {winningIcons.includes(icon) &&
-                  !clickedIcons.includes(index) &&
-                  scratched ? (
+                    !clickedIcons.includes(index) &&
+                    scratched ? (
                     <AnimatedIcon
                       iconIndex={icon}
                       onClick={() => handleIconClick(index)}

@@ -133,7 +133,7 @@ const useApiRequest = () => {
     await fetchData(config);
   };
 
-  const updateCardPlayed = async (user_id, beta_block_id) => {
+  const updateCardPlayed = async (beta_block_id, user_id, lucky_symbol_won, number_combination_total) => {
     const config = {
       url: SERVER + "/update_card_played",
       method: "POST",
@@ -141,8 +141,10 @@ const useApiRequest = () => {
         "Content-Type": "application/json",
       },
       body: {
-        user_id,
         beta_block_id,
+        user_id,
+        lucky_symbol_won,
+        number_combination_total
       },
     };
     await silentFetchData(config);
@@ -163,6 +165,30 @@ const useApiRequest = () => {
     await silentFetchData(config);
   };
 
+  const createGame = async (
+    beta_block_id,
+    user_id,
+    lucky_symbol_won,
+    number_combination_total,
+    number_combination_user_played) => {
+
+    const config = {
+      url: SERVER + "/game",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        beta_block_id,
+        user_id,
+        lucky_symbol_won,
+        number_combination_total,
+        number_combination_user_played
+      },
+    };
+    await silentFetchData(config);
+  };
+
   return {
     loading,
     error,
@@ -174,7 +200,8 @@ const useApiRequest = () => {
     postDailyAnswer,
     getLeaderBoard,
     updateCardPlayed,
-    updateScore
+    updateScore,
+    createGame
   };
 };
 

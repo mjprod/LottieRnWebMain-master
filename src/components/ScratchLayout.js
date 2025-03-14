@@ -21,6 +21,8 @@ const ScratchLayout = ({
   clickCount,
   setClickCount,
   nextCard,
+  setLuckySymbolWon,
+  setTotalComboCount,
 }) => {
   const { luckySymbolCount } = useGame();
 
@@ -71,8 +73,6 @@ const ScratchLayout = ({
     <View style={styles.container}>
       <View style={styles.bottomView}>
         <ScratchGame
-          //score={score}
-          //setScore={setScore}
           isWinner={isWinner}
           setIsWinner={setIsWinner}
           onAutoPop={triggerAutoPop}
@@ -86,6 +86,8 @@ const ScratchLayout = ({
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
           clickCount={clickCount}
           setClickCount={setClickCount}
+          setLuckySymbolWon={setLuckySymbolWon}
+          setTotalComboCount={setTotalComboCount}
         />
         {isScratchCardVisible && (
           <View style={styles.scratchCardContainer}>
