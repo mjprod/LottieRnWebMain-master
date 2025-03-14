@@ -34,6 +34,15 @@ const useAppNavigation = () => {
                 },
             });
         },
+        goToGameOverPage: (user_id, name, email) => {
+            navigate("/game_over", {
+                state: {
+                    username: name,
+                    email: email,
+                    id: user_id,
+                },
+            });
+        },
         goToLeaderBoardPage: (user_id, name, email) => {
             navigate("/leader_board", {
                 state: {

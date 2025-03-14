@@ -17,7 +17,7 @@ import TopLayout from "../components/TopLayout";
 import Video from "../components/Video";
 import GameOverScreen from "./GameOverScreen.js";
 import { ActivityIndicator } from "react-native-web";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation } from "react-router";
 import BottomDrawer from "../components/BottomDrawer.js";
 import IntroThemeVideo from "../components/IntroThemeVideo.js";
 import { useGame } from "../context/GameContext.js";
@@ -25,11 +25,12 @@ import useApiRequest from "../hook/useApiRequest.js";
 import { useSound } from "../hook/useSoundPlayer.js";
 import { useTheme } from "../hook/useTheme.js";
 import AssetPack from "../util/AssetsPack.js";
+import useAppNavigation from "../hook/useAppNavigation.js";
 
 const { width } = Dimensions.get("window");
 
 const ScratchLuckyGame = () => {
-  const navigate = useNavigate();
+  const appNavigation = useAppNavigation();
   const location = useLocation();
   const ref = useRef(null);
 
@@ -359,7 +360,7 @@ const ScratchLuckyGame = () => {
 
   const handleGameOver = () => {
     setGameOver(true);
-    navigate("/game_over");
+    appNavigation.goToGameOverPage(user.user_id, user.name, user.email)
     // {
     //state: {
     //luckySymbolCount,
