@@ -1,61 +1,55 @@
-import Slider from "@react-native-community/slider";
-import React, { useEffect, useRef, useState } from "react";
-import { Animated, Platform, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { ImageBackground } from "react-native-web";
-import { useNavigate } from "react-router";
-import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
+import { useLocation } from "react-router";
 import { IconJokerPlus } from "../assets/icons/IconJokerPlus";
-import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
 import GameButton from "../components/GameButton";
 import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
-import LottieTicketSlot from "../components/LottieTicketSlot";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
-import { useSound } from "../hook/useSoundPlayer";
 import TimerComponent from "../components/TimerComponent";
-import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
+import LinearGradient from 'react-native-web-linear-gradient';
+import AssetPack from "../util/AssetsPack";
+import { Dimentions } from "../util/constants";
+import RaffleTicketCard from "../components/RaffleTicketCard";
+import useAppNavigation from "../hook/useAppNavigation";
+import useApiRequest from "../hook/useApiRequest";
+import StatCard from "../components/StatCard";
 
 const GameOverScreen = () => {
-  const navigate = useNavigate();
+  const appNavigation = useAppNavigation()
+  const {
+    response,
+    fetchUserDetails,
+  } = useApiRequest();
 
-  const { switchTrack } = useSound();
-
-  const backgroundResult = require("./../assets/image/background_game.png");
-  const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
-  const backgroundTotalTicket = require("./../assets/image/background_total_ticket.png");
-
-  const [progress, setProgress] = useState(12456);
-  const [timeLeft] = useTimeLeftForNextDraw();
-
-  const animatedProgress = useRef(new Animated.Value(0)).current;
-
-  //const location = useLocation();
-  ///const {
-  //ticketCount = 0, // default value if not provided
-  //} = location.state || {};
+  const location = useLocation()
+  const [userData, setUserData] = useState("");
 
   useEffect(() => {
-    // Start the animation when the component mounts
-    Animated.timing(animatedProgress, {
-      toValue: progress,
-      duration: 3000,
-      useNativeDriver: false,
-    }).start();
+    if (location.state !== null) {
+      const id = location.state.user_id;
+      const username = location.state.name;
+      const email = location.state.email;
 
-    switchTrack(1);
-  }, []);
+      fetchUserDetails(id, username, email);
+    }
+  }, [location]);
 
-  // Update the state to reflect the animated value (for Slider to work properly)
-  animatedProgress.addListener(({ value }) => {
-    setProgress(value); // Sync the animated value with the slider's progress
-  });
+  useEffect(() => {
+    if (response) {
+      if (response.user) {
+        setUserData(response.user);
+      }
+    }
+  }, [response]);
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        resizeMode="contain"
-        source={backgroundResult}
-        style={styles.imageBackground}
-      >
+      <LinearGradient start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
+        locations={[0, 0.3, 0.45, 0.55, 1.0]}
+        colors={['#212121', '#262E33', '#1D4A64', '#24282B', '#212121']}
+        style={styles.imageBackground}>
+
         <View style={styles.rotatingBackgroundContainer}>
           <RotatingCirclesBackground />
         </View>
@@ -70,97 +64,37 @@ const GameOverScreen = () => {
             </View>
 
             <View style={styles.resultRow}>
-              <View style={styles.resultCard}>
-                <View style={styles.viewRow}>
-                  <IconStarResultScreen />
-                  <Text style={styles.resultTitle}>TOTAL POINTS</Text>
-                </View>
-                <Text style={styles.resultPoints}>+9999</Text>
-              </View>
+              <StatCard title="Total Points" stat={userData.total_score} />
               <View style={{ width: 10 }} />
-              <View style={styles.resultCard}>
-                <View style={styles.viewRow}>
-                  <IconFourLeafClover />
-                  <Text style={styles.resultTitle}>LUCKY SYMBOLS</Text>
-                </View>
-
+              <StatCard title="LUCKY SYMBOLS">
                 <ImageBackground
                   resizeMode="contain"
-                  source={backgroundLuckySymbol}
-                  style={styles.imageBackgroundLuckySymbol}
-                >
+                  source={AssetPack.backgrounds.LUCKY_SYMBOL}
+                  style={styles.imageBackgroundLuckySymbol}>
                   <LottieLuckySymbolCoinSlot topLayout={false} />
                 </ImageBackground>
                 <View style={styles.luckySymbols}></View>
-              </View>
+              </StatCard>
             </View>
-
-            {/* Total Tickets Earned Section */}
-            <View style={styles.ticketsSection}>
-              <ImageBackground
-                resizeMode="contain"
-                source={backgroundTotalTicket}
-                style={styles.imageBackgroundLuckySymbol}
-              >
-                <LottieTicketSlot />
-              </ImageBackground>
-              <Text style={styles.ticketTitle}>TOTAL TICKETS EARNED</Text>
-              <View
-                style={{
-                  backgroundColor: "#4B595D",
-                  height: 1,
-                  width: "100%",
-                  marginVertical: 10,
-                }}
-              />
-              <View style={styles.containerTotalTicket}>
-                <Text style={styles.nextTicketText}>Next Ticket</Text>
-                <Text style={styles.ticketProgress}>12456 / 20000</Text>
-              </View>
-
-              <View style={styles.sliderContainer}>
-                <Slider
-                  style={styles.slider}
-                  minimumValue={0}
-                  maximumValue={20000}
-                  value={progress}
-                  onValueChange={(value) => setProgress(value)}
-                  minimumTrackTintColor="#FFD89D" // Custom color for the filled track
-                  maximumTrackTintColor="#000000" // Custom color for the unfilled track
-                  thumbTintColor="#FFD89D" // Custom color for the thumb
-                  thumbStyle={styles.thumb} // Style for the thumb
-                />
-              </View>
-
-              <Text style={styles.addedPoints}>+9999</Text>
-            </View>
-            <TimerComponent
-              days={timeLeft.days}
-              hours={timeLeft.hours}
-              minutes={timeLeft.minutes}
-              seconds={timeLeft.seconds}
+            <RaffleTicketCard
+              score={userData.total_score}
+              ticketCount={userData.ticket_balance}
             />
+            <TimerComponent
+              style={styles.timerContainer} />
             <GameButton
               text="BACK HOME"
               onPress={() => {
-                const initialScore = 0; // Define the initialScore variable
-                const initialTicketCount = 0; // Define the initialTicketCount variable
-                const initialLuckySymbolCount = 0; // Define the initialLuckySymbolCount variable
-                const initialScratchCardLeft = 0; // Define the initialScratchCardLeft variable
-
-                navigate("/*", {
-                  state: {
-                    initialScore,
-                    initialTicketCount,
-                    initialLuckySymbolCount,
-                    initialScratchCardLeft,
-                  },
-                });
+                appNavigation.goToLaunchScreen(
+                  userData.user_id,
+                  userData.name,
+                  userData.email
+                );
               }}
             />
           </View>
         </View>
-      </ImageBackground>
+      </LinearGradient>
     </View>
   );
 };
@@ -253,6 +187,7 @@ const styles = StyleSheet.create({
   },
   ticketsSection: {
     marginTop: 20,
+    marginBottom: Dimentions.pageMargin,
     justifyContent: "center",
     alignItems: "center",
     border: "1px solid #4B595D",
@@ -325,7 +260,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
   timerContainer: {
-    flexDirection: "row",
+    marginVertical: Dimentions.sectionMargin,
     alignItems: "center",
   },
   rotatingBackgroundContainer: {

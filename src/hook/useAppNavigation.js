@@ -7,6 +7,9 @@ const useAppNavigation = () => {
         goBack: () => {
             navigate(-1);
         },
+        goToLaunchScreen: (user_id, name, email) => {
+            navigate(`/${user_id}/${name}/${email}`);
+        },
         goToDailyPage: (user_id, name, email) => {
             navigate("/daily", {
                 state: {

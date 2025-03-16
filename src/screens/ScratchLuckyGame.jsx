@@ -51,7 +51,7 @@ const ScratchLuckyGame = () => {
   const [luckySymbolWon, setLuckySymbolWon] = useState(0)
   const [totalComboCount, setTotalComboCount] = useState(0)
   const [comboPlayed, setComboPlayed] = useState(0)
- 
+
   const {
     user,
     setUser,
@@ -424,12 +424,6 @@ const ScratchLuckyGame = () => {
       </View>
 
       <BottomDrawer />
-      {gameOver && (
-        <GameOverScreen
-          luckySymbolCount={luckySymbolCount}
-          ticketCount={ticketCount}
-        />
-      )}
       {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen()}
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect
