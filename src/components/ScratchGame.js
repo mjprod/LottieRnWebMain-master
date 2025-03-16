@@ -42,6 +42,7 @@ const ScratchGame = ({
   setClickCount,
   setLuckySymbolWon,
   setTotalComboCount,
+  setComboPlayed
 }) => {
   const { score, setScore, luckySymbolCount } = useGame();
 
@@ -407,7 +408,7 @@ const ScratchGame = ({
         playSound("error");
         setClickCount(0);
         setSoundShouldPlay(1);
-
+        setComboPlayed(0);
         setClickedIcons([...clickedIcons, index]);
         setLastClickedIcon(icon);
 
@@ -422,7 +423,13 @@ const ScratchGame = ({
       const newClickedIcons = [...clickedIcons, index];
       setClickedIcons(newClickedIcons);
       setClickCount(clickCount + 1);
-
+      if(clickCount+1 === 6) {
+        setComboPlayed(1);
+      }else if (clickCount+1 === 9) {
+        setComboPlayed(2);
+      } else if (clickCount+1 === 12) {
+        setComboPlayed(3);
+      }
       setScore(score + timerGame * 100);
 
       const newClickedCount = {

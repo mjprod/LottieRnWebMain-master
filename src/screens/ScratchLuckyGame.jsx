@@ -50,7 +50,8 @@ const ScratchLuckyGame = () => {
 
   const [luckySymbolWon, setLuckySymbolWon] = useState(0)
   const [totalComboCount, setTotalComboCount] = useState(0)
-
+  const [comboPlayed, setComboPlayed] = useState(0)
+ 
   const {
     user,
     setUser,
@@ -163,8 +164,6 @@ const ScratchLuckyGame = () => {
     setSkipToFinishLuckyVideo(false);
     setWinLuckySymbolVideo(false);
 
-    updateScore(user.user_id, score, gameId, { 6: 1, 9: 2, 12: 3 }[clickCount] || 0)
-
     setTimeout(() => {
       if (luckySymbolCount <= 2) {
         setTimeout(() => {
@@ -258,6 +257,7 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (reset) {
+      updateScore(user.user_id, score, gameId, comboPlayed)
       setTimeout(() => {
         if (scratchCardLeft - 1 > 0) {
           setScratchCardLeft(scratchCardLeft - 1);
@@ -267,7 +267,7 @@ const ScratchLuckyGame = () => {
       }, 600);
       setTimerGame(0);
       setScratchStarted(false);
-
+      setComboPlayed(0)
       Animated.timing(translateX, {
         toValue: width * 0.1,
         duration: 200,
@@ -416,6 +416,7 @@ const ScratchLuckyGame = () => {
                 nextCard={nextCard}
                 setLuckySymbolWon={setLuckySymbolWon}
                 setTotalComboCount={setTotalComboCount}
+                setComboPlayed={setComboPlayed}
               />
             </View>
           </Animated.View>

@@ -23,6 +23,7 @@ const ScratchLayout = ({
   nextCard,
   setLuckySymbolWon,
   setTotalComboCount,
+  setComboPlayed,
 }) => {
   const { luckySymbolCount } = useGame();
 
@@ -88,6 +89,7 @@ const ScratchLayout = ({
           setClickCount={setClickCount}
           setLuckySymbolWon={setLuckySymbolWon}
           setTotalComboCount={setTotalComboCount}
+          setComboPlayed={setComboPlayed}
         />
         {isScratchCardVisible && (
           <View style={styles.scratchCardContainer}>
