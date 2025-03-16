@@ -26,6 +26,7 @@ import { useSound } from "../hook/useSoundPlayer.js";
 import { useTheme } from "../hook/useTheme.js";
 import AssetPack from "../util/AssetsPack.js";
 import useAppNavigation from "../hook/useAppNavigation.js";
+import LinearGradient from 'react-native-web-linear-gradient';
 
 const { width } = Dimensions.get("window");
 
@@ -124,11 +125,13 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (countDownStarted) {
       setTimeout(() => {
-        ref.current.play();
+        if (ref.current != null) {
+          ref.current.play();
+        }
         setStartPlay(true);
       }, 1000);
     }
-  }, [countDownStarted]);
+  }, [countDownStarted, ref]);
 
   const saveLuckySymbol = async (luckySymbol) => {
     setLuckySymbolCount(luckySymbol);
@@ -383,8 +386,10 @@ const ScratchLuckyGame = () => {
         showAlphaView={scratchStarted || gameOver}
         source={backgroundLoop} />
       <View style={styles.containerOverlay}>
-        <ImageBackground
-          source={AssetPack.backgrounds.GAME}
+        <LinearGradient
+          start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
+          locations={[0, 0.3, 0.45, 0.55, 1.0]}
+          colors={['#212121', '#262E33', '#1D4A64', '#24282B', '#212121']}
           style={styles.imageBackground}
           resizeMode="stretch">
           <Animated.View style={[{ transform: [{ translateX }] }]}>
@@ -420,7 +425,7 @@ const ScratchLuckyGame = () => {
               />
             </View>
           </Animated.View>
-        </ImageBackground>
+        </LinearGradient>
       </View>
 
       <BottomDrawer />
@@ -473,13 +478,20 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     position: "absolute",
-    top: 130,
+    top: 120,
     left: 10,
     right: 10,
     bottom: 65,
     zIndex: 2,
     justifyContent: "flex-start",
     alignItems: "flex-start",
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+    borderColor: "#A88C5D",
+    borderWidth: 1,
+
   },
   overlay: {
     flex: 1,

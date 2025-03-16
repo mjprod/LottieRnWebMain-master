@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 63,
     borderColor: "#7F48A7",
     borderWidth: 1,
-    paddingVertical: 12,
+    paddingVertical: 10,
     paddingHorizontal: 17,
   },
   betaCompetitionText: {

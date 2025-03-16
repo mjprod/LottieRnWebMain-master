@@ -1,4 +1,4 @@
-export const SERVER = "http://localhost:8083";
+export const SERVER = "http://192.168.1.104:8083";
 
 export const COLOR_BACKGROUND = "#131313";
 

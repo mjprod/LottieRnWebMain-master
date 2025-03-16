@@ -24,6 +24,7 @@ const GameButton = ({ text, onPress, buttonSize = ButtonSize.FULL, loading = fal
           top: 0,
           left: 0,
           width: "100%",
+          height: "100%",
         }}
         source={buttonSize}
         autoPlay
@@ -59,6 +60,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.0)",
   },
   text: {
+    justifyContent: "center",
+    alignItems: "center",
     color: "#3E362A",
     fontSize: 22,
     textTransform: "uppercase",

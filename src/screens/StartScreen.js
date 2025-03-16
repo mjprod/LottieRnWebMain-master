@@ -15,13 +15,11 @@ import { ScrollView } from "react-native";
 import useApiRequest from "../hook/useApiRequest";
 import { useGame } from "../context/GameContext";
 import useAppNavigation from "../hook/useAppNavigation";
+import LinearGradient from 'react-native-web-linear-gradient';
 
 const GameOverScreen = () => {
     const appNavigation = useAppNavigation();
     const { setUser, setLuckySymbolCount } = useGame();
-
-    const backgroundResult = require("./../assets/image/background_game.png");
-    const backgroundLuckySymbol = require("./../assets/image/background_result_lucky_symbol.png");
 
     const { fetchUserDetails, response } = useApiRequest();
 
@@ -58,10 +56,10 @@ const GameOverScreen = () => {
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <ImageBackground
-                resizeMode="contain"
-                source={backgroundResult}
-                style={styles.imageBackground}>
+           <LinearGradient start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
+                   locations={[0, 0.3, 0.45, 0.55, 1.0]}
+                   colors={['#212121', '#262E33', '#1D4A64', '#24282B', '#212121']}
+                   style={styles.imageBackground}>
                 <View style={styles.rotatingBackgroundContainer}>
                     <RotatingCirclesBackground />
                 </View>
@@ -84,7 +82,7 @@ const GameOverScreen = () => {
                             <StatCard title="LUCKY SYMBOLS">
                                 <ImageBackground
                                     resizeMode="contain"
-                                    source={backgroundLuckySymbol}
+                                    source={AssetPack.backgrounds.LUCKY_SYMBOL}
                                     style={styles.imageBackgroundLuckySymbol}>
                                     <LottieLuckySymbolCoinSlot topLayout={false} />
                                 </ImageBackground>
@@ -116,7 +114,7 @@ const GameOverScreen = () => {
                         </View>
                     </View>
                 </View>
-            </ImageBackground>
+            </LinearGradient>
         </ScrollView >
     );
 };
