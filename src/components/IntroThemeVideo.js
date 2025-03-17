@@ -1,13 +1,13 @@
-import React, {  } from "react";
-import { View, StyleSheet,Platform } from "react-native";
+import React, { } from "react";
+import { View, StyleSheet, Platform } from "react-native";
 import Video from "./Video";
 import BrowserDetection from "react-browser-detection";
 import { useTheme } from "../hook/useTheme";
 import { useSound } from "../hook/useSoundPlayer";
 
-const IntroThemeVideo = ({ handleVideoEnd }) => {
+const IntroThemeVideo = ({ handleVideoEnd, style }) => {
 
-  const { introThemeNext,introChromeThemeNext } = useTheme();
+  const { introThemeNext, introChromeThemeNext } = useTheme();
   const { isSoundEnabled } = useSound();
 
 
@@ -17,7 +17,7 @@ const IntroThemeVideo = ({ handleVideoEnd }) => {
         source={
           introChromeThemeNext
         } // Play the win video
-        muted = {!isSoundEnabled} 
+        muted={!isSoundEnabled}
         style={styles.transparentVideo} // Video styling
         onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
         onEnded={handleVideoEnd} // Web: Trigger callback when video ends
@@ -28,7 +28,7 @@ const IntroThemeVideo = ({ handleVideoEnd }) => {
         source={
           introThemeNext
         } // Play the win video
-         muted = {isSoundEnabled} 
+        muted={isSoundEnabled}
         style={styles.transparentVideo} // Video styling
         onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
         onEnded={handleVideoEnd} // Web: Trigger callback when video ends
@@ -38,17 +38,18 @@ const IntroThemeVideo = ({ handleVideoEnd }) => {
 
   return (
     <View
-    key="overlay"
-    style={{
-      ...styles.blackOverlayWin,
-      flex: 1,
-      zIndex: 9999, // Makes sure the overlay is on top of all other elements
-      elevation: 10, // Ensures the overlay has proper visual depth on Android
-    }}
-  >
-    <BrowserDetection>{browserHandler}</BrowserDetection>
+      key="overlay"
+      style={{
+        ...style,
+        ...styles.blackOverlayWin,
+        flex: 1,
+        zIndex: 9999, // Makes sure the overlay is on top of all other elements
+        elevation: 10, // Ensures the overlay has proper visual depth on Android
+      }}
+    >
+      <BrowserDetection>{browserHandler}</BrowserDetection>
       <View style={styles.transparentOverlay} />
-  </View>
+    </View>
   );
 };
 

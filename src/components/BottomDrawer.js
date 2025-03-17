@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing } from 'react-native';
+import useTimeLeftForNextDraw from '../hook/useTimeLeftForNextDraw';
+import { useGame } from '../context/GameContext';
 
 const BottomDrawer = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const heightAnimation = useState(new Animated.Value(60))[0]; // Initial height for collapsed state
   const widthAnimation = useState(new Animated.Value(100))[0]; // Initial width (percentage)
+  const [timeLeft] = useTimeLeftForNextDraw();
+  const { user } = useGame()
 
   const toggleDrawer = () => {
     setIsExpanded(!isExpanded);
@@ -50,19 +54,21 @@ const BottomDrawer = () => {
           <View style={styles.timerSection}>
             <Text style={styles.timerLabel}>Time till Next Draw</Text>
             <View style={styles.timerValues}>
-              <Text style={styles.timerValue}>888</Text>
+              <Text style={styles.timerValue}>{timeLeft.days}</Text>
+              <Text style={styles.timerUnit}>Days</Text>
+              <Text style={styles.timerValue}>{timeLeft.hours}</Text>
               <Text style={styles.timerUnit}>Hrs</Text>
-              <Text style={styles.timerValue}>88</Text>
+              <Text style={styles.timerValue}>{timeLeft.minutes}</Text>
               <Text style={styles.timerUnit}>Mins</Text>
-              <Text style={styles.timerValue}>88</Text>
+              <Text style={styles.timerValue}>{timeLeft.seconds}</Text>
               <Text style={styles.timerUnit}>Secs</Text>
             </View>
           </View>
           <View style={styles.pointsSection}>
-            <Text style={styles.points}>-9999 Points to go</Text>
+            <Text style={styles.points}>{(user.ticket_balance * 20000 + 20000) - user.total_score} Points to go</Text>
             <View style={styles.ticketsSection}>
-             
-              <Text style={styles.tickets}>888 Tickets</Text>
+
+              <Text style={styles.tickets}>{user.ticket_balance} Tickets</Text>
             </View>
           </View>
         </View>

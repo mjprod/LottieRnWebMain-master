@@ -28,7 +28,7 @@ const GameOverScreen = () => {
   useEffect(() => {
     if (location.state !== null) {
       const id = location.state.user_id;
-      const username = location.state.name;
+      const username = location.state.username;
       const email = location.state.email;
 
       fetchUserDetails(id, username, email);

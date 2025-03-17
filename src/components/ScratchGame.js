@@ -408,7 +408,6 @@ const ScratchGame = ({
         playSound("error");
         setClickCount(0);
         setSoundShouldPlay(1);
-        setComboPlayed(0);
         setClickedIcons([...clickedIcons, index]);
         setLastClickedIcon(icon);
 

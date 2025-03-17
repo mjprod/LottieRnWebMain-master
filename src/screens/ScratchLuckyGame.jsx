@@ -3,7 +3,6 @@ import BrowserDetection from "react-browser-detection";
 import {
   Animated,
   Dimensions,
-  ImageBackground,
   Platform,
   StyleSheet,
   TouchableOpacity,
@@ -15,7 +14,6 @@ import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
 import ScratchLayout from "../components/ScratchLayout";
 import TopLayout from "../components/TopLayout";
 import Video from "../components/Video";
-import GameOverScreen from "./GameOverScreen.js";
 import { ActivityIndicator } from "react-native-web";
 import { useLocation } from "react-router";
 import BottomDrawer from "../components/BottomDrawer.js";

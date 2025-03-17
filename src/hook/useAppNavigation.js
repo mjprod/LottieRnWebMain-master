@@ -42,7 +42,7 @@ const useAppNavigation = () => {
                 state: {
                     username: name,
                     email: email,
-                    id: user_id,
+                    user_id: user_id,
                 },
             });
         },
