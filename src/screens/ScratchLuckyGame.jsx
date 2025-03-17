@@ -145,7 +145,7 @@ const ScratchLuckyGame = () => {
             : AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME
         } // Play the win video
         style={styles.transparentVideo} // Video styling
-        onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
+        // onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
         onEnded={handleVideoEnd} // Web: Trigger callback when video ends
       />
     ),
@@ -156,7 +156,7 @@ const ScratchLuckyGame = () => {
         } // Play the win video
         style={styles.transparentVideo} // Video styling
         onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
-        onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+        // onEnded={handleVideoEnd} // Web: Trigger callback when video ends
       />
     ),
   };

@@ -12,6 +12,11 @@
   display: none;
 }
 
+html, body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 @font-face {
   font-family: 'Inter-Bold';
   src: url('./assets/fonts/Inter-Bold.ttf') format('truetype');
