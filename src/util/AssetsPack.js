@@ -1,3 +1,4 @@
+import { Howl } from "howler";
 const AssetPack = {
   icons: {
     CARDS: require("./../assets/icons/icon_cards_normal.svg"),
@@ -58,6 +59,20 @@ const AssetPack = {
     COMBO_3X: require("../assets/lotties/ComboHolderMaxVersion-3x.json"),
     COMBO_4X: require("../assets/lotties/ComboHolderMaxVersion-4x.json"),
   },
+  howls: {
+    x4: new Howl({
+      src: [require(`./../assets/sounds/combo.mp3`)],
+      preload: true,
+    }),
+    x3: new Howl({
+      src: [require(`./../assets/sounds/nice_combo.mp3`)],
+      preload: true,
+    }),
+    x2: new Howl({
+      src: [require(`./../assets/sounds/ultra_combo.mp3`)],
+      preload: true,
+    }),
+  }
 };
 
 export default AssetPack;

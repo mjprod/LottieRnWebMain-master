@@ -85,51 +85,51 @@ const ScratchGame = ({
     soundRefs.current = {
       sound1: new Howl({
         src: [require(`./../assets/audio/${currentTheme}/1_C.mp3`)],
-        preload: false,
+        preload: true,
       }),
       sound2: new Howl({
         src: [require(`./../assets/audio/${currentTheme}/2_D.mp3`)],
-        preload: false,
+        preload: true,
       }),
       sound3: new Howl({
         src: [require(`./../assets/audio/${currentTheme}/3_E.mp3`)],
-        preload: false,
+        preload: true,
       }),
       sound4: new Howl({
         src: [require(`./../assets/audio/${currentTheme}/4_E.mp3`)],
-        preload: false,
+        preload: true,
       }),
       sound5: new Howl({
         src: [require(`./../assets/audio/${currentTheme}/5_F_.mp3`)],
-        preload: false,
+        preload: true,
       }),
       sound6: new Howl({
         src: [require(`./../assets/audio/${currentTheme}/6_G_.mp3`)],
-        preload: false,
+        preload: true,
       }),
       sound7: new Howl({
         src: [require(`./../assets/audio/${currentTheme}/7_G_.mp3`)],
-        preload: false,
+        preload: true,
       }),
       sound8: new Howl({
         src: [require(`./../assets/audio/${currentTheme}/8_A_.mp3`)],
-        preload: false,
+        preload: true,
       }),
       sound9: new Howl({
         src: [require(`./../assets/audio/${currentTheme}/9_C_plus.mp3`)],
-        preload: false,
+        preload: true,
       }),
       sound10: new Howl({
         src: [require(`./../assets/audio/${currentTheme}/10_C_plus.mp3`)],
-        preload: false,
+        preload: true,
       }),
       sound11: new Howl({
         src: [require(`./../assets/audio/${currentTheme}/11_D_plus.mp3`)],
-        preload: false,
+        preload: true,
       }),
       sound12: new Howl({
         src: [require(`./../assets/audio/${currentTheme}/12_E_plus.mp3`)],
-        preload: false,
+        preload: true,
       }),
       error: new Howl({
         src: [require("./../assets/audio/sfx_autopopup.wav")],
