@@ -373,7 +373,7 @@ const ScratchGame = ({
         console.log("NO LUCKY SYMBOL");
         nextCard();
       }
-    }, 500);
+    }, 300);
   };
 
   useEffect(() => {

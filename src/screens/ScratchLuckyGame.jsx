@@ -145,8 +145,8 @@ const ScratchLuckyGame = () => {
             : AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME
         } // Play the win video
         style={styles.transparentVideo} // Video styling
-        // onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
-        onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+        onEnd={handleLuckySymbolWonVideoEnd} // Mobile: Trigger callback when video ends
+        onEnded={handleLuckySymbolWonVideoEnd} // Web: Trigger callback when video ends
       />
     ),
     default: (browser) => (
@@ -155,8 +155,8 @@ const ScratchLuckyGame = () => {
           skipToFinishLuckyVideo ? AssetPack.videos.LUCKY_SYMBOL_FINAL : AssetPack.videos.WIN_LUCKY_SYMBOL
         } // Play the win video
         style={styles.transparentVideo} // Video styling
-        onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
-        // onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+        onEnd={handleLuckySymbolWonVideoEnd} // Mobile: Trigger callback when video ends
+        onEnded={handleLuckySymbolWonVideoEnd} // Web: Trigger callback when video ends
       />
     ),
   };
@@ -193,10 +193,10 @@ const ScratchLuckyGame = () => {
   };
 
   const addLuckySymbol = () => {
-    console.log("User ID:", user.user_id)
     if (luckySymbolCount > 2) {
       updateLuckySymbol(user.user_id, 0)
       saveLuckySymbol(0);
+      nextCard();
     } else if (luckySymbolCount === 2) {
       saveLuckySymbol(luckySymbolCount + 1);
       setTimeout(() => {
@@ -206,6 +206,7 @@ const ScratchLuckyGame = () => {
     } else {
       saveLuckySymbol(luckySymbolCount + 1);
       updateLuckySymbol(user.user_id, luckySymbolCount + 1)
+      nextCard();
     }
   };
 
@@ -214,7 +215,7 @@ const ScratchLuckyGame = () => {
       saveLuckySymbol(count);
       setTimeout(() => {
         if (count === 0) {
-          onCountdownComplete();
+          setCollectLuckySymbolVideo(true);
         } else {
           decrementLuckySymbol(count - 1, onComplete);
         }
@@ -222,13 +223,9 @@ const ScratchLuckyGame = () => {
     }
   };
 
-  const onCountdownComplete = () => {
-    setCollectLuckySymbolVideo(true);
-  };
-
-  const handleVideoEnd = () => {
+  const handleLuckySymbolWonVideoEnd = () => {
+    setWinLuckySymbolVideo(false);
     addLuckySymbol();
-    nextCard();
   };
 
   const handleVideoIntroEnd = () => {
@@ -295,9 +292,9 @@ const ScratchLuckyGame = () => {
     }
   }, [reset, setReset]);
 
-  const handleClick = () => {
+  const handleWinLuckySymbolVideoScreenClick = () => {
+    setWinLuckySymbolVideo(false);
     addLuckySymbol();
-    nextCard();
   };
 
   // Function to render the win screen with a video overlay
@@ -313,7 +310,7 @@ const ScratchLuckyGame = () => {
         }}
       >
         <BrowserDetection>{browserHandler}</BrowserDetection>
-        <TouchableOpacity style={styles.clickableArea} onPress={handleClick}>
+        <TouchableOpacity style={styles.clickableArea} onPress={handleWinLuckySymbolVideoScreenClick}>
           <View style={styles.transparentOverlay} />
         </TouchableOpacity>
       </View>

@@ -36,8 +36,7 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
       {iconComponentsDefault[iconIndex]}
       <TouchableWithoutFeedback
         hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-        onPress={handleIconClick}
-      >
+        onPress={handleIconClick}>
         <View style={styles.overlay}>
           {selectedBobbleColour && (
             <LottieView
@@ -47,18 +46,13 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
               loop={true}
             />
           )}
-        </View>
-      </TouchableWithoutFeedback>
-      {timerGame > 0 && (
-        <TouchableWithoutFeedback
-          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          onPress={handleIconClick}
-        >
+          {timerGame > 0 && (
           <View style={styles.centeredTextWrapper}>
             <PopUpText value={timerGame} />
           </View>
-        </TouchableWithoutFeedback>
-      )}
+        )}
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 };

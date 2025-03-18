@@ -80,8 +80,8 @@ const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo }) => {
       setTimeout(() => {
         setLuckySymbolCount(0);
         nextCard();
-      }, 1200);
-    }, 1000);
+      }, 300);
+    }, 200);
   };
 
   return (
