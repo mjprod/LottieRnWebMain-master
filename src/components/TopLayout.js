@@ -31,7 +31,20 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
 
   const { isSoundEnabled } = useSound();
 
-  const soundRefs = useRef(AssetPack.howls);
+  const soundRefs = useRef({
+      x4: new Howl({
+        src: [require(`./../assets/sounds/combo.mp3`)],
+        preload: true,
+      }),
+      x3: new Howl({
+        src: [require(`./../assets/sounds/nice_combo.mp3`)],
+        preload: true,
+      }),
+      x2: new Howl({
+        src: [require(`./../assets/sounds/ultra_combo.mp3`)],
+        preload: true,
+      }),
+    });
 
   useEffect(() => {
     // Clean up sounds when component unmounts
