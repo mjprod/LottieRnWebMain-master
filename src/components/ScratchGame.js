@@ -181,7 +181,7 @@ const ScratchGame = ({
   };
 
   useEffect(() => {
-    setClickedIcons([]);
+    setTimeout(()=>{setClickedIcons([]);
     setClickedCount({});
     setClickCount(0);
     setLastClickedIcon(null);
@@ -207,7 +207,7 @@ const ScratchGame = ({
       setTotalComboCount(winners.length - 1)
     } else {
       setTotalComboCount(0)
-    }
+    }}, 400);
 
   }, [setIsWinner, reset, setIsLuckySymbolTrue]);
 
