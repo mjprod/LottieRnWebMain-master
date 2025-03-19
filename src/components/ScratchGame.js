@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
-  View,
-  ImageBackground,
   Animated,
   Easing,
   Platform,
 } from "react-native";
-import AnimatedIcon from "./AnimatedIcon";
-import LottieView from "react-native-web-lottie";
 
 import { Howl } from "howler";
 
@@ -26,6 +22,7 @@ import themes from "../global/themeConfig";
 import { useTheme } from "../hook/useTheme";
 import { useSound } from "../hook/useSoundPlayer";
 import { useGame } from "../context/GameContext";
+import GameGrid from "./GameGrid";
 
 const ScratchGame = ({
   //score,
@@ -81,67 +78,21 @@ const ScratchGame = ({
 
   const soundRefs = useRef({});
 
+  const soundNotes = ["C", "D", "E", "E", "F_", "G_", "G_", "A_", "C_plus", "C_plus", "D_plus", "E_plus"];
   useEffect(() => {
-    soundRefs.current = {
-      sound1: new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/1_C.mp3`)],
+    soundRefs.current = {};
+    for (let i = 1; i <= 12; i++) {
+      soundRefs.current[`sound${i}`] = new Howl({
+        src: [require(`./../assets/audio/${currentTheme}/${i}_${soundNotes[i - 1]}.mp3`)],
         preload: true,
-      }),
-      sound2: new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/2_D.mp3`)],
-        preload: true,
-      }),
-      sound3: new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/3_E.mp3`)],
-        preload: true,
-      }),
-      sound4: new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/4_E.mp3`)],
-        preload: true,
-      }),
-      sound5: new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/5_F_.mp3`)],
-        preload: true,
-      }),
-      sound6: new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/6_G_.mp3`)],
-        preload: true,
-      }),
-      sound7: new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/7_G_.mp3`)],
-        preload: true,
-      }),
-      sound8: new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/8_A_.mp3`)],
-        preload: true,
-      }),
-      sound9: new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/9_C_plus.mp3`)],
-        preload: true,
-      }),
-      sound10: new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/10_C_plus.mp3`)],
-        preload: true,
-      }),
-      sound11: new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/11_D_plus.mp3`)],
-        preload: true,
-      }),
-      sound12: new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/12_E_plus.mp3`)],
-        preload: true,
-      }),
-      error: new Howl({
-        src: [require("./../assets/audio/sfx_autopopup.wav")],
-        preload: true,
-      }),
-    };
+      });
+    }
+    soundRefs.current.error = new Howl({ src: [require("./../assets/audio/sfx_autopopup.wav")], preload: true });
 
-    // Clean up the old sounds when the theme changes
     return () => {
-      Object.values(soundRefs.current).forEach((sound) => {
+      Object.values(soundRefs.current).forEach(sound => {
         sound.stop();
-        sound.unload(); // Unload sounds to prevent memory leaks
+        sound.unload();
       });
     };
   }, [currentTheme]);
@@ -176,38 +127,39 @@ const ScratchGame = ({
 
   const generateRandomLuckySymbol = () => {
     const result = Math.random() < generateRandomLuckySymbolPercentage;
-    //console.log("Generated result:", result);
     return result;
   };
 
   useEffect(() => {
-    setTimeout(()=>{setClickedIcons([]);
-    setClickedCount({});
-    setClickCount(0);
-    setLastClickedIcon(null);
-    setSoundShouldPlay(1);
+    setTimeout(() => {
+      setClickedIcons([]);
+      setClickedCount({});
+      setClickCount(0);
+      setLastClickedIcon(null);
+      setSoundShouldPlay(1);
 
-    // Generate lucky symbol once and use it
-    const icons = generateRandomLuckySymbol();
+      // Generate lucky symbol once and use it
+      const icons = generateRandomLuckySymbol();
 
-    setArrayIcon(icons); // Set the arrayIcon with the result of generateRandomLuckySymbol
-    setIsLuckySymbolTrue(icons); // Set if the lucky symbol is true
+      setArrayIcon(icons); // Set the arrayIcon with the result of generateRandomLuckySymbol
+      setIsLuckySymbolTrue(icons); // Set if the lucky symbol is true
 
-    const generatedArray = generateIconsArray(icons); // Generate icons array based on the result of generateRandomLuckySymbol
-    const booblePositions = findBoobleColor(generatedArray); // Find the bubble colors for the array
-    setArrayBobble(booblePositions); // Set the bubble positions
+      const generatedArray = generateIconsArray(icons); // Generate icons array based on the result of generateRandomLuckySymbol
+      const booblePositions = findBoobleColor(generatedArray); // Find the bubble colors for the array
+      setArrayBobble(booblePositions); // Set the bubble positions
 
-    setIconsArray(generatedArray); // Set the icons array
-    const winners = checkWinCondition(generatedArray); // Check for win condition
-    setWinningIcons(winners); // Set the winning icons
-    setIsWinner(winners.length > 0); // Determine if it's a winner
+      setIconsArray(generatedArray); // Set the icons array
+      const winners = checkWinCondition(generatedArray); // Check for win condition
+      setWinningIcons(winners); // Set the winning icons
+      setIsWinner(winners.length > 0); // Determine if it's a winner
 
-    setLuckySymbolWon(!!icons)
-    if (winners.length > 0) {
-      setTotalComboCount(winners.length - 1)
-    } else {
-      setTotalComboCount(0)
-    }}, 400);
+      setLuckySymbolWon(!!icons)
+      if (winners.length > 0) {
+        setTotalComboCount(winners.length - 1)
+      } else {
+        setTotalComboCount(0)
+      }
+    }, 400);
 
   }, [setIsWinner, reset, setIsLuckySymbolTrue]);
 
@@ -397,109 +349,51 @@ const ScratchGame = ({
   useEffect(() => { }, [clickedCount]);
 
   const handleIconClick = (index) => {
+    if (clickedIcons.includes(index)) return;
+
     const icon = iconsArray[index];
+    const isMismatch = lastClickedIcon !== null && lastClickedIcon !== icon && (clickedCount[lastClickedIcon] || 0) < 3;
 
-    if (!clickedIcons.includes(index)) {
-      if (
-        lastClickedIcon !== null &&
-        lastClickedIcon !== icon &&
-        clickedCount[lastClickedIcon] < 3
-      ) {
-        playSound("error");
-        setClickCount(0);
-        setSoundShouldPlay(1);
-        setClickedIcons([...clickedIcons, index]);
-        setLastClickedIcon(icon);
-
-        //Add bobble error
-        const newArrayBobble = [...arrayBobble];
-        newArrayBobble[index] = "lottieScratchieBubblePopError";
-        setArrayBobble(newArrayBobble);
-
-        return;
-      }
-
-      const newClickedIcons = [...clickedIcons, index];
-      setClickedIcons(newClickedIcons);
-      setClickCount(clickCount + 1);
-      if(clickCount+1 === 6) {
-        setComboPlayed(1);
-      }else if (clickCount+1 === 9) {
-        setComboPlayed(2);
-      } else if (clickCount+1 === 12) {
-        setComboPlayed(3);
-      }
-      setScore(score + timerGame * 100);
-
-      const newClickedCount = {
-        ...clickedCount,
-        [icon]: (clickedCount[icon] || 0) + 1,
-      };
-      setClickedCount(newClickedCount);
-
-      switch (soundShouldPlay) {
-        case 1:
-          playSound("sound1");
-          updateSounds();
-          break;
-        case 2:
-          playSound("sound2");
-          updateSounds();
-          break;
-        case 3:
-          playSound("sound3");
-          updateSounds();
-          break;
-        case 4:
-          playSound("sound4");
-          updateSounds();
-          break;
-        case 5:
-          playSound("sound5");
-          updateSounds();
-          break;
-        case 6:
-          playSound("sound6");
-          updateSounds();
-          break;
-        case 7:
-          playSound("sound7");
-          updateSounds();
-          break;
-        case 8:
-          playSound("sound8");
-          updateSounds();
-          break;
-        case 9:
-          playSound("sound9");
-          updateSounds();
-          break;
-        case 10:
-          playSound("sound10");
-          updateSounds();
-          break;
-        case 11:
-          playSound("sound11");
-          updateSounds();
-          break;
-        case 12:
-          playSound("sound12");
-          updateSounds();
-          setTimeout(() => {
-            setClickCount(0);
-          }, 1000);
-          setSoundShouldPlay(1);
-          break;
-        default:
-          break;
-      }
-
-      if (newClickedCount[icon] === 3) {
-        setTimeout(() => { }, finishPopUpToVideoTimer);
-      }
-
+    if (isMismatch) {
+      playSound("error");
+      setClickCount(0);
+      setSoundShouldPlay(1);
+      setClickedIcons(prev => [...prev, index]);
       setLastClickedIcon(icon);
+
+      setArrayBobble(prev => {
+        const updatedBobble = [...prev];
+        updatedBobble[index] = "lottieScratchieBubblePopError";
+        return updatedBobble;
+      });
+      return;
     }
+
+    setClickedIcons(prev => [...prev, index]);
+    setClickCount(prev => prev + 1);
+    setScore(prev => prev + timerGame * 100);
+
+    setClickedCount(prev => ({
+      ...prev,
+      [icon]: (prev[icon] || 0) + 1,
+    }));
+
+    const comboSteps = { 6: 1, 9: 2, 12: 3 };
+    if (comboSteps[clickCount + 1]) setComboPlayed(comboSteps[clickCount + 1]);
+
+    const soundKey = `sound${soundShouldPlay}`;
+    playSound(soundKey);
+    setSoundShouldPlay(prev => (prev < 12 ? prev + 1 : 1));
+
+    if (soundShouldPlay === 12) {
+      setTimeout(() => setClickCount(0), 1000);
+    }
+
+    if ((clickedCount[icon] || 0) + 1 === 3) {
+      setTimeout(() => { }, finishPopUpToVideoTimer);
+    }
+
+    setLastClickedIcon(icon);
   };
 
   const updateSounds = () => {
@@ -520,45 +414,18 @@ const ScratchGame = ({
   }, [fadeAnim, onLoading]);
 
   return (
-    <ImageBackground
-      source={backgroundScratchCard}
-      style={[styles.background_view]}
-    >
-      <View style={styles.container}>
-        <Animated.View style={[styles.gridContainer, { opacity: fadeAnim }]}>
-          {iconsArray.map((icon, index) => (
-            <View key={index} style={styles.iconContainer}>
-              {icon !== null && (
-                <View style={styles.iconWrapper}>
-                  {winningIcons.includes(icon) &&
-                    !clickedIcons.includes(index) &&
-                    scratched ? (
-                    <AnimatedIcon
-                      iconIndex={icon}
-                      onClick={() => handleIconClick(index)}
-                      timerGame={timerGame}
-                      bobble={arrayBobble[index]}
-                    />
-                  ) : clickedIcons.includes(index) ? (
-                    <View style={[styles.lottieContainer]}>
-                      <LottieView
-                        style={styles.lottieAnimation}
-                        source={lottieAnimations[arrayBobble[index]]}
-                        autoPlay
-                        loop={false}
-                        resizeMode="cover"
-                      />
-                    </View>
-                  ) : (
-                    iconComponentsDefault[icon]
-                  )}
-                </View>
-              )}
-            </View>
-          ))}
-        </Animated.View>
-      </View>
-    </ImageBackground>
+    <GameGrid backgroundScratchCard={backgroundScratchCard}
+      iconsArray={iconsArray}
+      winningIcons={winningIcons}
+      clickedIcons={clickedIcons}
+      scratched={scratched}
+      handleIconClick={handleIconClick}
+      timerGame={timerGame}
+      arrayBobble={arrayBobble}
+      lottieAnimations={lottieAnimations}
+      iconComponentsDefault={iconComponentsDefault}
+      fadeAnim={fadeAnim}
+    />
   );
 };
 

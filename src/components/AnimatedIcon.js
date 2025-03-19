@@ -18,26 +18,23 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
   const { currentTheme } = useTheme();
 
   const handleIconClick = () => {
-    if (onClick) {
-      onClick(iconIndex);
-    }
+    if (onClick) onClick(iconIndex);
   };
 
   useEffect(() => {
-    if (themes[currentTheme] && themes[currentTheme].iconsActive) {
-      const iconComponentsDefaultNew = themes[currentTheme].iconsActive;
-
-      setIconComponentsDefault(iconComponentsDefaultNew);
+    if (themes[currentTheme].iconsActive) {
+      setIconComponentsDefault(themes[currentTheme].iconsActive);
     }
   }, [currentTheme]);
 
   return (
-    <View style={styles.iconWrapper}>
-      {iconComponentsDefault[iconIndex]}
-      <TouchableWithoutFeedback
-        hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-        onPress={handleIconClick}>
-        <View style={styles.overlay}>
+    <TouchableWithoutFeedback 
+      onPress={handleIconClick} 
+      accessible={true} 
+      hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}>
+      <View style={styles.iconWrapper}>
+        {iconComponentsDefault[iconIndex]}
+        <View style={styles.overlay} pointerEvents="box-none">
           {selectedBobbleColour && (
             <LottieView
               style={styles.lottieAnimation}
@@ -47,13 +44,13 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
             />
           )}
           {timerGame > 0 && (
-          <View style={styles.centeredTextWrapper}>
-            <PopUpText value={timerGame} />
-          </View>
-        )}
+            <View style={styles.centeredTextWrapper}>
+              <PopUpText value={timerGame} />
+            </View>
+          )}
         </View>
-      </TouchableWithoutFeedback>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
