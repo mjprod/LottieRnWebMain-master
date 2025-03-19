@@ -89,8 +89,7 @@ const ScratchLayout = ({
           setClickCount={setClickCount}
           setLuckySymbolWon={setLuckySymbolWon}
           setTotalComboCount={setTotalComboCount}
-          setComboPlayed={setComboPlayed}
-        />
+          setComboPlayed={setComboPlayed} />
         {isScratchCardVisible && (
           <View style={styles.scratchCardContainer}>
             <ScratchCard
@@ -107,11 +106,7 @@ const ScratchLayout = ({
         <Image style={styles.arrowImage} source={null} />
       </View>
 
-      <View
-        //ref={buttonRef}
-        //onLayout={handleLayout}
-        style={{ marginTop: 5, overflow: "hidden", alignSelf: "stretch" }}
-      >
+      <View style={{ marginTop: 5, overflow: "hidden", alignSelf: "stretch" }}>
         <ScratchCardLeft scratchCardLeft={scratchCardLeft} />
       </View>
     </View>
@@ -123,7 +118,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 12,
     marginTop: "-10%",
-    //overflow: "hidden",
   },
   bottomView: {
     width: "100%",
@@ -151,29 +145,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     top: -10,
     zIndex: 1,
-  },
-  transparentVideo: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    //height: windowHeight,
-    //width: windowWidth,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  transparentOverlay: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0)",
-    // height: windowHeight,
-    //width: windowWidth,
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 999,
-    elevation: 10,
-  },
+  }
 });
 
 export default ScratchLayout;

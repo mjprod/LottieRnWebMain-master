@@ -50,6 +50,7 @@ const ScratchLuckyGame = () => {
   const [luckySymbolWon, setLuckySymbolWon] = useState(0)
   const [totalComboCount, setTotalComboCount] = useState(0)
   const [comboPlayed, setComboPlayed] = useState(0)
+  const [nextCardAnimationFinished, setNextCardAnimationFinished] = useState(true);
 
   const {
     user,
@@ -169,27 +170,17 @@ const ScratchLuckyGame = () => {
       if (luckySymbolCount <= 2) {
         setTimeout(() => {
           if (scratchCardLeft > 1) {
-            console.log(nextTheme[0]);
-            console.log(currentTheme);
-            console.log(currentTheme === nextTheme);
-
             if (currentTheme === nextTheme) {
-              setTimeout(() => {
-                setReset(true);
-              }, 100);
+              setReset(true)
             } else {
               setIntroThemeVideo(true);
             }
-
-            setTimeout(() => {
-              goToNextTheme();
-            }, 100);
           } else {
             handleGameOver();
           }
-        }, 700);
+        }, 200);
       }
-    }, 300);
+    }, 100);
   };
 
   const addLuckySymbol = () => {
@@ -230,7 +221,6 @@ const ScratchLuckyGame = () => {
 
   const handleVideoIntroEnd = () => {
     setIntroThemeVideo(false);
-
     setTimeout(() => {
       setReset(true);
     }, 100);
@@ -255,17 +245,7 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (reset) {
-      updateScore(user.user_id, score, gameId, comboPlayed)
-      setTimeout(() => {
-        if (scratchCardLeft - 1 > 0) {
-          setScratchCardLeft(scratchCardLeft - 1);
-        } else {
-          handleGameOver();
-        }
-      }, 600);
-      setTimerGame(0);
-      setScratchStarted(false);
-      setComboPlayed(0)
+      setNextCardAnimationFinished(false);
       Animated.timing(translateX, {
         toValue: width * 0.1,
         duration: 200,
@@ -276,11 +256,24 @@ const ScratchLuckyGame = () => {
           duration: 300,
           useNativeDriver: Platform.OS !== "web",
         }).start(() => {
+          updateScore(user.user_id, score, gameId, comboPlayed)
+          setTimeout(() => {
+            if (scratchCardLeft - 1 > 0) {
+              setScratchCardLeft(scratchCardLeft - 1);
+            } else {
+              handleGameOver();
+            }
+          }, 600);
+          setTimerGame(0);
+          setScratchStarted(false);
+          setComboPlayed(0)
+          goToNextTheme();
           Animated.timing(translateX, {
             toValue: -width * 0.1,
             duration: 300,
             useNativeDriver: Platform.OS !== "web",
           }).start(() => {
+            setNextCardAnimationFinished(true);
             Animated.spring(translateX, {
               toValue: 0,
               friction: 5,
@@ -289,6 +282,7 @@ const ScratchLuckyGame = () => {
           });
         });
       });
+
     }
   }, [reset, setReset]);
 
@@ -319,10 +313,6 @@ const ScratchLuckyGame = () => {
 
   const handleAnimationFinish = () => {
     setGameStarted(true);
-  };
-
-  const startGame = () => {
-    setCountDownStarted(true);
   };
 
   const renderInitialScreen = () => {
@@ -376,7 +366,7 @@ const ScratchLuckyGame = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <View style={styles.fullScreen}>
+    <View style={styles.fullScreen} pointerEvents={nextCardAnimationFinished ? "auto" : "none"}>
       <BackgroundGame
         showAlphaView={scratchStarted || gameOver}
         source={backgroundLoop} />
