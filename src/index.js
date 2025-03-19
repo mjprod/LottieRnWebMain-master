@@ -27,5 +27,4 @@ root.render(
   <AppRoot>
     <App />
   </AppRoot>
-
 );

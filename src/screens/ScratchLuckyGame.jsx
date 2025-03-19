@@ -520,11 +520,11 @@ const styles = StyleSheet.create({
       web: {
         width: "100vw",
         height: "100vh",
-        objectFit: "cover",
+        objectFit: "contain",
       },
       default: {
         ...StyleSheet.absoluteFillObject, // For mobile, full-screen video scaling
-        resizeMode: "cover",
+        resizeMode: "contain",
       },
     }),
   },

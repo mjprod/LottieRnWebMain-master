@@ -25,7 +25,7 @@ class Video extends Component {
       controls: false,  // Hide controls
       preload: "auto",
       style: {
-        objectFit: "cover", // Make sure the video covers the full container while keeping aspect ratio
+        objectFit: "contain", // Make sure the video covers the full container while keeping aspect ratio
         width: "100%", // Full width
         height: "100%", // Full height
       },
