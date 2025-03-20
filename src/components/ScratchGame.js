@@ -315,7 +315,6 @@ const ScratchGame = ({
   useEffect(() => { }, [clickedCount]);
 
   const handleIconClick = useCallback((index) => {
-    console.log("CLICKED ICON: ", index);
     if (clickedIcons.includes(index)) return;
 
     const icon = iconsArray[index];

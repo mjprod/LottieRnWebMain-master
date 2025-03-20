@@ -22,7 +22,7 @@
     "start-expo": "expo start",
     "start-native": "react-native-scripts start",
     "eject-native": "react-native-scripts eject",
-    "android": "react-native run-android",
+    "android": "react-native run-android", 
     "ios": "react-native run-ios",
     "test": "jest",
     "mobile": "react-native start"

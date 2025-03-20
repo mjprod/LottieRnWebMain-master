@@ -177,9 +177,9 @@ const ScratchLuckyGame = () => {
           } else {
             handleGameOver();
           }
-        }, 200);
+        }, 700);
       }
-    }, 100);
+    }, 300);
   };
 
   const addLuckySymbol = () => {

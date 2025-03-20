@@ -1,11 +1,11 @@
 import { Howl } from "howler";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { useSound } from "../hook/useSoundPlayer";
 
 const useSoundManager = () => {
   const soundRefs = useRef({});;
   const { isSoundEnabled } = useSound();
-  const initializeSounds = (theme) => {
+  const initializeSounds = useCallback((theme) => {
     console.log("Initializing sounds for theme:", theme);
     const soundNotes = ["C", "D", "E", "E", "F_", "G_", "G_", "A_", "C_plus", "C_plus", "D_plus", "E_plus"];
 
@@ -23,9 +23,9 @@ const useSoundManager = () => {
         sound.unload();
       });
     };
-  }
+  }, [soundRefs]);
 
-  const playSound = (soundKey) => {
+  const playSound = useCallback((soundKey) => {
     const sound = soundRefs.current[soundKey];
 
     if (sound && isSoundEnabled) {
@@ -40,7 +40,7 @@ const useSoundManager = () => {
     } else {
       console.error(`Sound ${soundKey} not found`);
     }
-  };
+  }, [soundRefs, isSoundEnabled]);
 
   return { initializeSounds, playSound };
 }

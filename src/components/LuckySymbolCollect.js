@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Animated,
-  TouchableWithoutFeedback,
+  Pressable,
   StyleSheet,
   Platform,
   Text,
@@ -105,7 +105,7 @@ const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo }) => {
       )}
       {initialAnimationComplete && !showBonusCard && (
         <View>
-          <TouchableWithoutFeedback onPress={handlePress}>
+          <Pressable onPress={handlePress}>
             <Animated.View
               style={[
                 styles.animatedContainer,
@@ -129,7 +129,7 @@ const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo }) => {
                 />
               </View>
             </Animated.View>
-          </TouchableWithoutFeedback>
+          </Pressable>
           <Text style={styles.tapTextFormat}>TAP!</Text>
         </View>
       )}

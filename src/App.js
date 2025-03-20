@@ -5,7 +5,6 @@ import { SnackbarProvider } from "./components/SnackbarContext";
 import { GameProvider } from "./context/GameContext";
 import { SoundProvider } from "./hook/useSoundPlayer";
 import { ThemeProvider } from "./hook/useTheme";
-import "./index.css";
 import DailyScreen from "./screens/DailyScreen";
 import GameOverScreen from "./screens/GameOverScreen";
 import LauchScreen from "./screens/LauchScreen";
@@ -14,6 +13,8 @@ import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 import LeaderBoardScreen from "./screens/LeaderBoardScreen";
 import HowToPlayScreen from "./screens/HowToPlayScreen";
 import StartScreen from "./screens/StartScreen";
+
+import "./index.css";
 
 const { height } = Dimensions.get("window");
 
@@ -68,9 +69,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "rgba(33,33,33,.9)",
-    paddingTop: "10%",
   },
   app: {
+    margin: "auto",
     flex: 1,
     width: 400,
     maxHeight: 750,
