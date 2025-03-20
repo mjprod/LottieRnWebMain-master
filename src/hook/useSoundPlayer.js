@@ -93,8 +93,14 @@ export const SoundProvider = ({ children }) => {
     Object.keys(soundRefs.current).forEach((trackKey, index) => {
       if (trackKey === "intro") return;
       const sound = soundRefs.current[trackKey];
-      setSoundVolume(sound, index === currentTrackIndex ? 1 : 0);
-      playSoundIfNotPlaying(sound);
+      
+      if (index === currentTrackIndex) {
+        setSoundVolume(sound, 1);
+        playSoundIfNotPlaying(sound);
+      } else {
+        sound.stop(); // Ensure other tracks are stopped
+        setSoundVolume(sound, 0);
+      }
     });
   };
 
@@ -115,6 +121,7 @@ export const SoundProvider = ({ children }) => {
         setSoundVolume(sound, isSoundEnabled ? 1 : 0);
         playSoundIfNotPlaying(sound);
       } else {
+        sound.stop(); // Stop other tracks to prevent overlapping
         toggleMuteSound(sound, true);
       }
     });
@@ -150,7 +157,8 @@ export const SoundProvider = ({ children }) => {
   };
 
   const playNextTrack = () => {
-    switchTrack(getTrackKey());
+    const newIndex = getTrackKey();
+    switchTrack(newIndex);
   };
 
   const switchTrack = (newIndex) => {
@@ -159,13 +167,17 @@ export const SoundProvider = ({ children }) => {
     const currentSound = soundRefs.current[trackKeys[currentTrackIndex]];
     const newSound = soundRefs.current[trackKeys[newIndex]];
 
-    if (currentSound) setSoundVolume(currentSound, 0);
+    if (currentSound) {
+      currentSound.fade(currentSound.volume(), 0, 500); // Fade out before stopping
+      setTimeout(() => currentSound.stop(), 500);
+    }
 
     setTimeout(() => {
       if (newSound) {
         toggleMuteSound(newSound, !isSoundEnabled);
         setSoundVolume(newSound, isSoundEnabled ? 1 : 0);
         playSoundIfNotPlaying(newSound);
+        newSound.fade(0, 1, 500); // Fade in new track
       }
     }, 500);
 

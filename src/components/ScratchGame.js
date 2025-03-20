@@ -291,7 +291,7 @@ const ScratchGame = ({
         console.log("NO LUCKY SYMBOL");
         nextCard();
       }
-    }, 300);
+    }, 500);
   };
 
   useEffect(() => {
@@ -361,7 +361,7 @@ const ScratchGame = ({
     }
 
     setLastClickedIcon(icon);
-  }, []);
+  }, [clickedIcons]);
 
   const updateSounds = () => {
     setSoundShouldPlay(soundShouldPlay + 1);
