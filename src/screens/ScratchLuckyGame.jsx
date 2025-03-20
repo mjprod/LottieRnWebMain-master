@@ -89,7 +89,7 @@ const ScratchLuckyGame = () => {
 
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
-
+  
   useEffect(() => {
     if (location.state) {
       const { username, email, id } = location.state;

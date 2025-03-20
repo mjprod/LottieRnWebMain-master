@@ -9,6 +9,7 @@ import React, {
 import { Howl } from "howler";
 import themes from "../global/themeConfig.js";
 import { useTheme } from "./useTheme.js";
+import { useLocation } from "react-router-dom";
 
 const SoundContext = createContext();
 
@@ -21,6 +22,13 @@ export const SoundProvider = ({ children }) => {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
 
   const { currentTheme } = useTheme();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname !== "/game") {
+      muteAllSounds();
+    }
+  }, [location.pathname]);
 
   const trackKeys = [
     "intro",
@@ -93,7 +101,7 @@ export const SoundProvider = ({ children }) => {
     Object.keys(soundRefs.current).forEach((trackKey, index) => {
       if (trackKey === "intro") return;
       const sound = soundRefs.current[trackKey];
-      
+
       if (index === currentTrackIndex) {
         setSoundVolume(sound, 1);
         playSoundIfNotPlaying(sound);

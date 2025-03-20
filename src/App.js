@@ -39,8 +39,8 @@ export default function App() {
       <View style={dynamicStyles.app}>
         <GameProvider>
           <ThemeProvider>
-            <SoundProvider>
-              <BrowserRouter>
+            <BrowserRouter>
+              <SoundProvider>
                 <SnackbarProvider>
                   <Routes>
                     <Route path="/*" element={<NotFoundScreen />} />
@@ -53,8 +53,8 @@ export default function App() {
                     <Route path="/:id/:username/:email" element={<LauchScreen />} />
                   </Routes>
                 </SnackbarProvider>
-              </BrowserRouter>
-            </SoundProvider>
+              </SoundProvider>
+            </BrowserRouter>
           </ThemeProvider>
         </GameProvider>
       </View>
