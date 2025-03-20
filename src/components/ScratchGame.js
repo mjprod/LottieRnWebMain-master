@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   StyleSheet,
   Animated,
@@ -316,7 +316,8 @@ const ScratchGame = ({
 
   useEffect(() => { }, [clickedCount]);
 
-  const handleIconClick = (index) => {
+  const handleIconClick = useCallback((index) => {
+    console.log("CLICKED ICON: ", index);
     if (clickedIcons.includes(index)) return;
 
     const icon = iconsArray[index];
@@ -362,7 +363,7 @@ const ScratchGame = ({
     }
 
     setLastClickedIcon(icon);
-  };
+  }, []);
 
   const updateSounds = () => {
     setSoundShouldPlay(soundShouldPlay + 1);

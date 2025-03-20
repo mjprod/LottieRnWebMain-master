@@ -366,7 +366,7 @@ const ScratchLuckyGame = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <View style={styles.fullScreen} pointerEvents={nextCardAnimationFinished ? "auto" : "none"}>
+    <View style={[styles.fullScreen, { pointerEvents: nextCardAnimationFinished ? "auto" : "none" }]}>
       <BackgroundGame
         showAlphaView={scratchStarted || gameOver}
         source={backgroundLoop} />

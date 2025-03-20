@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet, View, Pressable, TouchableOpacity } from "react-native";
 import LottieView from "react-native-web-lottie";
 import PopUpText from "./PopUpText";
 import themes from "../global/themeConfig";
@@ -28,29 +28,25 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
   }, [currentTheme]);
 
   return (
-    <TouchableWithoutFeedback 
-      onPress={handleIconClick} 
-      accessible={true} 
-      hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}>
-      <View style={styles.iconWrapper}>
-        {iconComponentsDefault[iconIndex]}
-        <View style={styles.overlay} pointerEvents="box-none">
-          {selectedBobbleColour && (
-            <LottieView
-              style={styles.lottieAnimation}
-              source={selectedBobbleColour}
-              autoPlay
-              loop={true}
-            />
-          )}
-          {timerGame > 0 && (
-            <View style={styles.centeredTextWrapper}>
-              <PopUpText value={timerGame} />
-            </View>
-          )}
-        </View>
+
+    <View style={[styles.iconWrapper, { pointerEvents: "box-none" }]} onTouchStart={handleIconClick} onMouseDown={handleIconClick}>
+      {iconComponentsDefault[iconIndex]}
+      <View style={{ ...styles.overlay, pointerEvents: "box-none" }}>
+        {selectedBobbleColour && (
+          <LottieView
+            style={styles.lottieAnimation}
+            source={selectedBobbleColour}
+            autoPlay
+            loop={true}
+          />
+        )}
+        {timerGame > 0 && (
+          <View style={styles.centeredTextWrapper}>
+            <PopUpText value={timerGame} />
+          </View>
+        )}
       </View>
-    </TouchableWithoutFeedback>
+    </View>
   );
 };
 

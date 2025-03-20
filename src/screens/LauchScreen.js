@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native-web";
 
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import GameButton from "../components/GameButton";
 import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import ProfileHeader from "../components/ProfileHeader";
