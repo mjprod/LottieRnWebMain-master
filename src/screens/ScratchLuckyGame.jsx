@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import BrowserDetection from "react-browser-detection";
 import {
   Animated,
@@ -35,7 +35,7 @@ const ScratchLuckyGame = () => {
   const countDownLottieRef = useRef(null);
 
   const [gameStarted, setGameStarted] = useState(false);
-  const [countDownStarted, setCountDownStarted] = useState(true);
+  const [countDownStarted] = useState(true);
   const [introThemeVideo, setIntroThemeVideo] = useState(false);
   const [reset, setReset] = useState(false);
   const [scratched, setScratched] = useState(false);
@@ -89,7 +89,7 @@ const ScratchLuckyGame = () => {
 
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
-  
+
   useEffect(() => {
     if (location.state) {
       const { username, email, id } = location.state;
@@ -291,7 +291,7 @@ const ScratchLuckyGame = () => {
   };
 
   // Function to render the win screen with a video overlay
-  const renderWinLuckySymbolVideoScreen = () => {
+  const renderWinLuckySymbolVideoScreen = useMemo(() => {
     return (
       <View
         key="overlay"
@@ -308,13 +308,13 @@ const ScratchLuckyGame = () => {
         </TouchableOpacity>
       </View>
     );
-  };
+  }, [browserHandler]);
 
   const handleAnimationFinish = () => {
     setGameStarted(true);
   };
 
-  const renderInitialScreen = () => {
+  const renderInitialScreen = useMemo(() => {
     return (
       <View
         key="overlay"
@@ -349,12 +349,16 @@ const ScratchLuckyGame = () => {
         </TouchableOpacity>
       </View>
     );
-  };
+  }, [countDownLottieRef, countDownStarted]);
 
   const handleGameOver = () => {
     setGameOver(true);
     appNavigation.goToGameOverPage(user.user_id, user.name, user.email)
   };
+
+  const backGroundVideo = useMemo(() =>{
+    return backgroundLoop;
+  }, [backgroundLoop]);
 
   if (loading)
     return (
@@ -364,11 +368,12 @@ const ScratchLuckyGame = () => {
     );
   if (error) return <p>Error: {error}</p>;
 
+  
   return (
     <View style={[styles.fullScreen, { pointerEvents: nextCardAnimationFinished ? "auto" : "none" }]}>
       <BackgroundGame
         showAlphaView={scratchStarted || gameOver}
-        source={backgroundLoop} />
+        source={backGroundVideo} />
       <View style={styles.containerOverlay}>
         <LinearGradient
           start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
@@ -413,7 +418,7 @@ const ScratchLuckyGame = () => {
       </View>
 
       <BottomDrawer />
-      {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen()}
+      {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen}
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect
           nextCard={nextCard}
@@ -422,7 +427,7 @@ const ScratchLuckyGame = () => {
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
         />
       )}
-      {(!gameStarted || !countDownStarted) && renderInitialScreen()}
+      {(!gameStarted || !countDownStarted) && renderInitialScreen}
       {introThemeVideo && (
         <IntroThemeVideo handleVideoEnd={handleVideoIntroEnd} />
       )}
