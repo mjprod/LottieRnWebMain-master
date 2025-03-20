@@ -1,5 +1,5 @@
 import { Howl } from "howler";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Animated,
   Image,
@@ -15,6 +15,7 @@ import { useTheme } from "../hook/useTheme";
 import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import NumberTicker from "./NumberTicker";
 import AssetPack from "../util/AssetsPack";
+import useComboSounds from "../hook/useComboSounds";
 
 const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
   const { score, luckySymbolCount } = useGame();
@@ -29,55 +30,28 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
 
   const lottieRef = useRef(null);
 
-  const { isSoundEnabled } = useSound();
-
-  const soundRefs = useRef({
-      x4: new Howl({
-        src: [require(`./../assets/sounds/combo.mp3`)],
-        preload: true,
-      }),
-      x3: new Howl({
-        src: [require(`./../assets/sounds/nice_combo.mp3`)],
-        preload: true,
-      }),
-      x2: new Howl({
-        src: [require(`./../assets/sounds/ultra_combo.mp3`)],
-        preload: true,
-      }),
-    });
-
+  const {initializeComboSounds, playComboSound} = useComboSounds();
+  
   useEffect(() => {
-    // Clean up sounds when component unmounts
-    return () => {
-      Object.values(soundRefs.current).forEach((sound) => {
-        sound.stop();
-        sound.unload();
-      });
-    };
+    initializeComboSounds();
   }, []);
-
-  const playSound = (soundKey) => {
-    if (soundRefs.current[soundKey] && isSoundEnabled) {
-      soundRefs.current[soundKey].play();
-    }
-  };
 
   useEffect(() => {
     switch (clickCount) {
       case 6:
         setAnimationIndex(0);
         setPlayAnimation(true);
-        playSound("x2");
+        playComboSound("x2");
         break;
       case 9:
         setAnimationIndex(1);
         setPlayAnimation(true);
-        playSound("x3");
+        playComboSound("x3");
         break;
       case 12:
         setAnimationIndex(2);
         setPlayAnimation(true);
-        playSound("x4");
+        playComboSound("x4");
         break;
       default:
         return;

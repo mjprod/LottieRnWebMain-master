@@ -21,7 +21,7 @@ import { useTheme } from "../hook/useTheme";
 import { useSound } from "../hook/useSoundPlayer";
 import { useGame } from "../context/GameContext";
 import GameGrid from "./GameGrid";
-import useSoundManager from "../util/soundManager";
+import useClickSounds from "../hook/useClickSounds";
 
 const ScratchGame = ({
   //score,
@@ -41,7 +41,7 @@ const ScratchGame = ({
   setComboPlayed
 }) => {
   const { score, setScore, luckySymbolCount } = useGame();
-  const {initializeSounds, playSound} = useSoundManager();
+  const {initializeClickSounds, playClickSound} = useClickSounds();
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
@@ -77,7 +77,7 @@ const ScratchGame = ({
   };
 
   useEffect(() => {
-    initializeSounds(currentTheme);
+    initializeClickSounds(currentTheme);
   }, [currentTheme]);
 
   useEffect(() => {
@@ -321,7 +321,7 @@ const ScratchGame = ({
     const isMismatch = lastClickedIcon !== null && lastClickedIcon !== icon && (clickedCount[lastClickedIcon] || 0) < 3;
 
     if (isMismatch) {
-      playSound("error");
+      playClickSound("error");
       setClickCount(0);
       setSoundShouldPlay(1);
       setClickedIcons(prev => [...prev, index]);
@@ -348,7 +348,7 @@ const ScratchGame = ({
     if (comboSteps[clickCount + 1]) setComboPlayed(comboSteps[clickCount + 1]);
 
     const soundKey = `sound${soundShouldPlay}`;
-    playSound(soundKey);
+    playClickSound(soundKey);
     setSoundShouldPlay(prev => (prev < 12 ? prev + 1 : 1));
 
     if (soundShouldPlay === 12) {
