@@ -32,7 +32,7 @@ const ScratchLuckyGame = () => {
   const appNavigation = useAppNavigation();
   const location = useLocation();
 
-  const ref = useRef(null);
+  const countDownLottieRef = useRef(null);
 
   const [gameStarted, setGameStarted] = useState(false);
   const [countDownStarted, setCountDownStarted] = useState(true);
@@ -123,13 +123,13 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (countDownStarted) {
       setTimeout(() => {
-        if (ref.current != null) {
-          ref.current.play();
+        if (countDownLottieRef.current != null) {
+          countDownLottieRef.current.play();
         }
         setStartPlay(true);
       }, 1000);
     }
-  }, [countDownStarted, ref]);
+  }, [countDownStarted, countDownLottieRef]);
 
   const saveLuckySymbol = async (luckySymbol) => {
     setLuckySymbolCount(luckySymbol);
@@ -337,7 +337,7 @@ const ScratchLuckyGame = () => {
           {countDownStarted && (
             <View style={styles.rowCountDown}>
               <LottieView
-                ref={ref}
+                ref={countDownLottieRef}
                 style={styles.lottieAnimation}
                 source={AssetPack.lotties.COUNT_DOWN}
                 speed={1}
