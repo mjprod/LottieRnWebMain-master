@@ -23,6 +23,7 @@ import { useTheme } from "../hook/useTheme";
 import { useSound } from "../hook/useSoundPlayer";
 import { useGame } from "../context/GameContext";
 import GameGrid from "./GameGrid";
+import useSoundManager from "../util/soundManager";
 
 const ScratchGame = ({
   //score,
@@ -42,6 +43,7 @@ const ScratchGame = ({
   setComboPlayed
 }) => {
   const { score, setScore, luckySymbolCount } = useGame();
+  const {initializeSounds, playSound} = useSoundManager();
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
@@ -76,43 +78,9 @@ const ScratchGame = ({
     lottieScratchieBubblePopError: require("./../assets/lotties/lottieScratchieBubblePopError.json"),
   };
 
-  const soundRefs = useRef({});
-
-  const soundNotes = ["C", "D", "E", "E", "F_", "G_", "G_", "A_", "C_plus", "C_plus", "D_plus", "E_plus"];
   useEffect(() => {
-    soundRefs.current = {};
-    for (let i = 1; i <= 12; i++) {
-      soundRefs.current[`sound${i}`] = new Howl({
-        src: [require(`./../assets/audio/${currentTheme}/${i}_${soundNotes[i - 1]}.mp3`)],
-        preload: true,
-      });
-    }
-    soundRefs.current.error = new Howl({ src: [require("./../assets/audio/sfx_autopopup.wav")], preload: true });
-
-    return () => {
-      Object.values(soundRefs.current).forEach(sound => {
-        sound.stop();
-        sound.unload();
-      });
-    };
+    initializeSounds(currentTheme);
   }, [currentTheme]);
-
-  const playSound = (soundKey) => {
-    const sound = soundRefs.current[soundKey];
-
-    if (sound && isSoundEnabled) {
-      if (!sound._loaded) {
-        sound.once("load", () => {
-          sound.play();
-        });
-        sound.load();
-      } else {
-        sound.play();
-      }
-    } else {
-      console.error(`Sound ${soundKey} not found`);
-    }
-  };
 
   useEffect(() => {
     if (themes[currentTheme] && themes[currentTheme].iconsDefault) {
