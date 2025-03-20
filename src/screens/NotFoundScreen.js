@@ -11,13 +11,11 @@ const NotFoundScreen = () => {
   return (
     <ImageBackground
       source={AssetPack.backgrounds.BLUE_BACKGROUND_CARD}
-      style={styles.rotatingBackgroundContainer}
-    >
+      style={styles.rotatingBackgroundContainer}>
       <RotatingCirclesBackground style={{ paddingVertical: "20%" }}>
         <Image
           source={AssetPack.images.PHAROAH}
-          style={{ width: 250, height: 200, marginBottom: -100, zIndex: 10 }}
-        />
+          style={{ width: 250, height: 200, marginBottom: -100, zIndex: 10 }}/>
         <ImageBackground
           blurRadius={10}
           resizeMode="cover"
@@ -32,8 +30,7 @@ const NotFoundScreen = () => {
             borderRadius: 12,
             marginHorizontal: 35,
             marginBottom: 30,
-          }}
-        >
+          }}>
           <View
             style={{
               backgroundColor: "#00000099",
