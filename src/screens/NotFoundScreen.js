@@ -3,11 +3,8 @@ import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
 import AssetPack from "../util/AssetsPack";
 import GameButton from "../components/GameButton";
-import useAppNavigation from "../hook/useAppNavigation";
 
 const NotFoundScreen = () => {
-  const appNavigation = useAppNavigation()
-
   return (
     <ImageBackground
       source={AssetPack.backgrounds.BLUE_BACKGROUND_CARD}

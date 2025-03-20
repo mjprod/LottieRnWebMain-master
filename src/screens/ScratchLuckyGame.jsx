@@ -63,7 +63,6 @@ const ScratchLuckyGame = () => {
     setScratchStarted,
     luckySymbolCount,
     setLuckySymbolCount,
-    ticketCount,
     setTicketCount,
   } = useGame();
 

@@ -6,8 +6,6 @@ import {
   Platform,
 } from "react-native";
 
-import { Howl } from "howler";
-
 import {
   generateRandomLuckySymbolPercentage,
   finishPopUpToVideoTimer,

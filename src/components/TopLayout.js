@@ -89,33 +89,6 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
     }
   }, [clickCount]);
 
-  /*
-  TODO: Implement countdown timer
-  useEffect(() => {
-    let interval;
-    if (scratchStarted) {
-      setCountdownTimer(10);
-      interval = setInterval(() => {
-        setCountdownTimer((prevTimer) => {
-          const newTime = prevTimer - 1;
-          const nextTime = newTime <= 1 ? 1 : newTime;
-
-          setTimerGame(nextTime);
-
-          if (nextTime === 1) {
-            clearInterval(interval);
-          }
-          return nextTime;
-        });
-      }, 1000);
-    } else {
-      setCountdownTimer(0);
-    }
-
-    return () => clearInterval(interval);
-  }, [scratchStarted, setTimerGame]);
-*/
-
   useEffect(() => {
     let interval;
     if (scratchStarted) {

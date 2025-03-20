@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { useNavigate } from "react-router-dom";
 import TopBannerNav from "../components/TopBannerNav";
 import AssetPack from "../util/AssetsPack";
@@ -40,7 +40,5 @@ const HowToPlayScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default HowToPlayScreen;

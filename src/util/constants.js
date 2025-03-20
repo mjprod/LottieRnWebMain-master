@@ -1,4 +1,4 @@
-export const SERVER = "http://192.168.128.52:8083";
+export const SERVER = process.env.REACT_APP_SERVER_URL;
 
 export const COLOR_BACKGROUND = "#131313";
 

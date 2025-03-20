@@ -9,7 +9,7 @@ import {
 import AssetPack from "../util/AssetsPack";
 import PurplePill from "./PurplePill";
 import LinearGradient from "react-native-web-linear-gradient";
-import { COLOR_BACKGROUND, Colors, Dimentions, Fonts } from "../util/constants";
+import { Colors, Dimentions, Fonts } from "../util/constants";
 import AlphaView from "./AlphaView";
 import { useNavigate } from "react-router";
 

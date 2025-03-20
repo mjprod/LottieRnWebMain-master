@@ -8,8 +8,6 @@ import {
   Text,
 } from "react-native";
 import LottieView from "react-native-web-lottie";
-import useApiRequest from "../hook/useApiRequest";
-import { userId } from "../global/Settings";
 import { useGame } from "../context/GameContext";
 
 const colectLuckyCoins = require("./../assets/image/lucky_coin.png");

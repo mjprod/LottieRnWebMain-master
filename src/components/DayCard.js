@@ -150,7 +150,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingTop: 5,
         lineHeight: 15,
-        borderColor: '#3EDA41',
         borderWidth: 1,
     },
     mainContainer: {
@@ -161,7 +160,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderBottomRightRadius: 12,
         borderBottomLeftRadius: 12,
-        borderColor: '#3D3D3D',
     },
     mainContainerActive: {
         flexDirection: 'row',

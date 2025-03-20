@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Pressable, TouchableOpacity } from "react-native";
+import { StyleSheet, View } from "react-native";
 import LottieView from "react-native-web-lottie";
 import PopUpText from "./PopUpText";
 import themes from "../global/themeConfig";
@@ -28,7 +28,6 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
   }, [currentTheme]);
 
   return (
-
     <View style={[styles.iconWrapper, { pointerEvents: "box-none" }]} onTouchStart={handleIconClick} onMouseDown={handleIconClick}>
       {iconComponentsDefault[iconIndex]}
       <View style={{ ...styles.overlay, pointerEvents: "box-none" }}>

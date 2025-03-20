@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Image, StyleSheet, ImageBackground, View } from "react-native";
+import { Text, Image, StyleSheet, View } from "react-native";
 import AssetPack from "../util/AssetsPack";
 import DiagonalGradientCard from "../components/DiagonalGradientCard";
 
