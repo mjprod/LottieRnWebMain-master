@@ -14,6 +14,7 @@ import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import NumberTicker from "./NumberTicker";
 import AssetPack from "../util/AssetsPack";
 import useComboSounds from "../hook/useComboSounds";
+
 const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) => (
   <View style={styles.container}>
     <Image source={gameCenterIcon} style={styles.centralImage} />
@@ -30,6 +31,7 @@ const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex,
     )}
   </View>
 );
+
 const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
   const { score, luckySymbolCount } = useGame();
 
@@ -96,9 +98,6 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
     setTimerGame(countdownTimer);
   }, [countdownTimer, setTimerGame]);
 
-  
-
-  // Function to determine background based on timer value
   const getBackground = (value) => {
     if (value >= 1 && value <= 2) {
       return AssetPack.backgrounds.GAME_TOP_LAYOUT_RED;
@@ -110,7 +109,9 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
       return AssetPack.backgrounds.GAME_TOP_LAYOUT;
     }
   };
+
   const backgroundSource = useMemo(() => getBackground(countdownTimer), [countdownTimer]);
+
   return (
     <View style={{ marginTop: -25 }}>
       <ImageBackground
