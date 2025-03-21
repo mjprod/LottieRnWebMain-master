@@ -65,6 +65,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    overflow: "hidden",
     height: "100vh",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -85,12 +86,14 @@ const styles = StyleSheet.create({
 const smallStyles = StyleSheet.create({
   container: {
     flex: 1,
+    overflow: "hidden",
     justifyContent: "flex-start",
     alignItems: "center",
     userSelect: "none",
     backgroundColor: "#131313",
   },
   app: {
+    overflow: "hidden",
     width: "100%",
     height: height,
     backgroundColor: "#131313",
