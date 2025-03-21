@@ -349,7 +349,7 @@ const ScratchLuckyGame = () => {
     appNavigation.goToGameOverPage(user.user_id, user.name, user.email)
   };
 
-  const backGroundVideo = useMemo(() =>{
+  const backGroundVideo = useMemo(() => {
     return backgroundLoop;
   }, [backgroundLoop]);
 
@@ -361,20 +361,20 @@ const ScratchLuckyGame = () => {
     );
   if (error) return <p>Error: {error}</p>;
 
-  
+
   return (
     <View style={[styles.fullScreen, { pointerEvents: nextCardAnimationFinished ? "auto" : "none" }]}>
       <BackgroundGame
         showAlphaView={scratchStarted || gameOver}
         source={backGroundVideo} />
       <View style={styles.containerOverlay}>
-        <LinearGradient
-          start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
-          locations={[0, 0.3, 0.45, 0.55, 1.0]}
-          colors={['#212121', '#262E33', '#1D4A64', '#24282B', '#212121']}
-          style={styles.imageBackground}
-          resizeMode="stretch">
-          <Animated.View style={[{ transform: [{ translateX }] }]}>
+        <Animated.View style={[styles.background, { transform: [{ translateX }] }]}>
+          <LinearGradient
+            start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
+            locations={[0, 0.3, 0.45, 0.55, 1.0]}
+            colors={['#212121', '#262E33', '#1D4A64', '#24282B', '#212121']}
+            style={styles.imageBackground}
+            resizeMode="stretch">
             <View style={styles.overlay}>
               <Animated.View style={{ marginTop: marginTopAnim }}>
                 <TopLayout
@@ -403,11 +403,10 @@ const ScratchLuckyGame = () => {
                 nextCard={nextCard}
                 setLuckySymbolWon={setLuckySymbolWon}
                 setTotalComboCount={setTotalComboCount}
-                setComboPlayed={setComboPlayed}
-              />
+                setComboPlayed={setComboPlayed} />
             </View>
-          </Animated.View>
-        </LinearGradient>
+          </LinearGradient>
+        </Animated.View>
       </View>
 
       <BottomDrawer />
@@ -456,7 +455,7 @@ const styles = StyleSheet.create({
     }),
     flexDirection: "row",
   },
-  imageBackground: {
+  background: {
     flex: 1,
     margin: 10,
     position: "absolute",
@@ -467,13 +466,15 @@ const styles = StyleSheet.create({
     zIndex: 2,
     justifyContent: "flex-start",
     alignItems: "flex-start",
+  },
+  imageBackground: {
+    margin: "auto",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
     borderColor: "#A88C5D",
     borderWidth: 1,
-
   },
   overlay: {
     flex: 1,

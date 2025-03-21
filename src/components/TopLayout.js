@@ -173,7 +173,7 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
         />
       </ImageBackground>
       <View style={styles.containerBottom}>
-        <View style={[styles.textWrapper, styles.textBottomLeft]}>
+        <View style={[styles.textWrapper, styles.textBottomLeft, { marginTop: -1 }]}>
           <NumberTicker number={score} duration={500} textSize={20} />
         </View>
 

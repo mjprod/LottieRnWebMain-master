@@ -106,7 +106,7 @@ const ScratchLayout = ({
         <Image style={styles.arrowImage} source={null} />
       </View>
 
-      <View style={{ marginTop: 5, overflow: "hidden", alignSelf: "stretch" }}>
+      <View style={{ marginTop: 5, marginBottom: 10, overflow: "hidden", alignSelf: "stretch" }}>
         <ScratchCardLeft scratchCardLeft={scratchCardLeft} />
       </View>
     </View>
