@@ -7,7 +7,7 @@ export default settings;
 
 //Eraser settings
 export const eraserRadius = 45;
-export const eraserShouldBeScratched = 88;
+export const eraserShouldBeScratched = 90;
 
 //Eraser
 export const eraserDurationAnimation = 250;
@@ -15,7 +15,7 @@ export const eraserAnimationSteps = 85;
 
 //ScratchCard
 export const simulateScratchTimeOut = 2500;
-export const generateRandomLuckySymbolPercentage = 0.5;
+export const generateRandomLuckySymbolPercentage = 0.25;
 export const finishPopUpToVideoTimer = 1000;
 //export const setLuckySymbolCountTimer = 5700;
 export const timerSoundBetweenScratchWithFinger = 300;

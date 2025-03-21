@@ -25,6 +25,7 @@ import { useTheme } from "../hook/useTheme.js";
 import AssetPack from "../util/AssetsPack.js";
 import useAppNavigation from "../hook/useAppNavigation.js";
 import LinearGradient from 'react-native-web-linear-gradient';
+import { Easing } from "react-native";
 
 const { width } = Dimensions.get("window");
 
@@ -231,12 +232,14 @@ const ScratchLuckyGame = () => {
       Animated.timing(marginTopAnim, {
         toValue: 6,
         duration: 300,
+        easing: Easing.in(Easing.ease),
         useNativeDriver: Platform.OS !== "web",
       }).start();
     } else {
       Animated.timing(marginTopAnim, {
         toValue: 0,
         duration: 300,
+        easing: Easing.out(Easing.ease),
         useNativeDriver: Platform.OS !== "web",
       }).start();
     }
@@ -245,43 +248,33 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (reset) {
       setNextCardAnimationFinished(false);
-      Animated.timing(translateX, {
-        toValue: width * 0.1,
-        duration: 200,
-        useNativeDriver: Platform.OS !== "web",
-      }).start(() => {
+      Animated.sequence([
         Animated.timing(translateX, {
-          toValue: -width,
-          duration: 300,
+          toValue: -width * 1.1,
+          duration: 400,
           useNativeDriver: Platform.OS !== "web",
-        }).start(() => {
-          updateScore(user.user_id, score, gameId, comboPlayed)
-          setTimeout(() => {
-            if (scratchCardLeft - 1 > 0) {
-              setScratchCardLeft(scratchCardLeft - 1);
-            } else {
-              handleGameOver();
-            }
-          }, 600);
-          setTimerGame(0);
-          setScratchStarted(false);
-          setComboPlayed(0)
-          goToNextTheme();
-          Animated.timing(translateX, {
-            toValue: -width * 0.1,
-            duration: 300,
-            useNativeDriver: Platform.OS !== "web",
-          }).start(() => {
-            setNextCardAnimationFinished(true);
-            Animated.spring(translateX, {
-              toValue: 0,
-              friction: 5,
-              useNativeDriver: Platform.OS !== "web",
-            }).start();
-          });
-        });
+        }),
+        Animated.spring(translateX, {
+          toValue: 0,
+          friction: 7,
+          tension: 50,
+          useNativeDriver: Platform.OS !== "web",
+        })
+      ]).start(() => {
+        updateScore(user.user_id, score, gameId, comboPlayed);
+        setTimeout(() => {
+          if (scratchCardLeft - 1 > 0) {
+            setScratchCardLeft(scratchCardLeft - 1);
+          } else {
+            handleGameOver();
+          }
+        }, 600);
+        setTimerGame(0);
+        setScratchStarted(false);
+        setComboPlayed(0);
+        goToNextTheme();
+        setNextCardAnimationFinished(true);
       });
-
     }
   }, [reset, setReset]);
 
