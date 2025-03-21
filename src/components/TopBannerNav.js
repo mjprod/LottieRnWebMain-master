@@ -12,6 +12,7 @@ import LinearGradient from "react-native-web-linear-gradient";
 import { Colors, Dimentions, Fonts } from "../util/constants";
 import AlphaView from "./AlphaView";
 import { useNavigate } from "react-router";
+import backgroudImage from "./../assets/image/top_nav_background.jpg"
 
 const TopBannerNav = ({
   title = "Be in to win Prizes!",
@@ -32,7 +33,7 @@ const TopBannerNav = ({
   };
 
   return (
-    <ImageBackground style={{ alignItems: "start" }} source={backgroundImage} >
+    <ImageBackground style={{ alignItems: "start" }} source={backgroudImage} >
       <AlphaView showAlphaView={showAlphaView} />
       <LinearGradient
         colors={[Colors.transparent, Colors.transparent, Colors.background]}

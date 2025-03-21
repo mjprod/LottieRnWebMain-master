@@ -19,7 +19,7 @@ const AssetPack = {
     CARD_NUMBER_SET_COMPLETED: require("./../assets/image/card_set_number_completed.svg"),
     CARD_NUMBER_SET_INACTIVE: require("./../assets/image/card_set_number_inactive.svg"),
     BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg"),
-    TOP_NAV_BACKGROUND: require("./../assets/image/top_nav_background.jpg"),
+    TOP_NAV_BACKGROUND: import("./../assets/image/top_nav_background.jpg"),
     GOLDEN_BACKGROUND_GRADIENT: require("./../assets/image/highlightBackgroundGradient.svg"),
     NEXT_DRAW_CARD: require("./../assets/image/next_draw_card_background.png"),
     BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg"),

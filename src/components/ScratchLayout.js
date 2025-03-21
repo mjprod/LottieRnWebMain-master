@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   bottomView: {
     width: "100%",
-    height: heightScratch,
+    height: "100%",
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
     borderBottomLeftRadius: 12,
