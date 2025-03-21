@@ -19,6 +19,7 @@
   "scripts": {
     "start": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
     "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "clean": "rm -rf node_modules yarn.lock && yarn install",
     "start-expo": "expo start",
     "start-native": "react-native-scripts start",
     "eject-native": "react-native-scripts eject",
