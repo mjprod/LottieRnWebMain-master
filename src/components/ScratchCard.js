@@ -1,10 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
-import { eraserRadius, heightScratch } from "../global/Settings";
+import { View, StyleSheet } from "react-native";
+import { eraserRadius, heightScratch, widthScratch } from "../global/Settings";
 
 const scratch_foreground_thumbnail = require("./../assets/image/scratch_foreground.jpg");
-
-const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 const ScratchCard = ({ autoScratch, onScratch, onLoading, setScratchStarted }) => {
   const canvasRef = useRef(null);
@@ -24,8 +22,8 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading, setScratchStarted }) =
 
     img.onload = () => {
       // Set canvas dimensions
-      canvas.width = windowWidth * 0.5;
-      canvas.height = windowHeight * 0.2;
+      canvas.width = widthScratch;
+      canvas.height = heightScratch;
 
       // Draw the image on the canvas
       context.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -131,8 +129,8 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading, setScratchStarted }) =
         ref={canvasRef}
         style={{
           border: "1px solid black",
-          width: windowWidth,
-          height: windowHeight,
+          width: widthScratch,
+          height: widthScratch,
           touchAction: "none",
         }}
       />

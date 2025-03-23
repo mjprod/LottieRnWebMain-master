@@ -3,7 +3,7 @@ import { StyleSheet, View, Image } from "react-native";
 import ScratchCardLeft from "./ScratchCardLeft";
 import ScratchGame from "./ScratchGame";
 import ScratchCard from "./ScratchCard";
-import { eraserShouldBeScratched, heightScratch } from "../global/Settings";
+import { eraserShouldBeScratched, heightScratch, widthScratch } from "../global/Settings";
 import { useGame } from "../context/GameContext";
 
 const scratchForeground = require("./../assets/image/scratch_foreground.jpg");
@@ -120,8 +120,8 @@ const styles = StyleSheet.create({
     marginTop: "-10%",
   },
   bottomView: {
-    width: "100%",
-    height: "100%",
+    width: widthScratch,
+    height: heightScratch,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
     borderBottomLeftRadius: 12,

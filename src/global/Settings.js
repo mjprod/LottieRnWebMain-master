@@ -30,6 +30,7 @@ export const totalPositions = 20;
 export const columns = 4;
 export const maxRepeatedIcons = 3;
 export const heightScratch = 350;
+export const widthScratch = 350;
 export const colorSymbolNotSelected = 'rgba(0, 0, 0, 0.5)';
 
 

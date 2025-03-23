@@ -427,7 +427,6 @@ const ScratchLuckyGame = () => {
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
   fullScreen: {
     flex: 1,
@@ -454,18 +453,6 @@ const styles = StyleSheet.create({
       default: StyleSheet.absoluteFillObject,
     }),
     flexDirection: "row",
-  },
-  background: {
-    flex: 1,
-    margin: 10,
-    position: "absolute",
-    top: 120,
-    left: 10,
-    right: 10,
-    bottom: 65,
-    zIndex: 2,
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
   },
   imageBackground: {
     margin: "auto",
