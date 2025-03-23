@@ -11,8 +11,8 @@ const useApiRequest = () => {
   const fetchData = async (config) => {
     const { url, method = "GET", headers, body } = config;
     showConsoleMessage("API Request Config:", config)
-
-    const encryptData = encrypt(JSON.stringify(body));
+    console.log("Body", JSON.stringify(body))
+    const encryptData = encrypt(body);
 
     try {
       setLoading(true);
