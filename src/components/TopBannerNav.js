@@ -10,7 +10,6 @@ import AssetPack from "../util/AssetsPack";
 import PurplePill from "./PurplePill";
 import LinearGradient from "react-native-web-linear-gradient";
 import { Colors, Dimentions, Fonts } from "../util/constants";
-import AlphaView from "./AlphaView";
 import { useNavigate } from "react-router";
 
 const TopBannerNav = ({
@@ -40,8 +39,7 @@ const TopBannerNav = ({
             <Image
               resizeMode="contain"
               style={styles.arrowIcon}
-              source={AssetPack.icons.ARROW_LEFT.default}
-            />
+              source={AssetPack.icons.ARROW_LEFT.default}/>
           </TouchableOpacity>
         )}
         <PurplePill
