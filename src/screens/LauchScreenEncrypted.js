@@ -5,7 +5,6 @@ import {
   ScrollView,
   ImageBackground,
   View,
-  Text,
 } from "react-native-web";
 
 import { useParams } from "react-router";
@@ -18,7 +17,7 @@ import TopBannerNav from "../components/TopBannerNav";
 import SectionTitle from "../components/SectionTitle";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
-import { Colors, Dimentions, LeaderBoardStatus } from "../util/constants";
+import { Colors, Dimentions } from "../util/constants";
 import NextDrawCard from "../components/NextDrawCard";
 import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
 import RaffleTicketCard from "../components/RaffleTicketCard";
@@ -38,12 +37,9 @@ const LauchScreenEncrypted = () => {
   const [initialTicketCount, setInitialTicketCount] = useState(0);
   const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
 
-  const [leaderBoardData, setLeaderBoardData] = useState();
-
   const { loading, error, response, fetchUserDetails, getLeaderBoard } = useApiRequest();
   const { showSnackbar } = useSnackbar();
 
-  const { id, username, email } = useParams();
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -55,17 +51,11 @@ const LauchScreenEncrypted = () => {
       }
       const authTokenData = JSON.parse(decrypt(authToken, true));
       fetchUserDetails(authTokenData.user_id, authTokenData.username, authTokenData.email);
-      getLeaderBoard(5);
     }
     window.history.replaceState(null, '', window.location.pathname);
   }, [searchParams]);
 
-  useEffect(() => {
-    console.log("User Updated!", user)
-  }, [user]);
-
   const handleStartGame = () => {
-    console.log("User Updated!", user);
     if (user.name === undefined || user.name === "") {
       showSnackbar("Please complete your profile to play the game");
       // fetchUserDetails(id, username, email);
@@ -112,16 +102,6 @@ const LauchScreenEncrypted = () => {
             appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
           }
         }
-      } else {
-        setLeaderBoardData(Object.values(response).map((data) => {
-          return {
-            id: data.user_id,
-            rank: data.rank,
-            username: data.name,
-            points: data.total_score,
-            status: LeaderBoardStatus.up,
-          }
-        }));
       }
     }
   }, [response]);
@@ -197,7 +177,7 @@ const LauchScreenEncrypted = () => {
               text="LeaderBard"
               viewAllText="View All"
               viewAllAction={handleViewAllPress} />
-            <LeaderBoardList leaderboardData={leaderBoardData} />
+            <LeaderBoardList />
             <GamesAvailableCard
               style={{ marginVertical: 24 }}
               cardsLeft={initialScratchCardLeft} />
