@@ -42,7 +42,7 @@ const useApiRequest = () => {
   const silentFetchData = async (config) => {
     const { url, method = "GET", headers, body } = config;
     showConsoleMessage("Silent API Request Config:", config)
-    const encryptData = encrypt(JSON.stringify(body));
+    const encryptData = encrypt(body);
 
     try {
       const res = await fetch(url, {
@@ -56,7 +56,7 @@ const useApiRequest = () => {
       }
       const data = await res.json();
 
-      setResponse(decrypt(data).json());
+      setResponse(decrypt(data));
 
       showConsoleMessage("Silent API Response Data:", decrypt(data))
     } catch (err) {
