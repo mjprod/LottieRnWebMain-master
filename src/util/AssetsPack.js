@@ -45,6 +45,7 @@ const AssetPack = {
     CAROUSEL_ITEM_1: require("../assets/image/carousel/carousel_item_1.png"),
     CAROUSEL_ITEM_2: require("../assets/image/carousel/carousel_item_2.png"),
     CAROUSEL_ITEM_3: require("../assets/image/carousel/carousel_item_3.png"),
+    EXTENDING_PLAY: require("./../assets/image/extending_play_image.png"),
   },
   lotties: {
     CTA_BUTTON_FULL_WIDTH: require("./../assets/lotties/buttonCallToActionFullWidth.json"),
@@ -58,20 +59,6 @@ const AssetPack = {
     COMBO_2X: require("../assets/lotties/ComboHolderMaxVersion-2x.json"),
     COMBO_3X: require("../assets/lotties/ComboHolderMaxVersion-3x.json"),
     COMBO_4X: require("../assets/lotties/ComboHolderMaxVersion-4x.json"),
-  },
-  howls: {
-    x4: new Howl({
-      src: [require(`./../assets/sounds/combo.mp3`)],
-      preload: true,
-    }),
-    x3: new Howl({
-      src: [require(`./../assets/sounds/nice_combo.mp3`)],
-      preload: true,
-    }),
-    x2: new Howl({
-      src: [require(`./../assets/sounds/ultra_combo.mp3`)],
-      preload: true,
-    }),
   }
 };
 

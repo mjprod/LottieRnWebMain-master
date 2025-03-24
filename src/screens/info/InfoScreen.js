@@ -9,7 +9,7 @@ import { useGame } from "../../context/GameContext";
 import ThankYouContent from "./components/ThankYouContent";
 import DrawInProgressContent from "./components/DrawInProgressContent";
 import WeAreExtendingContent from "./components/WeAreExtendingContent";
-import { ActivityIndicator } from "react-native-web";
+import LoadingView from "../../components/LoadingView";
 
 export const InfoScreenContents = {
     extending: "we_are_extending",
@@ -18,13 +18,13 @@ export const InfoScreenContents = {
 };
 
 
-const InfoScreen = ({contentName}) => {
+const InfoScreen = ({ contentName }) => {
     const appNavigation = useAppNavigation()
 
     const { user, setUser } = useGame()
 
     const { fetchUserDetails, response } = useApiRequest();
-    
+
     const [content, setContent] = useState();
 
     useEffect(() => {
@@ -52,9 +52,7 @@ const InfoScreen = ({contentName}) => {
 
     if (!content) {
         return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#FFD89E" />
-            </View>
+            <LoadingView />
         );
     }
     return (
