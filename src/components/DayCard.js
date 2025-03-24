@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         flexDirection: 'row',
         backgroundColor: '#FFDEA8',
-        borderColor: '#FFDEA866',
+        borderColor: '#3D3D3D',
         overflow: "hidden",
         borderWidth: 1,
         borderBottomRightRadius: 12,
