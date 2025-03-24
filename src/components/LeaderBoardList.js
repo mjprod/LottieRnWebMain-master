@@ -4,13 +4,13 @@ import LeaderBoardItem from "./items/LeaderBoardItem";
 import { LeaderBoardStatus } from "../util/constants";
 import useApiRequest from "../hook/useApiRequest";
 
-const LeaderBoardList = ({ username, style }) => {
-  const { loading, error, response, getLeaderBoard } = useApiRequest();
+const LeaderBoardList = ({ username, style, numberOfItems = 10 }) => {
+  const { response, getLeaderBoard } = useApiRequest();
 
   const [leaderboardData, setLeaderBoardData] = useState([]);
 
   useEffect(() => {
-    getLeaderBoard(5);
+    getLeaderBoard(numberOfItems);
   }, []);
 
   useEffect(() => {
@@ -26,6 +26,7 @@ const LeaderBoardList = ({ username, style }) => {
       }));
     }
   }, [response]);
+
   return (
     <FlatList
       style={{ width: "100%", ...style }}

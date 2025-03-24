@@ -39,7 +39,7 @@ const TopBannerNav = ({
             <Image
               resizeMode="contain"
               style={styles.arrowIcon}
-              source={AssetPack.icons.ARROW_LEFT.default}/>
+              source={AssetPack.icons.ARROW_LEFT}/>
           </TouchableOpacity>
         )}
         <PurplePill

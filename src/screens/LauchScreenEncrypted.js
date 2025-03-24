@@ -177,7 +177,7 @@ const LauchScreenEncrypted = () => {
               text="LeaderBard"
               viewAllText="View All"
               viewAllAction={handleViewAllPress} />
-            <LeaderBoardList />
+            <LeaderBoardList numberOfItems={5} />
             <GamesAvailableCard
               style={{ marginVertical: 24 }}
               cardsLeft={initialScratchCardLeft} />
