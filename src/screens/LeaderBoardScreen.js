@@ -32,10 +32,9 @@ const LeaderBoardScreen = () => {
   }, [location]);
 
   useEffect(() => {
-    if (response) {
-      if (response.user) {
-        setUser(response.user);
-      }
+    if (response && response.user) {
+      console.log(response.user)
+      setUser(response.user);
     }
   }, [response]);
 

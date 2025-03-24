@@ -50,7 +50,9 @@ const LauchScreenEncrypted = () => {
         return;
       }
       const authTokenData = JSON.parse(decrypt(authToken, true));
-      fetchUserDetails(authTokenData.user_id, authTokenData.username, authTokenData.email);
+      fetchUserDetails(authTokenData.user_id, authTokenData.name, authTokenData.email);
+    } else {
+      fetchUserDetails(user.user_id, user.name, user.email);
     }
     window.history.replaceState(null, '', window.location.pathname);
   }, [searchParams]);
@@ -69,45 +71,42 @@ const LauchScreenEncrypted = () => {
   };
 
   useEffect(() => {
-    if (response) {
-      if (response.user) {
-        setInitialScore(response.user.total_score || 0);
-        setInitialTicketCount(response.user.ticket_balance || 0);
-        setInitialScratchCardLeft(response.user.card_balance || 0);
-        setUser(response.user);
-        setLuckySymbolCount(response.user.lucky_symbol_balance);
+    if (response && response.user) {
+      setInitialScore(response.user.total_score || 0);
+      setInitialTicketCount(response.user.ticket_balance || 0);
+      setInitialScratchCardLeft(response.user.card_balance || 0);
+      setUser(response.user);
+      setLuckySymbolCount(response.user.lucky_symbol_balance);
 
-        const userData = response.user;
-        const currentWeek = response.current_week;
-        if (response.daily === null || response.daily.length === 0) {
-          appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-        } else {
-          const currentWeekDaily = response.daily.find(
-            (item) => item.current_week === currentWeek
+      const userData = response.user;
+      const currentWeek = response.current_week;
+      if (response.daily === null || response.daily.length === 0) {
+        appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+      } else {
+        const currentWeekDaily = response.daily.find(
+          (item) => item.current_week === currentWeek
+        );
+        if (currentWeekDaily != null) {
+          const localConvertedDays = currentWeekDaily.days.map((date) =>
+            convertUTCToLocal(date)
           );
-          if (currentWeekDaily != null) {
-            const localConvertedDays = currentWeekDaily.days.map((date) =>
-              convertUTCToLocal(date)
-            );
-            const hasCurrentDate = localConvertedDays.some((item) =>
-              item.includes(getCurrentDate())
-            );
-            if (!hasCurrentDate) {
-              console.log("Daily Question not answered.", currentWeekDaily);
-              appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-            } else {
-              console.log("Daily Question already answered.");
-            }
-          } else {
+          const hasCurrentDate = localConvertedDays.some((item) =>
+            item.includes(getCurrentDate())
+          );
+          if (!hasCurrentDate) {
+            console.log("Daily Question not answered.", currentWeekDaily);
             appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+          } else {
+            console.log("Daily Question already answered.");
           }
+        } else {
+          appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
         }
       }
     }
   }, [response]);
 
   useEffect(() => {
-    console.log("Error: ", error);
     if (error && error.length > 0) {
       showSnackbar(error);
     }
