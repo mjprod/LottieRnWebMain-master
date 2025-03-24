@@ -14,7 +14,7 @@ import LeaderBoardScreen from "./screens/LeaderBoardScreen";
 import HowToPlayScreen from "./screens/HowToPlayScreen";
 import StartScreen from "./screens/StartScreen";
 import LauchScreenEncrypted from "./screens/LauchScreenEncrypted";
-
+import InfoScreen, { InfoScreenContents } from "./screens/info/InfoScreen";
 import "./index.css";
 
 const { height } = Dimensions.get("window");
@@ -53,6 +53,9 @@ export default function App() {
                     <Route path="/how_to_play" element={<HowToPlayScreen />} />
                     <Route path="/leader_board" element={<LeaderBoardScreen />} />
                     <Route path="/:id/:username/:email" element={<LauchScreen />} />
+                    <Route path="/we_are_extending" element={<InfoScreen contentName={InfoScreenContents.extending} />} />
+                    <Route path="/thank_you" element={<InfoScreen contentName={InfoScreenContents.thank_you} />} />
+                    <Route path="/draw_in_progress" element={<InfoScreen contentName={InfoScreenContents.in_progress} />} />
                     <Route path="/" element={<LauchScreenEncrypted />} />
                   </Routes>
                 </SnackbarProvider>
