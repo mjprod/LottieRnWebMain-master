@@ -32,13 +32,12 @@ import { decrypt } from "../util/crypto";
 const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
 
-  const { setLuckySymbolCount } = useGame();
+  const { user, setUser, setLuckySymbolCount } = useGame();
 
   const [initialScore, setInitialScore] = useState(0);
   const [initialTicketCount, setInitialTicketCount] = useState(0);
   const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
 
-  const [initialUserData, setInitialUserData] = useState("");
   const [leaderBoardData, setLeaderBoardData] = useState();
 
   const { loading, error, response, fetchUserDetails, getLeaderBoard } = useApiRequest();
@@ -48,15 +47,21 @@ const LauchScreenEncrypted = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    const authToken = searchParams.get('authToken');
-    const authTokenData = JSON.parse(decrypt(authToken, true));
-    fetchUserDetails(authTokenData.user_id, authTokenData.username, authTokenData.email);
-    window.history.replaceState(null, '', window.location.pathname);
-    getLeaderBoard(5)
+    if (!user && user === null) {
+      const authToken = searchParams.get('authToken');
+      if (!authToken) {
+        appNavigation.goToNotFoundPage();
+        return;
+      }
+      const authTokenData = JSON.parse(decrypt(authToken, true));
+      window.history.replaceState(null, '', window.location.pathname);
+      fetchUserDetails(authTokenData.user_id, authTokenData.username, authTokenData.email);
+      getLeaderBoard(5);
+    }
   }, [searchParams]);
 
   const handleStartGame = () => {
-    if (initialUserData.name === undefined || initialUserData.name === "") {
+    if (user.name === undefined || user.name === "") {
       showSnackbar("Please complete your profile to play the game");
       fetchUserDetails(id, username, email);
       return;
@@ -74,7 +79,7 @@ const LauchScreenEncrypted = () => {
         setInitialScore(response.user.total_score || 0);
         setInitialTicketCount(response.user.ticket_balance || 0);
         setInitialScratchCardLeft(response.user.card_balance || 0);
-        setInitialUserData(response.user);
+        setUser(response.user);
         setLuckySymbolCount(response.user.lucky_symbol_balance);
 
         const userData = response.user;
@@ -135,66 +140,75 @@ const LauchScreenEncrypted = () => {
     appNavigation.goToLeaderBoardPage(id, username, email)
   };
 
-  return (
-    <ScrollView style={{ backgroundColor: Colors.background }}>
-      <View style={styles.header}>
-        <TopBannerNav />
-        {loading ? (
-          <LoadingView />
-        ) : (
-          <ProfileHeader
-            containerStyle={{ paddingHorizontal: Dimentions.pageMargin }}
-            id={initialUserData.user_id}
-            name={initialUserData.name} />
-        )}
-      </View>
-      <View style={{ ...styles.container }}>
-        <View style={{
-          marginLeft: Dimentions.pageMargin,
-          marginRight: Dimentions.pageMargin,
-          marginBottom: Dimentions.sectionMargin,
-          marginTop: Dimentions.sectionMargin
-        }}>
-          <SectionTitle text={"Statistics"} />
-          <View style={styles.resultRow}>
-            <StatCard title="Total Points" stat={initialScore} loading={loading} />
-            <View style={{ width: 10 }} />
-            <StatCard title="LUCKY SYMBOLS" loading={loading}>
-              <ImageBackground
-                resizeMode="contain"
-                source={AssetPack.backgrounds.LUCKY_SYMBOL}
-                style={styles.imageBackgroundLuckySymbol}>
-                <LottieLuckySymbolCoinSlot topLayout={false} />
-              </ImageBackground>
-              <View style={styles.luckySymbols}></View>
-            </StatCard>
+  if (user) {
+    return (
+      <ScrollView style={{ backgroundColor: Colors.background }}>
+        <View style={styles.header}>
+          <TopBannerNav />
+          {loading ? (
+            <LoadingView />
+          ) : (
+            <ProfileHeader
+              containerStyle={{ paddingHorizontal: Dimentions.pageMargin }}
+              id={user.user_id ? user.user_id : ""}
+              name={user.name ?? ""} />
+          )}
+        </View>
+        <View style={{ ...styles.container }}>
+          <View style={{
+            marginLeft: Dimentions.pageMargin,
+            marginRight: Dimentions.pageMargin,
+            marginBottom: Dimentions.sectionMargin,
+            marginTop: Dimentions.sectionMargin
+          }}>
+            <SectionTitle text={"Statistics"} />
+            <View style={styles.resultRow}>
+              <StatCard title="Total Points" stat={initialScore} loading={loading} />
+              <View style={{ width: 10 }} />
+              <StatCard title="LUCKY SYMBOLS" loading={loading}>
+                <ImageBackground
+                  resizeMode="contain"
+                  source={AssetPack.backgrounds.LUCKY_SYMBOL}
+                  style={styles.imageBackgroundLuckySymbol}>
+                  <LottieLuckySymbolCoinSlot topLayout={false} />
+                </ImageBackground>
+                <View style={styles.luckySymbols}></View>
+              </StatCard>
+            </View>
+            <RaffleTicketCard score={initialScore} ticketCount={initialTicketCount} />
+            <GameButton
+              style={{ marginTop: Dimentions.pageMargin, width: "100%" }}
+              text="Play Now"
+              onPress={() => handleStartGame()} />
           </View>
-          <RaffleTicketCard score={initialScore} ticketCount={initialTicketCount} />
-          <GameButton
-            style={{ marginTop: Dimentions.pageMargin, width: "100%" }}
-            text="Play Now"
-            onPress={() => handleStartGame()} />
+          <View style={{
+            paddingTop: Dimentions.sectionMargin,
+            paddingHorizontal:
+              Dimentions.pageMargin,
+            paddingBottom: Dimentions.sectionMargin,
+            borderRadius: 16
+          }}>
+            <SectionTitle
+              text="LeaderBard"
+              viewAllText="View All"
+              viewAllAction={handleViewAllPress} />
+            <LeaderBoardList leaderboardData={leaderBoardData} />
+            <GamesAvailableCard
+              style={{ marginVertical: 24 }}
+              cardsLeft={initialScratchCardLeft} />
+            <NextDrawCard style={{ marginVertical: 24 }} />
+          </View>
         </View>
-        <View style={{
-          paddingTop: Dimentions.sectionMargin,
-          paddingHorizontal:
-            Dimentions.pageMargin,
-          paddingBottom: Dimentions.sectionMargin,
-          borderRadius: 16
-        }}>
-          <SectionTitle
-            text="LeaderBard"
-            viewAllText="View All"
-            viewAllAction={handleViewAllPress} />
-          <LeaderBoardList leaderboardData={leaderBoardData} />
-          <GamesAvailableCard
-            style={{ marginVertical: 24 }}
-            cardsLeft={initialScratchCardLeft} />
-          <NextDrawCard style={{ marginVertical: 24 }} />
-        </View>
+      </ScrollView>
+    );
+  } else {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#FFD89E" />
       </View>
-    </ScrollView>
-  );
+    );
+  }
+
 };
 
 const styles = StyleSheet.create({
@@ -223,7 +237,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
-  },
+  }
 });
 
 export default LauchScreenEncrypted;
