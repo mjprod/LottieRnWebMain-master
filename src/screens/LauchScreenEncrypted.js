@@ -47,29 +47,34 @@ const LauchScreenEncrypted = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    if (!user && user === null) {
+    if (!user || user === null) {
       const authToken = searchParams.get('authToken');
       if (!authToken) {
         appNavigation.goToNotFoundPage();
         return;
       }
       const authTokenData = JSON.parse(decrypt(authToken, true));
-      window.history.replaceState(null, '', window.location.pathname);
       fetchUserDetails(authTokenData.user_id, authTokenData.username, authTokenData.email);
       getLeaderBoard(5);
     }
+    window.history.replaceState(null, '', window.location.pathname);
   }, [searchParams]);
 
+  useEffect(() => {
+    console.log("User Updated!", user)
+  }, [user]);
+
   const handleStartGame = () => {
+    console.log("User Updated!", user);
     if (user.name === undefined || user.name === "") {
       showSnackbar("Please complete your profile to play the game");
-      fetchUserDetails(id, username, email);
+      // fetchUserDetails(id, username, email);
       return;
     }
     if (initialScratchCardLeft === 0) {
       showSnackbar("You don't have any cards left. Please wait till next day to play the game!")
     } else {
-      appNavigation.goToStartPage(id, username, email);
+      appNavigation.goToStartPage(user.user_id, user.name, user.email);
     }
   };
 
@@ -137,7 +142,7 @@ const LauchScreenEncrypted = () => {
   };
 
   const handleViewAllPress = () => {
-    appNavigation.goToLeaderBoardPage(id, username, email)
+    appNavigation.goToLeaderBoardPage(user.user_id, user.name, user.email)
   };
 
   if (user) {

@@ -16,11 +16,11 @@ import useApiRequest from "../hook/useApiRequest";
 import { useGame } from "../context/GameContext";
 import useAppNavigation from "../hook/useAppNavigation";
 import LinearGradient from 'react-native-web-linear-gradient';
-
+import { useSnackbar } from "../components/SnackbarContext";
 const GameOverScreen = () => {
     const appNavigation = useAppNavigation();
     const { setUser, setLuckySymbolCount } = useGame();
-
+    const { showSnackbar } = useSnackbar();
     const { fetchUserDetails, response } = useApiRequest();
 
     const location = useLocation();
@@ -31,8 +31,13 @@ const GameOverScreen = () => {
     const [initialUserData, setInitialUserData] = useState("");
 
     useEffect(() => {
-        fetchUserDetails(id, username, email);
-    }, [id]);
+        if (id && username && email) {
+            fetchUserDetails(id, username, email);
+        } else {
+            showSnackbar("Something went wrong");
+            appNavigation.goToNotFoundPage();
+        }
+    }, [id, email, username]);
 
     useEffect(() => {
         if (response) {
@@ -56,10 +61,10 @@ const GameOverScreen = () => {
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-           <LinearGradient start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
-                   locations={[0, 0.3, 0.45, 0.55, 1.0]}
-                   colors={['#212121', '#262E33', '#1D4A64', '#24282B', '#212121']}
-                   style={styles.imageBackground}>
+            <LinearGradient start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
+                locations={[0, 0.3, 0.45, 0.55, 1.0]}
+                colors={['#212121', '#262E33', '#1D4A64', '#24282B', '#212121']}
+                style={styles.imageBackground}>
                 <View style={styles.rotatingBackgroundContainer}>
                     <RotatingCirclesBackground />
                 </View>

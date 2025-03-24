@@ -28,7 +28,6 @@ const decrypt = (data, urlSafe = false) => {
             ciphertextBase64 = decodeUrlSafeBase64(parts[1]);
         }
         
-        console.log('iv:', ivBase64, 'ciphertext:', ciphertextBase64);
         var iv = CryptoJS.enc.Base64.parse(ivBase64);
         var ciphertext = CryptoJS.enc.Base64.parse(ciphertextBase64);
 
