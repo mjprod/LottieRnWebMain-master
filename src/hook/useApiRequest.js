@@ -56,9 +56,9 @@ const useApiRequest = () => {
       }
       const data = await res.json();
 
-      setResponse(decrypt(data));
+      setResponse(JSON.parse(decrypt(data)));
 
-      showConsoleMessage("Silent API Response Data:", decrypt(data))
+      showConsoleMessage("Silent API Response Data:", JSON.parse(decrypt(data)));
     } catch (err) {
       showConsoleError("Silent API Error:", err)
     } finally {

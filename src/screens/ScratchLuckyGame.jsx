@@ -102,7 +102,8 @@ const ScratchLuckyGame = () => {
     if (response) {
       if (response.user) {
         setUser(response.user);
-      } else if (response.gameId) {
+      }
+      if (response.gameId) {
         setGameId(response.gameId);
       }
     }
