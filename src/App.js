@@ -13,6 +13,7 @@ import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 import LeaderBoardScreen from "./screens/LeaderBoardScreen";
 import HowToPlayScreen from "./screens/HowToPlayScreen";
 import StartScreen from "./screens/StartScreen";
+import LauchScreenEncrypted from "./screens/LauchScreenEncrypted";
 
 import "./index.css";
 
@@ -52,6 +53,7 @@ export default function App() {
                     <Route path="/how_to_play" element={<HowToPlayScreen />} />
                     <Route path="/leader_board" element={<LeaderBoardScreen />} />
                     <Route path="/:id/:username/:email" element={<LauchScreen />} />
+                    <Route path="/" element={<LauchScreenEncrypted />} />
                   </Routes>
                 </SnackbarProvider>
               </SoundProvider>

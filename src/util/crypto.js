@@ -1,9 +1,21 @@
 const CryptoJS = require('crypto-js');
 const { SECRET_KEY } = require('./constants');
 
+function decodeUrlSafeBase64(urlSafeBase64) {
+    // Replace URL-safe characters with standard Base64 characters.
+    let base64 = urlSafeBase64.replace(/-/g, '+').replace(/_/g, '/');
+    
+    // Add padding if necessary (Base64 string length should be a multiple of 4).
+    while (base64.length % 4 !== 0) {
+      base64 += '=';
+    }
+    
+    // Decode the Base64 string to get the original data.
+    return base64;
+  }
+  
 
-
-const decrypt = (data) => {
+const decrypt = (data, urlSafe = false) => {
     var parts = data.split(':');
     if (parts.length !== 2) {
         console.error('Unexpected format for encrypted data. Expected "iv:ciphertext".');
@@ -11,6 +23,12 @@ const decrypt = (data) => {
         var ivBase64 = parts[0];
         var ciphertextBase64 = parts[1];
 
+        if( urlSafe){
+            ivBase64 = decodeUrlSafeBase64(parts[0]);
+            ciphertextBase64 = decodeUrlSafeBase64(parts[1]);
+        }
+        
+        console.log('iv:', ivBase64, 'ciphertext:', ciphertextBase64);
         var iv = CryptoJS.enc.Base64.parse(ivBase64);
         var ciphertext = CryptoJS.enc.Base64.parse(ciphertextBase64);
 
