@@ -9,8 +9,7 @@ import {
 import AssetPack from "../util/AssetsPack";
 import PurplePill from "./PurplePill";
 import LinearGradient from "react-native-web-linear-gradient";
-import { COLOR_BACKGROUND, Colors, Dimentions, Fonts } from "../util/constants";
-import AlphaView from "./AlphaView";
+import { Colors, Dimentions, Fonts } from "../util/constants";
 import { useNavigate } from "react-router";
 
 const TopBannerNav = ({
@@ -19,7 +18,6 @@ const TopBannerNav = ({
   backgroundImage = AssetPack.backgrounds.TOP_NAV_BACKGROUND,
   onBackPress,
   hasBackButton = false,
-  showAlphaView = false,
 }) => {
   const navigate = useNavigate();
 
@@ -33,7 +31,6 @@ const TopBannerNav = ({
 
   return (
     <ImageBackground style={{ alignItems: "start" }} source={backgroundImage} >
-      <AlphaView showAlphaView={showAlphaView} />
       <LinearGradient
         colors={[Colors.transparent, Colors.transparent, Colors.background]}
         style={styles.linearGradient}>
@@ -42,8 +39,7 @@ const TopBannerNav = ({
             <Image
               resizeMode="contain"
               style={styles.arrowIcon}
-              source={AssetPack.icons.ARROW_LEFT}
-            />
+              source={AssetPack.icons.ARROW_LEFT}/>
           </TouchableOpacity>
         )}
         <PurplePill
@@ -62,6 +58,7 @@ const styles = StyleSheet.create({
     marginBottom: Dimentions.pageMargin,
     marginTop: 20,
     letterSpacing: 1,
+    zIndex: 9999,
   },
   title: {
     fontFamily: Fonts.TekoMedium,

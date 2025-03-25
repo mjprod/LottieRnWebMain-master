@@ -1,5 +1,4 @@
-import { Howl } from "howler";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useMemo, useEffect, useRef, useState } from "react";
 import {
   Animated,
   Image,
@@ -10,11 +9,28 @@ import {
 } from "react-native";
 import LottieView from "react-native-web-lottie";
 import { useGame } from "../context/GameContext";
-import { useSound } from "../hook/useSoundPlayer";
 import { useTheme } from "../hook/useTheme";
 import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import NumberTicker from "./NumberTicker";
 import AssetPack from "../util/AssetsPack";
+import useComboSounds from "../hook/useComboSounds";
+
+const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) => (
+  <View style={styles.container}>
+    <Image source={gameCenterIcon} style={styles.centralImage} />
+    {playAnimation && (
+      <LottieView
+        ref={lottieRef}
+        key={animationIndex}
+        source={animations[animationIndex]}
+        loop={false}
+        autoPlay
+        style={styles.lottie}
+        onAnimationFinish={onAnimationFinish}
+      />
+    )}
+  </View>
+);
 
 const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
   const { score, luckySymbolCount } = useGame();
@@ -29,55 +45,28 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
 
   const lottieRef = useRef(null);
 
-  const { isSoundEnabled } = useSound();
-
-  const soundRefs = useRef({
-    x4: new Howl({
-      src: [AssetPack.sounds.COMBO],
-      preload: true,
-    }),
-    x3: new Howl({
-      src: [AssetPack.sounds.NICE_COMBO],
-      preload: true,
-    }),
-    x2: new Howl({
-      src: [AssetPack.sounds.ULTRA_COMBO],
-      preload: true,
-    }),
-  });
+  const { initializeComboSounds, playComboSound } = useComboSounds();
 
   useEffect(() => {
-    // Clean up sounds when component unmounts
-    return () => {
-      Object.values(soundRefs.current).forEach((sound) => {
-        sound.stop();
-        sound.unload();
-      });
-    };
+    initializeComboSounds();
   }, []);
-
-  const playSound = (soundKey) => {
-    if (soundRefs.current[soundKey] && isSoundEnabled) {
-      soundRefs.current[soundKey].play();
-    }
-  };
 
   useEffect(() => {
     switch (clickCount) {
       case 6:
         setAnimationIndex(0);
         setPlayAnimation(true);
-        playSound("x2");
+        playComboSound("x2");
         break;
       case 9:
         setAnimationIndex(1);
         setPlayAnimation(true);
-        playSound("x3");
+        playComboSound("x3");
         break;
       case 12:
         setAnimationIndex(2);
         setPlayAnimation(true);
-        playSound("x4");
+        playComboSound("x4");
         break;
       default:
         return;
@@ -89,60 +78,26 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
     }
   }, [clickCount]);
 
-  /*
-  TODO: Implement countdown timer
   useEffect(() => {
-    let interval;
     if (scratchStarted) {
       setCountdownTimer(10);
-      interval = setInterval(() => {
-        setCountdownTimer((prevTimer) => {
-          const newTime = prevTimer - 1;
-          const nextTime = newTime <= 1 ? 1 : newTime;
-
-          setTimerGame(nextTime);
-
-          if (nextTime === 1) {
-            clearInterval(interval);
-          }
-          return nextTime;
+      const intervalRef = setInterval(() => {
+        setCountdownTimer((prev) => {
+          if (prev > 1) return prev - 1;
+          clearInterval(intervalRef);
+          return 1;
         });
       }, 1000);
+      return () => clearInterval(intervalRef);
     } else {
       setCountdownTimer(0);
     }
-
-    return () => clearInterval(interval);
-  }, [scratchStarted, setTimerGame]);
-*/
-
-  useEffect(() => {
-    let interval;
-    if (scratchStarted) {
-      setCountdownTimer(10);
-      interval = setInterval(() => {
-        setCountdownTimer((prevTimer) => {
-          const newTime = prevTimer - 1;
-          const nextTime = newTime <= 1 ? 1 : newTime;
-
-          if (nextTime === 1) {
-            clearInterval(interval);
-          }
-          return nextTime;
-        });
-      }, 1000);
-    } else {
-      setCountdownTimer(0);
-    }
-
-    return () => clearInterval(interval);
   }, [scratchStarted]);
 
   useEffect(() => {
     setTimerGame(countdownTimer);
   }, [countdownTimer, setTimerGame]);
 
-  // Function to determine background based on timer value
   const getBackground = (value) => {
     if (value >= 1 && value <= 2) {
       return AssetPack.backgrounds.GAME_TOP_LAYOUT_RED;
@@ -155,33 +110,12 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
     }
   };
 
-  // Function that renders the central image with Lottie animation
-  const CentralImageWithLottie = () => {
-    return (
-      <View style={styles.container}>
-        <Image source={gameCenterIcon} style={styles.centralImage} />
-        {playAnimation && (
-          <LottieView
-            ref={lottieRef}
-            key={animationIndex} // Force re-render when animation index changes
-            source={animations[animationIndex]}
-            loop={false}
-            autoPlay={true} // Start animation on play
-            style={styles.lottie}
-            onAnimationFinish={() => {
-              //console.log("Animation ended");
-              setPlayAnimation(false); // Stop animation when finished
-            }}
-          />
-        )}
-      </View>
-    );
-  };
+  const backgroundSource = useMemo(() => getBackground(countdownTimer), [countdownTimer]);
 
   return (
     <View style={{ marginTop: -25 }}>
       <ImageBackground
-        source={getBackground(countdownTimer)}
+        source={backgroundSource}
         resizeMode="contain"
         style={styles.image_top}
       >
@@ -229,11 +163,17 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
             />
           </View>
         </View>
-
-        {CentralImageWithLottie()}
+        <CentralImageWithLottie
+          gameCenterIcon={gameCenterIcon}
+          playAnimation={playAnimation}
+          animationIndex={animationIndex}
+          lottieRef={lottieRef}
+          animations={animations}
+          onAnimationFinish={() => setPlayAnimation(false)}
+        />
       </ImageBackground>
       <View style={styles.containerBottom}>
-        <View style={[styles.textWrapper, styles.textBottomLeft]}>
+        <View style={[styles.textWrapper, styles.textBottomLeft, { marginTop: -1 }]}>
           <NumberTicker number={score} duration={500} textSize={20} />
         </View>
 

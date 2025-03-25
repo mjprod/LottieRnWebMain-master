@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, ScrollView, StyleSheet } from "react-native";
+import { Animated, ScrollView, StyleSheet, Platform } from "react-native";
 import { ActivityIndicator, View } from "react-native-web";
 import ProfileHeader from "../components/ProfileHeader";
 import { useSnackbar } from "../components/SnackbarContext";
 import useApiRequest from "../hook/useApiRequest";
 import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import DailyCardsContainer from "../components/DailyCardsContainer";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
 import LinkButton from "../components/LinkButton";
@@ -34,12 +34,12 @@ const DailyScreen = () => {
       Animated.timing(slideAnim, {
         toValue: 0,
         duration: 500,
-        useNativeDriver: true,
+        useNativeDriver: Platform.OS !== 'web',
       }),
       Animated.timing(fadeAnim, {
         toValue: 0,
         duration: 500,
-        useNativeDriver: true,
+        useNativeDriver: Platform.OS !== 'web',
       }),
     ]).start(() => setIsThumbsUpAnimationFinished(true));
   };
@@ -154,7 +154,7 @@ const DailyScreen = () => {
   };
 
   const handleCardPressed = (card) => {
-    if (card.status == DailyCardStatus.active) {
+    if (card.status === DailyCardStatus.active) {
       appNavigation.goToStartPage(userData.user_id, userData.name, userData.email)
     }
   }

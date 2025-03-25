@@ -1,9 +1,10 @@
+import { Howl } from "howler";
 const AssetPack = {
   icons: {
-    CARDS: require("./../assets/icons/icon_cards_normal.svg"),
-    CARDS_GREEN: require("./../assets/icons/icon_cards_green.svg"),
-    ICON_404: require("./../assets/icons/404.svg"),
-    ARROW_LEFT: require("./../assets/icons/icon_back.svg"),
+    CARDS: require("./../assets/icons/icon_cards_normal.svg").default,
+    CARDS_GREEN: require("./../assets/icons/icon_cards_green.svg").default,
+    ICON_404: require("./../assets/icons/404.svg").default,
+    ARROW_LEFT: require("./../assets/icons/icon_back.svg").default,
     LUCKY_SYMBOL: require("./../assets/image/icon_lucky_symbol.png"),
     TICKET: require("./../assets/image/icon_ticket.png"),
   },
@@ -14,14 +15,14 @@ const AssetPack = {
     GAME: require("./../assets/image/background_game.png"),
     DAILY_CARD_BACKGROUND: require("./../assets/image/day_card_background.png"),
     DAILY_CARD_EXTRA_BACKGROUND: require("./../assets/image/day_card_extra_background.png"),
-    CARD_NUMBER_SET: require("./../assets/image/card_set_number_background.svg"),
-    CARD_NUMBER_SET_COMPLETED: require("./../assets/image/card_set_number_completed.svg"),
-    CARD_NUMBER_SET_INACTIVE: require("./../assets/image/card_set_number_inactive.svg"),
-    BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg"),
+    CARD_NUMBER_SET: require("./../assets/image/card_set_number_background.svg").default,
+    CARD_NUMBER_SET_COMPLETED: require("./../assets/image/card_set_number_completed.svg").default,
+    CARD_NUMBER_SET_INACTIVE: require("./../assets/image/card_set_number_inactive.svg").default,
+    BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg").default,
     TOP_NAV_BACKGROUND: require("./../assets/image/top_nav_background.jpg"),
-    GOLDEN_BACKGROUND_GRADIENT: require("./../assets/image/highlightBackgroundGradient.svg"),
+    GOLDEN_BACKGROUND_GRADIENT: require("./../assets/image/highlightBackgroundGradient.svg").default,
     NEXT_DRAW_CARD: require("./../assets/image/next_draw_card_background.png"),
-    BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg"),
+    BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg").default,
     GOLD_RUSH: require("./../assets/image/gold_rush.jpg"),
     LUCKY_SYMBOL: require("./../assets/image/background_result_lucky_symbol.png"),
     GAME_TOP_LAYOUT: require("./../assets/image/background_top_layout.png"),
@@ -32,7 +33,8 @@ const AssetPack = {
   videos: {
     WIN_LUCKY_SYMBOL: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4"),
     WIN_LUCKY_SYMBOL_CHROME: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_chrome.webm"),
-    LUCKY_SYMBOL_FINAL: require("./../assets/video/lucky_symbol_3d_coin_cut.mp4")
+    LUCKY_SYMBOL_FINAL: require("./../assets/video/lucky_symbol_3d_coin_cut.mp4"),
+    DRAW_IN_PROGRESS_BACKGROUND: require("./../assets/video/draw_in_progress_background.mp4"),
   },
   sounds: {
     COMBO: require(`./../assets/sounds/combo.mp3`),
@@ -44,6 +46,9 @@ const AssetPack = {
     CAROUSEL_ITEM_1: require("../assets/image/carousel/carousel_item_1.png"),
     CAROUSEL_ITEM_2: require("../assets/image/carousel/carousel_item_2.png"),
     CAROUSEL_ITEM_3: require("../assets/image/carousel/carousel_item_3.png"),
+    EXTENDING_PLAY: require("./../assets/image/extending_play_image.png"),
+    AMAZON_GOLD_GIFT_CARD: require("./../assets/image/amazon_gift_card_golden.png"),
+    TURBO_GAME_CARDS_SHOW: require("./../assets/image/turbo_game_cards_show.png"),
   },
   lotties: {
     CTA_BUTTON_FULL_WIDTH: require("./../assets/lotties/buttonCallToActionFullWidth.json"),
@@ -57,7 +62,9 @@ const AssetPack = {
     COMBO_2X: require("../assets/lotties/ComboHolderMaxVersion-2x.json"),
     COMBO_3X: require("../assets/lotties/ComboHolderMaxVersion-3x.json"),
     COMBO_4X: require("../assets/lotties/ComboHolderMaxVersion-4x.json"),
-  },
+    WIN: require("../assets/lotties/lottieMagicLetterWINheader.json"),
+    SPIN_WHEEL: require("../assets/lotties/specialEventsCasinoHomeCarousel.json"),
+  }
 };
 
 export default AssetPack;

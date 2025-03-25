@@ -3,21 +3,16 @@ import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
 import AssetPack from "../util/AssetsPack";
 import GameButton from "../components/GameButton";
-import useAppNavigation from "../hook/useAppNavigation";
 
 const NotFoundScreen = () => {
-  const appNavigation = useAppNavigation()
-
   return (
     <ImageBackground
       source={AssetPack.backgrounds.BLUE_BACKGROUND_CARD}
-      style={styles.rotatingBackgroundContainer}
-    >
+      style={styles.rotatingBackgroundContainer}>
       <RotatingCirclesBackground style={{ paddingVertical: "20%" }}>
         <Image
           source={AssetPack.images.PHAROAH}
-          style={{ width: 250, height: 200, marginBottom: -100, zIndex: 10 }}
-        />
+          style={{ width: 250, height: 200, marginBottom: -100, zIndex: 10 }}/>
         <ImageBackground
           blurRadius={10}
           resizeMode="cover"
@@ -32,8 +27,7 @@ const NotFoundScreen = () => {
             borderRadius: 12,
             marginHorizontal: 35,
             marginBottom: 30,
-          }}
-        >
+          }}>
           <View
             style={{
               backgroundColor: "#00000099",

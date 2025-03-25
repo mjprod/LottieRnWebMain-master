@@ -1,0 +1,29 @@
+{
+    "presets": [
+        "module:metro-react-native-babel-preset",
+        "@babel/preset-env",
+        [
+            "@babel/preset-react",
+            {
+                "runtime": "automatic"
+            }
+        ]
+    ],
+    "env": {
+        "development": {
+            "plugins": [
+                "@babel/transform-react-jsx-source"
+            ]
+        }
+    },
+    "overrides": [
+        {
+            "include": [
+                "./node_modules/react-native-svg-web"
+            ],
+            "presets": [
+                "@babel/preset-env"
+            ]
+        }
+    ]
+}

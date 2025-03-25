@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { View, StyleSheet, Animated, Easing } from "react-native";
+import { View, StyleSheet, Animated, Easing, Platform } from "react-native";
 
 const RotatingCirclesBackground = ({ style, children }) => {
   const rotation = useRef(new Animated.Value(0)).current;
@@ -11,7 +11,7 @@ const RotatingCirclesBackground = ({ style, children }) => {
         toValue: 1,
         duration: 10000,
         easing: Easing.linear,
-        useNativeDriver: true,
+        useNativeDriver: Platform.OS !== 'web',
       }).start(() => {
         startAnimation(); // Restart animation when it finishes
       });

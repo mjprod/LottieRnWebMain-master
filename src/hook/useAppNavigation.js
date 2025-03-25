@@ -58,6 +58,9 @@ const useAppNavigation = () => {
         goToHowToPlayPage: () => {
             navigate("/how_to_play");
         },
+        goToNotFoundPage: () => {
+            navigate("/not_found");
+        }
     };
 
     return appNavigation;

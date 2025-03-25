@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Text, View, StyleSheet, Animated, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, Animated, ActivityIndicator, Platform } from 'react-native';
 import LottieView from "react-native-web-lottie";
 import ProgressBar from './ProgressBar';
 import DiagonalGradientCard from './DiagonalGradientCard';
@@ -19,7 +19,7 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle 
         Animated.timing(animatedProgress, {
             toValue: score,
             duration: 3000,
-            useNativeDriver: false,
+            useNativeDriver: Platform.OS !== 'web',
         }).start();
 
         setProgress(score);

@@ -1,9 +1,9 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState()
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [scratchStarted, setScratchStarted] = useState(false);

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Platform } from 'react-native';
 import { Animated, Text, View, StyleSheet } from 'react-native';
 
 const DigitTicker = ({ digit, duration = 500, textSize = 40, textStyle }) => {
@@ -12,7 +13,7 @@ const DigitTicker = ({ digit, duration = 500, textSize = 40, textStyle }) => {
       Animated.timing(animatedValue, {
         toValue: 1,
         duration,
-        useNativeDriver: true,
+        useNativeDriver: Platform.OS !== 'web',
       }).start(() => setPreviousDigit(digit));
     }
   }, [digit, previousDigit, animatedValue, duration]);

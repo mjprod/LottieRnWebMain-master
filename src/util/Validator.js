@@ -1,5 +1,3 @@
-const answerRegex = /^(?!\d+$)(?:\S+\s+){19,}\S+$/;
-
 export const isValidAnswer = (value) => {
   if (!value.trim())
     return { isValid: false, message: "Answer cannot be empty!" };

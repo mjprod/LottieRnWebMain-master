@@ -5,7 +5,6 @@ import { SnackbarProvider } from "./components/SnackbarContext";
 import { GameProvider } from "./context/GameContext";
 import { SoundProvider } from "./hook/useSoundPlayer";
 import { ThemeProvider } from "./hook/useTheme";
-import "./index.css";
 import DailyScreen from "./screens/DailyScreen";
 import GameOverScreen from "./screens/GameOverScreen";
 import LauchScreen from "./screens/LauchScreen";
@@ -14,8 +13,11 @@ import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 import LeaderBoardScreen from "./screens/LeaderBoardScreen";
 import HowToPlayScreen from "./screens/HowToPlayScreen";
 import StartScreen from "./screens/StartScreen";
+import LauchScreenEncrypted from "./screens/LauchScreenEncrypted";
+import InfoScreen, { InfoScreenContents } from "./screens/info/InfoScreen";
+import "./index.css";
 
-const { height, width } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
 
 export default function App() {
   React.useEffect(() => {
@@ -39,8 +41,8 @@ export default function App() {
       <View style={dynamicStyles.app}>
         <GameProvider>
           <ThemeProvider>
-            <SoundProvider>
-              <BrowserRouter>
+            <BrowserRouter>
+              <SoundProvider>
                 <SnackbarProvider>
                   <Routes>
                     <Route path="/*" element={<NotFoundScreen />} />
@@ -51,10 +53,15 @@ export default function App() {
                     <Route path="/how_to_play" element={<HowToPlayScreen />} />
                     <Route path="/leader_board" element={<LeaderBoardScreen />} />
                     <Route path="/:id/:username/:email" element={<LauchScreen />} />
+                    <Route path={InfoScreenContents.extending} element={<InfoScreen contentName={InfoScreenContents.extending} />} />
+                    <Route path={InfoScreenContents.thank_you} element={<InfoScreen contentName={InfoScreenContents.thank_you} />} />
+                    <Route path={InfoScreenContents.in_progress} element={<InfoScreen contentName={InfoScreenContents.in_progress} />} />
+                    <Route path={InfoScreenContents.congratulations} element={<InfoScreen contentName={InfoScreenContents.congratulations} />} />
+                    <Route path="/" element={<LauchScreenEncrypted />} />
                   </Routes>
                 </SnackbarProvider>
-              </BrowserRouter>
-            </SoundProvider>
+              </SoundProvider>
+            </BrowserRouter>
           </ThemeProvider>
         </GameProvider>
       </View>
@@ -64,14 +71,14 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    height: height,
+    overflow: "hidden",
+    height: "100vh",
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "rgba(33,33,33,.9)",
-    paddingTop: "10%",
   },
   app: {
+    margin: "auto",
     flex: 1,
     width: 400,
     maxHeight: 750,
@@ -85,12 +92,14 @@ const styles = StyleSheet.create({
 const smallStyles = StyleSheet.create({
   container: {
     flex: 1,
+    overflow: "hidden",
     justifyContent: "flex-start",
     alignItems: "center",
     userSelect: "none",
     backgroundColor: "#131313",
   },
   app: {
+    overflow: "hidden",
     width: "100%",
     height: height,
     backgroundColor: "#131313",

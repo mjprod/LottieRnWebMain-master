@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import { Animated, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
@@ -9,14 +10,14 @@ const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 300,
-        useNativeDriver: false,
+        useNativeDriver: Platform.OS !== 'web',
       }).start(() => {
         if (duration !== Infinity) {
           setTimeout(() => {
             Animated.timing(fadeAnim, {
               toValue: 0,
               duration: 300,
-              useNativeDriver: true,
+              useNativeDriver: Platform.OS !== 'web',
             }).start(() => {
               onDismiss && onDismiss();
             });

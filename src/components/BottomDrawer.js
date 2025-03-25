@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, Platform } from 'react-native';
 import useTimeLeftForNextDraw from '../hook/useTimeLeftForNextDraw';
 import { useGame } from '../context/GameContext';
 
@@ -19,14 +19,14 @@ const BottomDrawer = () => {
         toValue: isExpanded ? 60 : 200, // Adjust to your expanded height
         duration: 300,
         easing: Easing.out(Easing.ease),
-        useNativeDriver: false,
+        useNativeDriver: Platform.OS !== 'web',
       }),
       // Animate width to 95% when expanded
       Animated.timing(widthAnimation, {
         toValue: isExpanded ? 100 : 92, // 100% when collapsed, 95% when expanded
         duration: 300,
         easing: Easing.out(Easing.ease),
-        useNativeDriver: false,
+        useNativeDriver: Platform.OS !== 'web',
       }),
     ]).start();
   };

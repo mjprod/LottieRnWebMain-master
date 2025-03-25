@@ -23,8 +23,9 @@ class Video extends Component {
       loop: false,     // Ensure the video does not loop, plays only once
       playsInline: true, // Ensure inline playback on mobile
       controls: false,  // Hide controls
+      preload: "auto",
       style: {
-        objectFit: "cover", // Make sure the video covers the full container while keeping aspect ratio
+        objectFit: "contain", // Make sure the video covers the full container while keeping aspect ratio
         width: "100%", // Full width
         height: "100%", // Full height
       },

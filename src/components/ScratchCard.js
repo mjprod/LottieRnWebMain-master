@@ -1,34 +1,29 @@
 import React, { useRef, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { eraserRadius, heightScratch } from "../global/Settings";
+import { eraserRadius, heightScratch, widthScratch } from "../global/Settings";
 
 const scratch_foreground_thumbnail = require("./../assets/image/scratch_foreground.jpg");
 
-//const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
-
-const ScratchCard = ({ autoScratch, onScratch, onLoading , setScratchStarted}) => {
+const ScratchCard = ({ autoScratch, onScratch, onLoading, setScratchStarted }) => {
   const canvasRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [totalArea, setTotalArea] = useState(0);
   const [erasedArea, setErasedArea] = useState(0);
   const radius = eraserRadius;
 
-  const  windowWidth = 400;
-    const windowHeight = heightScratch;
-
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext("2d", { willReadFrequently: true });
 
     const img = new Image();
     img.src = scratch_foreground_thumbnail;
 
     img.onload = () => {
       // Set canvas dimensions
-      canvas.width = windowWidth;
-      canvas.height = windowHeight;
+      canvas.width = widthScratch;
+      canvas.height = heightScratch;
 
       // Draw the image on the canvas
       context.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -65,7 +60,7 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading , setScratchStarted}) =
           y = event.clientY - rect.top;
         }
 
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
         if (ctx) {
           ctx.beginPath();
           ctx.arc(x, y, radius, 0, 2 * Math.PI);
@@ -89,8 +84,8 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading , setScratchStarted}) =
   const updateErasedArea = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
-    const ctx = canvas.getContext("2d");
+
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
     // Get image data from the canvas
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -100,9 +95,9 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading , setScratchStarted}) =
 
     // Count transparent pixels
     for (let i = 3; i < pixels.length; i += 4) {
-        if (pixels[i] === 0) { // Alpha channel fully transparent
-            erasedPixelCount++;
-        }
+      if (pixels[i] === 0) { // Alpha channel fully transparent
+        erasedPixelCount++;
+      }
     }
 
     // Calculate the total number of pixels
@@ -112,7 +107,7 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading , setScratchStarted}) =
     const erasedArea = erasedPixelCount / totalPixelCount;
 
     setErasedArea(erasedArea * totalArea); // Update the erased area state
-};
+  };
 
   useEffect(() => {
     if (totalArea > 0) {
@@ -120,13 +115,13 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading , setScratchStarted}) =
       //console.log("Percentage Erased:", percentageErased);
       if (onScratch) {
         onScratch(percentageErased);
-        if (percentageErased > 0){
+        if (percentageErased > 0) {
           setScratchStarted(true);
         }
       }
     }
   }, [erasedArea, totalArea, onScratch]);
-  
+
 
   return (
     <View style={styles.container}>
@@ -134,9 +129,9 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading , setScratchStarted}) =
         ref={canvasRef}
         style={{
           border: "1px solid black",
-          width: windowWidth,
-          height: windowHeight,
-          touchAction: "none", 
+          width: widthScratch,
+          height: widthScratch,
+          touchAction: "none",
         }}
       />
     </View>

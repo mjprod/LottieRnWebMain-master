@@ -3,31 +3,23 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import SectionTitle from "../components/SectionTitle";
 import GameButton from "../components/GameButton";
 import LeaderBoardList from "../components/LeaderBoardList";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import TopBannerNav from "../components/TopBannerNav";
 import LinkButton from "../components/LinkButton";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import NextDrawCard from "../components/NextDrawCard";
 import useApiRequest from "../hook/useApiRequest";
-import { LeaderBoardStatus } from "../util/constants";
 import { COLOR_BACKGROUND } from "../util/constants";
 import useAppNavigation from "../hook/useAppNavigation";
+import { useGame } from "../context/GameContext";
 
 const LeaderBoardScreen = () => {
   const location = useLocation();
   const appNavigation = useAppNavigation()
 
-  const [initialUserData, setInitialUserData] = useState();
-  const { getLeaderBoard, fetchUserDetails, response } = useApiRequest();
-  const [leaderBoardData, setLeaderBoardData] = useState();
-  const [initialScore, setInitialScore] = useState(0);
-  const [initialTicketCount, setInitialTicketCount] = useState(0);
-  const [initialLuckySymbolCount, setInitialLuckySymbolCount] = useState(0);
-  const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
+  const { user, setUser } = useGame()
 
-  useEffect(() => {
-    getLeaderBoard(10);
-  }, []);
+  const { fetchUserDetails, response } = useApiRequest();
 
   useEffect(() => {
     if (location.state) {
@@ -40,47 +32,29 @@ const LeaderBoardScreen = () => {
   }, [location]);
 
   useEffect(() => {
-    if (response) {
-      if (response.user) {
-        setInitialScore(response.user.total_score || 0);
-        setInitialTicketCount(response.user.ticket_balance || 0);
-        setInitialLuckySymbolCount(response.user.lucky_symbol_balance || 0);
-        setInitialScratchCardLeft(response.user.card_balance || 0);
-        setInitialUserData(response.user);
-      } else {
-        setLeaderBoardData(Object.values(response).map((data) => {
-          return {
-            id: data.user_id,
-            rank: data.rank,
-            username: data.name,
-            points: data.total_score,
-            status: LeaderBoardStatus.up,
-          }
-        }));
-      }
+    if (response && response.user) {
+      console.log(response.user)
+      setUser(response.user);
     }
   }, [response]);
 
   const handlePlayNowButtonPress = () => {
-    appNavigation.goToGamePage(initialUserData.user_id, initialUserData.name, initialUserData.email)
+    appNavigation.goToGamePage(user.user_id, user.name, user.email)
   }
   return (
     <ScrollView style={styles.container}>
-      <TopBannerNav hasBackButton={initialUserData ? true : false} />
+      <TopBannerNav hasBackButton={true} />
       <View style={{ marginHorizontal: 25 }}>
         <SectionTitle text="LeaderBard" style={{ marginBottom: 10 }} />
         <LeaderBoardList
           style={{ marginBottom: 30 }}
-          leaderboardData={leaderBoardData}
-          username={initialUserData && initialUserData.name}
-        />
+          username={user && user.name} />
         <GameButton style={{ marginBottom: 30 }} text="Play Now" onPress={handlePlayNowButtonPress} />
         <LinkButton
           style={{ marginBottom: 30 }}
           text={"How To Play Turbo Scratch >"}
-          handlePress={appNavigation.goToHowToPlayPage}
-        />
-        <GamesAvailableCard style={{ marginBottom: 30 }} cardsLeft={initialScratchCardLeft} />
+          handlePress={appNavigation.goToHowToPlayPage} />
+        <GamesAvailableCard style={{ marginBottom: 30 }} cardsLeft={user ? user.card_balance : 0} />
         <NextDrawCard style={{ marginBottom: 30 }} />
       </View>
     </ScrollView>

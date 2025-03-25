@@ -17,13 +17,13 @@ export const IconTypeLucky = ({ scratched }) => {
             toValue: 1.2, // Scale up
             duration: 2000,
             easing: Easing.bounce,
-            useNativeDriver: true,
+            useNativeDriver: Platform.OS !== 'web',
           }),
           Animated.timing(bounceAnim, {
             toValue: 1, // Scale back to original size
             duration: 2000,
             easing: Easing.bounce,
-            useNativeDriver: true,
+            useNativeDriver: Platform.OS !== 'web',
           }),
         ])
       ).start();
@@ -36,7 +36,7 @@ export const IconTypeLucky = ({ scratched }) => {
           toValue: 1,
           duration: 2000,
           easing: Easing.linear,
-          useNativeDriver: true,
+          useNativeDriver: Platform.OS !== 'web',
         })
       ).start();
       */

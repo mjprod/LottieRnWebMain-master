@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet, View } from "react-native";
 import LottieView from "react-native-web-lottie";
 import PopUpText from "./PopUpText";
 import themes from "../global/themeConfig";
@@ -18,47 +18,33 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
   const { currentTheme } = useTheme();
 
   const handleIconClick = () => {
-    if (onClick) {
-      onClick(iconIndex);
-    }
+    if (onClick) onClick(iconIndex);
   };
 
   useEffect(() => {
-    if (themes[currentTheme] && themes[currentTheme].iconsActive) {
-      const iconComponentsDefaultNew = themes[currentTheme].iconsActive;
-
-      setIconComponentsDefault(iconComponentsDefaultNew);
+    if (themes[currentTheme].iconsActive) {
+      setIconComponentsDefault(themes[currentTheme].iconsActive);
     }
   }, [currentTheme]);
 
   return (
-    <View style={styles.iconWrapper}>
+    <View style={[styles.iconWrapper, { pointerEvents: "box-none" }]} onTouchStart={handleIconClick} onMouseDown={handleIconClick}>
       {iconComponentsDefault[iconIndex]}
-      <TouchableWithoutFeedback
-        hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-        onPress={handleIconClick}
-      >
-        <View style={styles.overlay}>
-          {selectedBobbleColour && (
-            <LottieView
-              style={styles.lottieAnimation}
-              source={selectedBobbleColour}
-              autoPlay
-              loop={true}
-            />
-          )}
-        </View>
-      </TouchableWithoutFeedback>
-      {timerGame > 0 && (
-        <TouchableWithoutFeedback
-          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          onPress={handleIconClick}
-        >
+      <View style={{ ...styles.overlay, pointerEvents: "box-none" }}>
+        {selectedBobbleColour && (
+          <LottieView
+            style={styles.lottieAnimation}
+            source={selectedBobbleColour}
+            autoPlay
+            loop={true}
+          />
+        )}
+        {timerGame > 0 && (
           <View style={styles.centeredTextWrapper}>
             <PopUpText value={timerGame} />
           </View>
-        </TouchableWithoutFeedback>
-      )}
+        )}
+      </View>
     </View>
   );
 };

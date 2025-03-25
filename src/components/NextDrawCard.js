@@ -59,15 +59,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#171717",
   },
   topSection: {
+    flex: 1,
+    flexDirection: "column",
     paddingTop: 30,
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 20,
-    flex: 1,
-    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    flexDirection: "column",
   },
   bottomSection: {
     width: "100%",

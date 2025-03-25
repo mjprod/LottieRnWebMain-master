@@ -1,5 +1,6 @@
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -118,7 +119,7 @@ export const ThemeProvider = ({ children }) => {
   };
 
   // Function to go to the next theme
-  const goToNextTheme = () => {
+  const goToNextTheme = useCallback(() => {
     console.log("Going to the next theme");
     if (currentThemeIndex < themeSequence.length - 1) {
       setCurrentThemeIndex(currentThemeIndex + 1);
@@ -126,7 +127,7 @@ export const ThemeProvider = ({ children }) => {
     } else {
       console.log("You are already on the last theme");
     }
-  };
+  }, [currentThemeIndex, themeSequence]);
 
   // This effect runs every time the themeSequence or currentThemeIndex changes.
   // It updates the gameCenterIcon and backgroundLoop based on the current theme.

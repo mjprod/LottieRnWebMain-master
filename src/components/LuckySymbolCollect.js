@@ -2,14 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Animated,
-  TouchableWithoutFeedback,
+  Pressable,
   StyleSheet,
   Platform,
   Text,
 } from "react-native";
 import LottieView from "react-native-web-lottie";
-import useApiRequest from "../hook/useApiRequest";
-import { userId } from "../global/Settings";
 import { useGame } from "../context/GameContext";
 
 const colectLuckyCoins = require("./../assets/image/lucky_coin.png");
@@ -80,8 +78,8 @@ const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo }) => {
       setTimeout(() => {
         setLuckySymbolCount(0);
         nextCard();
-      }, 1200);
-    }, 1000);
+      }, 300);
+    }, 200);
   };
 
   return (
@@ -107,7 +105,7 @@ const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo }) => {
       )}
       {initialAnimationComplete && !showBonusCard && (
         <View>
-          <TouchableWithoutFeedback onPress={handlePress}>
+          <Pressable onPress={handlePress}>
             <Animated.View
               style={[
                 styles.animatedContainer,
@@ -131,7 +129,7 @@ const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo }) => {
                 />
               </View>
             </Animated.View>
-          </TouchableWithoutFeedback>
+          </Pressable>
           <Text style={styles.tapTextFormat}>TAP!</Text>
         </View>
       )}

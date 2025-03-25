@@ -17,11 +17,11 @@ const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [], onCardPressed
   const generateCardSet = (day, status = DailyCardStatus.inactive) => {
     return {
       id: day,
-      cardSet: day === 4 || day == 6 ? 2 : 1,
+      cardSet: day === 4 || day === 6 ? 2 : 1,
       cardBackground: AssetPack.backgrounds.DAILY_CARD_BACKGROUND,
       status: status,
       extras:
-        day == 7
+        day === 7
           ? {
             name: "Gift Card",
             number: 1,

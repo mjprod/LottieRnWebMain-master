@@ -1,10 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import AlphaView from "./AlphaView";
-import NavLayout from "./NavLayout";
 import TopBannerNav from "./TopBannerNav";
-
-const { width: screenWidth } = Dimensions.get("window");
 
 export const BackgroundGame = ({ source, showAlphaView }) => {
   const videoRef = useRef(null);
@@ -20,14 +17,10 @@ export const BackgroundGame = ({ source, showAlphaView }) => {
     }
   }, []);
 
-  const isMobile = screenWidth < 768;
-
   return (
-    <View style={isMobile ? styles.containerMobile : styles.container}>
-      {/* NavLayout */}
-      <TopBannerNav showAlphaView={showAlphaView} hasBackButton />
+    <View style={styles.container}>
+      <TopBannerNav hasBackButton />
 
-      {/* Video */}
       <View style={styles.videoContainer}>
         <video
           ref={videoRef}
@@ -50,24 +43,16 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 0,
     padding: 0,
-  },
-  containerMobile: {
-    width: "100vw",
-    height: "100vh",
-    overflow: "hidden",
-    padding: 0,
-    margin: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#242424",
   },
   videoContainer: {
     flex: 1,
-    maxWidth: 400,  
     maxHeight: 200,
-    width: "100%",
-    height: "100%",
   },
   video: {
-    width: "100%",
-    height: "100%",
+    flex: 1,
     objectFit: "cover",
   },
 });

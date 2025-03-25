@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { SERVER } from "../util/constants";
+import { SERVER, API_KEY, Endpoint } from "../util/constants";
 import { showConsoleMessage, showConsoleError } from "../util/ConsoleMessage";
+import { encrypt, decrypt } from "../util/crypto";
 
 const useApiRequest = () => {
   const [loading, setLoading] = useState(false);
@@ -10,12 +11,14 @@ const useApiRequest = () => {
   const fetchData = async (config) => {
     const { url, method = "GET", headers, body } = config;
     showConsoleMessage("API Request Config:", config)
+    const encryptData = encrypt(body);
+
     try {
       setLoading(true);
       const res = await fetch(url, {
         method,
-        headers,
-        body: body ? JSON.stringify(body) : null,
+        headers: { ...headers, "x-api-key": API_KEY },
+        body: JSON.stringify({ data: encryptData}),
       });
       showConsoleMessage("API Response:", res)
       if (!res.ok) {
@@ -23,9 +26,11 @@ const useApiRequest = () => {
       }
 
       const data = await res.json();
-      setResponse(data);
+
+      setResponse(JSON.parse(decrypt(data)));
+
       setError(null);
-      showConsoleMessage("API Response Data:", data)
+      showConsoleMessage("API Response Data:", JSON.parse(decrypt(data)));
     } catch (err) {
       setError(err.message);
       showConsoleError("API Error:", err)
@@ -37,19 +42,23 @@ const useApiRequest = () => {
   const silentFetchData = async (config) => {
     const { url, method = "GET", headers, body } = config;
     showConsoleMessage("Silent API Request Config:", config)
+    const encryptData = encrypt(body);
+
     try {
       const res = await fetch(url, {
         method,
-        headers,
-        body: body ? JSON.stringify(body) : null,
+        headers: { ...headers, "x-api-key": API_KEY },
+        body: JSON.stringify({ data: encryptData}),
       });
       showConsoleMessage("Silent API Response:", res)
       if (!res.ok) {
         throw new Error(`Silent HTTP error! status: ${JSON.stringify(res)}`);
       }
       const data = await res.json();
-      setResponse(data);
-      showConsoleMessage("Silent API Response Data:", data)
+
+      setResponse(JSON.parse(decrypt(data)));
+
+      showConsoleMessage("Silent API Response Data:", JSON.parse(decrypt(data)));
     } catch (err) {
       showConsoleError("Silent API Error:", err)
     } finally {
@@ -58,7 +67,7 @@ const useApiRequest = () => {
 
   const updateLuckySymbol = async (user_id, lucky_symbol) => {
     const config = {
-      url: SERVER + "/update_lucky_symbol",
+      url: Endpoint.update_lucky_symbol,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +83,7 @@ const useApiRequest = () => {
 
   const fetchUserDetails = async (user_id, name, email) => {
     const config = {
-      url: SERVER + "/users",
+      url: Endpoint.fetch_user_details,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -91,7 +100,7 @@ const useApiRequest = () => {
 
   const getDailyQuestion = async (user_id) => {
     const config = {
-      url: SERVER + "/daily_question",
+      url: Endpoint.get_daily_question,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +114,7 @@ const useApiRequest = () => {
 
   const postDailyAnswer = async (user_id, question_id, answer, cards_won) => {
     const config = {
-      url: SERVER + "/daily_answer",
+      url: Endpoint.post_daily_answer,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +131,7 @@ const useApiRequest = () => {
 
   const getLeaderBoard = async (limit) => {
     const config = {
-      url: SERVER + "/leader_board",
+      url: Endpoint.leader_board,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -136,7 +145,7 @@ const useApiRequest = () => {
 
   const updateCardPlayed = async (beta_block_id, user_id, lucky_symbol_won, number_combination_total) => {
     const config = {
-      url: SERVER + "/update_card_played",
+      url: Endpoint.update_card_played,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -153,7 +162,7 @@ const useApiRequest = () => {
 
   const updateScore = async (user_id, score, game_id, combo_played) => {
     const config = {
-      url: SERVER + "/update_score",
+      url: Endpoint.update_score,
       method: "POST",
       headers: {
         "Content-Type": "application/json",

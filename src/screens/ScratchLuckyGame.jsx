@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import BrowserDetection from "react-browser-detection";
 import {
   Animated,
@@ -25,6 +25,7 @@ import { useTheme } from "../hook/useTheme.js";
 import AssetPack from "../util/AssetsPack.js";
 import useAppNavigation from "../hook/useAppNavigation.js";
 import LinearGradient from 'react-native-web-linear-gradient';
+import { Easing } from "react-native";
 
 const { width } = Dimensions.get("window");
 
@@ -32,10 +33,10 @@ const ScratchLuckyGame = () => {
   const appNavigation = useAppNavigation();
   const location = useLocation();
 
-  const ref = useRef(null);
+  const countDownLottieRef = useRef(null);
 
   const [gameStarted, setGameStarted] = useState(false);
-  const [countDownStarted, setCountDownStarted] = useState(true);
+  const [countDownStarted] = useState(true);
   const [introThemeVideo, setIntroThemeVideo] = useState(false);
   const [reset, setReset] = useState(false);
   const [scratched, setScratched] = useState(false);
@@ -50,6 +51,7 @@ const ScratchLuckyGame = () => {
   const [luckySymbolWon, setLuckySymbolWon] = useState(0)
   const [totalComboCount, setTotalComboCount] = useState(0)
   const [comboPlayed, setComboPlayed] = useState(0)
+  const [nextCardAnimationFinished, setNextCardAnimationFinished] = useState(true);
 
   const {
     user,
@@ -62,7 +64,6 @@ const ScratchLuckyGame = () => {
     setScratchStarted,
     luckySymbolCount,
     setLuckySymbolCount,
-    ticketCount,
     setTicketCount,
   } = useGame();
 
@@ -101,7 +102,8 @@ const ScratchLuckyGame = () => {
     if (response) {
       if (response.user) {
         setUser(response.user);
-      } else if (response.gameId) {
+      }
+      if (response.gameId) {
         setGameId(response.gameId);
       }
     }
@@ -123,13 +125,13 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (countDownStarted) {
       setTimeout(() => {
-        if (ref.current != null) {
-          ref.current.play();
+        if (countDownLottieRef.current != null) {
+          countDownLottieRef.current.play();
         }
         setStartPlay(true);
       }, 1000);
     }
-  }, [countDownStarted, ref]);
+  }, [countDownStarted, countDownLottieRef]);
 
   const saveLuckySymbol = async (luckySymbol) => {
     setLuckySymbolCount(luckySymbol);
@@ -145,8 +147,8 @@ const ScratchLuckyGame = () => {
             : AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME
         } // Play the win video
         style={styles.transparentVideo} // Video styling
-        onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
-        onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+        onEnd={handleLuckySymbolWonVideoEnd} // Mobile: Trigger callback when video ends
+        onEnded={handleLuckySymbolWonVideoEnd} // Web: Trigger callback when video ends
       />
     ),
     default: (browser) => (
@@ -155,8 +157,8 @@ const ScratchLuckyGame = () => {
           skipToFinishLuckyVideo ? AssetPack.videos.LUCKY_SYMBOL_FINAL : AssetPack.videos.WIN_LUCKY_SYMBOL
         } // Play the win video
         style={styles.transparentVideo} // Video styling
-        onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
-        onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+        onEnd={handleLuckySymbolWonVideoEnd} // Mobile: Trigger callback when video ends
+        onEnded={handleLuckySymbolWonVideoEnd} // Web: Trigger callback when video ends
       />
     ),
   };
@@ -169,21 +171,11 @@ const ScratchLuckyGame = () => {
       if (luckySymbolCount <= 2) {
         setTimeout(() => {
           if (scratchCardLeft > 1) {
-            console.log(nextTheme[0]);
-            console.log(currentTheme);
-            console.log(currentTheme === nextTheme);
-
             if (currentTheme === nextTheme) {
-              setTimeout(() => {
-                setReset(true);
-              }, 100);
+              setReset(true)
             } else {
               setIntroThemeVideo(true);
             }
-
-            setTimeout(() => {
-              goToNextTheme();
-            }, 100);
           } else {
             handleGameOver();
           }
@@ -193,10 +185,10 @@ const ScratchLuckyGame = () => {
   };
 
   const addLuckySymbol = () => {
-    console.log("User ID:", user.user_id)
     if (luckySymbolCount > 2) {
       updateLuckySymbol(user.user_id, 0)
       saveLuckySymbol(0);
+      nextCard();
     } else if (luckySymbolCount === 2) {
       saveLuckySymbol(luckySymbolCount + 1);
       setTimeout(() => {
@@ -206,6 +198,7 @@ const ScratchLuckyGame = () => {
     } else {
       saveLuckySymbol(luckySymbolCount + 1);
       updateLuckySymbol(user.user_id, luckySymbolCount + 1)
+      nextCard();
     }
   };
 
@@ -214,7 +207,7 @@ const ScratchLuckyGame = () => {
       saveLuckySymbol(count);
       setTimeout(() => {
         if (count === 0) {
-          onCountdownComplete();
+          setCollectLuckySymbolVideo(true);
         } else {
           decrementLuckySymbol(count - 1, onComplete);
         }
@@ -222,18 +215,13 @@ const ScratchLuckyGame = () => {
     }
   };
 
-  const onCountdownComplete = () => {
-    setCollectLuckySymbolVideo(true);
-  };
-
-  const handleVideoEnd = () => {
+  const handleLuckySymbolWonVideoEnd = () => {
+    setWinLuckySymbolVideo(false);
     addLuckySymbol();
-    nextCard();
   };
 
   const handleVideoIntroEnd = () => {
     setIntroThemeVideo(false);
-
     setTimeout(() => {
       setReset(true);
     }, 100);
@@ -245,12 +233,14 @@ const ScratchLuckyGame = () => {
       Animated.timing(marginTopAnim, {
         toValue: 6,
         duration: 300,
+        easing: Easing.in(Easing.ease),
         useNativeDriver: Platform.OS !== "web",
       }).start();
     } else {
       Animated.timing(marginTopAnim, {
         toValue: 0,
         duration: 300,
+        easing: Easing.out(Easing.ease),
         useNativeDriver: Platform.OS !== "web",
       }).start();
     }
@@ -258,50 +248,44 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (reset) {
-      updateScore(user.user_id, score, gameId, comboPlayed)
-      setTimeout(() => {
-        if (scratchCardLeft - 1 > 0) {
-          setScratchCardLeft(scratchCardLeft - 1);
-        } else {
-          handleGameOver();
-        }
-      }, 600);
-      setTimerGame(0);
-      setScratchStarted(false);
-      setComboPlayed(0)
-      Animated.timing(translateX, {
-        toValue: width * 0.1,
-        duration: 200,
-        useNativeDriver: Platform.OS !== "web",
-      }).start(() => {
+      setNextCardAnimationFinished(false);
+      Animated.sequence([
         Animated.timing(translateX, {
-          toValue: -width,
-          duration: 300,
+          toValue: -width * 1.1,
+          duration: 400,
           useNativeDriver: Platform.OS !== "web",
-        }).start(() => {
-          Animated.timing(translateX, {
-            toValue: -width * 0.1,
-            duration: 300,
-            useNativeDriver: Platform.OS !== "web",
-          }).start(() => {
-            Animated.spring(translateX, {
-              toValue: 0,
-              friction: 5,
-              useNativeDriver: Platform.OS !== "web",
-            }).start();
-          });
-        });
+        }),
+        Animated.spring(translateX, {
+          toValue: 0,
+          friction: 7,
+          tension: 50,
+          useNativeDriver: Platform.OS !== "web",
+        })
+      ]).start(() => {
+        updateScore(user.user_id, score, gameId, comboPlayed);
+        setTimeout(() => {
+          if (scratchCardLeft - 1 > 0) {
+            setScratchCardLeft(scratchCardLeft - 1);
+          } else {
+            handleGameOver();
+          }
+        }, 600);
+        setTimerGame(0);
+        setScratchStarted(false);
+        setComboPlayed(0);
+        goToNextTheme();
+        setNextCardAnimationFinished(true);
       });
     }
   }, [reset, setReset]);
 
-  const handleClick = () => {
+  const handleWinLuckySymbolVideoScreenClick = () => {
+    setWinLuckySymbolVideo(false);
     addLuckySymbol();
-    nextCard();
   };
 
   // Function to render the win screen with a video overlay
-  const renderWinLuckySymbolVideoScreen = () => {
+  const renderWinLuckySymbolVideoScreen = useMemo(() => {
     return (
       <View
         key="overlay"
@@ -313,22 +297,18 @@ const ScratchLuckyGame = () => {
         }}
       >
         <BrowserDetection>{browserHandler}</BrowserDetection>
-        <TouchableOpacity style={styles.clickableArea} onPress={handleClick}>
+        <TouchableOpacity style={styles.clickableArea} onPress={handleWinLuckySymbolVideoScreenClick}>
           <View style={styles.transparentOverlay} />
         </TouchableOpacity>
       </View>
     );
-  };
+  }, [browserHandler]);
 
   const handleAnimationFinish = () => {
     setGameStarted(true);
   };
 
-  const startGame = () => {
-    setCountDownStarted(true);
-  };
-
-  const renderInitialScreen = () => {
+  const renderInitialScreen = useMemo(() => {
     return (
       <View
         key="overlay"
@@ -351,7 +331,7 @@ const ScratchLuckyGame = () => {
           {countDownStarted && (
             <View style={styles.rowCountDown}>
               <LottieView
-                ref={ref}
+                ref={countDownLottieRef}
                 style={styles.lottieAnimation}
                 source={AssetPack.lotties.COUNT_DOWN}
                 speed={1}
@@ -363,12 +343,16 @@ const ScratchLuckyGame = () => {
         </TouchableOpacity>
       </View>
     );
-  };
+  }, [countDownLottieRef, countDownStarted]);
 
   const handleGameOver = () => {
     setGameOver(true);
     appNavigation.goToGameOverPage(user.user_id, user.name, user.email)
   };
+
+  const backGroundVideo = useMemo(() => {
+    return backgroundLoop;
+  }, [backgroundLoop]);
 
   if (loading)
     return (
@@ -378,19 +362,20 @@ const ScratchLuckyGame = () => {
     );
   if (error) return <p>Error: {error}</p>;
 
+
   return (
-    <View style={styles.fullScreen}>
+    <View style={[styles.fullScreen, { pointerEvents: nextCardAnimationFinished ? "auto" : "none" }]}>
       <BackgroundGame
         showAlphaView={scratchStarted || gameOver}
-        source={backgroundLoop} />
+        source={backGroundVideo} />
       <View style={styles.containerOverlay}>
-        <LinearGradient
-          start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
-          locations={[0, 0.3, 0.45, 0.55, 1.0]}
-          colors={['#212121', '#262E33', '#1D4A64', '#24282B', '#212121']}
-          style={styles.imageBackground}
-          resizeMode="stretch">
-          <Animated.View style={[{ transform: [{ translateX }] }]}>
+        <Animated.View style={[styles.background, { transform: [{ translateX }] }]}>
+          <LinearGradient
+            start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
+            locations={[0, 0.3, 0.45, 0.55, 1.0]}
+            colors={['#212121', '#262E33', '#1D4A64', '#24282B', '#212121']}
+            style={styles.imageBackground}
+            resizeMode="stretch">
             <View style={styles.overlay}>
               <Animated.View style={{ marginTop: marginTopAnim }}>
                 <TopLayout
@@ -419,15 +404,14 @@ const ScratchLuckyGame = () => {
                 nextCard={nextCard}
                 setLuckySymbolWon={setLuckySymbolWon}
                 setTotalComboCount={setTotalComboCount}
-                setComboPlayed={setComboPlayed}
-              />
+                setComboPlayed={setComboPlayed} />
             </View>
-          </Animated.View>
-        </LinearGradient>
+          </LinearGradient>
+        </Animated.View>
       </View>
 
       <BottomDrawer />
-      {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen()}
+      {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen}
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect
           nextCard={nextCard}
@@ -436,7 +420,7 @@ const ScratchLuckyGame = () => {
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
         />
       )}
-      {(!gameStarted || !countDownStarted) && renderInitialScreen()}
+      {(!gameStarted || !countDownStarted) && renderInitialScreen}
       {introThemeVideo && (
         <IntroThemeVideo handleVideoEnd={handleVideoIntroEnd} />
       )}
@@ -444,7 +428,6 @@ const ScratchLuckyGame = () => {
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
   fullScreen: {
     flex: 1,
@@ -473,23 +456,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   imageBackground: {
-    flex: 1,
-    margin: 10,
-    position: "absolute",
-    top: 120,
-    left: 10,
-    right: 10,
-    bottom: 65,
-    zIndex: 2,
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    margin: "auto",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
     borderColor: "#A88C5D",
     borderWidth: 1,
-
   },
   overlay: {
     flex: 1,
@@ -523,11 +496,11 @@ const styles = StyleSheet.create({
       web: {
         width: "100vw",
         height: "100vh",
-        objectFit: "cover",
+        objectFit: "contain",
       },
       default: {
         ...StyleSheet.absoluteFillObject, // For mobile, full-screen video scaling
-        resizeMode: "cover",
+        resizeMode: "contain",
       },
     }),
   },
