@@ -47,6 +47,7 @@ const AssetPack = {
     CAROUSEL_ITEM_2: require("../assets/image/carousel/carousel_item_2.png"),
     CAROUSEL_ITEM_3: require("../assets/image/carousel/carousel_item_3.png"),
     EXTENDING_PLAY: require("./../assets/image/extending_play_image.png"),
+    AMAZON_GOLD_GIFT_CARD: require("./../assets/image/amazon_gift_card_golden.png"),
   },
   lotties: {
     CTA_BUTTON_FULL_WIDTH: require("./../assets/lotties/buttonCallToActionFullWidth.json"),

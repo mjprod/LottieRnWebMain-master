@@ -42,7 +42,7 @@ const DrawInProgressContent = () => {
             </View>
             <DiagonalGradientCard style={styles.gradientCard}>
                 <Image style={{ width: 15, height: 15 }} source={AssetPack.icons.TICKET} />
-                <Text style={styles.gardientCardText}>You Have</Text><Text style={styles.gradientCardTicketNumber}>12</Text><Text style={styles.gardientCardText}>Tickets in this week's draw</Text>
+                <Text style={styles.gardientCardText}>You Have {" "} <Text style={styles.gradientCardTicketNumber}>12 </Text>{" "}Tickets in this week's draw</Text>
             </DiagonalGradientCard>
         </ScrollView>
     );
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "60%",
         objectFit: "fill",
-        zIndex: -9999,
+        zIndex: -1,
     },
     topContainer: {
         justifyContent: "center",
@@ -151,12 +151,6 @@ const styles = StyleSheet.create({
         color: "#3EDA41",
         fontFamily: Fonts.TekoMedium,
         fontSize: 30,
-        textTransform: "uppercase",
-    },
-    gardientCardText: {
-        color: "#FFFFFF",
-        fontFamily: Fonts.TekoMedium,
-        fontSize: 18,
         textTransform: "uppercase",
     },
     lottieAnimation: {
