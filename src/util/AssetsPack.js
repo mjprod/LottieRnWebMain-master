@@ -33,7 +33,8 @@ const AssetPack = {
   videos: {
     WIN_LUCKY_SYMBOL: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4"),
     WIN_LUCKY_SYMBOL_CHROME: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_chrome.webm"),
-    LUCKY_SYMBOL_FINAL: require("./../assets/video/lucky_symbol_3d_coin_cut.mp4")
+    LUCKY_SYMBOL_FINAL: require("./../assets/video/lucky_symbol_3d_coin_cut.mp4"),
+    DRAW_IN_PROGRESS_BACKGROUND: require("./../assets/video/draw_in_progress_background.mp4"),
   },
   sounds: {
     COMBO: require(`./../assets/sounds/combo.mp3`),
@@ -59,6 +60,8 @@ const AssetPack = {
     COMBO_2X: require("../assets/lotties/ComboHolderMaxVersion-2x.json"),
     COMBO_3X: require("../assets/lotties/ComboHolderMaxVersion-3x.json"),
     COMBO_4X: require("../assets/lotties/ComboHolderMaxVersion-4x.json"),
+    WIN: require("../assets/lotties/lottieMagicLetterWINheader.json"),
+    SPIN_WHEEL: require("../assets/lotties/specialEventsCasinoHomeCarousel.json"),
   }
 };
 
