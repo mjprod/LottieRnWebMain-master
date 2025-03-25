@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { useLocation, useParams } from "react-router-dom";
 import TopBannerNav from "../../components/TopBannerNav";
 import useApiRequest from "../../hook/useApiRequest";
 import { COLOR_BACKGROUND } from "../../util/constants";
@@ -10,11 +9,13 @@ import ThankYouContent from "./components/ThankYouContent";
 import DrawInProgressContent from "./components/DrawInProgressContent";
 import WeAreExtendingContent from "./components/WeAreExtendingContent";
 import LoadingView from "../../components/LoadingView";
+import Congratulations from "./components/Congratulations";
 
 export const InfoScreenContents = {
     extending: "we_are_extending",
     thank_you: "thank_you",
-    in_progress: "draw_in_progress"
+    in_progress: "draw_in_progress",
+    congratulations: "congratulations"
 };
 
 
@@ -44,6 +45,9 @@ const InfoScreen = ({ contentName }) => {
                 break;
             case InfoScreenContents.in_progress:
                 setContent(<DrawInProgressContent />)
+                break;
+            case InfoScreenContents.congratulations:
+                setContent(<Congratulations />)
                 break;
             default:
                 appNavigation.goToNotFoundPage()

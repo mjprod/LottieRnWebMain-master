@@ -53,9 +53,10 @@ export default function App() {
                     <Route path="/how_to_play" element={<HowToPlayScreen />} />
                     <Route path="/leader_board" element={<LeaderBoardScreen />} />
                     <Route path="/:id/:username/:email" element={<LauchScreen />} />
-                    <Route path="/we_are_extending" element={<InfoScreen contentName={InfoScreenContents.extending} />} />
-                    <Route path="/thank_you" element={<InfoScreen contentName={InfoScreenContents.thank_you} />} />
-                    <Route path="/draw_in_progress" element={<InfoScreen contentName={InfoScreenContents.in_progress} />} />
+                    <Route path={InfoScreenContents.extending} element={<InfoScreen contentName={InfoScreenContents.extending} />} />
+                    <Route path={InfoScreenContents.thank_you} element={<InfoScreen contentName={InfoScreenContents.thank_you} />} />
+                    <Route path={InfoScreenContents.in_progress} element={<InfoScreen contentName={InfoScreenContents.in_progress} />} />
+                    <Route path={InfoScreenContents.congratulations} element={<InfoScreen contentName={InfoScreenContents.congratulations} />} />
                     <Route path="/" element={<LauchScreenEncrypted />} />
                   </Routes>
                 </SnackbarProvider>
