@@ -10,6 +10,9 @@ export const Endpoint = {
   update_card_played: SERVER + "/game/update_card_played",
   update_lucky_symbol: SERVER + "game/update_lucky_symbol",
   update_score:  SERVER + "/game/update_score",
+  login: SERVER + "/login",
+  token: SERVER + "/login/token",
+  logout: SERVER + "/login/logout",
 }
 
 export const COLOR_BACKGROUND = "#131313";

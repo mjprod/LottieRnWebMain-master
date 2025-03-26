@@ -27,20 +27,30 @@ import { useGame } from "../context/GameContext";
 import useAppNavigation from "../hook/useAppNavigation";
 import { useSearchParams } from "react-router-dom";
 import { decrypt } from "../util/crypto";
+import useStorage from "../hook/useStorage";
 
 const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
 
   const { user, setUser, setLuckySymbolCount } = useGame();
 
+  const [initialUserData, setInitialUserData] = useState(null);
   const [initialScore, setInitialScore] = useState(0);
   const [initialTicketCount, setInitialTicketCount] = useState(0);
   const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
 
-  const { loading, error, response, fetchUserDetails, getLeaderBoard } = useApiRequest();
+  const { loading, error, response, fetchUserDetails, login } = useApiRequest();
   const { showSnackbar } = useSnackbar();
 
   const [searchParams] = useSearchParams();
+
+  const params = useParams();
+  const { saveData } = useStorage();
+
+  useEffect(() => {
+    if (params.id && params.username && params.email)
+      login(params.id, params.username, params.email);
+  }, [params]);
 
   useEffect(() => {
     if (!user || user === null) {
@@ -50,7 +60,8 @@ const LauchScreenEncrypted = () => {
         return;
       }
       const authTokenData = JSON.parse(decrypt(authToken, true));
-      fetchUserDetails(authTokenData.user_id, authTokenData.name, authTokenData.email);
+      setInitialUserData(authTokenData);
+      login(authTokenData.user_id, authTokenData.name, authTokenData.email);
     } else {
       fetchUserDetails(user.user_id, user.name, user.email);
     }
@@ -71,6 +82,15 @@ const LauchScreenEncrypted = () => {
   };
 
   useEffect(() => {
+    if (response != null) {
+      if (response.accessToken && response.refreshToken) {
+        saveData("accessToken", response.accessToken)
+        saveData("refreshToken", response.refreshToken)
+
+        fetchUserDetails(initialUserData.user_id, initialUserData.name, initialUserData.email);
+      }
+    }
+
     if (response && response.user) {
       setInitialScore(response.user.total_score || 0);
       setInitialTicketCount(response.user.ticket_balance || 0);
