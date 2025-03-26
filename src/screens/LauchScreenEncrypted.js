@@ -45,28 +45,31 @@ const LauchScreenEncrypted = () => {
   const [searchParams] = useSearchParams();
 
   const params = useParams();
+
   const { saveData } = useStorage();
 
   useEffect(() => {
-    if (params.id && params.username && params.email)
-      login(params.id, params.username, params.email);
-  }, [params]);
-
-  useEffect(() => {
-    if (!user || user === null) {
-      const authToken = searchParams.get('authToken');
-      if (!authToken) {
-        appNavigation.goToNotFoundPage();
-        return;
+    if (params.id && params.name && params.email) {
+      setInitialUserData({ user_id: params.id, name: params.name, email: params.email });
+      login(params.id, params.name, params.email);
+    } else if (searchParams.get('authToken')) {
+      if (!user || user === null) {
+        const authToken = searchParams.get('authToken');
+        if (!authToken) {
+          appNavigation.goToNotFoundPage();
+          return;
+        }
+        const authTokenData = JSON.parse(decrypt(authToken, true));
+        setInitialUserData(authTokenData);
+        login(authTokenData.user_id, authTokenData.name, authTokenData.email);
+      } else {
+        fetchUserDetails(user.user_id, user.name, user.email);
       }
-      const authTokenData = JSON.parse(decrypt(authToken, true));
-      setInitialUserData(authTokenData);
-      login(authTokenData.user_id, authTokenData.name, authTokenData.email);
+      window.history.replaceState(null, '', window.location.pathname);
     } else {
-      fetchUserDetails(user.user_id, user.name, user.email);
+      appNavigation.goToNotFoundPage();
     }
-    window.history.replaceState(null, '', window.location.pathname);
-  }, [searchParams]);
+  }, [params, searchParams]);
 
   const handleStartGame = () => {
     if (user.name === undefined || user.name === "") {

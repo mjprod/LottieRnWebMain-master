@@ -8,7 +8,7 @@ export const Endpoint = {
   post_daily_answer: SERVER + "/daily/answer",
   leader_board: SERVER + "/leaderboard",
   update_card_played: SERVER + "/game/update_card_played",
-  update_lucky_symbol: SERVER + "game/update_lucky_symbol",
+  update_lucky_symbol: SERVER + "/game/update_lucky_symbol",
   update_score:  SERVER + "/game/update_score",
   login: SERVER + "/login",
   token: SERVER + "/login/token",
