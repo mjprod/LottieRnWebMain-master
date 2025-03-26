@@ -1,68 +1,46 @@
 import { useState } from "react";
-import { SERVER, API_KEY, Endpoint } from "../util/constants";
 import { showConsoleMessage, showConsoleError } from "../util/ConsoleMessage";
 import { encrypt, decrypt } from "../util/crypto";
+import useStorage from "./useStorage";
+import { Endpoint } from "../util/constants";
 
 const useApiRequest = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
+  const { saveData, loadData } = useStorage();
 
-  const fetchData = async (config) => {
+  const fetchData = async (config, silent = false) => {
     const { url, method = "GET", headers, body } = config;
     showConsoleMessage("API Request Config:", config)
     const encryptData = encrypt(body);
+    loadData("token").then((token) => {
+      try {
+        if (!silent) setLoading(true);
+        fetch(url, {
+          method,
+          headers: token ? { ...headers, "Authorization": "Bearer " + token } : headers,
+          body: JSON.stringify({ data: encryptData }),
+        }).then((res) => {
+          showConsoleMessage("API Response:", res)
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          res.json().then((data) => {
+            setResponse(JSON.parse(decrypt(data)));
 
-    try {
-      setLoading(true);
-      const res = await fetch(url, {
-        method,
-        headers: { ...headers, "x-api-key": API_KEY },
-        body: JSON.stringify({ data: encryptData}),
-      });
-      showConsoleMessage("API Response:", res)
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
+            setError(null);
+            showConsoleMessage("API Response Data:", JSON.parse(decrypt(data)));
+          });
+        });
+      } catch (err) {
+        setError(err.message);
+        showConsoleError("API Error:", err)
+      } finally {
+        if (!silent) setLoading(false);
       }
+    });
 
-      const data = await res.json();
-
-      setResponse(JSON.parse(decrypt(data)));
-
-      setError(null);
-      showConsoleMessage("API Response Data:", JSON.parse(decrypt(data)));
-    } catch (err) {
-      setError(err.message);
-      showConsoleError("API Error:", err)
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const silentFetchData = async (config) => {
-    const { url, method = "GET", headers, body } = config;
-    showConsoleMessage("Silent API Request Config:", config)
-    const encryptData = encrypt(body);
-
-    try {
-      const res = await fetch(url, {
-        method,
-        headers: { ...headers, "x-api-key": API_KEY },
-        body: JSON.stringify({ data: encryptData}),
-      });
-      showConsoleMessage("Silent API Response:", res)
-      if (!res.ok) {
-        throw new Error(`Silent HTTP error! status: ${JSON.stringify(res)}`);
-      }
-      const data = await res.json();
-
-      setResponse(JSON.parse(decrypt(data)));
-
-      showConsoleMessage("Silent API Response Data:", JSON.parse(decrypt(data)));
-    } catch (err) {
-      showConsoleError("Silent API Error:", err)
-    } finally {
-    }
   };
 
   const updateLuckySymbol = async (user_id, lucky_symbol) => {
@@ -78,7 +56,7 @@ const useApiRequest = () => {
       },
     };
 
-    await silentFetchData(config);
+    await fetchData(config, true);
   };
 
   const fetchUserDetails = async (user_id, name, email) => {
@@ -95,7 +73,10 @@ const useApiRequest = () => {
       },
     };
 
-    await fetchData(config);
+    await fetchData(config).then(() => {
+      if (response != null && response.token)
+        saveData("token", response.token)
+    });
   };
 
   const getDailyQuestion = async (user_id) => {
@@ -157,7 +138,7 @@ const useApiRequest = () => {
         number_combination_total
       },
     };
-    await silentFetchData(config);
+    await fetchData(config, true);
   };
 
   const updateScore = async (user_id, score, game_id, combo_played) => {
@@ -174,7 +155,7 @@ const useApiRequest = () => {
         combo_played
       },
     };
-    await silentFetchData(config);
+    await fetchData(config, true);
   };
 
   return {
