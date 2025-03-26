@@ -16,17 +16,41 @@ const useApiRequest = () => {
     const encryptData = encrypt(body);
     const accessToken = await loadData("accessToken");
 
+    const options = {
+      method,
+      headers: accessToken ? {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + accessToken,
+        ...headers,
+      } : headers,
+      body: JSON.stringify({ data: encryptData }),
+      // credentials: 'include', // If I do this I will get a CORS error
+    }
+
     if (!silent) setLoading(true);
+
     try {
-      const res = await fetch(url, {
-        method,
-        headers: accessToken ? { ...headers, "Authorization": "Bearer " + accessToken } : headers,
-        body: JSON.stringify({ data: encryptData }),
-      });
+      const res = await fetch(url, options);
       showConsoleMessage("API Response:", res)
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
+      if (res.status === 401 && !options._retry) {
+        options._retry = true;
+        const refreshToken = loadData('refreshToken');
+
+        const refreshResponse = await fetch(Endpoint.token, {
+          method: 'POST',
+          body: JSON.stringify({ data: encrypt({refreshToken: refreshToken}) }),
+          // credentials: 'include', // If I do this I will get a CORS error
+        });
+
+        if (refreshResponse.ok) {
+          const data = await refreshResponse.json();
+          const newAccessToken = data.accessToken;
+          localStorage.setItem('accessToken', newAccessToken);
+          options.headers['Authorization'] = `Bearer ${newAccessToken}`;
+          res = await fetch(url, options);
+        }
       }
+
       const data = await res.json();
 
       setResponse(JSON.parse(decrypt(data)));
