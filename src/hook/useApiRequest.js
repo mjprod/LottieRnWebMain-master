@@ -145,7 +145,7 @@ const useApiRequest = () => {
     await fetchData(config);
   };
 
-  const getLeaderBoard = async (limit) => {
+  const getLeaderBoard = async (limit, page = 1) => {
     const config = {
       url: Endpoint.leader_board,
       method: "POST",
@@ -154,6 +154,7 @@ const useApiRequest = () => {
       },
       body: {
         limit,
+        page
       },
     };
     await fetchData(config);

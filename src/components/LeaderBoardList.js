@@ -12,16 +12,17 @@ const LeaderBoardList = ({ username, style, numberOfItems = 10 }) => {
   useEffect(() => {
     getLeaderBoard(numberOfItems);
   }, []);
-
+  
   useEffect(() => {
     if (response) {
-      setLeaderBoardData(Object.values(response).map((data) => {
+      setLeaderBoardData(Object.values(response.data).map((item) => {
+        console.log("Item", item)
         return {
-          id: data.user_id,
-          rank: data.rank,
-          username: data.name,
-          points: data.total_score,
-          status: LeaderBoardStatus.up,
+          id: item.user_id,
+          rank: item.current_rank,
+          username: item.name,
+          points: item.total_score,
+          status: item.trend ,
         }
       }));
     }
