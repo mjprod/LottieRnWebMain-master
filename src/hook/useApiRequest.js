@@ -1,68 +1,84 @@
-import { useState } from "react";
-import { SERVER, API_KEY, Endpoint } from "../util/constants";
+import { useEffect, useState } from "react";
 import { showConsoleMessage, showConsoleError } from "../util/ConsoleMessage";
 import { encrypt, decrypt } from "../util/crypto";
+import useStorage from "./useStorage";
+import { Endpoint } from "../util/constants";
 
 const useApiRequest = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
+  const { loadData } = useStorage();
 
-  const fetchData = async (config) => {
+  const fetchData = async (config, silent = false) => {
     const { url, method = "GET", headers, body } = config;
     showConsoleMessage("API Request Config:", config)
     const encryptData = encrypt(body);
+    const accessToken = await loadData("accessToken");
+
+    const options = {
+      method,
+      headers: accessToken ? {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + accessToken,
+        ...headers,
+      } : headers,
+      body: JSON.stringify({ data: encryptData }),
+      // credentials: 'include', // If I do this I will get a CORS error
+    }
+
+    if (!silent) setLoading(true);
 
     try {
-      setLoading(true);
-      const res = await fetch(url, {
-        method,
-        headers: { ...headers, "x-api-key": API_KEY },
-        body: JSON.stringify({ data: encryptData}),
-      });
+      const res = await fetch(url, options);
       showConsoleMessage("API Response:", res)
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
+      if (res.status === 401 && !options._retry) {
+        options._retry = true;
+        const refreshToken = loadData('refreshToken');
+
+        const refreshResponse = await fetch(Endpoint.token, {
+          method: 'POST',
+          body: JSON.stringify({ data: encrypt({refreshToken: refreshToken}) }),
+          // credentials: 'include', // If I do this I will get a CORS error
+        });
+
+        if (refreshResponse.ok) {
+          const data = await refreshResponse.json();
+          const newAccessToken = data.accessToken;
+          localStorage.setItem('accessToken', newAccessToken);
+          options.headers['Authorization'] = `Bearer ${newAccessToken}`;
+          res = await fetch(url, options);
+        }
       }
 
       const data = await res.json();
 
       setResponse(JSON.parse(decrypt(data)));
-
       setError(null);
       showConsoleMessage("API Response Data:", JSON.parse(decrypt(data)));
     } catch (err) {
       setError(err.message);
       showConsoleError("API Error:", err)
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
-  const silentFetchData = async (config) => {
-    const { url, method = "GET", headers, body } = config;
-    showConsoleMessage("Silent API Request Config:", config)
-    const encryptData = encrypt(body);
+  const login = async (user_id, name, email) => {
+    const config = {
+      url: Endpoint.login,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        user_id,
+        name,
+        email,
+      },
+    };
 
-    try {
-      const res = await fetch(url, {
-        method,
-        headers: { ...headers, "x-api-key": API_KEY },
-        body: JSON.stringify({ data: encryptData}),
-      });
-      showConsoleMessage("Silent API Response:", res)
-      if (!res.ok) {
-        throw new Error(`Silent HTTP error! status: ${JSON.stringify(res)}`);
-      }
-      const data = await res.json();
-
-      setResponse(JSON.parse(decrypt(data)));
-
-      showConsoleMessage("Silent API Response Data:", JSON.parse(decrypt(data)));
-    } catch (err) {
-      showConsoleError("Silent API Error:", err)
-    } finally {
-    }
+    await fetchData(config);
   };
 
   const updateLuckySymbol = async (user_id, lucky_symbol) => {
@@ -78,7 +94,7 @@ const useApiRequest = () => {
       },
     };
 
-    await silentFetchData(config);
+    await fetchData(config, true);
   };
 
   const fetchUserDetails = async (user_id, name, email) => {
@@ -157,7 +173,7 @@ const useApiRequest = () => {
         number_combination_total
       },
     };
-    await silentFetchData(config);
+    await fetchData(config, true);
   };
 
   const updateScore = async (user_id, score, game_id, combo_played) => {
@@ -174,7 +190,7 @@ const useApiRequest = () => {
         combo_played
       },
     };
-    await silentFetchData(config);
+    await fetchData(config, true);
   };
 
   return {
@@ -189,6 +205,7 @@ const useApiRequest = () => {
     getLeaderBoard,
     updateCardPlayed,
     updateScore,
+    login
   };
 };
 

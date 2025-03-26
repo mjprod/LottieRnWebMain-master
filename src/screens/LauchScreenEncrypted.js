@@ -27,35 +27,49 @@ import { useGame } from "../context/GameContext";
 import useAppNavigation from "../hook/useAppNavigation";
 import { useSearchParams } from "react-router-dom";
 import { decrypt } from "../util/crypto";
+import useStorage from "../hook/useStorage";
 
 const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
 
   const { user, setUser, setLuckySymbolCount } = useGame();
 
+  const [initialUserData, setInitialUserData] = useState(null);
   const [initialScore, setInitialScore] = useState(0);
   const [initialTicketCount, setInitialTicketCount] = useState(0);
   const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
 
-  const { loading, error, response, fetchUserDetails, getLeaderBoard } = useApiRequest();
+  const { loading, error, response, fetchUserDetails, login } = useApiRequest();
   const { showSnackbar } = useSnackbar();
 
   const [searchParams] = useSearchParams();
 
+  const params = useParams();
+
+  const { saveData } = useStorage();
+
   useEffect(() => {
-    if (!user || user === null) {
-      const authToken = searchParams.get('authToken');
-      if (!authToken) {
-        appNavigation.goToNotFoundPage();
-        return;
+    if (params.id && params.name && params.email) {
+      setInitialUserData({ user_id: params.id, name: params.name, email: params.email });
+      login(params.id, params.name, params.email);
+    } else if (searchParams.get('authToken')) {
+      if (!user || user === null) {
+        const authToken = searchParams.get('authToken');
+        if (!authToken) {
+          appNavigation.goToNotFoundPage();
+          return;
+        }
+        const authTokenData = JSON.parse(decrypt(authToken, true));
+        setInitialUserData(authTokenData);
+        login(authTokenData.user_id, authTokenData.name, authTokenData.email);
+      } else {
+        fetchUserDetails(user.user_id, user.name, user.email);
       }
-      const authTokenData = JSON.parse(decrypt(authToken, true));
-      fetchUserDetails(authTokenData.user_id, authTokenData.name, authTokenData.email);
+      window.history.replaceState(null, '', window.location.pathname);
     } else {
-      fetchUserDetails(user.user_id, user.name, user.email);
+      appNavigation.goToNotFoundPage();
     }
-    window.history.replaceState(null, '', window.location.pathname);
-  }, [searchParams]);
+  }, [params, searchParams]);
 
   const handleStartGame = () => {
     if (user.name === undefined || user.name === "") {
@@ -71,6 +85,15 @@ const LauchScreenEncrypted = () => {
   };
 
   useEffect(() => {
+    if (response != null) {
+      if (response.accessToken && response.refreshToken) {
+        saveData("accessToken", response.accessToken)
+        saveData("refreshToken", response.refreshToken)
+
+        fetchUserDetails(initialUserData.user_id, initialUserData.name, initialUserData.email);
+      }
+    }
+
     if (response && response.user) {
       setInitialScore(response.user.total_score || 0);
       setInitialTicketCount(response.user.ticket_balance || 0);

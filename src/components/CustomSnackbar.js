@@ -37,7 +37,7 @@ const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
           Animated.timing(fadeAnim, {
             toValue: 0,
             duration: 300,
-            useNativeDriver: true,
+            useNativeDriver: Platform.OS !== 'web',
           }).start(() => {
             onDismiss && onDismiss();
           });

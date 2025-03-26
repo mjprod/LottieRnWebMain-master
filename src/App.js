@@ -52,7 +52,7 @@ export default function App() {
                     <Route path="/game_over" element={<GameOverScreen />} />
                     <Route path="/how_to_play" element={<HowToPlayScreen />} />
                     <Route path="/leader_board" element={<LeaderBoardScreen />} />
-                    <Route path="/:id/:username/:email" element={<LauchScreen />} />
+                    <Route path="/:id/:name/:email" element={<LauchScreenEncrypted />} />
                     <Route path={InfoScreenContents.extending} element={<InfoScreen contentName={InfoScreenContents.extending} />} />
                     <Route path={InfoScreenContents.thank_you} element={<InfoScreen contentName={InfoScreenContents.thank_you} />} />
                     <Route path={InfoScreenContents.in_progress} element={<InfoScreen contentName={InfoScreenContents.in_progress} />} />
