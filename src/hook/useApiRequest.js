@@ -194,6 +194,18 @@ const useApiRequest = () => {
     await fetchData(config, true);
   };
 
+  const updateCardBalance = async (user_id, card_balance) => {
+    const config = {
+      url: Endpoint.update_card_balance,
+      method: "POST",
+      body: {
+        user_id,
+        card_balance
+      },
+    };
+    await fetchData(config, true);
+  };
+
   return {
     loading,
     error,

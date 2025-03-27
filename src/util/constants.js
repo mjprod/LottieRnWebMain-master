@@ -9,6 +9,7 @@ export const Endpoint = {
   leader_board: SERVER + "/leaderboard",
   update_card_played: SERVER + "/game/update_card_played",
   update_lucky_symbol: SERVER + "/game/update_lucky_symbol",
+  update_card_balance: SERVER + "/game/update_card_balance",
   update_score:  SERVER + "/game/update_score",
   login: SERVER + "/login",
   token: SERVER + "/login/token",

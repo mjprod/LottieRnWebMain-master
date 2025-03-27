@@ -24,11 +24,6 @@ class Video extends Component {
       playsInline: true, // Ensure inline playback on mobile
       controls: false,  // Hide controls
       preload: "auto",
-      style: {
-        objectFit: "contain", // Make sure the video covers the full container while keeping aspect ratio
-        width: "100%", // Full width
-        height: "100%", // Full height
-      },
     };
 
     return (

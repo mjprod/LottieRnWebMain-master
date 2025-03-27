@@ -360,6 +360,7 @@ const ScratchLuckyGame = () => {
         <ActivityIndicator size="large" color="#FFD89E" />
       </View>
     );
+    
   if (error) return <p>Error: {error}</p>;
 
 
