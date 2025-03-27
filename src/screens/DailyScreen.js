@@ -51,7 +51,7 @@ const DailyScreen = () => {
   const [totalWeeks, setTotalWeeks] = useState("");
   const [days, setDays] = useState([]);
 
-  const [dailySetData, setDailySetData] = useState(DailySetData);
+  const [dailySetData] = useState(DailySetData);
   const [noOfCardsInSet, setNumberOfCardsInSet] = useState(12);
   const [numberOfSetsInCurrentWeek, setNumberOfSetsInCurrentWeek] = useState(1);
 

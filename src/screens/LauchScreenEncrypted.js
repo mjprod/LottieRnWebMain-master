@@ -65,7 +65,11 @@ const LauchScreenEncrypted = () => {
       }
       window.history.replaceState(null, '', window.location.pathname);
     } else {
-      appNavigation.goToNotFoundPage();
+      if (!user || user === null) {
+        appNavigation.goToNotFoundPage();
+      } else {
+        fetchUserDetails(user.user_id, user.name, user.email);
+      }
     }
   }, [params, searchParams]);
 

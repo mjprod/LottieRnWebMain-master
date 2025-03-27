@@ -33,7 +33,7 @@ const ScratchLayout = ({
   const [triggerAutoPop, setTriggerAutoPop] = useState(false);
   const [isScratchCardVisible, setIsScratchCardVisible] = useState(true);
   const [autoScratch, setAutoScratch] = useState(false);
-  const [scratchedStarted, setScratchedStarted] = useState(false);
+  // const [scratchedStarted, setScratchedStarted] = useState(false);
 
   const setScratchedCard = () => {
     if (isLuckySymbolTrue) {
@@ -49,11 +49,12 @@ const ScratchLayout = ({
   const handleScratch = (scratchPercentage) => {
     if (scratchPercentage >= eraserShouldBeScratched && isScratchCardVisible) {
       setScratchedCard();
-    } else {
-      if (scratchPercentage > 0) {
-        setScratchedStarted(true);
-      }
-    }
+    } 
+    // else {
+    //   if (scratchPercentage > 0) {
+    //     setScratchedStarted(true);
+    //   }
+    // }
   };
 
   useEffect(() => {
@@ -61,7 +62,7 @@ const ScratchLayout = ({
       setIsScratchCardVisible(true);
       setTriggerAutoPop(false);
       setIsWinner(false);
-      setScratchedStarted(false);
+      // setScratchedStarted(false);
       setScratched(false);
       setAutoScratch(false);
       setReset(false);
