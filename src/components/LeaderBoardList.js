@@ -59,7 +59,6 @@ const LeaderBoardList = ({ username, style, numberOfItems = 10 }) => {
           onPageChange={onPageChange}
         />
       }
-
     </View>
   );
 };
