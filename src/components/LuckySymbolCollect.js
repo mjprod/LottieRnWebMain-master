@@ -15,7 +15,7 @@ const lottieStars = require("./../assets/lotties/lottieStars.json");
 const lottieSymbolsAnim = require("./../assets/lotties/3LuckySymbolsPart01.json");
 const lottieBonusCard = require("./../assets/lotties/lottieBonusCard.json");
 
-const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo }) => {
+const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo, onComplete }) => {
   const { setLuckySymbolCount } = useGame();
 
   const [clicks, setClicks] = useState(0);
@@ -75,6 +75,7 @@ const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo }) => {
   const handleBonusCardAnimationComplete = () => {
     setTimeout(() => {
       setCollectLuckySymbolVideo(false);
+      onComplete();
       setTimeout(() => {
         setLuckySymbolCount(0);
         nextCard();

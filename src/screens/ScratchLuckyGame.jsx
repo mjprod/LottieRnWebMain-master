@@ -26,6 +26,7 @@ import AssetPack from "../util/AssetsPack.js";
 import useAppNavigation from "../hook/useAppNavigation.js";
 import LinearGradient from 'react-native-web-linear-gradient';
 import { Easing } from "react-native";
+import { BONUS_PACK_NUMBER_OF_CARDS } from "../util/constants.js";
 
 const { width } = Dimensions.get("window");
 
@@ -83,6 +84,7 @@ const ScratchLuckyGame = () => {
     updateLuckySymbol,
     updateCardPlayed,
     fetchUserDetails,
+    updateCardBalance,
     updateScore
   } = useApiRequest();
 
@@ -308,6 +310,10 @@ const ScratchLuckyGame = () => {
     setGameStarted(true);
   };
 
+  const handleLuckySymbolCollectComplete = () => {
+    updateCardBalance(user.user_id, BONUS_PACK_NUMBER_OF_CARDS);
+  };
+  
   const renderInitialScreen = useMemo(() => {
     return (
       <View
@@ -360,7 +366,7 @@ const ScratchLuckyGame = () => {
         <ActivityIndicator size="large" color="#FFD89E" />
       </View>
     );
-    
+
   if (error) return <p>Error: {error}</p>;
 
 
@@ -417,6 +423,7 @@ const ScratchLuckyGame = () => {
         <LuckySymbolCollect
           nextCard={nextCard}
           setReset={setReset}
+          onComplete={handleLuckySymbolCollectComplete}
           setLuckySymbolCount={setLuckySymbolCount}
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
         />

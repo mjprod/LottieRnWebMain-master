@@ -2,6 +2,8 @@ export const SERVER = process.env.REACT_APP_SERVER_URL;
 export const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
 export const API_KEY = process.env.REACT_APP_API_KEY;
 
+export const BONUS_PACK_NUMBER_OF_CARDS = 12;
+
 export const Endpoint = {
   fetch_user_details: SERVER + "/users",
   get_daily_question: SERVER + "/daily/question",

@@ -199,8 +199,8 @@ const useApiRequest = () => {
       url: Endpoint.update_card_balance,
       method: "POST",
       body: {
-        user_id,
-        card_balance
+        user_id: user_id,
+        increase_card_balance: card_balance
       },
     };
     await fetchData(config, true);
@@ -218,6 +218,7 @@ const useApiRequest = () => {
     getLeaderBoard,
     updateCardPlayed,
     updateScore,
+    updateCardBalance,
     login
   };
 };
