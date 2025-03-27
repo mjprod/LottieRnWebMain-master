@@ -75,7 +75,7 @@ const LauchScreenEncrypted = () => {
       appNavigation.goToNotFoundPage();
       return;
     }
-    if (user.card_balance === 0) {
+    if (user.card_balance < 0) {
       showSnackbar("You don't have any cards left. Please wait till next day to play the game!")
     } else {
       appNavigation.goToStartPage(user.user_id, user.name, user.email);

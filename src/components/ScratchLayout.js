@@ -38,10 +38,8 @@ const ScratchLayout = ({
   const setScratchedCard = () => {
     if (isLuckySymbolTrue) {
       setIsLuckySymbolTrue(false);
-      setTimeout(() => {
-        setScratched(true);
-        setIsScratchCardVisible(false);
-      }, 5300);
+      setScratched(true);
+      setIsScratchCardVisible(false);
     } else {
       setScratched(true);
       setIsScratchCardVisible(false);
@@ -100,12 +98,9 @@ const ScratchLayout = ({
               onLoading={setImageLoading}
               setScratchStarted={setScratchStarted}
             />
-          </View>
-        )}
-
+          </View>)}
         <Image style={styles.arrowImage} source={null} />
       </View>
-
       <View style={{ marginTop: 5, marginBottom: 10, overflow: "hidden", alignSelf: "stretch" }}>
         <ScratchCardLeft scratchCardLeft={scratchCardLeft} />
       </View>

@@ -168,22 +168,17 @@ const ScratchLuckyGame = () => {
   const nextCard = () => {
     setSkipToFinishLuckyVideo(false);
     setWinLuckySymbolVideo(false);
-
-    setTimeout(() => {
-      if (luckySymbolCount <= 2) {
-        setTimeout(() => {
-          if (scratchCardLeft > 1) {
-            if (currentTheme === nextTheme) {
-              setReset(true)
-            } else {
-              setIntroThemeVideo(true);
-            }
-          } else {
-            handleGameOver();
-          }
-        }, 700);
+    if (luckySymbolCount <= 2) {
+      if (scratchCardLeft > 1) {
+        if (currentTheme === nextTheme) {
+          setReset(true)
+        } else {
+          setIntroThemeVideo(true);
+        }
+      } else {
+        handleGameOver();
       }
-    }, 300);
+    }
   };
 
   const addLuckySymbol = () => {
@@ -313,7 +308,7 @@ const ScratchLuckyGame = () => {
   const handleLuckySymbolCollectComplete = () => {
     updateCardBalance(user.user_id, BONUS_PACK_NUMBER_OF_CARDS);
   };
-  
+
   const renderInitialScreen = useMemo(() => {
     return (
       <View
@@ -360,15 +355,13 @@ const ScratchLuckyGame = () => {
     return backgroundLoop;
   }, [backgroundLoop]);
 
-  if (loading)
-    return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#FFD89E" />
-      </View>
-    );
+  if (loading) return (
+    <View style={styles.loaderContainer}>
+      <ActivityIndicator size="large" color="#FFD89E" />
+    </View>
+  );
 
   if (error) return <p>Error: {error}</p>;
-
 
   return (
     <View style={[styles.fullScreen, { pointerEvents: nextCardAnimationFinished ? "auto" : "none" }]}>
