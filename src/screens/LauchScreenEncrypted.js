@@ -17,7 +17,7 @@ import TopBannerNav from "../components/TopBannerNav";
 import SectionTitle from "../components/SectionTitle";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
-import { Colors, Dimentions } from "../util/constants";
+import { Colors, Dimentions, GameStatus } from "../util/constants";
 import NextDrawCard from "../components/NextDrawCard";
 import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
 import RaffleTicketCard from "../components/RaffleTicketCard";
@@ -28,6 +28,7 @@ import useAppNavigation from "../hook/useAppNavigation";
 import { useSearchParams } from "react-router-dom";
 import { decrypt } from "../util/crypto";
 import useStorage from "../hook/useStorage";
+import { InfoScreenContents } from "./info/InfoScreen";
 
 const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
@@ -36,7 +37,7 @@ const LauchScreenEncrypted = () => {
 
   const [initialUserData, setInitialUserData] = useState(null);
 
-  const { loading, error, response, fetchUserDetails, login } = useApiRequest();
+  const { loading, error, response, fetchUserDetails, getWinner, login } = useApiRequest();
   const { showSnackbar } = useSnackbar();
 
   const [searchParams] = useSearchParams();
@@ -91,9 +92,25 @@ const LauchScreenEncrypted = () => {
       }
     }
 
+    if (response.winner) {
+      const winner = response.winner
+      if (winner.user_id === user.user_id) {
+        appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
+      } else {
+        appNavigation.goToThankYouPage(InfoScreenContents.thank_you);
+      }
+    }
+
     if (response && response.user) {
       setUser(response.user);
       setLuckySymbolCount(response.user.lucky_symbol_balance);
+      const gameStatus = response.user.time_result;
+
+      if (gameStatus === GameStatus.drawing) {
+        appNavigation.goToInProgressPage();
+      } else if (gameStatus === GameStatus.check_winner) {
+        getWinner()
+      }
 
       const userData = response.user;
       const currentWeek = response.current_week;

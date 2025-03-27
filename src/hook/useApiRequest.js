@@ -206,6 +206,14 @@ const useApiRequest = () => {
     await fetchData(config, true);
   };
 
+  const getWinner = async ()=>{
+    const config = {
+      url: Endpoint.update_card_balance,
+      method: "GET",
+    };
+    await fetchData(config, true);
+  };
+
   return {
     loading,
     error,

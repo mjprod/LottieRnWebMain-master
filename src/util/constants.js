@@ -26,6 +26,12 @@ export const DailyCardStatus = {
   completed: "completed",
 };
 
+export const GameStatus = {
+  online: "online",
+  drawing: "drawing",
+  check_winner: "check winner",
+};
+
 export const LeaderBoardStatus = {
   up: "up",
   down: "down",
