@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { showConsoleMessage, showConsoleError } from "../util/ConsoleMessage";
 import { encrypt, decrypt } from "../util/crypto";
 import useStorage from "./useStorage";
@@ -38,7 +38,7 @@ const useApiRequest = () => {
 
         const refreshResponse = await fetch(Endpoint.token, {
           method: 'POST',
-          body: JSON.stringify({ data: encrypt({refreshToken: refreshToken}) }),
+          body: JSON.stringify({ data: encrypt({ refreshToken: refreshToken }) }),
           // credentials: 'include', // If I do this I will get a CORS error
         });
 
@@ -206,6 +206,14 @@ const useApiRequest = () => {
     await fetchData(config, true);
   };
 
+  const getWinner = async () => {
+    const config = {
+      url: Endpoint.update_card_balance,
+      method: "GET",
+    };
+    await fetchData(config, true);
+  };
+
   return {
     loading,
     error,
@@ -219,6 +227,7 @@ const useApiRequest = () => {
     updateCardPlayed,
     updateScore,
     updateCardBalance,
+    getWinner,
     login
   };
 };

@@ -17,7 +17,7 @@ import TopBannerNav from "../components/TopBannerNav";
 import SectionTitle from "../components/SectionTitle";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
-import { Colors, Dimentions } from "../util/constants";
+import { Colors, Dimentions, GameStatus } from "../util/constants";
 import NextDrawCard from "../components/NextDrawCard";
 import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
 import RaffleTicketCard from "../components/RaffleTicketCard";
@@ -28,6 +28,7 @@ import useAppNavigation from "../hook/useAppNavigation";
 import { useSearchParams } from "react-router-dom";
 import { decrypt } from "../util/crypto";
 import useStorage from "../hook/useStorage";
+import { InfoScreenContents } from "./info/InfoScreen";
 
 const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
@@ -35,11 +36,8 @@ const LauchScreenEncrypted = () => {
   const { user, setUser, setLuckySymbolCount } = useGame();
 
   const [initialUserData, setInitialUserData] = useState(null);
-  const [initialScore, setInitialScore] = useState(0);
-  const [initialTicketCount, setInitialTicketCount] = useState(0);
-  const [initialScratchCardLeft, setInitialScratchCardLeft] = useState(0);
 
-  const { loading, error, response, fetchUserDetails, login } = useApiRequest();
+  const { loading, error, response, fetchUserDetails, getWinner, login } = useApiRequest();
   const { showSnackbar } = useSnackbar();
 
   const [searchParams] = useSearchParams();
@@ -74,10 +72,10 @@ const LauchScreenEncrypted = () => {
   const handleStartGame = () => {
     if (user.name === undefined || user.name === "") {
       showSnackbar("Please complete your profile to play the game");
-      // fetchUserDetails(id, username, email);
+      appNavigation.goToNotFoundPage();
       return;
     }
-    if (initialScratchCardLeft === 0) {
+    if (user.card_balance === 0) {
       showSnackbar("You don't have any cards left. Please wait till next day to play the game!")
     } else {
       appNavigation.goToStartPage(user.user_id, user.name, user.email);
@@ -94,12 +92,25 @@ const LauchScreenEncrypted = () => {
       }
     }
 
+    if (response && response.winner) {
+      const winner = response.winner
+      if (winner.user_id === user.user_id) {
+        appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
+      } else {
+        appNavigation.goToThankYouPage(InfoScreenContents.thank_you);
+      }
+    }
+
     if (response && response.user) {
-      setInitialScore(response.user.total_score || 0);
-      setInitialTicketCount(response.user.ticket_balance || 0);
-      setInitialScratchCardLeft(response.user.card_balance || 0);
       setUser(response.user);
       setLuckySymbolCount(response.user.lucky_symbol_balance);
+      const gameStatus = response.user.time_result;
+
+      if (gameStatus === GameStatus.drawing) {
+        appNavigation.goToInProgressPage();
+      } else if (gameStatus === GameStatus.check_winner) {
+        getWinner()
+      }
 
       const userData = response.user;
       const currentWeek = response.current_week;
@@ -170,7 +181,7 @@ const LauchScreenEncrypted = () => {
           }}>
             <SectionTitle text={"Statistics"} />
             <View style={styles.resultRow}>
-              <StatCard title="Total Points" stat={initialScore} loading={loading} />
+              <StatCard title="Total Points" stat={user.total_score} loading={loading} />
               <View style={{ width: 10 }} />
               <StatCard title="LUCKY SYMBOLS" loading={loading}>
                 <ImageBackground
@@ -182,7 +193,7 @@ const LauchScreenEncrypted = () => {
                 <View style={styles.luckySymbols}></View>
               </StatCard>
             </View>
-            <RaffleTicketCard score={initialScore} ticketCount={initialTicketCount} />
+            <RaffleTicketCard score={user.total_score} ticketCount={user.ticket_balance} />
             <GameButton
               style={{ marginTop: Dimentions.pageMargin, width: "100%" }}
               text="Play Now"
@@ -202,7 +213,7 @@ const LauchScreenEncrypted = () => {
             <LeaderBoardList numberOfItems={5} />
             <GamesAvailableCard
               style={{ marginVertical: 24 }}
-              cardsLeft={initialScratchCardLeft} />
+              cardsLeft={user.card_balance} />
             <NextDrawCard style={{ marginVertical: 24 }} />
           </View>
         </View>

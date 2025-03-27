@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { InfoScreenContents } from '../screens/info/InfoScreen';
 
 const useAppNavigation = () => {
     const navigate = useNavigate();
@@ -60,6 +61,21 @@ const useAppNavigation = () => {
         },
         goToNotFoundPage: () => {
             navigate("/not_found");
+        },
+        goToInfoPage: (info) => {
+            navigate(`/${info}`);
+        },
+        goToCongratulationsPage: () => {
+            navigate(`/${InfoScreenContents.congratulations}`);
+        },
+        goToThankYouPage: () => {
+            navigate(`/${InfoScreenContents.thank_you}`);
+        },
+        goToInProgressPage: () => {
+            navigate(`/${InfoScreenContents.in_progress}`);
+        },
+        goToWeAreExtendingPage: () => {
+            navigate(`/${InfoScreenContents.extending}`);
         }
     };
 

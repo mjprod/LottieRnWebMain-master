@@ -44,7 +44,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           style={styles.arrowLeft}
           disabled={currentPage === 1}
           onPress={() => onPageChange(currentPage - 1)}>
-          <Image source={AssetPack.icons.ARROW_LEFT} style={{ width: 10, height: 20, resizeMode: "contain" }} />
+          <Image source={AssetPack.icons.ARROW_LEFT} style={{ width: 10, height: 20 }} resizeMode="contain" />
         </TouchableOpacity>{
           pagesToShow.map((page, index) => {
             if (page === '...') {
@@ -76,7 +76,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           style={styles.arrowRight}
           disabled={currentPage === totalPages}
           onPress={() => onPageChange(currentPage + 1)}>
-          <Image source={AssetPack.icons.ARROW_LEFT} style={{ width: 10, height: 20, resizeMode: "contain", transform: [{ rotate: "180deg" }], }} />
+          <Image source={AssetPack.icons.ARROW_LEFT} style={{ width: 10, height: 20, transform: [{ rotate: "180deg" }], }} resizeMode="contain" />
         </TouchableOpacity>
       </View>
     </View >
