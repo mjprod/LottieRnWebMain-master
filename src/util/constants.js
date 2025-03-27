@@ -2,6 +2,8 @@ export const SERVER = process.env.REACT_APP_SERVER_URL;
 export const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
 export const API_KEY = process.env.REACT_APP_API_KEY;
 
+export const BONUS_PACK_NUMBER_OF_CARDS = 12;
+
 export const Endpoint = {
   fetch_user_details: SERVER + "/users",
   get_daily_question: SERVER + "/daily/question",
@@ -9,6 +11,7 @@ export const Endpoint = {
   leader_board: SERVER + "/leaderboard",
   update_card_played: SERVER + "/game/update_card_played",
   update_lucky_symbol: SERVER + "/game/update_lucky_symbol",
+  update_card_balance: SERVER + "/game/update_card_balance",
   update_score:  SERVER + "/game/update_score",
   login: SERVER + "/login",
   token: SERVER + "/login/token",
