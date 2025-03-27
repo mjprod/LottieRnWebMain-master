@@ -7,7 +7,6 @@ import { SoundProvider } from "./hook/useSoundPlayer";
 import { ThemeProvider } from "./hook/useTheme";
 import DailyScreen from "./screens/DailyScreen";
 import GameOverScreen from "./screens/GameOverScreen";
-import LauchScreen from "./screens/LauchScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import ScratchLuckyGame from "./screens/ScratchLuckyGame";
 import LeaderBoardScreen from "./screens/LeaderBoardScreen";
