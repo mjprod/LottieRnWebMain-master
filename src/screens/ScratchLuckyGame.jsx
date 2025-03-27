@@ -266,7 +266,7 @@ const ScratchLuckyGame = () => {
           } else {
             handleGameOver();
           }
-        }, 600);
+        }, 200);
         setTimerGame(0);
         setScratchStarted(false);
         setComboPlayed(0);
@@ -374,8 +374,7 @@ const ScratchLuckyGame = () => {
             start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
             locations={[0, 0.3, 0.45, 0.55, 1.0]}
             colors={['#212121', '#262E33', '#1D4A64', '#24282B', '#212121']}
-            style={styles.imageBackground}
-            resizeMode="stretch">
+            style={styles.imageBackground}>
             <View style={styles.overlay}>
               <Animated.View style={{ marginTop: marginTopAnim }}>
                 <TopLayout

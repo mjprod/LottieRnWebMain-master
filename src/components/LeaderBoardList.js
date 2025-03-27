@@ -3,7 +3,6 @@ import { View, FlatList, ActivityIndicator } from "react-native-web";
 import LeaderBoardItem from "./items/LeaderBoardItem";
 import useApiRequest from "../hook/useApiRequest";
 import Pagination from "./Pagination";
-import { Dimentions } from "../util/constants";
 
 const LeaderBoardList = ({ username, style, numberOfItems = 10 }) => {
   const { response, getLeaderBoard } = useApiRequest();

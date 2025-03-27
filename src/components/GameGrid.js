@@ -54,7 +54,7 @@ const GameGrid = ({
   }, [iconsArray, winningIcons, clickedIcons, scratched, handleIconClick, timerGame, arrayBobble, lottieAnimations, iconComponentsDefault]);
 
   return (
-    <ImageBackground source={backgroundScratchCard} style={styles.background_view}>
+    <ImageBackground source={backgroundScratchCard} style={styles.background_view} resizeMode="cover">
       <View style={styles.container}>
         <Animated.View style={[styles.gridContainer, { opacity: fadeAnim }]}>
           {renderGrid}
@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
       width: "100%",
       height: "100%",
       flex: 1,
-      resizeMode: "cover",
     },
   });
 export default React.memo(GameGrid);

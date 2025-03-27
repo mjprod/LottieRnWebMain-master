@@ -384,11 +384,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
-  tinyLogo: {
-    width: "100%",
-    height: 144,
-    resizeMode: "contain",
-  },
   horizontalDivider: {
     height: 1,
     backgroundColor: "rgba(255, 255, 255, 0.15)",
