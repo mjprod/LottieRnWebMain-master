@@ -92,7 +92,7 @@ const LauchScreenEncrypted = () => {
       }
     }
 
-    if (response.winner) {
+    if (response && response.winner) {
       const winner = response.winner
       if (winner.user_id === user.user_id) {
         appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
