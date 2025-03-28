@@ -8,25 +8,25 @@ import {
   View,
 } from "react-native";
 
-import { BackgroundGame } from "../components/BackgroundGame";
-import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
-import ScratchLayout from "../components/ScratchLayout";
-import TopLayout from "../components/TopLayout";
+import { BackgroundGame } from "../../components/BackgroundGame.js";
+import LuckySymbolCollect from "../../components/LuckySymbolCollect.js";
+import ScratchLayout from "../../components/ScratchLayout.js";
+import TopLayout from "../../components/TopLayout.js";
 
 import { ActivityIndicator } from "react-native-web";
 import { useLocation } from "react-router";
-import BottomDrawer from "../components/BottomDrawer.js";
-import IntroThemeVideo from "../components/IntroThemeVideo.js";
-import { useGame } from "../context/GameContext.js";
-import useApiRequest from "../hook/useApiRequest.js";
-import { useSound } from "../hook/useSoundPlayer.js";
-import { useTheme } from "../hook/useTheme.js";
-import useAppNavigation from "../hook/useAppNavigation.js";
+import BottomDrawer from "../../components/BottomDrawer.js";
+import IntroThemeVideo from "../../components/IntroThemeVideo.js";
+import { useGame } from "../../context/GameContext.js";
+import useApiRequest from "../../hook/useApiRequest.js";
+import { useSound } from "../../hook/useSoundPlayer.js";
+import { useTheme } from "../../hook/useTheme.js";
+import useAppNavigation from "../../hook/useAppNavigation.js";
 import LinearGradient from 'react-native-web-linear-gradient';
 import { Easing } from "react-native";
-import { BONUS_PACK_NUMBER_OF_CARDS } from "../util/constants.js";
-import WinLuckySymbolView from "./game/components/WinLuckySymbolView";
-import InitialCountDownView from "./game/components/InitialCountDownView.jsx";
+import { BONUS_PACK_NUMBER_OF_CARDS } from "../../util/constants.js";
+import WinLuckySymbolView from "./components/WinLuckySymbolView.jsx";
+import InitialCountDownView from "./components/InitialCountDownView.jsx";
 
 const { width } = Dimensions.get("window");
 
