@@ -47,6 +47,7 @@ const ScratchLuckyGame = () => {
   const [clickCount, setClickCount] = useState(0);
   const [winLuckySymbolVideo, setWinLuckySymbolVideo] = useState(false);
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
+  const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
   const [gameId, setGameId] = useState(null);
 
   const [luckySymbolWon, setLuckySymbolWon] = useState(0)
@@ -161,6 +162,7 @@ const ScratchLuckyGame = () => {
   };
 
   const nextCard = () => {
+    setSkipToFinishLuckyVideo(false);
     setWinLuckySymbolVideo(false);
     if (luckySymbolCount <= 2) {
       if (scratchCardLeft > 1) {
@@ -271,7 +273,10 @@ const ScratchLuckyGame = () => {
   }, [reset, setReset]);
 
   const handleWinLuckySymbolVideoScreenClick = () => {
-    luckySymbolVideoRef.current.seekToTime(2);
+    if (!skipToFinishLuckyVideo) {
+      luckySymbolVideoRef.current.seekToTime(2);
+    }
+    setSkipToFinishLuckyVideo(true)
   };
 
   const renderWinLuckySymbolVideoScreen = useMemo(() => {
