@@ -56,7 +56,6 @@ const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo, onComplete }
         useNativeDriver: Platform.OS !== "web",
       }),
     ]).start(() => {
-      console.log(lottieAnimRef.current);
       if (lottieAnimRef.current) {
         lottieAnimRef.current.play();
         if (nextClickCount === 2) {

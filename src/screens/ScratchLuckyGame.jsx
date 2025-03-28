@@ -35,7 +35,8 @@ const ScratchLuckyGame = () => {
   const location = useLocation();
 
   const countDownLottieRef = useRef(null);
-
+  const luckySymbolVideoRef = useRef(null);
+  
   const [gameStarted, setGameStarted] = useState(false);
   const [countDownStarted] = useState(true);
   const [introThemeVideo, setIntroThemeVideo] = useState(false);
@@ -138,29 +139,29 @@ const ScratchLuckyGame = () => {
   const saveLuckySymbol = async (luckySymbol) => {
     setLuckySymbolCount(luckySymbol);
   };
-
+  
   const browserHandler = {
     chrome: () => (
       <Video
-        deo
+        ref={luckySymbolVideoRef}
         source={
           skipToFinishLuckyVideo
             ? AssetPack.videos.LUCKY_SYMBOL_FINAL
-            : AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME
-        } // Play the win video
-        style={styles.transparentVideo} // Video styling
-        onEnd={handleLuckySymbolWonVideoEnd} // Mobile: Trigger callback when video ends
-        onEnded={handleLuckySymbolWonVideoEnd} // Web: Trigger callback when video ends
+            : AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME}
+        style={styles.transparentVideo}
+        onEnd={handleLuckySymbolWonVideoEnd}
+        onEnded={handleLuckySymbolWonVideoEnd}
       />
     ),
     default: (browser) => (
       <Video
+        ref={luckySymbolVideoRef}
         source={
           skipToFinishLuckyVideo ? AssetPack.videos.LUCKY_SYMBOL_FINAL : AssetPack.videos.WIN_LUCKY_SYMBOL
-        } // Play the win video
-        style={styles.transparentVideo} // Video styling
-        onEnd={handleLuckySymbolWonVideoEnd} // Mobile: Trigger callback when video ends
-        onEnded={handleLuckySymbolWonVideoEnd} // Web: Trigger callback when video ends
+        }
+        style={styles.transparentVideo}
+        onEnd={handleLuckySymbolWonVideoEnd}
+        onEnded={handleLuckySymbolWonVideoEnd}
       />
     ),
   };
@@ -246,6 +247,7 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (reset) {
       setNextCardAnimationFinished(false);
+      updateScore(user.user_id, score, gameId, comboPlayed);
       Animated.sequence([
         Animated.timing(translateX, {
           toValue: -width * 1.1,
@@ -259,7 +261,6 @@ const ScratchLuckyGame = () => {
           useNativeDriver: Platform.OS !== "web",
         })
       ]).start(() => {
-        updateScore(user.user_id, score, gameId, comboPlayed);
         setTimeout(() => {
           if (scratchCardLeft - 1 > 0) {
             setScratchCardLeft(scratchCardLeft - 1);
@@ -267,21 +268,19 @@ const ScratchLuckyGame = () => {
             handleGameOver();
           }
         }, 200);
+        setNextCardAnimationFinished(true);
         setTimerGame(0);
         setScratchStarted(false);
         setComboPlayed(0);
         goToNextTheme();
-        setNextCardAnimationFinished(true);
       });
     }
   }, [reset, setReset]);
 
   const handleWinLuckySymbolVideoScreenClick = () => {
-    setWinLuckySymbolVideo(false);
-    addLuckySymbol();
+    luckySymbolVideoRef.current.seekToTime(2);
   };
 
-  // Function to render the win screen with a video overlay
   const renderWinLuckySymbolVideoScreen = useMemo(() => {
     return (
       <View
@@ -289,8 +288,9 @@ const ScratchLuckyGame = () => {
         style={{
           ...styles.blackOverlayWin,
           flex: 1,
-          zIndex: 9999, // Makes sure the overlay is on top of all other elements
-          elevation: 10, // Ensures the overlay has proper visual depth on Android
+          zIndex: 9999,
+          elevation: 10,
+          alignContent: "flex-end",
         }}
       >
         <BrowserDetection>{browserHandler}</BrowserDetection>
@@ -485,17 +485,10 @@ const styles = StyleSheet.create({
     }),
   },
   transparentVideo: {
-    ...Platform.select({
-      web: {
-        width: "100vw",
-        height: "100vh",
-        objectFit: "contain",
-      },
-      default: {
-        ...StyleSheet.absoluteFillObject, // For mobile, full-screen video scaling
-        resizeMode: "contain",
-      },
-    }),
+    width: 300,
+    height: 300,
+    objectFit: "contain",
+    resizeMode: "contain",
   },
   clickableArea: {
     position: "absolute",
