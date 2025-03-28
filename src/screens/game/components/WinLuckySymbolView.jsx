@@ -46,7 +46,6 @@ const WinLuckySymbolView = ({ videoRef, style, onSkipClicked, onVideoEnd }) => {
 };
 
 const styles = StyleSheet.create({
-
     transparentVideo: {
         width: 300,
         height: 300,

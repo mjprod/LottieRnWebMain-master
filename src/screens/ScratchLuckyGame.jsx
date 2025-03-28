@@ -5,10 +5,9 @@ import {
   Dimensions,
   Platform,
   StyleSheet,
-  TouchableOpacity,
   View,
 } from "react-native";
-import LottieView from "react-native-web-lottie";
+
 import { BackgroundGame } from "../components/BackgroundGame";
 import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
 import ScratchLayout from "../components/ScratchLayout";
@@ -22,12 +21,12 @@ import { useGame } from "../context/GameContext.js";
 import useApiRequest from "../hook/useApiRequest.js";
 import { useSound } from "../hook/useSoundPlayer.js";
 import { useTheme } from "../hook/useTheme.js";
-import AssetPack from "../util/AssetsPack.js";
 import useAppNavigation from "../hook/useAppNavigation.js";
 import LinearGradient from 'react-native-web-linear-gradient';
 import { Easing } from "react-native";
 import { BONUS_PACK_NUMBER_OF_CARDS } from "../util/constants.js";
 import WinLuckySymbolView from "./game/components/WinLuckySymbolView";
+import InitialCountDownView from "./game/components/InitialCountDownView.jsx";
 
 const { width } = Dimensions.get("window");
 
@@ -259,50 +258,13 @@ const ScratchLuckyGame = () => {
     setSkipToFinishLuckyVideo(true)
   };
 
-  const handleAnimationFinish = () => {
+  const handleCountdownFinish = () => {
     setGameStarted(true);
   };
 
   const handleLuckySymbolCollectComplete = () => {
     updateCardBalance(user.user_id, BONUS_PACK_NUMBER_OF_CARDS);
   };
-
-  const renderInitialScreen = useMemo(() => {
-    return (
-      <View
-        key="overlay"
-        style={{
-          ...styles.blackOverlayWin,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.9)",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-          zIndex: 9999,
-          elevation: 10,
-        }}
-      >
-        <TouchableOpacity style={{ width: "80%" }}>
-          {countDownStarted && (
-            <View style={styles.rowCountDown}>
-              <LottieView
-                ref={countDownLottieRef}
-                style={styles.lottieAnimation}
-                source={AssetPack.lotties.COUNT_DOWN}
-                speed={1}
-                loop={false}
-                onAnimationFinish={handleAnimationFinish}
-              />
-            </View>
-          )}
-        </TouchableOpacity>
-      </View>
-    );
-  }, [countDownLottieRef, countDownStarted]);
 
   const handleGameOver = () => {
     setGameOver(true);
@@ -381,7 +343,11 @@ const ScratchLuckyGame = () => {
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
         />
       )}
-      {(!gameStarted || !countDownStarted) && renderInitialScreen}
+      {(!gameStarted || !countDownStarted) &&
+        <InitialCountDownView
+          countDownLottieRef={countDownLottieRef}
+          onCountDownComplete={handleCountdownFinish}
+        />}
       {introThemeVideo && (
         <IntroThemeVideo handleVideoEnd={handleVideoIntroEnd} />
       )}
@@ -424,28 +390,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 16,
     borderColor: "#A88C5D",
     borderWidth: 1,
-  },
-  blackOverlayWin: {
-    ...Platform.select({
-      web: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 1000,
-      },
-      default: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 1000,
-      },
-    }),
   },
   loaderContainer: {
     flex: 1,
