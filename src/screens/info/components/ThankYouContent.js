@@ -16,7 +16,7 @@ const ThankYouContent = () => {
             <Text style={styles.text}>
                 We appreciate you joining this round of the game. Get ready to play again, as the next round starts Monday. Stay tuned and best of luck!
             </Text>
-            <Image style={{ width: "100%", height: 200, marginBottom: 20, resizeMode: 'contain', marginTop: 30 }} source={AssetPack.images.TURBO_GAME_CARDS_SHOW} />
+            <Image style={{ width: "100%", height: 200, marginBottom: 20,  marginTop: 30 }} resizeMode='contain' source={AssetPack.images.TURBO_GAME_CARDS_SHOW} />
             <TimerComponent />
         </View>
     );
@@ -60,10 +60,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 35.5,
         paddingVertical: 15,
         borderRadius: 30,
-        shadowColor: "#FFDEA8",
-        shadowOffset: { width: 1, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        boxShadow: "1px 2px 3.84px 0 rgba(255, 222, 168, 0.25)",
         elevation: 5,
     },
     roundedText: {

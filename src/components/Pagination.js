@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native-web';
 import AssetPack from '../util/AssetsPack';
-import { Dimentions } from '../util/constants';
+import { Pressable } from 'react-native';
 
 function getPagesArray(current, total) {
   const maxVisible = 5;
@@ -40,12 +40,12 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   return (
     <View style={{}}>
       <View style={styles.container} >
-        <TouchableOpacity
+        <Pressable
           style={styles.arrowLeft}
           disabled={currentPage === 1}
           onPress={() => onPageChange(currentPage - 1)}>
           <Image source={AssetPack.icons.ARROW_LEFT} style={{ width: 10, height: 20 }} resizeMode="contain" />
-        </TouchableOpacity>{
+        </Pressable>{
           pagesToShow.map((page, index) => {
             if (page === '...') {
               return (
@@ -57,7 +57,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
             const isActive = page === currentPage;
             return (
-              <TouchableOpacity
+              <Pressable
                 style={isActive ? styles.pageActive : styles.page}
                 key={`page-${page}`}
                 onPress={() => onPageChange(page)}>
@@ -67,17 +67,17 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 }}>
                   {page}
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             );
           })
         }
 
-        <TouchableOpacity
+        <Pressable
           style={styles.arrowRight}
           disabled={currentPage === totalPages}
           onPress={() => onPageChange(currentPage + 1)}>
           <Image source={AssetPack.icons.ARROW_LEFT} style={{ width: 10, height: 20, transform: [{ rotate: "180deg" }], }} resizeMode="contain" />
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View >
   );

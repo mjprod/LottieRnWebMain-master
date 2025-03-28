@@ -14,7 +14,7 @@ const AlphaView = ({ showAlphaView }) => {
   }, [showAlphaView]);
 
   return (
-    <Animated.View
+    showAlphaView && <Animated.View
       style={[
         styles.containerNav,
         {

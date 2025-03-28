@@ -433,13 +433,7 @@ const styles = StyleSheet.create({
   lottieAnimation: {
     width: "100%",
     height: "100%",
-  },
-  background_view: {
-    width: "100%",
-    height: "100%",
-    flex: 1,
-    resizeMode: "cover",
-  },
+  }
 });
 
 export default ScratchGame;

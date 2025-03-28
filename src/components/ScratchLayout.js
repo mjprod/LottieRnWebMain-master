@@ -33,15 +33,13 @@ const ScratchLayout = ({
   const [triggerAutoPop, setTriggerAutoPop] = useState(false);
   const [isScratchCardVisible, setIsScratchCardVisible] = useState(true);
   const [autoScratch, setAutoScratch] = useState(false);
-  const [scratchedStarted, setScratchedStarted] = useState(false);
+  // const [scratchedStarted, setScratchedStarted] = useState(false);
 
   const setScratchedCard = () => {
     if (isLuckySymbolTrue) {
       setIsLuckySymbolTrue(false);
-      setTimeout(() => {
-        setScratched(true);
-        setIsScratchCardVisible(false);
-      }, 5300);
+      setScratched(true);
+      setIsScratchCardVisible(false);
     } else {
       setScratched(true);
       setIsScratchCardVisible(false);
@@ -51,11 +49,12 @@ const ScratchLayout = ({
   const handleScratch = (scratchPercentage) => {
     if (scratchPercentage >= eraserShouldBeScratched && isScratchCardVisible) {
       setScratchedCard();
-    } else {
-      if (scratchPercentage > 0) {
-        setScratchedStarted(true);
-      }
-    }
+    } 
+    // else {
+    //   if (scratchPercentage > 0) {
+    //     setScratchedStarted(true);
+    //   }
+    // }
   };
 
   useEffect(() => {
@@ -63,7 +62,7 @@ const ScratchLayout = ({
       setIsScratchCardVisible(true);
       setTriggerAutoPop(false);
       setIsWinner(false);
-      setScratchedStarted(false);
+      // setScratchedStarted(false);
       setScratched(false);
       setAutoScratch(false);
       setReset(false);
@@ -100,12 +99,9 @@ const ScratchLayout = ({
               onLoading={setImageLoading}
               setScratchStarted={setScratchStarted}
             />
-          </View>
-        )}
-
+          </View>)}
         <Image style={styles.arrowImage} source={null} />
       </View>
-
       <View style={{ marginTop: 5, marginBottom: 10, overflow: "hidden", alignSelf: "stretch" }}>
         <ScratchCardLeft scratchCardLeft={scratchCardLeft} />
       </View>

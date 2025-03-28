@@ -8,7 +8,7 @@ import { ThemeProvider } from "./hook/useTheme";
 import DailyScreen from "./screens/DailyScreen";
 import GameOverScreen from "./screens/GameOverScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
-import ScratchLuckyGame from "./screens/ScratchLuckyGame";
+import ScratchLuckyGame from "./screens/game/ScratchLuckyGame";
 import LeaderBoardScreen from "./screens/LeaderBoardScreen";
 import HowToPlayScreen from "./screens/HowToPlayScreen";
 import StartScreen from "./screens/StartScreen";

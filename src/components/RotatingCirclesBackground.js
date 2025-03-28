@@ -6,14 +6,14 @@ const RotatingCirclesBackground = ({ style, children }) => {
 
   useEffect(() => {
     const startAnimation = () => {
-      rotation.setValue(0); // Reset animation value to 0 before starting
+      rotation.setValue(0);
       Animated.timing(rotation, {
         toValue: 1,
         duration: 10000,
         easing: Easing.linear,
         useNativeDriver: Platform.OS !== 'web',
       }).start(() => {
-        startAnimation(); // Restart animation when it finishes
+        startAnimation();
       });
     };
     startAnimation();
@@ -54,11 +54,9 @@ const RotatingCirclesBackground = ({ style, children }) => {
             WebkitBackdropFilter: `blur(${100}px)`,
             position: "absolute",
             top: 0,
-            left: -500,
-            right: 0,
-            bottom: 0,
-            width: 1200,
-            height: 1200,
+            left: 0,
+            width: "100%",
+            height: "100%",
           }}
         />
         {children}
