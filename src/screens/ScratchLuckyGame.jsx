@@ -375,36 +375,34 @@ const ScratchLuckyGame = () => {
             locations={[0, 0.3, 0.45, 0.55, 1.0]}
             colors={['#212121', '#262E33', '#1D4A64', '#24282B', '#212121']}
             style={styles.imageBackground}>
-            <View style={styles.overlay}>
-              <Animated.View style={{ marginTop: marginTopAnim }}>
-                <TopLayout
-                  scratched={scratched}
-                  scratchStarted={scratchStarted}
-                  timerGame={timerGame}
-                  setTimerGame={setTimerGame}
-                  luckySymbolCount={luckySymbolCount}
-                  clickCount={clickCount} />
-              </Animated.View>
-
-              <ScratchLayout
-                reset={reset}
-                setReset={setReset}
+            <Animated.View style={{ marginTop: marginTopAnim }}>
+              <TopLayout
                 scratched={scratched}
-                setScratched={setScratched}
-                luckySymbolCount={luckySymbolCount}
-                setLuckySymbolCount={setLuckySymbolCount}
-                setScratchStarted={setScratchStarted}
-                scratchCardLeft={scratchCardLeft}
+                scratchStarted={scratchStarted}
                 timerGame={timerGame}
-                setWinLuckySymbolVideo={setWinLuckySymbolVideo}
-                setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
-                clickCount={clickCount}
-                setClickCount={setClickCount}
-                nextCard={nextCard}
-                setLuckySymbolWon={setLuckySymbolWon}
-                setTotalComboCount={setTotalComboCount}
-                setComboPlayed={setComboPlayed} />
-            </View>
+                setTimerGame={setTimerGame}
+                luckySymbolCount={luckySymbolCount}
+                clickCount={clickCount} />
+            </Animated.View>
+
+            <ScratchLayout
+              reset={reset}
+              setReset={setReset}
+              scratched={scratched}
+              setScratched={setScratched}
+              luckySymbolCount={luckySymbolCount}
+              setLuckySymbolCount={setLuckySymbolCount}
+              setScratchStarted={setScratchStarted}
+              scratchCardLeft={scratchCardLeft}
+              timerGame={timerGame}
+              setWinLuckySymbolVideo={setWinLuckySymbolVideo}
+              setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
+              clickCount={clickCount}
+              setClickCount={setClickCount}
+              nextCard={nextCard}
+              setLuckySymbolWon={setLuckySymbolWon}
+              setTotalComboCount={setTotalComboCount}
+              setComboPlayed={setComboPlayed} />
           </LinearGradient>
         </Animated.View>
       </View>
@@ -444,7 +442,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       web: {
         position: "absolute",
-        top: 0,
+        top: 50,
         left: 0,
         right: 0,
         bottom: 0,
@@ -463,11 +461,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 16,
     borderColor: "#A88C5D",
     borderWidth: 1,
-  },
-  overlay: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
   },
   blackOverlayWin: {
     ...Platform.select({
