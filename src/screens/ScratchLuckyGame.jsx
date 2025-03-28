@@ -36,7 +36,7 @@ const ScratchLuckyGame = () => {
 
   const countDownLottieRef = useRef(null);
   const luckySymbolVideoRef = useRef(null);
-  
+
   const [gameStarted, setGameStarted] = useState(false);
   const [countDownStarted] = useState(true);
   const [introThemeVideo, setIntroThemeVideo] = useState(false);
@@ -47,7 +47,6 @@ const ScratchLuckyGame = () => {
   const [clickCount, setClickCount] = useState(0);
   const [winLuckySymbolVideo, setWinLuckySymbolVideo] = useState(false);
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
-  const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
   const [gameId, setGameId] = useState(null);
 
   const [luckySymbolWon, setLuckySymbolWon] = useState(0)
@@ -139,15 +138,12 @@ const ScratchLuckyGame = () => {
   const saveLuckySymbol = async (luckySymbol) => {
     setLuckySymbolCount(luckySymbol);
   };
-  
+
   const browserHandler = {
     chrome: () => (
       <Video
         ref={luckySymbolVideoRef}
-        source={
-          skipToFinishLuckyVideo
-            ? AssetPack.videos.LUCKY_SYMBOL_FINAL
-            : AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME}
+        source={AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME}
         style={styles.transparentVideo}
         onEnd={handleLuckySymbolWonVideoEnd}
         onEnded={handleLuckySymbolWonVideoEnd}
@@ -156,9 +152,7 @@ const ScratchLuckyGame = () => {
     default: (browser) => (
       <Video
         ref={luckySymbolVideoRef}
-        source={
-          skipToFinishLuckyVideo ? AssetPack.videos.LUCKY_SYMBOL_FINAL : AssetPack.videos.WIN_LUCKY_SYMBOL
-        }
+        source={AssetPack.videos.WIN_LUCKY_SYMBOL}
         style={styles.transparentVideo}
         onEnd={handleLuckySymbolWonVideoEnd}
         onEnded={handleLuckySymbolWonVideoEnd}
@@ -167,7 +161,6 @@ const ScratchLuckyGame = () => {
   };
 
   const nextCard = () => {
-    setSkipToFinishLuckyVideo(false);
     setWinLuckySymbolVideo(false);
     if (luckySymbolCount <= 2) {
       if (scratchCardLeft > 1) {
