@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import BrowserDetection from "react-browser-detection";
+
 import {
   Animated,
   Dimensions,
@@ -13,7 +13,7 @@ import { BackgroundGame } from "../components/BackgroundGame";
 import LuckySymbolCollect from "../components/LuckySymbolCollect.js";
 import ScratchLayout from "../components/ScratchLayout";
 import TopLayout from "../components/TopLayout";
-import Video from "../components/Video";
+
 import { ActivityIndicator } from "react-native-web";
 import { useLocation } from "react-router";
 import BottomDrawer from "../components/BottomDrawer.js";
@@ -27,6 +27,7 @@ import useAppNavigation from "../hook/useAppNavigation.js";
 import LinearGradient from 'react-native-web-linear-gradient';
 import { Easing } from "react-native";
 import { BONUS_PACK_NUMBER_OF_CARDS } from "../util/constants.js";
+import WinLuckySymbolView from "./game/components/WinLuckySymbolView";
 
 const { width } = Dimensions.get("window");
 
@@ -138,27 +139,6 @@ const ScratchLuckyGame = () => {
 
   const saveLuckySymbol = async (luckySymbol) => {
     setLuckySymbolCount(luckySymbol);
-  };
-
-  const browserHandler = {
-    chrome: () => (
-      <Video
-        ref={luckySymbolVideoRef}
-        source={AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME}
-        style={styles.transparentVideo}
-        onEnd={handleLuckySymbolWonVideoEnd}
-        onEnded={handleLuckySymbolWonVideoEnd}
-      />
-    ),
-    default: (browser) => (
-      <Video
-        ref={luckySymbolVideoRef}
-        source={AssetPack.videos.WIN_LUCKY_SYMBOL}
-        style={styles.transparentVideo}
-        onEnd={handleLuckySymbolWonVideoEnd}
-        onEnded={handleLuckySymbolWonVideoEnd}
-      />
-    ),
   };
 
   const nextCard = () => {
@@ -279,26 +259,6 @@ const ScratchLuckyGame = () => {
     setSkipToFinishLuckyVideo(true)
   };
 
-  const renderWinLuckySymbolVideoScreen = useMemo(() => {
-    return (
-      <View
-        key="overlay"
-        style={{
-          ...styles.blackOverlayWin,
-          flex: 1,
-          zIndex: 9999,
-          elevation: 10,
-          alignContent: "flex-end",
-        }}
-      >
-        <BrowserDetection>{browserHandler}</BrowserDetection>
-        <TouchableOpacity style={styles.clickableArea} onPress={handleWinLuckySymbolVideoScreenClick}>
-          <View style={styles.transparentOverlay} />
-        </TouchableOpacity>
-      </View>
-    );
-  }, [browserHandler]);
-
   const handleAnimationFinish = () => {
     setGameStarted(true);
   };
@@ -406,7 +366,12 @@ const ScratchLuckyGame = () => {
       </View>
 
       <BottomDrawer />
-      {winLuckySymbolVideo && renderWinLuckySymbolVideoScreen}
+      {
+        winLuckySymbolVideo && <WinLuckySymbolView
+          videoRef={luckySymbolVideoRef}
+          onSkipClicked={handleWinLuckySymbolVideoScreenClick}
+          onVideoEnd={handleLuckySymbolWonVideoEnd} />
+      }
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect
           nextCard={nextCard}
@@ -468,36 +433,19 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.7)", // Semi-transparent background for win screen
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
         justifyContent: "center",
         alignItems: "center",
         zIndex: 1000,
       },
       default: {
         ...StyleSheet.absoluteFillObject,
-        backgroundColor: "rgba(0, 0, 0, 0.7)", // Same semi-transparent background for mobile
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
         justifyContent: "center",
         alignItems: "center",
         zIndex: 1000,
       },
     }),
-  },
-  transparentVideo: {
-    width: 300,
-    height: 300,
-    objectFit: "contain",
-    resizeMode: "contain",
-  },
-  clickableArea: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    height: "100%",
-    width: "100%",
-  },
-  transparentOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0)",
   },
   loaderContainer: {
     flex: 1,
