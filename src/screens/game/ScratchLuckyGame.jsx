@@ -12,10 +12,8 @@ import { BackgroundGame } from "../../components/BackgroundGame.js";
 import LuckySymbolCollect from "../../components/LuckySymbolCollect.js";
 import ScratchLayout from "../../components/ScratchLayout.js";
 import TopLayout from "../../components/TopLayout.js";
-
-import { ActivityIndicator } from "react-native-web";
 import { useLocation } from "react-router";
-import BottomDrawer from "../../components/BottomDrawer.js";
+import BottomDrawer from "./components/BottomDrawer";
 import IntroThemeVideo from "../../components/IntroThemeVideo.js";
 import { useGame } from "../../context/GameContext.js";
 import useApiRequest from "../../hook/useApiRequest.js";
@@ -27,6 +25,7 @@ import { Easing } from "react-native";
 import { BONUS_PACK_NUMBER_OF_CARDS } from "../../util/constants.js";
 import WinLuckySymbolView from "./components/WinLuckySymbolView.jsx";
 import InitialCountDownView from "./components/InitialCountDownView.jsx";
+import LoadingView from "../../components/LoadingView.js";
 
 const { width } = Dimensions.get("window");
 
@@ -275,12 +274,7 @@ const ScratchLuckyGame = () => {
     return backgroundLoop;
   }, [backgroundLoop]);
 
-  if (loading) return (
-    <View style={styles.loaderContainer}>
-      <ActivityIndicator size="large" color="#FFD89E" />
-    </View>
-  );
-
+  if (loading) return <LoadingView />;
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -326,14 +320,12 @@ const ScratchLuckyGame = () => {
           </LinearGradient>
         </Animated.View>
       </View>
-
       <BottomDrawer />
-      {
-        winLuckySymbolVideo && <WinLuckySymbolView
-          videoRef={luckySymbolVideoRef}
-          onSkipClicked={handleWinLuckySymbolVideoScreenClick}
-          onVideoEnd={handleLuckySymbolWonVideoEnd} />
-      }
+      {winLuckySymbolVideo && (<WinLuckySymbolView
+        videoRef={luckySymbolVideoRef}
+        onSkipClicked={handleWinLuckySymbolVideoScreenClick}
+        onVideoEnd={handleLuckySymbolWonVideoEnd} />
+      )}
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect
           nextCard={nextCard}
@@ -390,12 +382,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 16,
     borderColor: "#A88C5D",
     borderWidth: 1,
-  },
-  loaderContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+  }
 });
 
 export default ScratchLuckyGame;
