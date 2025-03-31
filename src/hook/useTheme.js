@@ -6,7 +6,6 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { numberOfCards } from "../global/Settings";
 import themes from "../global/themeConfig";
 
 export const ThemeEnum = Object.freeze({
@@ -38,7 +37,7 @@ export const ThemeProvider = ({ children }) => {
   const [soundMuteOnBackground, setSoundMuteOnBackground] = useState();
   const [soundMuteOffBackground, setSoundMuteOffBackground] = useState();
 
-  const setGames = (games) => {
+  const updateThemeUsingGames = (games) => {
     const themeSequence = games.map(game => {
       switch(game.theme_id) {
         case 1: return ThemeEnum.EGYPT
@@ -135,7 +134,7 @@ export const ThemeProvider = ({ children }) => {
           soundMuteOffBackground,
           setCurrentThemeByIndex,
           goToNextTheme,
-          setGames,
+          updateThemeUsingGames,
           currentThemeIndex,
         });
       }else {
@@ -158,7 +157,7 @@ export const ThemeProvider = ({ children }) => {
           soundMuteOffBackground,
           setCurrentThemeByIndex,
           goToNextTheme,
-          setGames,
+          updateThemeUsingGames,
           currentThemeIndex,
         });
       }
@@ -186,7 +185,6 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-// Custom hook to consume the ThemeContext
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {

@@ -24,8 +24,6 @@ import GameGrid from "./GameGrid";
 import useClickSounds from "../hook/useClickSounds";
 
 const ScratchGame = ({
-  //score,
-  //setScore,
   setIsWinner,
   scratched,
   reset,
@@ -38,7 +36,8 @@ const ScratchGame = ({
   setClickCount,
   setLuckySymbolWon,
   setTotalComboCount,
-  setComboPlayed
+  setComboPlayed,
+  maxCombinations = 4
 }) => {
   const { score, setScore, luckySymbolCount } = useGame();
   const {initializeClickSounds, playClickSound} = useClickSounds();
@@ -151,11 +150,11 @@ const ScratchGame = ({
   };
 
   const generateIconsArray = (winLuckySymbol) => {
+    console.log("MaxCombinations:", maxCombinations);
     let iconCounts = Array(totalIcons).fill(0);
     let resultArray = new Array(totalPositions).fill(null);
     let iconWithMaxCount = null;
     let columnIconMap = {};
-    let maxCombinations = 4;
     let combinationCount = 0;
 
     let luckyPosition = -1;

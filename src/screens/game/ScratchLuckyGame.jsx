@@ -48,7 +48,8 @@ const ScratchLuckyGame = () => {
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
   const [gameId, setGameId] = useState(null);
-
+  const [games, setGames] = useState();
+  const [maxCombinations, setMaxCombinations] = useState(0)
   const [luckySymbolWon, setLuckySymbolWon] = useState(0)
   const [totalComboCount, setTotalComboCount] = useState(0)
   const [comboPlayed, setComboPlayed] = useState(0)
@@ -74,7 +75,8 @@ const ScratchLuckyGame = () => {
     themeSequence,
     nextTheme,
     currentTheme,
-    setGames
+    updateThemeUsingGames,
+    currentThemeIndex
   } = useTheme();
 
   const {
@@ -108,11 +110,17 @@ const ScratchLuckyGame = () => {
       } else if (response.gameId) {
         setGameId(response.gameId);
       } else if (response.games) {
-        setGames(response.games)
+        setGames(response.games);
       }
     }
   }, [response]);
-
+  useEffect(() => {
+    if (games) {
+      updateThemeUsingGames(games);
+      if(games)
+      setMaxCombinations(games[currentThemeIndex].number_combination_total)
+    }
+  }, [games, currentThemeIndex]);
   useEffect(() => {
     if (user) {
       getGames(user.user_id, user.current_beta_block);
@@ -328,6 +336,7 @@ const ScratchLuckyGame = () => {
               clickCount={clickCount}
               setClickCount={setClickCount}
               nextCard={nextCard}
+              maxCombinations={maxCombinations}
               setLuckySymbolWon={setLuckySymbolWon}
               setTotalComboCount={setTotalComboCount}
               setComboPlayed={setComboPlayed} />
