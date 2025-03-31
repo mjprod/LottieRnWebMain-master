@@ -84,7 +84,9 @@ const useApiRequest = () => {
 
   const getGames = async (user_id, beta_block_id) => {
     setLoading(true)
+    console.log("GetGamesStart")
     setTimeout(() => {
+      console.log("GetGames")
       setResponse(gameData);
       setLoading(false);
     }, 1000);

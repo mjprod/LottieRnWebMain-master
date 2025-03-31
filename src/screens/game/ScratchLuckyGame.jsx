@@ -74,7 +74,8 @@ const ScratchLuckyGame = () => {
     themeSequence,
     nextTheme,
     currentTheme,
-    updateThemeSequence
+    updateThemeSequence,
+    setGames
   } = useTheme();
 
   const {
@@ -108,7 +109,8 @@ const ScratchLuckyGame = () => {
       } else if (response.gameId) {
         setGameId(response.gameId);
       } else if (response.games) {
-        updateThemeSequence(response.games.length);
+        setGames(response.games)
+        // updateThemeSequence(response.games.length);
       }
     }
   }, [response]);

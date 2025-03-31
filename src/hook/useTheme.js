@@ -98,6 +98,18 @@ export const ThemeProvider = ({ children }) => {
     setCurrentThemeIndex(0);
   };
 
+  const setGames = (games) => {
+    const themeSequence = games.map(game => {
+      switch(game.theme_id) {
+        case 1: return ThemeEnum.EGYPT
+        case 2: return ThemeEnum.MYTHOLOGY
+        case 3: return ThemeEnum.INTERNATIONAL
+        case 4: return ThemeEnum.COWBOY
+      }
+    });
+    setThemeSequence(themeSequence)
+  }
+
   const setCurrentThemeByIndex = (index) => {
     if (index >= 0 && index < themeSequence.length) {
       setCurrentThemeIndex(index);
@@ -181,6 +193,7 @@ export const ThemeProvider = ({ children }) => {
       updateThemeSequence,
       setCurrentThemeByIndex,
       goToNextTheme,
+      setGames,
       currentThemeIndex,
     }),
     [
