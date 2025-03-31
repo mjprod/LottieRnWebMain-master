@@ -77,7 +77,9 @@ const ScratchGame = ({
   };
 
   useEffect(() => {
-    initializeClickSounds(currentTheme);
+    if(currentTheme !== null){
+      initializeClickSounds(currentTheme);
+    }
   }, [currentTheme]);
 
   useEffect(() => {

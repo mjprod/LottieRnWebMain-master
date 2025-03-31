@@ -74,7 +74,6 @@ const ScratchLuckyGame = () => {
     themeSequence,
     nextTheme,
     currentTheme,
-    updateThemeSequence,
     setGames
   } = useTheme();
 
@@ -110,7 +109,6 @@ const ScratchLuckyGame = () => {
         setGameId(response.gameId);
       } else if (response.games) {
         setGames(response.games)
-        // updateThemeSequence(response.games.length);
       }
     }
   }, [response]);
@@ -125,10 +123,10 @@ const ScratchLuckyGame = () => {
   }, [user]);
 
   useEffect(() => {
-    if (themeSequence.length > 0) {
+    if (themeSequence && themeSequence.length > 0) {
       setCountDownStarted(true)
+      setScratchCardLeft(themeSequence.length);
     }
-    setScratchCardLeft(themeSequence.length);
   }, [themeSequence]);
 
   useEffect(() => {

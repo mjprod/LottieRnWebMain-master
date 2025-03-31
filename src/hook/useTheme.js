@@ -16,87 +16,27 @@ export const ThemeEnum = Object.freeze({
   COWBOY: "cowboy",
 });
 
-const shuffleArray = (array) => {
-  return array
-    .map((value) => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
-};
-
-const getRandomThemesArray = (numberOfCards) => {
-  const themeValues = shuffleArray(Object.values(ThemeEnum));
-  let themesArray = [];
-
-  while (themesArray.length < numberOfCards) {
-    for (const theme of themeValues) {
-      if (themesArray.length + 3 <= numberOfCards) {
-        themesArray.push(...Array(3).fill(theme));
-      } else {
-        themesArray.push(...Array(numberOfCards - themesArray.length).fill(theme));
-        break;
-      }
-    }
-  }
-
-  return themesArray;
-};
-
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [themeSequence, setThemeSequence] = useState(
-    getRandomThemesArray(numberOfCards)
-  );
+  const [themeSequence, setThemeSequence] = useState();
 
   useEffect(() => {
     console.log("Current themeSequence:", themeSequence);
   }, [themeSequence]);
 
   const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
-
-  const [gameCenterIcon, setGameCenterIcon] = useState(
-    themes[themeSequence[currentThemeIndex]].gameCenterIcon
-  );
-  const [backgroundLoop, setBackgroundLoop] = useState(
-    themes[themeSequence[currentThemeIndex]].backgroundLoop
-  );
-  const [backgroundScratchCard, setBackgroundScratchCard] = useState(
-    themes[themeSequence[currentThemeIndex]].backgroundScratchCard
-  );
-  const [introChromeTheme, setIntroChromeTheme] = useState(
-    themes[themeSequence[currentThemeIndex]].intro_chrome
-  );
-  const [introTheme, setIntroTheme] = useState(
-    themes[themeSequence[currentThemeIndex]].intro
-  );
-  const [lottiePopBlue, setLottiePopBlue] = useState(
-    themes[themeSequence[currentThemeIndex]].lottieScratchieBubblePopBlue
-  );
-  const [lottiePopGreen, setLottiePopGreen] = useState(
-    themes[themeSequence[currentThemeIndex]].lottieScratchieBubblePopGreen
-  );
-  const [lottiePopOrange, setLottiePopOrange] = useState(
-    themes[themeSequence[currentThemeIndex]].lottieScratchieBubblePopOrange
-  );
-  const [lottiePopPink, setLottiePopPink] = useState(
-    themes[themeSequence[currentThemeIndex]].lottieScratchieBubblePopPink
-  );
-
-  const [soundMuteOnBackground, setSoundMuteOnBackground] = useState(
-    themes[themeSequence[currentThemeIndex]].soundMuteOnBackground
-  );
-
-  const [soundMuteOffBackground, setSoundMuteOffBackground] = useState(
-    themes[themeSequence[currentThemeIndex]].soundMuteOffBackground
-  );
-
-  const updateThemeSequence = (numberOfCards) => {
-    console.log(`Updating theme sequence with ${numberOfCards} cards`);
-    const newThemeSequence = getRandomThemesArray(numberOfCards);
-    console.log("New themeSequence:", newThemeSequence);
-    setThemeSequence(newThemeSequence);
-    setCurrentThemeIndex(0);
-  };
+  const [gameCenterIcon, setGameCenterIcon] = useState();
+  const [backgroundLoop, setBackgroundLoop] = useState();
+  const [backgroundScratchCard, setBackgroundScratchCard] = useState();
+  const [introChromeTheme, setIntroChromeTheme] = useState();
+  const [introTheme, setIntroTheme] = useState();
+  const [lottiePopBlue, setLottiePopBlue] = useState();
+  const [lottiePopGreen, setLottiePopGreen] = useState();
+  const [lottiePopOrange, setLottiePopOrange] = useState();
+  const [lottiePopPink, setLottiePopPink] = useState();
+  const [soundMuteOnBackground, setSoundMuteOnBackground] = useState();
+  const [soundMuteOffBackground, setSoundMuteOffBackground] = useState();
 
   const setGames = (games) => {
     const themeSequence = games.map(game => {
@@ -108,6 +48,7 @@ export const ThemeProvider = ({ children }) => {
       }
     });
     setThemeSequence(themeSequence)
+    setCurrentThemeIndex(0);
   }
 
   const setCurrentThemeByIndex = (index) => {
@@ -129,7 +70,7 @@ export const ThemeProvider = ({ children }) => {
   }, [currentThemeIndex, themeSequence]);
 
   useEffect(() => {
-    if (themeSequence.length > 0) {
+    if (themeSequence && themeSequence.length > 0) {
       setGameCenterIcon(
         themes[themeSequence[currentThemeIndex]].gameCenterIcon
       );
@@ -165,37 +106,63 @@ export const ThemeProvider = ({ children }) => {
   }, [currentThemeIndex, themeSequence]);
 
   const contextValue = useMemo(
-    () => ({
-      themeSequence,
-      currentTheme: themeSequence[currentThemeIndex],
-      nextTheme: currentThemeIndex + 1 < themeSequence.length
-        ? themeSequence[currentThemeIndex + 1]
-        : null,
-      gameCenterIcon,
-      backgroundLoop,
-      backgroundScratchCard,
-      introChromeTheme,
-      introTheme,
-      introThemeNext:
-        currentThemeIndex + 1 < themeSequence.length
-          ? themes[themeSequence[currentThemeIndex + 1]].intro_default
-          : null,
-      introChromeThemeNext:
-        currentThemeIndex + 1 < themeSequence.length
-          ? themes[themeSequence[currentThemeIndex + 1]].intro_chrome
-          : null,
-      lottiePopBlue,
-      lottiePopGreen,
-      lottiePopOrange,
-      lottiePopPink,
-      soundMuteOnBackground,
-      soundMuteOffBackground,
-      updateThemeSequence,
-      setCurrentThemeByIndex,
-      goToNextTheme,
-      setGames,
-      currentThemeIndex,
-    }),
+    () => {
+      if(themeSequence) {
+        return ({
+          themeSequence,
+          currentTheme: themeSequence[currentThemeIndex],
+          nextTheme: currentThemeIndex + 1 < themeSequence.length
+            ? themeSequence[currentThemeIndex + 1]
+            : null,
+          gameCenterIcon,
+          backgroundLoop,
+          backgroundScratchCard,
+          introChromeTheme,
+          introTheme,
+          introThemeNext:
+            currentThemeIndex + 1 < themeSequence.length
+              ? themes[themeSequence[currentThemeIndex + 1]].intro_default
+              : null,
+          introChromeThemeNext:
+            currentThemeIndex + 1 < themeSequence.length
+              ? themes[themeSequence[currentThemeIndex + 1]].intro_chrome
+              : null,
+          lottiePopBlue,
+          lottiePopGreen,
+          lottiePopOrange,
+          lottiePopPink,
+          soundMuteOnBackground,
+          soundMuteOffBackground,
+          setCurrentThemeByIndex,
+          goToNextTheme,
+          setGames,
+          currentThemeIndex,
+        });
+      }else {
+        return ({
+          themeSequence,
+          currentTheme: null,
+          nextTheme: null,
+          gameCenterIcon,
+          backgroundLoop,
+          backgroundScratchCard,
+          introChromeTheme,
+          introTheme,
+          introThemeNext: null,
+          introChromeThemeNext: null,
+          lottiePopBlue,
+          lottiePopGreen,
+          lottiePopOrange,
+          lottiePopPink,
+          soundMuteOnBackground,
+          soundMuteOffBackground,
+          setCurrentThemeByIndex,
+          goToNextTheme,
+          setGames,
+          currentThemeIndex,
+        });
+      }
+    },
     [
       themeSequence,
       currentThemeIndex,
