@@ -125,17 +125,11 @@ const LauchScreenEncrypted = () => {
           (item) => item.current_week === currentWeek
         );
         if (currentWeekDaily != null) {
-          const localConvertedDays = currentWeekDaily.days.map((date) =>
-            convertUTCToLocal(date)
-          );
-          const hasCurrentDate = localConvertedDays.some((item) =>
+          const hasCurrentDate = currentWeekDaily.days.some((item) =>
             item.includes(getCurrentDate())
           );
           if (!hasCurrentDate) {
-            console.log("Daily Question not answered.", currentWeekDaily);
             appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-          } else {
-            console.log("Daily Question already answered.");
           }
         } else {
           appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);

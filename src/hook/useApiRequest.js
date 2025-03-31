@@ -3,6 +3,7 @@ import { showConsoleMessage, showConsoleError } from "../util/ConsoleMessage";
 import { encrypt, decrypt } from "../util/crypto";
 import useStorage from "./useStorage";
 import { Endpoint } from "../util/constants";
+import { gameData } from "../data/GameData";
 
 const useApiRequest = () => {
   const [loading, setLoading] = useState(false);
@@ -79,6 +80,14 @@ const useApiRequest = () => {
     };
 
     await fetchData(config);
+  };
+
+  const getGames = async (user_id, beta_block_id) => {
+    setLoading(true)
+    setTimeout(() => {
+      setResponse(gameData);
+      setLoading(false);
+    }, 1000);
   };
 
   const updateLuckySymbol = async (user_id, lucky_symbol) => {
@@ -228,7 +237,8 @@ const useApiRequest = () => {
     updateScore,
     updateCardBalance,
     getWinner,
-    login
+    login,
+    getGames
   };
 };
 

@@ -37,7 +37,7 @@ const ScratchLuckyGame = () => {
   const luckySymbolVideoRef = useRef(null);
 
   const [gameStarted, setGameStarted] = useState(false);
-  const [countDownStarted] = useState(true);
+  const [countDownStarted, setCountDownStarted] = useState(false);
   const [introThemeVideo, setIntroThemeVideo] = useState(false);
   const [reset, setReset] = useState(false);
   const [scratched, setScratched] = useState(false);
@@ -85,7 +85,8 @@ const ScratchLuckyGame = () => {
     updateCardPlayed,
     fetchUserDetails,
     updateCardBalance,
-    updateScore
+    updateScore,
+    getGames
   } = useApiRequest();
 
   const { setStartPlay } = useSound();
@@ -104,23 +105,27 @@ const ScratchLuckyGame = () => {
     if (response) {
       if (response.user) {
         setUser(response.user);
-      }
-      if (response.gameId) {
+      } else if (response.gameId) {
         setGameId(response.gameId);
+      } else if (response.games) {
+        updateThemeSequence(response.games.length);
       }
     }
   }, [response]);
 
   useEffect(() => {
     if (user) {
+      getGames(user.user_id, user.current_beta_block);
       setScore(user.total_score);
       setTicketCount(user.ticket_balance);
       setLuckySymbolCount(user.lucky_symbol_balance);
-      updateThemeSequence(user.card_balance);
     }
   }, [user]);
 
   useEffect(() => {
+    if (themeSequence.length > 0) {
+      setCountDownStarted(true)
+    }
     setScratchCardLeft(themeSequence.length);
   }, [themeSequence]);
 
