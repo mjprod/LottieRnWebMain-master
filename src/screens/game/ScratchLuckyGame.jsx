@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   Animated,
@@ -144,7 +144,7 @@ const ScratchLuckyGame = () => {
     setLuckySymbolCount(luckySymbol);
   };
 
-  const nextCard = () => {
+  const nextCard = useCallback(() => {
     setSkipToFinishLuckyVideo(false);
     setWinLuckySymbolVideo(false);
     if (luckySymbolCount <= 2) {
@@ -158,9 +158,9 @@ const ScratchLuckyGame = () => {
         handleGameOver();
       }
     }
-  };
+  }, [luckySymbolCount, scratchCardLeft]);
 
-  const addLuckySymbol = () => {
+  const addLuckySymbol = useCallback(() => {
     if (luckySymbolCount > 2) {
       updateLuckySymbol(user.user_id, 0)
       saveLuckySymbol(0);
@@ -176,7 +176,7 @@ const ScratchLuckyGame = () => {
       updateLuckySymbol(user.user_id, luckySymbolCount + 1)
       nextCard();
     }
-  };
+  }, [luckySymbolCount]);
 
   const decrementLuckySymbol = (count, onComplete) => {
     if (count >= 0) {
@@ -279,11 +279,20 @@ const ScratchLuckyGame = () => {
     return backgroundLoop;
   }, [backgroundLoop]);
 
+  const containerStyle = useMemo(
+    () => [
+      styles.fullScreen,
+      { pointerEvents: nextCardAnimationFinished ? "auto" : "none" }
+    ],
+    [nextCardAnimationFinished]
+  );
+
   if (loading) return <LoadingView />;
   if (error) return <p>Error: {error}</p>;
 
+  console.log("Refreshed Whole Page")
   return (
-    <View style={[styles.fullScreen, { pointerEvents: nextCardAnimationFinished ? "auto" : "none" }]}>
+    <View style={containerStyle}>
       <BackgroundGame
         showAlphaView={scratchStarted || gameOver}
         source={backGroundVideo} />
