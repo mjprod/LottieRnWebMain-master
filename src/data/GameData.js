@@ -2,7 +2,7 @@ export const gameData = {
     "games": [
         {
             "game_id": 1,
-            "lucky_symbol_won": 0,
+            "lucky_symbol_won": 1,
             "number_combination_total": 2,
             "theme_id": 1
         },
@@ -62,7 +62,7 @@ export const gameData = {
         },
         {
             "game_id": 11,
-            "lucky_symbol_won": 0,
+            "lucky_symbol_won": 1,
             "number_combination_total": 2,
             "theme_id": 4
         },

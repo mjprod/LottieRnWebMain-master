@@ -125,7 +125,8 @@ const LauchScreenEncrypted = () => {
           (item) => item.current_week === currentWeek
         );
         if (currentWeekDaily != null) {
-          const hasCurrentDate = currentWeekDaily.days.some((item) =>
+          const localCurrentWeekDaily = currentWeekDaily.days.map((date) => convertUTCToLocal(date))
+          const hasCurrentDate = localCurrentWeekDaily.some((item) =>
             item.includes(getCurrentDate())
           );
           if (!hasCurrentDate) {

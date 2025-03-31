@@ -25,6 +25,7 @@ const ScratchLayout = ({
   setTotalComboCount,
   setComboPlayed,
   maxCombinations,
+  hasLuckySymbol
 }) => {
   const { luckySymbolCount } = useGame();
 
@@ -68,6 +69,7 @@ const ScratchLayout = ({
       <View style={styles.bottomView}>
         <ScratchGame
           maxCombinations={maxCombinations}
+          hasLuckySymbol={hasLuckySymbol}
           isWinner={isWinner}
           setIsWinner={setIsWinner}
           onAutoPop={triggerAutoPop}
