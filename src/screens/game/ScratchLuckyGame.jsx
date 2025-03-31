@@ -110,17 +110,18 @@ const ScratchLuckyGame = () => {
       } else if (response.gameId) {
         setGameId(response.gameId);
       } else if (response.games) {
+        updateThemeUsingGames(response.games);
         setGames(response.games);
       }
     }
   }, [response]);
+
   useEffect(() => {
-    if (games) {
-      updateThemeUsingGames(games);
-      if(games)
+    if(games && games.length > 0){
       setMaxCombinations(games[currentThemeIndex].number_combination_total)
     }
-  }, [games, currentThemeIndex]);
+  }, [games, currentThemeIndex])
+
   useEffect(() => {
     if (user) {
       getGames(user.user_id, user.current_beta_block);

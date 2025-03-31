@@ -128,7 +128,7 @@ const ScratchGame = ({
       }
     }, 400);
 
-  }, [setIsWinner, reset, setIsLuckySymbolTrue]);
+  }, [setIsWinner, reset, setIsLuckySymbolTrue, maxCombinations]);
 
   const isValidIcon = (
     count,
