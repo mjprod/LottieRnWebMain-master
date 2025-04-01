@@ -321,11 +321,7 @@ const ScratchLuckyGame = () => {
             style={styles.imageBackground}>
             <Animated.View style={{ marginTop: marginTopAnim }}>
               <TopLayout
-                scratched={scratched}
-                scratchStarted={scratchStarted}
-                timerGame={timerGame}
                 setTimerGame={setTimerGame}
-                luckySymbolCount={luckySymbolCount}
                 clickCount={clickCount} />
             </Animated.View>
 

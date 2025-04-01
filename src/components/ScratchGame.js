@@ -41,7 +41,7 @@ const ScratchGame = ({
   hasLuckySymbol = false
 }) => {
   const { setScore, luckySymbolCount } = useGame();
-  const {initializeClickSounds, playClickSound} = useClickSounds();
+  const { initializeClickSounds, playClickSound } = useClickSounds();
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
@@ -77,7 +77,7 @@ const ScratchGame = ({
   };
 
   useEffect(() => {
-    if(currentTheme !== null){
+    if (currentTheme !== null) {
       initializeClickSounds(currentTheme);
     }
   }, [currentTheme]);
@@ -92,11 +92,6 @@ const ScratchGame = ({
       setIconComponentsDefault(updatedIcons);
     }
   }, [scratched, currentTheme]);
-
-  const generateRandomLuckySymbol = () => {
-    const result = Math.random() < generateRandomLuckySymbolPercentage;
-    return result;
-  };
 
   useEffect(() => {
     setTimeout(() => {

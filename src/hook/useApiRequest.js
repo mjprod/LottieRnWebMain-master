@@ -3,7 +3,6 @@ import { showConsoleMessage, showConsoleError } from "../util/ConsoleMessage";
 import { encrypt, decrypt } from "../util/crypto";
 import useStorage from "./useStorage";
 import { Endpoint } from "../util/constants";
-import { gameData } from "../data/GameData";
 
 const useApiRequest = () => {
   const [loading, setLoading] = useState(false);
@@ -83,11 +82,19 @@ const useApiRequest = () => {
   };
 
   const getGames = async (user_id, beta_block_id) => {
-    setLoading(true)
-    setTimeout(() => {
-      setResponse(gameData);
-      setLoading(false);
-    }, 1000);
+    const config = {
+      url: Endpoint.games,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        user_id,
+        beta_block_id,
+      },
+    };
+
+    await fetchData(config);
   };
 
   const updateLuckySymbol = async (user_id, lucky_symbol) => {
@@ -137,7 +144,7 @@ const useApiRequest = () => {
     await fetchData(config);
   };
 
-  const postDailyAnswer = async (user_id, question_id, answer, cards_won) => {
+  const postDailyAnswer = async (user_id, question_id, answer, cards_won, beta_block_id) => {
     const config = {
       url: Endpoint.post_daily_answer,
       method: "POST",
@@ -148,7 +155,8 @@ const useApiRequest = () => {
         user_id,
         question_id,
         answer,
-        cards_won
+        cards_won,
+        beta_block_id
       },
     };
     await fetchData(config);
