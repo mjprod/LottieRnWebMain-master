@@ -100,7 +100,6 @@ const ScratchGame = ({
       setClickCount(0);
       setLastClickedIcon(null);
       setSoundShouldPlay(1);
-
       const icons = hasLuckySymbol
 
       setArrayIcon(icons);
@@ -117,7 +116,7 @@ const ScratchGame = ({
 
       setLuckySymbolWon(!!icons)
       if (winners.length > 0) {
-        setTotalComboCount(winners.length - 1)
+        setTotalComboCount(winners.length)
       } else {
         setTotalComboCount(0)
       }

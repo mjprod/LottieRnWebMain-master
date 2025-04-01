@@ -121,7 +121,7 @@ const ScratchLuckyGame = () => {
     if (games && games.length > 0) {
       const currentGame = games[currentThemeIndex];
       setMaxCombinations(currentGame.number_combination_total)
-      setHasLuckySymbol(currentGame.lucky_symbol_won === 1)
+      setHasLuckySymbol(currentGame.lucky_symbol_won == 1)
       setGameId(currentGame.game_id)
     }
   }, [games, currentThemeIndex])
