@@ -24,8 +24,6 @@ import GameGrid from "./GameGrid";
 import useClickSounds from "../hook/useClickSounds";
 
 const ScratchGame = ({
-  //score,
-  //setScore,
   setIsWinner,
   scratched,
   reset,
@@ -38,10 +36,12 @@ const ScratchGame = ({
   setClickCount,
   setLuckySymbolWon,
   setTotalComboCount,
-  setComboPlayed
+  setComboPlayed,
+  maxCombinations = 4,
+  hasLuckySymbol = false
 }) => {
-  const { score, setScore, luckySymbolCount } = useGame();
-  const {initializeClickSounds, playClickSound} = useClickSounds();
+  const { setScore, luckySymbolCount } = useGame();
+  const { initializeClickSounds, playClickSound } = useClickSounds();
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [iconsArray, setIconsArray] = useState([]);
@@ -77,7 +77,9 @@ const ScratchGame = ({
   };
 
   useEffect(() => {
-    initializeClickSounds(currentTheme);
+    if (currentTheme !== null) {
+      initializeClickSounds(currentTheme);
+    }
   }, [currentTheme]);
 
   useEffect(() => {
@@ -91,11 +93,6 @@ const ScratchGame = ({
     }
   }, [scratched, currentTheme]);
 
-  const generateRandomLuckySymbol = () => {
-    const result = Math.random() < generateRandomLuckySymbolPercentage;
-    return result;
-  };
-
   useEffect(() => {
     setTimeout(() => {
       setClickedIcons([]);
@@ -104,20 +101,19 @@ const ScratchGame = ({
       setLastClickedIcon(null);
       setSoundShouldPlay(1);
 
-      // Generate lucky symbol once and use it
-      const icons = generateRandomLuckySymbol();
+      const icons = hasLuckySymbol
 
-      setArrayIcon(icons); // Set the arrayIcon with the result of generateRandomLuckySymbol
-      setIsLuckySymbolTrue(icons); // Set if the lucky symbol is true
+      setArrayIcon(icons);
+      setIsLuckySymbolTrue(icons);
 
-      const generatedArray = generateIconsArray(icons); // Generate icons array based on the result of generateRandomLuckySymbol
-      const booblePositions = findBoobleColor(generatedArray); // Find the bubble colors for the array
-      setArrayBobble(booblePositions); // Set the bubble positions
+      const generatedArray = generateIconsArray(icons);
+      const booblePositions = findBoobleColor(generatedArray);
+      setArrayBobble(booblePositions);
 
-      setIconsArray(generatedArray); // Set the icons array
-      const winners = checkWinCondition(generatedArray); // Check for win condition
-      setWinningIcons(winners); // Set the winning icons
-      setIsWinner(winners.length > 0); // Determine if it's a winner
+      setIconsArray(generatedArray);
+      const winners = checkWinCondition(generatedArray);
+      setWinningIcons(winners);
+      setIsWinner(winners.length > 0);
 
       setLuckySymbolWon(!!icons)
       if (winners.length > 0) {
@@ -127,7 +123,7 @@ const ScratchGame = ({
       }
     }, 400);
 
-  }, [setIsWinner, reset, setIsLuckySymbolTrue]);
+  }, [setIsWinner, reset, setIsLuckySymbolTrue, maxCombinations, hasLuckySymbol]);
 
   const isValidIcon = (
     count,
@@ -144,7 +140,7 @@ const ScratchGame = ({
         count < maxOtherCount ||
         index === iconWithMaxCount) &&
       !columnIconMap[columnIndex].has(index) &&
-      (winLuckySymbol === false || index !== 12) // Lucky symbol can't be repeated
+      (winLuckySymbol === false || index !== 12)
     );
   };
 
@@ -153,7 +149,6 @@ const ScratchGame = ({
     let resultArray = new Array(totalPositions).fill(null);
     let iconWithMaxCount = null;
     let columnIconMap = {};
-    let maxCombinations = 4;
     let combinationCount = 0;
 
     let luckyPosition = -1;
@@ -282,16 +277,13 @@ const ScratchGame = ({
   const checkResults = () => {
     setTimeout(() => {
       if (arrayIcon) {
-        console.log(arrayIcon);
-        console.log(luckySymbolCount);
         if (luckySymbolCount !== 3) {
           setWinLuckySymbolVideo(true);
         }
       } else {
-        console.log("NO LUCKY SYMBOL");
         nextCard();
       }
-    }, 500);
+    }, 600);
   };
 
   useEffect(() => {
@@ -299,7 +291,6 @@ const ScratchGame = ({
       winningIcons.length * 3 === clickedIcons.length &&
       winningIcons.length > 0
     ) {
-      console.log("ALL ICONS CLIKED");
       setTimeout(() => {
         checkResults();
       }, 100);

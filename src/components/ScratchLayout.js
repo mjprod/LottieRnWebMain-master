@@ -24,6 +24,8 @@ const ScratchLayout = ({
   setLuckySymbolWon,
   setTotalComboCount,
   setComboPlayed,
+  maxCombinations,
+  hasLuckySymbol
 }) => {
   const { luckySymbolCount } = useGame();
 
@@ -33,7 +35,6 @@ const ScratchLayout = ({
   const [triggerAutoPop, setTriggerAutoPop] = useState(false);
   const [isScratchCardVisible, setIsScratchCardVisible] = useState(true);
   const [autoScratch, setAutoScratch] = useState(false);
-  // const [scratchedStarted, setScratchedStarted] = useState(false);
 
   const setScratchedCard = () => {
     if (isLuckySymbolTrue) {
@@ -50,11 +51,6 @@ const ScratchLayout = ({
     if (scratchPercentage >= eraserShouldBeScratched && isScratchCardVisible) {
       setScratchedCard();
     } 
-    // else {
-    //   if (scratchPercentage > 0) {
-    //     setScratchedStarted(true);
-    //   }
-    // }
   };
 
   useEffect(() => {
@@ -62,7 +58,6 @@ const ScratchLayout = ({
       setIsScratchCardVisible(true);
       setTriggerAutoPop(false);
       setIsWinner(false);
-      // setScratchedStarted(false);
       setScratched(false);
       setAutoScratch(false);
       setReset(false);
@@ -73,6 +68,8 @@ const ScratchLayout = ({
     <View style={styles.container}>
       <View style={styles.bottomView}>
         <ScratchGame
+          maxCombinations={maxCombinations}
+          hasLuckySymbol={hasLuckySymbol}
           isWinner={isWinner}
           setIsWinner={setIsWinner}
           onAutoPop={triggerAutoPop}

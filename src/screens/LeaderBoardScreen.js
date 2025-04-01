@@ -12,11 +12,12 @@ import useApiRequest from "../hook/useApiRequest";
 import { COLOR_BACKGROUND } from "../util/constants";
 import useAppNavigation from "../hook/useAppNavigation";
 import { useGame } from "../context/GameContext";
+import { useSnackbar } from "../components/SnackbarContext";
 
 const LeaderBoardScreen = () => {
   const location = useLocation();
   const appNavigation = useAppNavigation()
-
+  const { showSnackbar } = useSnackbar()
   const { user, setUser } = useGame()
 
   const { fetchUserDetails, response } = useApiRequest();
@@ -39,7 +40,11 @@ const LeaderBoardScreen = () => {
   }, [response]);
 
   const handlePlayNowButtonPress = () => {
-    appNavigation.goToGamePage(user.user_id, user.name, user.email)
+    if (user.card_balance <= 0) {
+      showSnackbar("You don't have any cards left. Please wait till next day to play the game!")
+    } else {
+      appNavigation.goToStartPage(user.user_id, user.name, user.email);
+    }
   }
   return (
     <ScrollView style={styles.container}>

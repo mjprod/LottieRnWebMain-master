@@ -32,8 +32,8 @@ const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex,
   </View>
 );
 
-const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
-  const { score, luckySymbolCount } = useGame();
+const TopLayout = ({ setTimerGame, clickCount }) => {
+  const { score, luckySymbolCount, scratchStarted } = useGame();
 
   const scaleAnim = useRef(new Animated.Value(1.8)).current;
   const [countdownTimer, setCountdownTimer] = useState(0);
@@ -117,8 +117,7 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
       <ImageBackground
         source={backgroundSource}
         resizeMode="contain"
-        style={styles.image_top}
-      >
+        style={styles.image_top}>
         <View style={styles.textContainer}>
           <View style={styles.textColumn}>
             <Text style={[styles.textTopLeft, { color: "#FFFFFF" }]}>
@@ -135,11 +134,7 @@ const TopLayout = ({ scratchStarted, setTimerGame, clickCount }) => {
                   loop={false}
                 />
                 <Animated.View
-                  style={[
-                    //styles.rowCountDown,
-                    { transform: [{ scale: scaleAnim }] },
-                  ]}
-                >
+                  style={[{ transform: [{ scale: scaleAnim }] }]}>
                   <Text style={[styles.countDownText, { color: "#FFFFFF" }]}>
                     {countdownTimer * 100}
                   </Text>

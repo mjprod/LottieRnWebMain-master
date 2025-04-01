@@ -79,7 +79,7 @@ const LauchScreenEncrypted = () => {
       appNavigation.goToNotFoundPage();
       return;
     }
-    if (user.card_balance < 0) {
+    if (user.card_balance <= 0) {
       showSnackbar("You don't have any cards left. Please wait till next day to play the game!")
     } else {
       appNavigation.goToStartPage(user.user_id, user.name, user.email);
@@ -125,17 +125,12 @@ const LauchScreenEncrypted = () => {
           (item) => item.current_week === currentWeek
         );
         if (currentWeekDaily != null) {
-          const localConvertedDays = currentWeekDaily.days.map((date) =>
-            convertUTCToLocal(date)
-          );
-          const hasCurrentDate = localConvertedDays.some((item) =>
+          const localCurrentWeekDaily = currentWeekDaily.days.map((date) => convertUTCToLocal(date))
+          const hasCurrentDate = localCurrentWeekDaily.some((item) =>
             item.includes(getCurrentDate())
           );
           if (!hasCurrentDate) {
-            console.log("Daily Question not answered.", currentWeekDaily);
             appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-          } else {
-            console.log("Daily Question already answered.");
           }
         } else {
           appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);

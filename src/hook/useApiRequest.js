@@ -81,6 +81,22 @@ const useApiRequest = () => {
     await fetchData(config);
   };
 
+  const getGames = async (user_id, beta_block_id) => {
+    const config = {
+      url: Endpoint.games,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        user_id,
+        beta_block_id,
+      },
+    };
+
+    await fetchData(config);
+  };
+
   const updateLuckySymbol = async (user_id, lucky_symbol) => {
     const config = {
       url: Endpoint.update_lucky_symbol,
@@ -128,7 +144,7 @@ const useApiRequest = () => {
     await fetchData(config);
   };
 
-  const postDailyAnswer = async (user_id, question_id, answer, cards_won) => {
+  const postDailyAnswer = async (user_id, question_id, answer, cards_won, beta_block_id) => {
     const config = {
       url: Endpoint.post_daily_answer,
       method: "POST",
@@ -139,7 +155,8 @@ const useApiRequest = () => {
         user_id,
         question_id,
         answer,
-        cards_won
+        cards_won,
+        beta_block_id
       },
     };
     await fetchData(config);
@@ -160,7 +177,7 @@ const useApiRequest = () => {
     await fetchData(config);
   };
 
-  const updateCardPlayed = async (beta_block_id, user_id, lucky_symbol_won, number_combination_total) => {
+  const updateCardPlayed = async (beta_block_id, user_id, game_id) => {
     const config = {
       url: Endpoint.update_card_played,
       method: "POST",
@@ -170,8 +187,7 @@ const useApiRequest = () => {
       body: {
         beta_block_id,
         user_id,
-        lucky_symbol_won,
-        number_combination_total
+        game_id
       },
     };
     await fetchData(config, true);
@@ -228,7 +244,8 @@ const useApiRequest = () => {
     updateScore,
     updateCardBalance,
     getWinner,
-    login
+    login,
+    getGames
   };
 };
 

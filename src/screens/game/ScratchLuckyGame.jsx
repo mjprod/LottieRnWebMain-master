@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   Animated,
@@ -37,7 +37,7 @@ const ScratchLuckyGame = () => {
   const luckySymbolVideoRef = useRef(null);
 
   const [gameStarted, setGameStarted] = useState(false);
-  const [countDownStarted] = useState(true);
+  const [countDownStarted, setCountDownStarted] = useState(false);
   const [introThemeVideo, setIntroThemeVideo] = useState(false);
   const [reset, setReset] = useState(false);
   const [scratched, setScratched] = useState(false);
@@ -48,8 +48,10 @@ const ScratchLuckyGame = () => {
   const [collectLuckySymbolVideo, setCollectLuckySymbolVideo] = useState(false);
   const [skipToFinishLuckyVideo, setSkipToFinishLuckyVideo] = useState(false);
   const [gameId, setGameId] = useState(null);
-
-  const [luckySymbolWon, setLuckySymbolWon] = useState(0)
+  const [games, setGames] = useState();
+  const [maxCombinations, setMaxCombinations] = useState(0);
+  const [hasLuckySymbol, setHasLuckySymbol] = useState(false);
+  const [luckySymbolWon, setLuckySymbolWon] = useState(0);
   const [totalComboCount, setTotalComboCount] = useState(0)
   const [comboPlayed, setComboPlayed] = useState(0)
   const [nextCardAnimationFinished, setNextCardAnimationFinished] = useState(true);
@@ -74,7 +76,8 @@ const ScratchLuckyGame = () => {
     themeSequence,
     nextTheme,
     currentTheme,
-    updateThemeSequence
+    updateThemeUsingGames,
+    currentThemeIndex
   } = useTheme();
 
   const {
@@ -85,7 +88,8 @@ const ScratchLuckyGame = () => {
     updateCardPlayed,
     fetchUserDetails,
     updateCardBalance,
-    updateScore
+    updateScore,
+    getGames
   } = useApiRequest();
 
   const { setStartPlay } = useSound();
@@ -104,24 +108,38 @@ const ScratchLuckyGame = () => {
     if (response) {
       if (response.user) {
         setUser(response.user);
-      }
-      if (response.gameId) {
+      } else if (response.gameId) {
         setGameId(response.gameId);
+      } else if (response.games) {
+        updateThemeUsingGames(response.games);
+        setGames(response.games);
       }
     }
   }, [response]);
 
   useEffect(() => {
+    if (games && games.length > 0) {
+      const currentGame = games[currentThemeIndex];
+      setMaxCombinations(currentGame.number_combination_total)
+      setHasLuckySymbol(currentGame.lucky_symbol_won === 1)
+      setGameId(currentGame.game_id)
+    }
+  }, [games, currentThemeIndex])
+
+  useEffect(() => {
     if (user) {
+      getGames(user.user_id, user.current_beta_block);
       setScore(user.total_score);
       setTicketCount(user.ticket_balance);
       setLuckySymbolCount(user.lucky_symbol_balance);
-      updateThemeSequence(user.card_balance);
     }
   }, [user]);
 
   useEffect(() => {
-    setScratchCardLeft(themeSequence.length);
+    if (themeSequence && themeSequence.length > 0) {
+      setCountDownStarted(true)
+      setScratchCardLeft(themeSequence.length);
+    }
   }, [themeSequence]);
 
   useEffect(() => {
@@ -200,7 +218,7 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (scratchStarted) {
-      updateCardPlayed(user.current_beta_block, user.user_id, luckySymbolWon, totalComboCount)
+      updateCardPlayed(user.current_beta_block, user.user_id, gameId)
       Animated.timing(marginTopAnim, {
         toValue: 6,
         duration: 300,
@@ -274,14 +292,28 @@ const ScratchLuckyGame = () => {
     return backgroundLoop;
   }, [backgroundLoop]);
 
+  const containerStyle = useMemo(
+    () => [
+      styles.fullScreen,
+      { pointerEvents: nextCardAnimationFinished ? "auto" : "none" }
+    ],
+    [nextCardAnimationFinished]
+  );
+
+  const gameBackground = useMemo(() =>
+  (<BackgroundGame
+    showAlphaView={scratchStarted || gameOver}
+    source={backGroundVideo} />)
+    , [backGroundVideo, scratchStarted, gameOver]
+  );
+
   if (loading) return <LoadingView />;
   if (error) return <p>Error: {error}</p>;
 
+  console.log("Refreshed Whole Page")
   return (
-    <View style={[styles.fullScreen, { pointerEvents: nextCardAnimationFinished ? "auto" : "none" }]}>
-      <BackgroundGame
-        showAlphaView={scratchStarted || gameOver}
-        source={backGroundVideo} />
+    <View style={containerStyle}>
+      {gameBackground}
       <View style={styles.containerOverlay}>
         <Animated.View style={[styles.background, { transform: [{ translateX }] }]}>
           <LinearGradient
@@ -291,11 +323,7 @@ const ScratchLuckyGame = () => {
             style={styles.imageBackground}>
             <Animated.View style={{ marginTop: marginTopAnim }}>
               <TopLayout
-                scratched={scratched}
-                scratchStarted={scratchStarted}
-                timerGame={timerGame}
                 setTimerGame={setTimerGame}
-                luckySymbolCount={luckySymbolCount}
                 clickCount={clickCount} />
             </Animated.View>
 
@@ -314,6 +342,8 @@ const ScratchLuckyGame = () => {
               clickCount={clickCount}
               setClickCount={setClickCount}
               nextCard={nextCard}
+              maxCombinations={maxCombinations}
+              hasLuckySymbol={hasLuckySymbol}
               setLuckySymbolWon={setLuckySymbolWon}
               setTotalComboCount={setTotalComboCount}
               setComboPlayed={setComboPlayed} />

@@ -143,7 +143,7 @@ const DailyScreen = () => {
   const onSubmit = (answer) => {
     const { isValid, message } = isValidAnswer(answer);
     if (isValid) {
-      postDailyAnswer(userData.user_id, question.question_id, answer, noOfCardsInSet * numberOfSetsInCurrentWeek);
+      postDailyAnswer(userData.user_id, question.question_id, answer, noOfCardsInSet * numberOfSetsInCurrentWeek, userData.current_beta_block);
     } else {
       showSnackbar(message);
     }
