@@ -119,8 +119,10 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (games && games.length > 0) {
-      setMaxCombinations(games[currentThemeIndex].number_combination_total)
-      setHasLuckySymbol(games[currentThemeIndex].lucky_symbol_won === 1)
+      const currentGame = games[currentThemeIndex];
+      setMaxCombinations(currentGame.number_combination_total)
+      setHasLuckySymbol(currentGame.lucky_symbol_won === 1)
+      setGameId(currentGame.game_id)
     }
   }, [games, currentThemeIndex])
 
@@ -216,7 +218,7 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (scratchStarted) {
-      updateCardPlayed(user.current_beta_block, user.user_id, luckySymbolWon, totalComboCount)
+      updateCardPlayed(user.current_beta_block, user.user_id, gameId)
       Animated.timing(marginTopAnim, {
         toValue: 6,
         duration: 300,

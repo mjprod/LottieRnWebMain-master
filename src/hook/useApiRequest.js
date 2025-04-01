@@ -177,7 +177,7 @@ const useApiRequest = () => {
     await fetchData(config);
   };
 
-  const updateCardPlayed = async (beta_block_id, user_id, lucky_symbol_won, number_combination_total) => {
+  const updateCardPlayed = async (beta_block_id, user_id, game_id) => {
     const config = {
       url: Endpoint.update_card_played,
       method: "POST",
@@ -187,8 +187,7 @@ const useApiRequest = () => {
       body: {
         beta_block_id,
         user_id,
-        lucky_symbol_won,
-        number_combination_total
+        game_id
       },
     };
     await fetchData(config, true);
