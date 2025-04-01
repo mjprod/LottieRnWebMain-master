@@ -239,19 +239,11 @@ const ScratchLuckyGame = () => {
     if (reset) {
       setNextCardAnimationFinished(false);
       updateScore(user.user_id, score, gameId, comboPlayed);
-      Animated.sequence([
-        Animated.timing(translateX, {
-          toValue: -width * 1.1,
-          duration: 400,
-          useNativeDriver: Platform.OS !== "web",
-        }),
-        Animated.spring(translateX, {
-          toValue: 0,
-          friction: 7,
-          tension: 50,
-          useNativeDriver: Platform.OS !== "web",
-        })
-      ]).start(() => {
+      Animated.timing(translateX, {
+        toValue: -width * 1.1,
+        duration: 400,
+        useNativeDriver: Platform.OS !== "web",
+      }).start(() => {
         setTimeout(() => {
           if (scratchCardLeft - 1 > 0) {
             setScratchCardLeft(scratchCardLeft - 1);
@@ -264,7 +256,14 @@ const ScratchLuckyGame = () => {
         setScratchStarted(false);
         setComboPlayed(0);
         goToNextTheme();
+        Animated.spring(translateX, {
+          toValue: 0,
+          friction: 7,
+          tension: 50,
+          useNativeDriver: Platform.OS !== "web",
+        }).start();
       });
+
     }
   }, [reset, setReset]);
 
@@ -310,7 +309,6 @@ const ScratchLuckyGame = () => {
   if (loading) return <LoadingView />;
   if (error) return <p>Error: {error}</p>;
 
-  console.log("Refreshed Whole Page")
   return (
     <View style={containerStyle}>
       {gameBackground}
