@@ -12,11 +12,12 @@ import useApiRequest from "../hook/useApiRequest";
 import { COLOR_BACKGROUND } from "../util/constants";
 import useAppNavigation from "../hook/useAppNavigation";
 import { useGame } from "../context/GameContext";
+import { useSnackbar } from "../components/SnackbarContext";
 
 const LeaderBoardScreen = () => {
   const location = useLocation();
   const appNavigation = useAppNavigation()
-
+  const { showSnackbar } = useSnackbar()
   const { user, setUser } = useGame()
 
   const { fetchUserDetails, response } = useApiRequest();

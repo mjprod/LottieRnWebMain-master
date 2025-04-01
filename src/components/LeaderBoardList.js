@@ -52,7 +52,7 @@ const LeaderBoardList = ({ username, style, numberOfItems = 10 }) => {
           </View>
         )}
       />
-      {totalPages < 1 &&
+      {totalPages >= 1 &&
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
