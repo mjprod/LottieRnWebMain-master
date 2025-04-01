@@ -17,6 +17,7 @@ export const Endpoint = {
   login: SERVER + "/login",
   token: SERVER + "/login/token",
   logout: SERVER + "/login/logout",
+  winners : SERVER + "/winners"
 }
 
 export const COLOR_BACKGROUND = "#131313";

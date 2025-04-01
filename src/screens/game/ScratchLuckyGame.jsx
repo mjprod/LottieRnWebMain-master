@@ -280,7 +280,7 @@ const ScratchLuckyGame = () => {
   };
 
   const handleLuckySymbolCollectComplete = () => {
-    updateCardBalance(user.user_id, BONUS_PACK_NUMBER_OF_CARDS);
+    updateCardBalance(user.user_id, user.current_beta_block, BONUS_PACK_NUMBER_OF_CARDS);
   };
 
   const handleGameOver = () => {

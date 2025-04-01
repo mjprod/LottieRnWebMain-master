@@ -210,12 +210,13 @@ const useApiRequest = () => {
     await fetchData(config, true);
   };
 
-  const updateCardBalance = async (user_id, card_balance) => {
+  const updateCardBalance = async (user_id, beta_block_id, card_balance) => {
     const config = {
       url: Endpoint.update_card_balance,
       method: "POST",
       body: {
         user_id: user_id,
+        beta_block_id: beta_block_id,
         increase_card_balance: card_balance
       },
     };
@@ -224,7 +225,7 @@ const useApiRequest = () => {
 
   const getWinner = async () => {
     const config = {
-      url: Endpoint.update_card_balance,
+      url: Endpoint.winners,
       method: "GET",
     };
     await fetchData(config, true);
