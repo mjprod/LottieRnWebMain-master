@@ -177,7 +177,7 @@ const LauchScreenEncrypted = () => {
               <LoadingView />
             ) : (
               <ProfileHeader
-                containerStyle={{ marginTop: -20, marginHorizontal: Dimentions.pageMargin }}
+                containerStyle={{ marginTop: -100, marginHorizontal: Dimentions.pageMargin }}
                 id={user.user_id ? user.user_id : ""}
                 name={user.name ?? ""}
               />
@@ -213,9 +213,10 @@ const LauchScreenEncrypted = () => {
             paddingHorizontal:
               Dimentions.pageMargin,
             paddingBottom: Dimentions.sectionMargin,
-            borderRadius: 16,
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
             backgroundColor: "#131313",
-            borderWidth: 1,
+            borderTopWidth: 1,
             borderColor: "#3D3D3D",
           }}>
             <SectionTitle

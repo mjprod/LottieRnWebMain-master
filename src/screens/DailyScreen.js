@@ -80,7 +80,19 @@ const DailyScreen = () => {
       const username = location.state.name;
       const email = location.state.email;
 
-      fetchUserDetails(id, username, email);
+      fetchUserDetails(id, username, email).then((response) => {
+        if (response.user) {
+          setCurrentWeek(response.current_week);
+          setTotalWeeks(response.total_weeks);
+          const currentWeekDaily = response.daily.find(
+            (item) => item.current_week === response.current_week
+          );
+          if (currentWeekDaily) {
+            setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
+          }
+          setUserData(response.user);
+        }
+      });
     }
   }, [location]);
 
@@ -101,17 +113,7 @@ const DailyScreen = () => {
 
   useEffect(() => {
     if (response) {
-      if (response.user) {
-        setCurrentWeek(response.current_week);
-        setTotalWeeks(response.total_weeks);
-        const currentWeekDaily = response.daily.find(
-          (item) => item.current_week === response.current_week
-        );
-        if (currentWeekDaily) {
-          setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
-        }
-        setUserData(response.user);
-      }
+
       if (response.question) {
         setQuestion(response);
       }

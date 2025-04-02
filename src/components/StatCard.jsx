@@ -4,25 +4,14 @@ import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
 import { ActivityIndicator } from "react-native-web";
 import { Dimentions, Fonts } from "../util/constants";
 
-const StatCard = ({ title = "Title", titleIcon = <IconStarResultScreen />, stat = "0", loading, children }) => {
-    const LoadingView = () => {
-        return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size="small" color="#00ff00" />
-            </View>
-        );
-    };
+const StatCard = ({ title = "Title", titleIcon = <IconStarResultScreen />, stat = "0", children }) => {
     return (<View style={styles.card}>
         <View style={styles.viewRow}>
             {titleIcon}
             <Text style={styles.title}>{title}</Text>
         </View>
-        {loading ? (
-            <LoadingView />
-        ) : (
-            !children ? <Text style={styles.statText}>{stat}</Text> : children
-        )}
-
+        <View style={{ borderBottomWidth: 1, width: "100%", borderColor: "#3D3D3D", marginVertical: Dimentions.marginS }} />
+        {!children ? <Text style={styles.statText}>{stat}</Text> : children}
     </View>);
 }
 
@@ -31,17 +20,15 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
         border: "1px solid #3D3D3D",
         borderRadius: 12,
         backgroundColor: "#131313",
-        paddingVertical: Dimentions.contentPadding
+        padding: Dimentions.contentPadding,
     },
     viewRow: {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 20
     },
     title: {
         fontSize: 16,
@@ -56,6 +43,7 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.TekoMedium,
         fontSize: 40,
         color: "#FFEEC0",
+        margin: -5,
     }
 });
 
