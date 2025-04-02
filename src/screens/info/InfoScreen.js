@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import TopBannerNav from "../../components/TopBannerNav";
 import useApiRequest from "../../hook/useApiRequest";
-import { COLOR_BACKGROUND } from "../../util/constants";
+import { Colors } from "../../util/constants";
 import useAppNavigation from "../../hook/useAppNavigation";
 import { useGame } from "../../context/GameContext";
 import ThankYouContent from "./components/ThankYouContent";
@@ -72,7 +72,7 @@ const InfoScreen = ({ contentName }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLOR_BACKGROUND,
+        backgroundColor: Colors.background,
     }
 });
 

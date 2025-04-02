@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   StyleSheet,
+  View,
   ImageBackground,
 } from "react-native";
 import AssetPack from "../util/AssetsPack";
@@ -30,21 +31,23 @@ const TopBannerNav = ({
   };
 
   return (
-    <ImageBackground style={{ alignItems: "start" }} source={backgroundImage} >
+    <ImageBackground style={{ alignItems: "start" }} resizeMode="cover" source={backgroundImage} >
       <LinearGradient
         colors={[Colors.transparent, Colors.transparent, Colors.background]}
         style={styles.linearGradient}>
-        {hasBackButton && (
-          <TouchableOpacity onPress={onBackPressLocal}>
-            <Image
-              resizeMode="contain"
-              style={styles.arrowIcon}
-              source={AssetPack.icons.ARROW_LEFT}/>
-          </TouchableOpacity>
-        )}
-        <PurplePill
-          text={"Beta Competition"}
-          style={styles.betaCompetitionText} />
+        <View style={{ flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
+          {hasBackButton && (
+            <TouchableOpacity onPress={onBackPressLocal}>
+              <Image
+                resizeMode="contain"
+                style={styles.arrowIcon}
+                source={AssetPack.icons.ARROW_LEFT} />
+            </TouchableOpacity>
+          )}
+          <PurplePill
+            text={"Beta Competition"}
+            style={styles.betaCompetitionText} />
+        </View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subtitle}>{subtitle}</Text>
       </LinearGradient>
@@ -53,7 +56,11 @@ const TopBannerNav = ({
 };
 
 const styles = StyleSheet.create({
-  arrowIcon: { flex: 1, width: 21, height: 21 },
+  arrowIcon: {
+    width: 21,
+    height: 21,
+    marginRight: Dimentions.marginS
+  },
   betaCompetitionText: {
     marginBottom: Dimentions.pageMargin,
     marginTop: 20,

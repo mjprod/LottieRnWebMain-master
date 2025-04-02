@@ -28,6 +28,7 @@ import { Colors, Dimentions, GameStatus } from "../util/constants";
 import { decrypt } from "../util/crypto";
 import { convertUTCToLocal, getCurrentDate } from "../util/Helpers";
 import { InfoScreenContents } from "./info/InfoScreen";
+import LuckySymbolCard from "../components/LuckySymbolCard";
 
 const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
@@ -176,7 +177,7 @@ const LauchScreenEncrypted = () => {
               <LoadingView />
             ) : (
               <ProfileHeader
-                containerStyle={{ paddingHorizontal: Dimentions.pageMargin }}
+                containerStyle={{ marginTop: -20, marginHorizontal: Dimentions.pageMargin }}
                 id={user.user_id ? user.user_id : ""}
                 name={user.name ?? ""}
               />
@@ -198,35 +199,25 @@ const LauchScreenEncrypted = () => {
                 stat={user.total_score}
               />
               <View style={{ width: 10 }} />
-              <StatCard title="LUCKY SYMBOLS">
-                <ImageBackground
-                  resizeMode="contain"
-                  source={AssetPack.backgrounds.LUCKY_SYMBOL}
-                  style={styles.imageBackgroundLuckySymbol}
-                >
-                  <LottieLuckySymbolCoinSlot topLayout={false} />
-                </ImageBackground>
-                <View style={styles.luckySymbols}></View>
-              </StatCard>
+              <LuckySymbolCard />
             </View>
-            <RaffleTicketCard
-              score={user.total_score}
-              ticketCount={user.ticket_balance}
-            />
+            <RaffleTicketCard containerStyle={{ marginTop: 8 }} score={user.total_score} ticketCount={user.ticket_balance} />
             <GameButton
-              style={{ marginTop: Dimentions.pageMargin, width: "100%" }}
+              style={{ marginTop: Dimentions.marginL, width: "100%" }}
               text="Play Now"
               onPress={() => handleStartGame()}
             />
           </View>
-          <View
-            style={{
-              paddingTop: Dimentions.sectionMargin,
-              paddingHorizontal: Dimentions.pageMargin,
-              paddingBottom: Dimentions.sectionMargin,
-              borderRadius: 16,
-            }}
-          >
+          <View style={{
+            paddingTop: Dimentions.sectionMargin,
+            paddingHorizontal:
+              Dimentions.pageMargin,
+            paddingBottom: Dimentions.sectionMargin,
+            borderRadius: 16,
+            backgroundColor: "#131313",
+            borderWidth: 1,
+            borderColor: "#3D3D3D",
+          }}>
             <SectionTitle
               text="LeaderBard"
               viewAllText="View All"

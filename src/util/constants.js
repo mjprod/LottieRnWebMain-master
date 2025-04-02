@@ -20,7 +20,6 @@ export const Endpoint = {
   winners : SERVER + "/winners"
 }
 
-export const COLOR_BACKGROUND = "#131313";
 
 export const DailyCardStatus = {
   active: "active",
@@ -42,12 +41,18 @@ export const LeaderBoardStatus = {
 
 
 export const Dimentions = {
-  pageMargin: 28,
+  pageMargin: 16,
+  contentPadding: 24,
   sectionMargin: 32,
+  marginXS: 8,
+  marginS: 16,
+  marginM: 24,
+  marginL: 32,
+  marginXL: 48,
 };
 
 export const Colors = {
-  background: "#131313",
+  background: "#0A0A0A",
   transparent: "#00000000",
 };
 

@@ -4,6 +4,7 @@ import LottieView from "react-native-web-lottie";
 import ProgressBar from './ProgressBar';
 import DiagonalGradientCard from './DiagonalGradientCard';
 import AssetPack from '../util/AssetsPack';
+import { Fonts } from '../util/constants';
 
 const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle }) => {
     const nextTicketIn = ticketCount * 20000 + 20000
@@ -35,7 +36,7 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle 
     };
 
     return (
-        <DiagonalGradientCard style={{ ...styles.ticketsSection, ...containerStyle }}>
+        <View style={{ ...styles.ticketsSection, ...containerStyle }}>
             <View style={styles.containerTotalTicket}>
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: "flex-start", alignItems: 'center' }}>
                     <LottieView style={styles.lottieLuckyResultAnimation}
@@ -43,7 +44,7 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle 
                         autoPlay
                         speed={1}
                         loop={false} />
-                    <Text style={styles.ticketTitle}>Total Raffle Tickets Earned</Text>
+                    <Text style={styles.ticketTitle}>Tickets Earned</Text>
                 </View>
 
                 {loading ? (
@@ -53,7 +54,7 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle 
                 )}
             </View>
             <View style={{
-                backgroundColor: "#4B595D",
+                backgroundColor: "#FFFFFF1A",
                 height: 1,
                 width: "100%",
                 marginVertical: 16,
@@ -64,33 +65,35 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle 
                     {`${parseInt(progress, 10)} / ${nextTicketIn}`}{" "}
                 </Text>
             </View>
-            <ProgressBar progress={progress / nextTicketIn} color="#FFD89D" trackColor="#131313" style={styles.progressBar} />
+            <ProgressBar progress={progress / nextTicketIn} color="#FFDEA8" trackColor="#131313" style={styles.progressBar} />
             <View style={styles.sliderContainer}>
 
             </View>
-        </DiagonalGradientCard>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     ticketsSection: {
-        marginTop: 24,
-        paddingHorizontal: 20,
-        paddingVertical: 24,
+        padding: 24,
+        borderColor: "#3D3D3D",
+        backgroundColor: "#131313",
+        borderWidth: 1,
+        borderRadius: 8,
     },
     ticketTitle: {
-        fontFamily: "Inter-Medium",
+        fontFamily: Fonts.InterRegular,
         fontSize: 16,
         color: "#fff",
     },
     nextTicketText: {
-        fontFamily: "Inter-SemiBold",
-        fontSize: 12,
+        fontFamily: Fonts.InterRegular,
+        fontSize: 14,
         color: "#fff",
     },
     ticketProgress: {
-        fontFamily: "Inter-SemiBold",
-        fontSize: 12,
+        fontFamily: Fonts.InterRegular,
+        fontSize: 14,
         color: "#fff",
     },
     containerTotalTicket: {
@@ -98,6 +101,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         width: "100%",
+        marginVertical: -10
     },
     containerNextTicket: {
         flexDirection: "row",
@@ -115,13 +119,13 @@ const styles = StyleSheet.create({
     progressBar: {
         width: "100%",
         justifyContent: "center",
-        marginTop: 7,
+        marginTop: 8,
         paddingHorizontal: 0,
     },
     resultPoints: {
-        fontFamily: "Teko-Medium",
+        fontFamily: Fonts.TekoRecular,
         fontSize: 30,
-        color: "#00ff00",
+        color: "#FFEEC0",
     },
 });
 export default RaffleTicketCard;

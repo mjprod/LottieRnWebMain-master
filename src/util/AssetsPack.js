@@ -1,4 +1,3 @@
-import { Howl } from "howler";
 const AssetPack = {
   icons: {
     CARDS: require("./../assets/icons/icon_cards_normal.svg").default,
@@ -7,6 +6,7 @@ const AssetPack = {
     ARROW_LEFT: require("./../assets/icons/icon_back.svg").default,
     LUCKY_SYMBOL: require("./../assets/image/icon_lucky_symbol.png"),
     TICKET: require("./../assets/image/icon_ticket.png"),
+    DOUBLE_DASH: require("./../assets/icons/double_dash.svg").default,
   },
   logos: {
     TURBO_SCRATCH: require("./../assets/image/turbo_scratch_logo.png"),
@@ -20,11 +20,9 @@ const AssetPack = {
     CARD_NUMBER_SET_INACTIVE: require("./../assets/image/card_set_number_inactive.svg").default,
     BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg").default,
     TOP_NAV_BACKGROUND: require("./../assets/image/top_nav_background.jpg"),
-    GOLDEN_BACKGROUND_GRADIENT: require("./../assets/image/highlightBackgroundGradient.svg").default,
     NEXT_DRAW_CARD: require("./../assets/image/next_draw_card_background.png"),
     BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg").default,
     GOLD_RUSH: require("./../assets/image/gold_rush.jpg"),
-    LUCKY_SYMBOL: require("./../assets/image/background_result_lucky_symbol.png"),
     GAME_TOP_LAYOUT: require("./../assets/image/background_top_layout.png"),
     GAME_TOP_LAYOUT_RED: require("./../assets/image/background_top_layout_red.png"),
     GAME_TOP_LAYOUT_YELLOW: require("./../assets/image/background_top_layout_yellow.png"),
