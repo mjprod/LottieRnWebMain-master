@@ -4,16 +4,15 @@ const isWeb = Platform.OS === 'web';
 
 const useStorage = () => {
     const saveData = async (key, value) => {
-        const stringValue = JSON.stringify(value);
         if (isWeb) {
-            window.localStorage.setItem(key, stringValue);
+            window.localStorage.setItem(key, value);
         }
     };
 
     const loadData = async (key) => {
         if (isWeb) {
             const value = window.localStorage.getItem(key);
-            return value ? JSON.parse(value) : null;
+            return value;
         }
     };
 

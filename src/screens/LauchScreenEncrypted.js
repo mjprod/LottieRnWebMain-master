@@ -2,54 +2,101 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import {
   ActivityIndicator,
-  ScrollView,
   ImageBackground,
+  ScrollView,
   View,
 } from "react-native-web";
 
 import { useParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import GameButton from "../components/GameButton";
-import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
-import ProfileHeader from "../components/ProfileHeader";
-import { useSnackbar } from "../components/SnackbarContext";
-import useApiRequest from "../hook/useApiRequest";
-import TopBannerNav from "../components/TopBannerNav";
-import SectionTitle from "../components/SectionTitle";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
-import { Colors, Dimentions, GameStatus } from "../util/constants";
+import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import NextDrawCard from "../components/NextDrawCard";
-import { getCurrentDate, convertUTCToLocal } from "../util/Helpers";
+import ProfileHeader from "../components/ProfileHeader";
 import RaffleTicketCard from "../components/RaffleTicketCard";
+import SectionTitle from "../components/SectionTitle";
+import { useSnackbar } from "../components/SnackbarContext";
 import StatCard from "../components/StatCard";
-import AssetPack from "../util/AssetsPack";
+import TopBannerNav from "../components/TopBannerNav";
 import { useGame } from "../context/GameContext";
+import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
-import { useSearchParams } from "react-router-dom";
+import AssetPack from "../util/AssetsPack";
+import { Colors, Dimentions, GameStatus } from "../util/constants";
 import { decrypt } from "../util/crypto";
-import useStorage from "../hook/useStorage";
+import { convertUTCToLocal, getCurrentDate } from "../util/Helpers";
 import { InfoScreenContents } from "./info/InfoScreen";
 
 const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
 
   const { user, setUser, setLuckySymbolCount } = useGame();
-
   const [initialUserData, setInitialUserData] = useState(null);
-
-  const { loading, error, response, fetchUserDetails, getWinner, login } = useApiRequest();
   const { showSnackbar } = useSnackbar();
-
   const [searchParams] = useSearchParams();
-
   const params = useParams();
 
-  const { saveData } = useStorage();
+  const { fetchUserDetails, fetchUserDetailsLoading, fetchUserDetailsError,
+    getWinner, getWinnerLoading, getWinnerError,
+    login, loginLoading, loginError } = useApiRequest();
 
   useEffect(() => {
     if (params.id && params.name && params.email) {
       setInitialUserData({ user_id: params.id, name: params.name, email: params.email });
-      login(params.id, params.name, params.email);
+      login(params.id, params.name, params.email).then((data) => {
+        //get the user details
+        fetchUserDetails(params.id, params.name, params.email).then((response) => {
+          setUser(response.user);
+          setLuckySymbolCount(response.user.lucky_symbol_balance);
+          const gameStatus = response.user.time_result;
+
+          if (gameStatus === GameStatus.drawing) {
+            appNavigation.goToInProgressPage();
+          } else if (gameStatus === GameStatus.check_winner) {
+            getWinner().then((response) => {
+              const winner = response.winner
+              if (winner.user_id === user.user_id) {
+                appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
+              } else {
+                appNavigation.goToThankYouPage(InfoScreenContents.thank_you);
+              }
+            })
+              .catch((error) => {
+                console.error('Login failed:', error);
+              });
+          }
+
+          const userData = response.user;
+          const currentWeek = response.current_week;
+          if (response.daily === null || response.daily.length === 0) {
+            appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+          } else {
+            const currentWeekDaily = response.daily.find(
+              (item) => item.current_week === currentWeek
+            );
+            if (currentWeekDaily != null) {
+              const localCurrentWeekDaily = currentWeekDaily.days.map((date) => convertUTCToLocal(date))
+              const hasCurrentDate = localCurrentWeekDaily.some((item) =>
+                item.includes(getCurrentDate())
+              );
+              if (!hasCurrentDate) {
+                appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+              }
+            } else {
+              appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+            }
+          }
+        })
+          .catch((error) => {
+            console.error('User failed:', error);
+          });
+      })
+        .catch((error) => {
+          console.error('Login failed:', error);
+        });
+
     } else if (searchParams.get('authToken')) {
       if (!user || user === null) {
         const authToken = searchParams.get('authToken');
@@ -59,7 +106,13 @@ const LauchScreenEncrypted = () => {
         }
         const authTokenData = JSON.parse(decrypt(authToken, true));
         setInitialUserData(authTokenData);
-        login(authTokenData.user_id, authTokenData.name, authTokenData.email);
+        login(authTokenData.user_id, authTokenData.name, authTokenData.email)
+          .then((data) => {
+            console.log("Login response 2: ", data);
+          })
+          .catch((error) => {
+            console.error('Login failed:', error);
+          });
       } else {
         fetchUserDetails(user.user_id, user.name, user.email);
       }
@@ -87,63 +140,17 @@ const LauchScreenEncrypted = () => {
   };
 
   useEffect(() => {
-    if (response != null) {
-      if (response.accessToken && response.refreshToken) {
-        saveData("accessToken", response.accessToken)
-        saveData("refreshToken", response.refreshToken)
-
-        fetchUserDetails(initialUserData.user_id, initialUserData.name, initialUserData.email);
-      }
+    if (loginError && loginError.length > 0) {
+      showSnackbar(loginError);
+    }
+    if (fetchUserDetailsError && fetchUserDetailsError.length > 0) {
+      showSnackbar(fetchUserDetailsError);
+    }
+    if (getWinnerError && getWinnerError.length > 0) {
+      showSnackbar(getWinnerError);
     }
 
-    if (response && response.winner) {
-      const winner = response.winner
-      if (winner.user_id === user.user_id) {
-        appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
-      } else {
-        appNavigation.goToThankYouPage(InfoScreenContents.thank_you);
-      }
-    }
-
-    if (response && response.user) {
-      setUser(response.user);
-      setLuckySymbolCount(response.user.lucky_symbol_balance);
-      const gameStatus = response.user.time_result;
-
-      if (gameStatus === GameStatus.drawing) {
-        appNavigation.goToInProgressPage();
-      } else if (gameStatus === GameStatus.check_winner) {
-        getWinner()
-      }
-
-      const userData = response.user;
-      const currentWeek = response.current_week;
-      if (response.daily === null || response.daily.length === 0) {
-        appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-      } else {
-        const currentWeekDaily = response.daily.find(
-          (item) => item.current_week === currentWeek
-        );
-        if (currentWeekDaily != null) {
-          const localCurrentWeekDaily = currentWeekDaily.days.map((date) => convertUTCToLocal(date))
-          const hasCurrentDate = localCurrentWeekDaily.some((item) =>
-            item.includes(getCurrentDate())
-          );
-          if (!hasCurrentDate) {
-            appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-          }
-        } else {
-          appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-        }
-      }
-    }
-  }, [response]);
-
-  useEffect(() => {
-    if (error && error.length > 0) {
-      showSnackbar(error);
-    }
-  }, [error]);
+  }, [loginError, fetchUserDetailsError, getWinnerError]);
 
   const LoadingView = () => {
     return (
@@ -162,57 +169,74 @@ const LauchScreenEncrypted = () => {
       <ScrollView style={{ backgroundColor: Colors.background }}>
         <View style={styles.header}>
           <TopBannerNav />
-          {loading ? (
-            <LoadingView />
-          ) : (
-            <ProfileHeader
-              containerStyle={{ paddingHorizontal: Dimentions.pageMargin }}
-              id={user.user_id ? user.user_id : ""}
-              name={user.name ?? ""} />
-          )}
+          {
+            fetchUserDetailsLoading ||
+              loginLoading ||
+              getWinnerLoading ? (
+              <LoadingView />
+            ) : (
+              <ProfileHeader
+                containerStyle={{ paddingHorizontal: Dimentions.pageMargin }}
+                id={user.user_id ? user.user_id : ""}
+                name={user.name ?? ""}
+              />
+            )}
         </View>
         <View style={{ ...styles.container }}>
-          <View style={{
-            marginLeft: Dimentions.pageMargin,
-            marginRight: Dimentions.pageMargin,
-            marginBottom: Dimentions.sectionMargin,
-            marginTop: Dimentions.sectionMargin
-          }}>
+          <View
+            style={{
+              marginLeft: Dimentions.pageMargin,
+              marginRight: Dimentions.pageMargin,
+              marginBottom: Dimentions.sectionMargin,
+              marginTop: Dimentions.sectionMargin,
+            }}
+          >
             <SectionTitle text={"Statistics"} />
             <View style={styles.resultRow}>
-              <StatCard title="Total Points" stat={user.total_score} loading={loading} />
+              <StatCard
+                title="Total Points"
+                stat={user.total_score}
+              />
               <View style={{ width: 10 }} />
-              <StatCard title="LUCKY SYMBOLS" loading={loading}>
+              <StatCard title="LUCKY SYMBOLS">
                 <ImageBackground
                   resizeMode="contain"
                   source={AssetPack.backgrounds.LUCKY_SYMBOL}
-                  style={styles.imageBackgroundLuckySymbol}>
+                  style={styles.imageBackgroundLuckySymbol}
+                >
                   <LottieLuckySymbolCoinSlot topLayout={false} />
                 </ImageBackground>
                 <View style={styles.luckySymbols}></View>
               </StatCard>
             </View>
-            <RaffleTicketCard score={user.total_score} ticketCount={user.ticket_balance} />
+            <RaffleTicketCard
+              score={user.total_score}
+              ticketCount={user.ticket_balance}
+            />
             <GameButton
               style={{ marginTop: Dimentions.pageMargin, width: "100%" }}
               text="Play Now"
-              onPress={() => handleStartGame()} />
+              onPress={() => handleStartGame()}
+            />
           </View>
-          <View style={{
-            paddingTop: Dimentions.sectionMargin,
-            paddingHorizontal:
-              Dimentions.pageMargin,
-            paddingBottom: Dimentions.sectionMargin,
-            borderRadius: 16
-          }}>
+          <View
+            style={{
+              paddingTop: Dimentions.sectionMargin,
+              paddingHorizontal: Dimentions.pageMargin,
+              paddingBottom: Dimentions.sectionMargin,
+              borderRadius: 16,
+            }}
+          >
             <SectionTitle
               text="LeaderBard"
               viewAllText="View All"
-              viewAllAction={handleViewAllPress} />
+              viewAllAction={handleViewAllPress}
+            />
             <LeaderBoardList numberOfItems={5} />
             <GamesAvailableCard
               style={{ marginVertical: 24 }}
-              cardsLeft={user.card_balance} />
+              cardsLeft={user.card_balance}
+            />
             <NextDrawCard style={{ marginVertical: 24 }} />
           </View>
         </View>

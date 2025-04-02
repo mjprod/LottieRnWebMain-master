@@ -1,14 +1,80 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { showConsoleMessage, showConsoleError } from "../util/ConsoleMessage";
-import { encrypt, decrypt } from "../util/crypto";
-import useStorage from "./useStorage";
+import { fetchUserDetailsAPI, getWinnerAPI, loginAPI } from "../api/api";
+import { showConsoleError, showConsoleMessage } from "../util/ConsoleMessage";
 import { Endpoint } from "../util/constants";
+import { decrypt, encrypt } from "../util/crypto";
+import useStorage from "./useStorage";
 
 const useApiRequest = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
-  const { loadData } = useStorage();
+  const { loadData, saveData } = useStorage();
+
+  const queryClient = useQueryClient();
+
+  const loginMutation = useMutation({
+    mutationFn: loginAPI,
+    onSuccess: (data) => {
+      console.log('Suceessfully logged in');
+      if (data.accessToken && data.refreshToken) {
+        saveData('accessToken', data.accessToken);
+        saveData('refreshToken', data.refreshToken);
+      }
+      queryClient.invalidateQueries(['userDetails']);
+    },
+    onError: (error) => {
+      if (error.response?.data?.error) {
+        showConsoleError(error.response.data.error);
+      } else {
+        showConsoleError('Error creating Beta Block');
+      }
+    },
+  });
+
+  const login = async (user_id, name, email) => {
+    return loginMutation.mutateAsync({ user_id, name, email });
+  };
+
+  const fetchUserDetailsMutation = useMutation({
+    mutationFn: fetchUserDetailsAPI,
+    onSuccess: (data) => {
+      console.log("User details fetched successfully!");
+      queryClient.invalidateQueries(['userDetails']);
+    },
+    onError: (error) => {
+      if (error.response?.data?.error) {
+        showConsoleError(error.response.data.error);
+      } else {
+        showConsoleError('Error creating Beta Block');
+      }
+    },
+  });
+
+  const fetchUserDetails = async (user_id, name, email) => {
+    return fetchUserDetailsMutation.mutateAsync({ user_id, name, email });
+  };
+
+
+  const getWinnerMutation = useMutation({
+    mutationFn: getWinnerAPI,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['winner']);
+    },
+    onError: (error) => {
+      const errorMessage = error.response?.data?.error || 'Error fetching winner';
+      showConsoleError(errorMessage);
+    },
+  });
+
+  const getWinner = async () => {
+    return getWinnerMutation.mutateAsync();
+  };
+
+  // ###############################################################
+  // ################# OLD API Request Function #######################
+  // ###############################################################
 
   const fetchData = async (config, silent = false) => {
     const { url, method = "GET", headers, body } = config;
@@ -24,7 +90,6 @@ const useApiRequest = () => {
         ...headers,
       } : headers,
       body: JSON.stringify({ data: encryptData }),
-      // credentials: 'include', // If I do this I will get a CORS error
     }
 
     if (!silent) setLoading(true);
@@ -39,13 +104,12 @@ const useApiRequest = () => {
         const refreshResponse = await fetch(Endpoint.token, {
           method: 'POST',
           body: JSON.stringify({ data: encrypt({ refreshToken: refreshToken }) }),
-          // credentials: 'include', // If I do this I will get a CORS error
         });
 
         if (refreshResponse.ok) {
           const data = await refreshResponse.json();
           const newAccessToken = data.accessToken;
-          localStorage.setItem('accessToken', newAccessToken);
+          saveData('accessToken', newAccessToken);
           options.headers['Authorization'] = `Bearer ${newAccessToken}`;
           res = await fetch(url, options);
         }
@@ -62,23 +126,6 @@ const useApiRequest = () => {
     } finally {
       if (!silent) setLoading(false);
     }
-  };
-
-  const login = async (user_id, name, email) => {
-    const config = {
-      url: Endpoint.login,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        user_id,
-        name,
-        email,
-      },
-    };
-
-    await fetchData(config);
   };
 
   const getGames = async (user_id, beta_block_id) => {
@@ -113,22 +160,8 @@ const useApiRequest = () => {
     await fetchData(config, true);
   };
 
-  const fetchUserDetails = async (user_id, name, email) => {
-    const config = {
-      url: Endpoint.fetch_user_details,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        user_id,
-        name,
-        email,
-      },
-    };
 
-    await fetchData(config);
-  };
+
 
   const getDailyQuestion = async (user_id) => {
     const config = {
@@ -223,13 +256,6 @@ const useApiRequest = () => {
     await fetchData(config, true);
   };
 
-  const getWinner = async () => {
-    const config = {
-      url: Endpoint.winners,
-      method: "GET",
-    };
-    await fetchData(config, true);
-  };
 
   return {
     loading,
@@ -237,16 +263,22 @@ const useApiRequest = () => {
     response,
     fetchData,
     updateLuckySymbol,
-    fetchUserDetails,
     getDailyQuestion,
     postDailyAnswer,
     getLeaderBoard,
     updateCardPlayed,
     updateScore,
     updateCardBalance,
-    getWinner,
+    getGames,
     login,
-    getGames
+    loginLoading: loginMutation.isLoading,
+    loginError: loginMutation.error,
+    fetchUserDetails,
+    fetchUserDetailsLoading: fetchUserDetailsMutation.isLoading,
+    fetchUserDetailsError: fetchUserDetailsMutation.error,
+    getWinner,
+    getWinnerLoading: getWinnerMutation.isLoading,
+    getWinnerError: getWinnerMutation.error,
   };
 };
 

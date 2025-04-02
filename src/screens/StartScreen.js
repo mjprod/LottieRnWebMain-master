@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Platform, StyleSheet, Text, View, Image } from "react-native";
+import { Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { ImageBackground } from "react-native-web";
+import LinearGradient from 'react-native-web-linear-gradient';
 import { useLocation } from "react-router";
 import GameButton, { ButtonSize } from "../components/GameButton";
+import GamesAvailableCard from "../components/GamesAvailableCard";
+import LinkButton from "../components/LinkButton";
 import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
-import TimerComponent from "../components/TimerComponent";
-import StatCard from "../components/StatCard";
-import AssetPack from "../util/AssetsPack";
-import LinkButton from "../components/LinkButton";
-import GamesAvailableCard from "../components/GamesAvailableCard";
 import RoundedButton from "../components/RoundedButton";
-import { ScrollView } from "react-native";
-import useApiRequest from "../hook/useApiRequest";
-import { useGame } from "../context/GameContext";
-import useAppNavigation from "../hook/useAppNavigation";
-import LinearGradient from 'react-native-web-linear-gradient';
 import { useSnackbar } from "../components/SnackbarContext";
-const GameOverScreen = () => {
+import StatCard from "../components/StatCard";
+import TimerComponent from "../components/TimerComponent";
+import { useGame } from "../context/GameContext";
+import useApiRequest from "../hook/useApiRequest";
+import useAppNavigation from "../hook/useAppNavigation";
+import AssetPack from "../util/AssetsPack";
+const StartScreen = () => {
     const appNavigation = useAppNavigation();
     const { setUser, setLuckySymbolCount } = useGame();
     const { showSnackbar } = useSnackbar();
-    const { fetchUserDetails, response } = useApiRequest();
+    const { fetchUserDetails } = useApiRequest();
 
     const location = useLocation();
 
@@ -32,24 +31,23 @@ const GameOverScreen = () => {
 
     useEffect(() => {
         if (id && username && email) {
-            fetchUserDetails(id, username, email);
-        } else {
-            showSnackbar("Something went wrong");
-            appNavigation.goToNotFoundPage();
-        }
-    }, [id, email, username]);
-
-    useEffect(() => {
-        if (response) {
-            if (response.user) {
+            fetchUserDetails(id, username, email).then((response) => {
                 setUser(response.user)
                 setInitialScore(response.user.total_score || 0);
                 setLuckySymbolCount(response.user.lucky_symbol_balance);
                 setInitialScratchCardLeft(response.user.card_balance || 0);
                 setInitialUserData(response.user);
-            }
+            })
+                .catch((error) => {
+                    console.error('Login failed:', error);
+                });
+
+
+        } else {
+            showSnackbar("Something went wrong");
+            appNavigation.goToNotFoundPage();
         }
-    }, [response]);
+    }, [id, email, username]);
 
     const handleBackPress = () => {
         appNavigation.goBack();
@@ -312,4 +310,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default GameOverScreen;
+export default StartScreen;
