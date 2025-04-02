@@ -4,48 +4,27 @@ import TimerComponent from "./TimerComponent";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
 import PurplePill from "./PurplePill";
+import { Dimentions, Fonts } from "../util/constants";
 
 const NextDrawCard = ({ style }) => {
   return (
     <View style={{ ...styles.container, ...style }}>
-      <ImageBackground
-        style={{
-          flex: 1,
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-        resizeMode="stretch"
-        source={AssetPack.backgrounds.NEXT_DRAW_CARD}>
-        <View style={styles.topSection}>
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              marginBottom: 10,
-            }}>
-            <PurplePill text={"Beta Competition"} />
-          </View>
-
-          <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>
-            Win Amazon Gift Cards
-          </Text>
-          <Text style={{ color: "white", fontSize: 13, fontWeight: "bold" }}>
-            Scratch for more chances to win!
-          </Text>
-        </View>
-        <View style={styles.bottomSection}>
-          <Image
-            style={{ width: 145, height: 46 }}
-            source={AssetPack.logos.TURBO_SCRATCH} />
-          <TimerComponent />
-        </View>
-        <LottieView
-          style={{ position: "absolute", top: 0, left: 0 }}
-          source={AssetPack.lotties.CONFETTI}
-          speed={1}
-          loop={true}
-          autoPlay={true} />
-      </ImageBackground>
+      <Image
+        style={{ width: 145, height: 46 }}
+        source={AssetPack.logos.TURBO_SCRATCH} />
+      <Text style={{ color: "#fff", fontSize: 28, fontFamily: Fonts.TekoMedium, textTransform: 'uppercase' }}>
+        Win Amazon Gift Cards
+      </Text>
+      <Text style={{ color: "#FFFFFFCC", fontSize: 16, fontFamily: Fonts.InterMedium }}>
+        Scratch for more chances to win!
+      </Text>
+      <TimerComponent />
+      <LottieView
+        style={{ position: "absolute", top: 0, left: 0 }}
+        source={AssetPack.lotties.CONFETTI}
+        speed={1}
+        loop={true}
+        autoPlay={true} />
     </View>
   );
 };
@@ -57,6 +36,10 @@ const styles = StyleSheet.create({
     borderColor: "#FFFFFF33",
     overflow: "hidden",
     backgroundColor: "#171717",
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: Dimentions.marginL
   },
   topSection: {
     flex: 1,

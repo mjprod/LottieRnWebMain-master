@@ -9,7 +9,7 @@ import LinkButton from "../components/LinkButton";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import NextDrawCard from "../components/NextDrawCard";
 import useApiRequest from "../hook/useApiRequest";
-import { Colors } from "../util/constants";
+import { Colors, Dimentions } from "../util/constants";
 import useAppNavigation from "../hook/useAppNavigation";
 import { useGame } from "../context/GameContext";
 import { useSnackbar } from "../components/SnackbarContext";
@@ -49,7 +49,7 @@ const LeaderBoardScreen = () => {
   return (
     <ScrollView style={styles.container}>
       <TopBannerNav hasBackButton={true} />
-      <View style={{ marginHorizontal: 25 }}>
+      <View style={{ marginTop: -20, paddingHorizontal: Dimentions.marginS, backgroundColor: "#131313", borderColor: "#3D3D3D", paddingVertical: Dimentions.marginL, borderRadius: 16, borderWidth: 1 }}>
         <SectionTitle text="LeaderBard" style={{ marginBottom: 10 }} />
         <LeaderBoardList
           style={{ marginBottom: 30 }}

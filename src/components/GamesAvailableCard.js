@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     padding: 24,
     borderColor: "#ADADAD33",
+    backgroundColor: "#131313",
     borderWidth: 1,
     borderRadius: 12
   },
@@ -44,7 +45,8 @@ const styles = StyleSheet.create({
   valueText: {
     fontFamily: Fonts.TekoRecular,
     fontSize: 30,
-    marginVertical: -10,
+    marginTop: -15,
+    marginBottom: -20,
     color: "#FFDEA8",
   },
 });

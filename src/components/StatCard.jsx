@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         border: "1px solid #3D3D3D",
         borderRadius: 12,
+        backgroundColor: "#131313",
         paddingVertical: Dimentions.contentPadding
     },
     viewRow: {

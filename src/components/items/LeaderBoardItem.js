@@ -1,12 +1,12 @@
 import React from "react";
-import { Text, StyleSheet, ImageBackground, Image } from "react-native";
+import { Text, StyleSheet, ImageBackground, Image, View } from "react-native";
 import { LeaderBoardStatus } from "../../util/constants";
 import { maskString } from "../../util/Helpers";
 import { IconTypeLeaderBoardArrow } from "../../assets/icons/ArrowSolid";
 import { PointsIcon } from "../../assets/icons/PointsIcon";
 import AssetPack from "../../util/AssetsPack";
 
-const LeaderBoardItem = ({ rank, username, points, status, selected }) => {
+const LeaderBoardItem = ({ rank, username, points, status, selected}) => {
   const getStatusIcon = () => {
     switch (status) {
       case LeaderBoardStatus.up:
@@ -61,15 +61,17 @@ const LeaderBoardItem = ({ rank, username, points, status, selected }) => {
           styles.usernameText,
         ]}
       >
-        {maskString(username)}
+        {!selected ? maskString(username) : username}
       </Text>
-      <PointsIcon style={{ width: 15, height: 15, marginRight: 10 }} />
-      <Text
-        style={[
-          styles.text,
-          styles.pointsText,
-        ]}
-      >{`${points} Points`}</Text>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "start", width: 130 }}>
+        <PointsIcon style={{ width: 15, height: 15, marginRight: 10 }} />
+        <Text
+          style={[
+            styles.text,
+            styles.pointsText,
+          ]}
+        >{`${points} Points`}</Text>
+      </View>
       {getStatusIcon()}
     </ImageBackground>
   );
@@ -103,12 +105,13 @@ const styles = StyleSheet.create({
   rankText: {
     fontFamily: "Inter-Medium",
     fontSize: 14,
-    width: "15%",
+    width: "10%",
   },
   usernameText: {
     fontFamily: "Inter-Medium",
     fontSize: 14,
     flex: 1,
+    width: "15%",
   },
   pointsText: {
     fontFamily: "Teko-Medium",

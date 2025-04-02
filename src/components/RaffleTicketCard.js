@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     ticketsSection: {
         padding: 24,
         borderColor: "#3D3D3D",
+        backgroundColor: "#131313",
         borderWidth: 1,
         borderRadius: 8,
     },
@@ -87,12 +88,12 @@ const styles = StyleSheet.create({
     },
     nextTicketText: {
         fontFamily: Fonts.InterRegular,
-        fontSize: 12,
+        fontSize: 14,
         color: "#fff",
     },
     ticketProgress: {
         fontFamily: Fonts.InterRegular,
-        fontSize: 12,
+        fontSize: 14,
         color: "#fff",
     },
     containerTotalTicket: {
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
     progressBar: {
         width: "100%",
         justifyContent: "center",
-        marginTop: 7,
+        marginTop: 8,
         paddingHorizontal: 0,
     },
     resultPoints: {

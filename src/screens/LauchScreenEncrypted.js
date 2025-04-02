@@ -29,6 +29,7 @@ import { useSearchParams } from "react-router-dom";
 import { decrypt } from "../util/crypto";
 import useStorage from "../hook/useStorage";
 import { InfoScreenContents } from "./info/InfoScreen";
+import LuckySymbolCard from "../components/LuckySymbolCard";
 
 const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
@@ -182,14 +183,7 @@ const LauchScreenEncrypted = () => {
             <View style={styles.resultRow}>
               <StatCard title="Total Points" stat={user.total_score} loading={loading} />
               <View style={{ width: 10 }} />
-              <StatCard title="Lucky Symbols" loading={loading}>
-                <ImageBackground
-                  resizeMode="contain"
-                  source={AssetPack.backgrounds.LUCKY_SYMBOL}
-                  style={styles.imageBackgroundLuckySymbol}>
-                  <LottieLuckySymbolCoinSlot topLayout={false} />
-                </ImageBackground>
-              </StatCard>
+              <LuckySymbolCard />
             </View>
             <RaffleTicketCard containerStyle={{ marginTop: 8 }} score={user.total_score} ticketCount={user.ticket_balance} />
             <GameButton

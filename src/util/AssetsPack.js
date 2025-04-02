@@ -23,7 +23,6 @@ const AssetPack = {
     NEXT_DRAW_CARD: require("./../assets/image/next_draw_card_background.png"),
     BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg").default,
     GOLD_RUSH: require("./../assets/image/gold_rush.jpg"),
-    LUCKY_SYMBOL: require("./../assets/image/background_result_lucky_symbol.png"),
     GAME_TOP_LAYOUT: require("./../assets/image/background_top_layout.png"),
     GAME_TOP_LAYOUT_RED: require("./../assets/image/background_top_layout_red.png"),
     GAME_TOP_LAYOUT_YELLOW: require("./../assets/image/background_top_layout_yellow.png"),
