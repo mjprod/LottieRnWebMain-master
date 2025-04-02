@@ -20,7 +20,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 8,
+    paddingTop: 24,
+    paddingBottom: 24,
+    borderBottomColor: "#3D3D3D",
+    borderBottomWidth: 1,
+    borderTopColor: "#3D3D3D",
+    borderTopWidth: 1,
   },
   avatarContainer: {
     width: 50,

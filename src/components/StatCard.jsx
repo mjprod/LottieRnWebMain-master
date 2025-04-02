@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
-import DiagonalGradientCard from "./DiagonalGradientCard";
 import  {ActivityIndicator} from "react-native-web";
+import { Fonts } from "../util/constants";
 
 const StatCard = ({ title = "Title", titleIcon = <IconStarResultScreen />, stat = "0", loading, children }) => {
     const LoadingView = () => {
@@ -12,7 +12,7 @@ const StatCard = ({ title = "Title", titleIcon = <IconStarResultScreen />, stat 
             </View>
         );
     };
-    return (<DiagonalGradientCard style={styles.card}>
+    return (<View style={styles.card}>
         <View style={styles.viewRow}>
             {titleIcon}
             <Text style={styles.title}>{title}</Text>
@@ -23,7 +23,7 @@ const StatCard = ({ title = "Title", titleIcon = <IconStarResultScreen />, stat 
             !children ? <Text style={styles.statText}>{stat}</Text> : children
         )}
 
-    </DiagonalGradientCard>);
+    </View>);
 }
 
 const styles = StyleSheet.create({
@@ -32,29 +32,30 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        border: "1px solid #4B595D",
+        border: "1px solid #3D3D3D",
         borderRadius: 12,
-        padding: 8,
+        paddingVertical: "5%",
+        paddingHorizontal: "3%",
     },
     viewRow: {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
+        marginBottom: 20
     },
     title: {
-        fontSize: 18,
-        fontFamily: "Teko-Medium",
+        fontSize: 16,
+        fontFamily: Fonts.InterRegular,
         color: "#fff",
         justifyContent: "center",
         alignItems: "center",
         marginLeft: 5,
         marginTop: 3,
-        textTransform: "uppercase",
     },
     statText: {
         fontFamily: "Teko-Medium",
         fontSize: 30,
-        color: "#00ff00",
+        color: "#FFEEC0",
     }
 });
 

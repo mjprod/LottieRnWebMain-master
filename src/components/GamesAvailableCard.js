@@ -2,13 +2,14 @@ import React from "react";
 import { Text, Image, StyleSheet, View } from "react-native";
 import AssetPack from "../util/AssetsPack";
 import DiagonalGradientCard from "../components/DiagonalGradientCard";
+import { Fonts } from "../util/constants";
 
 const GamesAvailableCard = ({
   cardsLeft = 0,
   style,
 }) => {
   return (
-    <DiagonalGradientCard style={{ ...styles.backgroundRounded, ...style }}>
+    <View style={{ ...styles.backgroundRounded, ...style }}>
       <View style={{ flexDirection: "row", alignItems: "center", flex: 1, gap: 8 }}>
         <Image
           style={{ width: 22.25, height: 17 }}
@@ -20,7 +21,7 @@ const GamesAvailableCard = ({
           {cardsLeft} CARDS
         </Text>
       </View>
-    </DiagonalGradientCard>
+    </View>
   );
 };
 
@@ -29,18 +30,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    alignContent: "center",
+    padding: 24,
+    borderColor: "#ADADAD33",
+    borderWidth: 1,
+    borderRadius: 12
   },
   gamesAvailableText: {
-    fontFamily: "Inter-Medium",
+    fontFamily: Fonts.InterRegular,
     fontSize: 18,
     paddingTop: 2,
     color: "#fff",
   },
   valueText: {
-    fontFamily: "Teko-Medium",
+    fontFamily: Fonts.TekoRecular,
     fontSize: 30,
+    marginVertical: -10,
     color: "#FFDEA8",
   },
 });

@@ -167,7 +167,7 @@ const DailyScreen = () => {
           <LoadingView />
         ) : (
           <ProfileHeader
-            containerStyle={{ marginTop: -25, marginHorizontal: Dimentions.pageMargin, marginBottom: Dimentions.sectionMargin }}
+            containerStyle={{ marginTop: -50, marginHorizontal: Dimentions.pageMargin, marginBottom: Dimentions.sectionMargin }}
             id={userData.user_id}
             name={userData.name}
           />

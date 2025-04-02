@@ -166,7 +166,7 @@ const LauchScreenEncrypted = () => {
             <LoadingView />
           ) : (
             <ProfileHeader
-              containerStyle={{ paddingHorizontal: Dimentions.pageMargin }}
+              containerStyle={{ marginTop: -20, marginHorizontal: Dimentions.pageMargin }}
               id={user.user_id ? user.user_id : ""}
               name={user.name ?? ""} />
           )}
@@ -182,7 +182,7 @@ const LauchScreenEncrypted = () => {
             <View style={styles.resultRow}>
               <StatCard title="Total Points" stat={user.total_score} loading={loading} />
               <View style={{ width: 10 }} />
-              <StatCard title="LUCKY SYMBOLS" loading={loading}>
+              <StatCard title="Lucky Symbols" loading={loading}>
                 <ImageBackground
                   resizeMode="contain"
                   source={AssetPack.backgrounds.LUCKY_SYMBOL}
