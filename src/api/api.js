@@ -15,6 +15,11 @@ export const fetchUserDetailsAPI = async ({ user_id, name, email }) => {
   return response.data;
 };
 
+export const getWinnerAPI = async () => {
+  const response = await axiosInstance.get(Endpoint.winners);
+  return response.data;
+};
+
 export const getGamesAPI = async ({ user_id, beta_block_id }) => {
   const response = await axiosInstance.post(Endpoint.games, { user_id, beta_block_id });
   return response.data;

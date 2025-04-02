@@ -38,7 +38,9 @@ const LauchScreenEncrypted = () => {
   const [searchParams] = useSearchParams();
   const params = useParams();
 
-  const { loading, error, response, fetchUserDetails, fetchUserDetailsLoading, fetchUserDetailsError, getWinner, login, loginLoading, loginError } = useApiRequest();
+  const { fetchUserDetails, fetchUserDetailsLoading, fetchUserDetailsError,
+    getWinner, getWinnerLoading, getWinnerError,
+    login, loginLoading, loginError } = useApiRequest();
 
   useEffect(() => {
     if (params.id && params.name && params.email) {
@@ -53,7 +55,17 @@ const LauchScreenEncrypted = () => {
           if (gameStatus === GameStatus.drawing) {
             appNavigation.goToInProgressPage();
           } else if (gameStatus === GameStatus.check_winner) {
-            getWinner()
+            getWinner().then((response) => {
+              const winner = response.winner
+              if (winner.user_id === user.user_id) {
+                appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
+              } else {
+                appNavigation.goToThankYouPage(InfoScreenContents.thank_you);
+              }
+            })
+              .catch((error) => {
+                console.error('Login failed:', error);
+              });
           }
 
           const userData = response.user;
@@ -128,29 +140,17 @@ const LauchScreenEncrypted = () => {
   };
 
   useEffect(() => {
-    if (response && response.winner) {
-      const winner = response.winner
-      if (winner.user_id === user.user_id) {
-        appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
-      } else {
-        appNavigation.goToThankYouPage(InfoScreenContents.thank_you);
-      }
-    }
-
-  }, [response]);
-
-  useEffect(() => {
-    if (error && error.length > 0) {
-      showSnackbar(error);
-    }
     if (loginError && loginError.length > 0) {
       showSnackbar(loginError);
     }
     if (fetchUserDetailsError && fetchUserDetailsError.length > 0) {
       showSnackbar(fetchUserDetailsError);
     }
+    if (getWinnerError && getWinnerError.length > 0) {
+      showSnackbar(getWinnerError);
+    }
 
-  }, [error, loginError, fetchUserDetailsError]);
+  }, [loginError, fetchUserDetailsError, getWinnerError]);
 
   const LoadingView = () => {
     return (
@@ -169,57 +169,74 @@ const LauchScreenEncrypted = () => {
       <ScrollView style={{ backgroundColor: Colors.background }}>
         <View style={styles.header}>
           <TopBannerNav />
-          {loading || fetchUserDetailsLoading || loginLoading ? (
-            <LoadingView />
-          ) : (
-            <ProfileHeader
-              containerStyle={{ paddingHorizontal: Dimentions.pageMargin }}
-              id={user.user_id ? user.user_id : ""}
-              name={user.name ?? ""} />
-          )}
+          {
+            fetchUserDetailsLoading ||
+              loginLoading ||
+              getWinnerLoading ? (
+              <LoadingView />
+            ) : (
+              <ProfileHeader
+                containerStyle={{ paddingHorizontal: Dimentions.pageMargin }}
+                id={user.user_id ? user.user_id : ""}
+                name={user.name ?? ""}
+              />
+            )}
         </View>
         <View style={{ ...styles.container }}>
-          <View style={{
-            marginLeft: Dimentions.pageMargin,
-            marginRight: Dimentions.pageMargin,
-            marginBottom: Dimentions.sectionMargin,
-            marginTop: Dimentions.sectionMargin
-          }}>
+          <View
+            style={{
+              marginLeft: Dimentions.pageMargin,
+              marginRight: Dimentions.pageMargin,
+              marginBottom: Dimentions.sectionMargin,
+              marginTop: Dimentions.sectionMargin,
+            }}
+          >
             <SectionTitle text={"Statistics"} />
             <View style={styles.resultRow}>
-              <StatCard title="Total Points" stat={user.total_score} loading={loading} />
+              <StatCard
+                title="Total Points"
+                stat={user.total_score}
+              />
               <View style={{ width: 10 }} />
-              <StatCard title="LUCKY SYMBOLS" loading={loading}>
+              <StatCard title="LUCKY SYMBOLS">
                 <ImageBackground
                   resizeMode="contain"
                   source={AssetPack.backgrounds.LUCKY_SYMBOL}
-                  style={styles.imageBackgroundLuckySymbol}>
+                  style={styles.imageBackgroundLuckySymbol}
+                >
                   <LottieLuckySymbolCoinSlot topLayout={false} />
                 </ImageBackground>
                 <View style={styles.luckySymbols}></View>
               </StatCard>
             </View>
-            <RaffleTicketCard score={user.total_score} ticketCount={user.ticket_balance} />
+            <RaffleTicketCard
+              score={user.total_score}
+              ticketCount={user.ticket_balance}
+            />
             <GameButton
               style={{ marginTop: Dimentions.pageMargin, width: "100%" }}
               text="Play Now"
-              onPress={() => handleStartGame()} />
+              onPress={() => handleStartGame()}
+            />
           </View>
-          <View style={{
-            paddingTop: Dimentions.sectionMargin,
-            paddingHorizontal:
-              Dimentions.pageMargin,
-            paddingBottom: Dimentions.sectionMargin,
-            borderRadius: 16
-          }}>
+          <View
+            style={{
+              paddingTop: Dimentions.sectionMargin,
+              paddingHorizontal: Dimentions.pageMargin,
+              paddingBottom: Dimentions.sectionMargin,
+              borderRadius: 16,
+            }}
+          >
             <SectionTitle
               text="LeaderBard"
               viewAllText="View All"
-              viewAllAction={handleViewAllPress} />
+              viewAllAction={handleViewAllPress}
+            />
             <LeaderBoardList numberOfItems={5} />
             <GamesAvailableCard
               style={{ marginVertical: 24 }}
-              cardsLeft={user.card_balance} />
+              cardsLeft={user.card_balance}
+            />
             <NextDrawCard style={{ marginVertical: 24 }} />
           </View>
         </View>

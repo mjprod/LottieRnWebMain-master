@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { fetchUserDetailsAPI, loginAPI } from "../api/api";
+import { fetchUserDetailsAPI, getWinnerAPI, loginAPI } from "../api/api";
 import { showConsoleError, showConsoleMessage } from "../util/ConsoleMessage";
 import { Endpoint } from "../util/constants";
 import { decrypt, encrypt } from "../util/crypto";
@@ -57,13 +57,24 @@ const useApiRequest = () => {
   };
 
 
+  const getWinnerMutation = useMutation({
+    mutationFn: getWinnerAPI,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['winner']);
+    },
+    onError: (error) => {
+      const errorMessage = error.response?.data?.error || 'Error fetching winner';
+      showConsoleError(errorMessage);
+    },
+  });
 
+  const getWinner = async () => {
+    return getWinnerMutation.mutateAsync();
+  };
 
-
-
-
-
-
+  // ###############################################################
+  // ################# OLD API Request Function #######################
+  // ###############################################################
 
   const fetchData = async (config, silent = false) => {
     const { url, method = "GET", headers, body } = config;
@@ -93,7 +104,6 @@ const useApiRequest = () => {
         const refreshResponse = await fetch(Endpoint.token, {
           method: 'POST',
           body: JSON.stringify({ data: encrypt({ refreshToken: refreshToken }) }),
-          // credentials: 'include', // If I do this I will get a CORS error
         });
 
         if (refreshResponse.ok) {
@@ -246,13 +256,6 @@ const useApiRequest = () => {
     await fetchData(config, true);
   };
 
-  const getWinner = async () => {
-    const config = {
-      url: Endpoint.winners,
-      method: "GET",
-    };
-    await fetchData(config, true);
-  };
 
   return {
     loading,
@@ -266,7 +269,6 @@ const useApiRequest = () => {
     updateCardPlayed,
     updateScore,
     updateCardBalance,
-    getWinner,
     getGames,
     login,
     loginLoading: loginMutation.isLoading,
@@ -274,6 +276,9 @@ const useApiRequest = () => {
     fetchUserDetails,
     fetchUserDetailsLoading: fetchUserDetailsMutation.isLoading,
     fetchUserDetailsError: fetchUserDetailsMutation.error,
+    getWinner,
+    getWinnerLoading: getWinnerMutation.isLoading,
+    getWinnerError: getWinnerMutation.error,
   };
 };
 
