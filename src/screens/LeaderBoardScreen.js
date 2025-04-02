@@ -9,7 +9,7 @@ import LinkButton from "../components/LinkButton";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import NextDrawCard from "../components/NextDrawCard";
 import useApiRequest from "../hook/useApiRequest";
-import { COLOR_BACKGROUND } from "../util/constants";
+import { Colors } from "../util/constants";
 import useAppNavigation from "../hook/useAppNavigation";
 import { useGame } from "../context/GameContext";
 import { useSnackbar } from "../components/SnackbarContext";
@@ -69,7 +69,7 @@ const LeaderBoardScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLOR_BACKGROUND,
+    backgroundColor: Colors.background,
   }
 });
 

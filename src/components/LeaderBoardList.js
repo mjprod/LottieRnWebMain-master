@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList, ActivityIndicator } from "react-native-web";
+import { View, FlatList } from "react-native-web";
 import LeaderBoardItem from "./items/LeaderBoardItem";
 import useApiRequest from "../hook/useApiRequest";
 import Pagination from "./Pagination";
+import { Dimentions } from "../util/constants";
 
 const LeaderBoardList = ({ username, style, numberOfItems = 10 }) => {
   const { response, getLeaderBoard } = useApiRequest();
@@ -41,19 +42,18 @@ const LeaderBoardList = ({ username, style, numberOfItems = 10 }) => {
         keyExtractor={(item) => item.id.toString()}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
         renderItem={({ item }) => (
-          <View>
-            <LeaderBoardItem
-              rank={item.rank}
-              username={item.username}
-              points={item.points}
-              status={item.status}
-              selected={item.username === username}
-            />
-          </View>
+          <LeaderBoardItem
+            rank={item.rank}
+            username={item.username}
+            points={item.points}
+            status={item.status}
+            selected={item.username === username}
+          />
         )}
       />
-      {totalPages >= 1 &&
+      {totalPages > 1 &&
         <Pagination
+          containerStyle={{ marginTop: Dimentions.marginM }}
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={onPageChange}

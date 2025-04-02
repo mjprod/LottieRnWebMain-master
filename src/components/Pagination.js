@@ -34,11 +34,11 @@ function getPagesArray(current, total) {
   return pages;
 }
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination = ({ currentPage, totalPages, onPageChange, containerStyle }) => {
   const pagesToShow = getPagesArray(currentPage, totalPages);
 
   return (
-    <View style={{}}>
+    <View style={containerStyle}>
       <View style={styles.container} >
         <Pressable
           style={styles.arrowLeft}

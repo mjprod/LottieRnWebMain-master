@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, StyleSheet, ImageBackground } from "react-native";
+import { Text, StyleSheet, ImageBackground, Image } from "react-native";
 import { LeaderBoardStatus } from "../../util/constants";
 import { maskString } from "../../util/Helpers";
 import { IconTypeLeaderBoardArrow } from "../../assets/icons/ArrowSolid";
@@ -31,6 +31,8 @@ const LeaderBoardItem = ({ rank, username, points, status, selected }) => {
             }}
           />
         );
+      case LeaderBoardStatus.same:
+        return <Image style={{ height: 10, width: 15, marginLeft: 10 }} source={AssetPack.icons.DOUBLE_DASH} />
       default:
         return (
           <IconTypeLeaderBoardArrow
@@ -47,29 +49,24 @@ const LeaderBoardItem = ({ rank, username, points, status, selected }) => {
   };
   return (
     <ImageBackground
-      style={selected ? styles.containerSelected : styles.container}
-      source={selected && AssetPack.backgrounds.GOLDEN_BACKGROUND_GRADIENT}
-    >
+      style={selected ? styles.containerSelected : styles.container}>
       <Text
-        style={[selected ? styles.selectedText : styles.text, styles.rankText]}
+        style={[styles.text, styles.rankText]}
       >
         {rank}
       </Text>
       <Text
         style={[
-          selected ? styles.selectedText : styles.text,
+          styles.text,
           styles.usernameText,
         ]}
       >
         {maskString(username)}
       </Text>
-      <PointsIcon
-        fill={selected ? "#212121" : null}
-        style={{ width: 15, height: 15, marginRight: 10 }}
-      />
+      <PointsIcon style={{ width: 15, height: 15, marginRight: 10 }} />
       <Text
         style={[
-          selected ? styles.selectedText : styles.text,
+          styles.text,
           styles.pointsText,
         ]}
       >{`${points} Points`}</Text>
@@ -85,9 +82,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 25,
-    paddingVertical: 14,
+    paddingVertical: 12,
     borderWidth: 1,
     overflow: "hidden",
+    backgroundColor: "#171717",
     borderColor: "#FFFFFF33",
   },
   containerSelected: {
@@ -99,6 +97,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     overflow: "hidden",
     borderWidth: 1,
+    backgroundColor: "#1D1811",
     borderColor: "#FFDEA8",
   },
   rankText: {
@@ -120,11 +119,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Inter-Medium",
     color: "#fff",
-  },
-  selectedText: {
-    fontFamily: "Inter-Medium",
-    color: "#212121",
-  },
+  }
 });
 
 export default LeaderBoardItem;

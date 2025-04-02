@@ -189,12 +189,11 @@ const LauchScreenEncrypted = () => {
                   style={styles.imageBackgroundLuckySymbol}>
                   <LottieLuckySymbolCoinSlot topLayout={false} />
                 </ImageBackground>
-                <View style={styles.luckySymbols}></View>
               </StatCard>
             </View>
-            <RaffleTicketCard score={user.total_score} ticketCount={user.ticket_balance} />
+            <RaffleTicketCard containerStyle={{ marginTop: 8 }} score={user.total_score} ticketCount={user.ticket_balance} />
             <GameButton
-              style={{ marginTop: Dimentions.pageMargin, width: "100%" }}
+              style={{ marginTop: Dimentions.marginL, width: "100%" }}
               text="Play Now"
               onPress={() => handleStartGame()} />
           </View>
@@ -203,7 +202,10 @@ const LauchScreenEncrypted = () => {
             paddingHorizontal:
               Dimentions.pageMargin,
             paddingBottom: Dimentions.sectionMargin,
-            borderRadius: 16
+            borderRadius: 16,
+            backgroundColor: "#131313",
+            borderWidth: 1,
+            borderColor: "#3D3D3D",
           }}>
             <SectionTitle
               text="LeaderBard"

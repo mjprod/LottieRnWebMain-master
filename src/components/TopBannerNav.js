@@ -30,7 +30,7 @@ const TopBannerNav = ({
   };
 
   return (
-    <ImageBackground style={{ alignItems: "start" }} source={backgroundImage} >
+    <ImageBackground style={{ alignItems: "start" }} resizeMode="cover" source={backgroundImage} >
       <LinearGradient
         colors={[Colors.transparent, Colors.transparent, Colors.background]}
         style={styles.linearGradient}>

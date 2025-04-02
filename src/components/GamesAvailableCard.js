@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, Image, StyleSheet, View } from "react-native";
 import AssetPack from "../util/AssetsPack";
-import DiagonalGradientCard from "../components/DiagonalGradientCard";
 import { Fonts } from "../util/constants";
 
 const GamesAvailableCard = ({

@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
 import  {ActivityIndicator} from "react-native-web";
-import { Fonts } from "../util/constants";
+import { Dimentions, Fonts } from "../util/constants";
 
 const StatCard = ({ title = "Title", titleIcon = <IconStarResultScreen />, stat = "0", loading, children }) => {
     const LoadingView = () => {
@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         border: "1px solid #3D3D3D",
         borderRadius: 12,
-        paddingVertical: "5%",
-        paddingHorizontal: "3%",
+        paddingVertical: Dimentions.contentPadding
     },
     viewRow: {
         flexDirection: "row",

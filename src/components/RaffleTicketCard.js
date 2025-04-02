@@ -75,7 +75,6 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle 
 
 const styles = StyleSheet.create({
     ticketsSection: {
-        marginTop: 24,
         padding: 24,
         borderColor: "#3D3D3D",
         borderWidth: 1,
