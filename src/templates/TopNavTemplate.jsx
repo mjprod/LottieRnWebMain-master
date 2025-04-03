@@ -3,7 +3,7 @@ import TopBannerNav from "../components/TopBannerNav";
 import { Colors } from "../util/constants";
 
 
-const TopNavScreenTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, children }) => {
+const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, children }) => {
     return (
         <ScrollView style={styles.container}>
             <TopBannerNav title={title} subtitle={subtitle} backgroundImage={navBackgroudImage} hasBackButton={hasBackButton} />
@@ -21,4 +21,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default TopNavScreenTemplate;
+export default TopNavTemplate;

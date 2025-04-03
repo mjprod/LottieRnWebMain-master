@@ -10,7 +10,7 @@ import DrawInProgressContent from "./components/DrawInProgressContent";
 import WeAreExtendingContent from "./components/WeAreExtendingContent";
 import LoadingView from "../../components/LoadingView";
 import Congratulations from "./components/Congratulations";
-import TopNavScreenTemplate from "../../templates/TopNavScreenTemplate";
+import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 import AssetPack from "../../util/AssetsPack";
 
 export const InfoScreenContents = {
