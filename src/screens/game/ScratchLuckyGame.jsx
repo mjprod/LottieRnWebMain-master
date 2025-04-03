@@ -1,31 +1,25 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import {
-  Animated,
-  Dimensions,
-  Platform,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Animated, Dimensions, Platform, StyleSheet, View } from "react-native";
 
+import { Easing } from "react-native";
+import LinearGradient from "react-native-web-linear-gradient";
+import { useLocation } from "react-router";
 import { BackgroundGame } from "../../components/BackgroundGame.js";
+import IntroThemeVideo from "../../components/IntroThemeVideo.js";
+import LoadingView from "../../components/LoadingView.js";
 import LuckySymbolCollect from "../../components/LuckySymbolCollect.js";
 import ScratchLayout from "../../components/ScratchLayout.js";
 import TopLayout from "../../components/TopLayout.js";
-import { useLocation } from "react-router";
-import BottomDrawer from "./components/BottomDrawer";
-import IntroThemeVideo from "../../components/IntroThemeVideo.js";
 import { useGame } from "../../context/GameContext.js";
 import useApiRequest from "../../hook/useApiRequest.js";
+import useAppNavigation from "../../hook/useAppNavigation.js";
 import { useSound } from "../../hook/useSoundPlayer.js";
 import { useTheme } from "../../hook/useTheme.js";
-import useAppNavigation from "../../hook/useAppNavigation.js";
-import LinearGradient from 'react-native-web-linear-gradient';
-import { Easing } from "react-native";
 import { BONUS_PACK_NUMBER_OF_CARDS } from "../../util/constants.js";
-import WinLuckySymbolView from "./components/WinLuckySymbolView.jsx";
+import BottomDrawer from "./components/BottomDrawer";
 import InitialCountDownView from "./components/InitialCountDownView.jsx";
-import LoadingView from "../../components/LoadingView.js";
+import WinLuckySymbolView from "./components/WinLuckySymbolView.jsx";
 
 const { width } = Dimensions.get("window");
 
@@ -52,9 +46,10 @@ const ScratchLuckyGame = () => {
   const [maxCombinations, setMaxCombinations] = useState(0);
   const [hasLuckySymbol, setHasLuckySymbol] = useState(false);
   const [luckySymbolWon, setLuckySymbolWon] = useState(0);
-  const [totalComboCount, setTotalComboCount] = useState(0)
-  const [comboPlayed, setComboPlayed] = useState(0)
-  const [nextCardAnimationFinished, setNextCardAnimationFinished] = useState(true);
+  const [totalComboCount, setTotalComboCount] = useState(0);
+  const [comboPlayed, setComboPlayed] = useState(0);
+  const [nextCardAnimationFinished, setNextCardAnimationFinished] =
+    useState(true);
 
   const {
     user,
@@ -77,19 +72,20 @@ const ScratchLuckyGame = () => {
     nextTheme,
     currentTheme,
     updateThemeUsingGames,
-    currentThemeIndex
+    currentThemeIndex,
   } = useTheme();
 
   const {
-    loading,
-    error,
-    response,
+    getGamesLoading,
+    fetchUserDetailsLoading,
+    getGamesError,
+    fetchUserDetailsError,
     updateLuckySymbol,
     updateCardPlayed,
     fetchUserDetails,
     updateCardBalance,
     updateScore,
-    getGames
+    getGames,
   } = useApiRequest();
 
   const { setStartPlay } = useSound();
@@ -100,35 +96,42 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (location.state) {
       const { username, email, id } = location.state;
-      fetchUserDetails(id, username, email);
+      fetchUserDetails(id, username, email)
+        .then((response) => {
+          if (response.user) {
+            setUser(response.user);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user details:", error);
+        });
     }
   }, [location]);
 
   useEffect(() => {
-    if (response) {
-      if (response.user) {
-        setUser(response.user);
-      } else if (response.gameId) {
-        setGameId(response.gameId);
-      } else if (response.games) {
-        updateThemeUsingGames(response.games);
-        setGames(response.games);
-      }
-    }
-  }, [response]);
-
-  useEffect(() => {
     if (games && games.length > 0) {
       const currentGame = games[currentThemeIndex];
-      setMaxCombinations(currentGame.number_combination_total)
-      setHasLuckySymbol(currentGame.lucky_symbol_won == 1)
-      setGameId(currentGame.game_id)
+      setMaxCombinations(currentGame.number_combination_total);
+      setHasLuckySymbol(currentGame.lucky_symbol_won == 1);
+      setGameId(currentGame.game_id);
     }
-  }, [games, currentThemeIndex])
+  }, [games, currentThemeIndex]);
 
   useEffect(() => {
     if (user) {
-      getGames(user.user_id, user.current_beta_block);
+      console.log("user", user);
+      console.log("user.current_game_id", user.current_beta_block);
+
+      getGames(user.user_id, user.current_beta_block)
+        .then((response) => {
+          if (response.games) {
+            updateThemeUsingGames(response.games);
+            setGames(response.games);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching games:", error);
+        });
       setScore(user.total_score);
       setTicketCount(user.ticket_balance);
       setLuckySymbolCount(user.lucky_symbol_balance);
@@ -137,7 +140,7 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (themeSequence && themeSequence.length > 0) {
-      setCountDownStarted(true)
+      setCountDownStarted(true);
       setScratchCardLeft(themeSequence.length);
     }
   }, [themeSequence]);
@@ -163,7 +166,7 @@ const ScratchLuckyGame = () => {
     if (luckySymbolCount <= 2) {
       if (scratchCardLeft > 1) {
         if (currentTheme === nextTheme) {
-          setReset(true)
+          setReset(true);
         } else {
           setIntroThemeVideo(true);
         }
@@ -175,7 +178,7 @@ const ScratchLuckyGame = () => {
 
   const addLuckySymbol = () => {
     if (luckySymbolCount > 2) {
-      updateLuckySymbol(user.user_id, 0)
+      updateLuckySymbol(user.user_id, 0);
       saveLuckySymbol(0);
       nextCard();
     } else if (luckySymbolCount === 2) {
@@ -183,10 +186,10 @@ const ScratchLuckyGame = () => {
       setTimeout(() => {
         decrementLuckySymbol(3);
       }, 300);
-      updateLuckySymbol(user.user_id, 0)
+      updateLuckySymbol(user.user_id, 0);
     } else {
       saveLuckySymbol(luckySymbolCount + 1);
-      updateLuckySymbol(user.user_id, luckySymbolCount + 1)
+      updateLuckySymbol(user.user_id, luckySymbolCount + 1);
       nextCard();
     }
   };
@@ -218,7 +221,7 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (scratchStarted) {
-      updateCardPlayed(user.current_beta_block, user.user_id, gameId)
+      updateCardPlayed(user.current_beta_block, user.user_id, gameId);
       Animated.timing(marginTopAnim, {
         toValue: 6,
         duration: 300,
@@ -263,7 +266,6 @@ const ScratchLuckyGame = () => {
           useNativeDriver: Platform.OS !== "web",
         }).start();
       });
-
     }
   }, [reset, setReset]);
 
@@ -271,7 +273,7 @@ const ScratchLuckyGame = () => {
     if (!skipToFinishLuckyVideo) {
       luckySymbolVideoRef.current.seekToTime(2);
     }
-    setSkipToFinishLuckyVideo(true)
+    setSkipToFinishLuckyVideo(true);
   };
 
   const handleCountdownFinish = () => {
@@ -279,12 +281,16 @@ const ScratchLuckyGame = () => {
   };
 
   const handleLuckySymbolCollectComplete = () => {
-    updateCardBalance(user.user_id, user.current_beta_block, BONUS_PACK_NUMBER_OF_CARDS);
+    updateCardBalance(
+      user.user_id,
+      user.current_beta_block,
+      BONUS_PACK_NUMBER_OF_CARDS
+    );
   };
 
   const handleGameOver = () => {
     setGameOver(true);
-    appNavigation.goToGameOverPage(user.user_id, user.name, user.email)
+    appNavigation.goToGameOverPage(user.user_id, user.name, user.email);
   };
 
   const backGroundVideo = useMemo(() => {
@@ -294,35 +300,41 @@ const ScratchLuckyGame = () => {
   const containerStyle = useMemo(
     () => [
       styles.fullScreen,
-      { pointerEvents: nextCardAnimationFinished ? "auto" : "none" }
+      { pointerEvents: nextCardAnimationFinished ? "auto" : "none" },
     ],
     [nextCardAnimationFinished]
   );
 
-  const gameBackground = useMemo(() =>
-  (<BackgroundGame
-    showAlphaView={scratchStarted || gameOver}
-    source={backGroundVideo} />)
-    , [backGroundVideo, scratchStarted, gameOver]
+  const gameBackground = useMemo(
+    () => (
+      <BackgroundGame
+        showAlphaView={scratchStarted || gameOver}
+        source={backGroundVideo}
+      />
+    ),
+    [backGroundVideo, scratchStarted, gameOver]
   );
 
-  if (loading) return <LoadingView />;
-  if (error) return <p>Error: {error}</p>;
+  if (getGamesLoading || fetchUserDetailsLoading) return <LoadingView />;
+  if (getGamesError || fetchUserDetailsError)
+    return <p>Error: {getGamesError || fetchUserDetailsError}</p>;
 
   return (
     <View style={containerStyle}>
       {gameBackground}
       <View style={styles.containerOverlay}>
-        <Animated.View style={[styles.background, { transform: [{ translateX }] }]}>
+        <Animated.View
+          style={[styles.background, { transform: [{ translateX }] }]}
+        >
           <LinearGradient
-            start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
+            start={{ x: 0.0, y: 0.5 }}
+            end={{ x: 0.5, y: 1.0 }}
             locations={[0, 0.3, 0.45, 0.55, 1.0]}
-            colors={['#212121', '#262E33', '#1D4A64', '#24282B', '#212121']}
-            style={styles.imageBackground}>
+            colors={["#212121", "#262E33", "#1D4A64", "#24282B", "#212121"]}
+            style={styles.imageBackground}
+          >
             <Animated.View style={{ marginTop: marginTopAnim }}>
-              <TopLayout
-                setTimerGame={setTimerGame}
-                clickCount={clickCount} />
+              <TopLayout setTimerGame={setTimerGame} clickCount={clickCount} />
             </Animated.View>
 
             <ScratchLayout
@@ -344,15 +356,18 @@ const ScratchLuckyGame = () => {
               hasLuckySymbol={hasLuckySymbol}
               setLuckySymbolWon={setLuckySymbolWon}
               setTotalComboCount={setTotalComboCount}
-              setComboPlayed={setComboPlayed} />
+              setComboPlayed={setComboPlayed}
+            />
           </LinearGradient>
         </Animated.View>
       </View>
       <BottomDrawer />
-      {winLuckySymbolVideo && (<WinLuckySymbolView
-        videoRef={luckySymbolVideoRef}
-        onSkipClicked={handleWinLuckySymbolVideoScreenClick}
-        onVideoEnd={handleLuckySymbolWonVideoEnd} />
+      {winLuckySymbolVideo && (
+        <WinLuckySymbolView
+          videoRef={luckySymbolVideoRef}
+          onSkipClicked={handleWinLuckySymbolVideoScreenClick}
+          onVideoEnd={handleLuckySymbolWonVideoEnd}
+        />
       )}
       {collectLuckySymbolVideo && (
         <LuckySymbolCollect
@@ -363,11 +378,12 @@ const ScratchLuckyGame = () => {
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
         />
       )}
-      {(!gameStarted || !countDownStarted) &&
+      {(!gameStarted || !countDownStarted) && (
         <InitialCountDownView
           countDownLottieRef={countDownLottieRef}
           onCountDownComplete={handleCountdownFinish}
-        />}
+        />
+      )}
       {introThemeVideo && (
         <IntroThemeVideo handleVideoEnd={handleVideoIntroEnd} />
       )}
@@ -410,7 +426,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 16,
     borderColor: "#A88C5D",
     borderWidth: 1,
-  }
+  },
 });
 
 export default ScratchLuckyGame;
