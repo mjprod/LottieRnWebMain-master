@@ -29,6 +29,7 @@ import { convertUTCToLocal, getCurrentDate } from "../util/Helpers";
 import { InfoScreenContents } from "./info/InfoScreen";
 import LuckySymbolCard from "../components/LuckySymbolCard";
 import LoadingView from "../components/LoadingView";
+import TopNavTemplate from "../templates/TopNavTemplate";
 
 const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
@@ -160,48 +161,42 @@ const LauchScreenEncrypted = () => {
 
   if (user) {
     return (
-      <ScrollView style={{ backgroundColor: Colors.background }}>
-        <View style={styles.header}>
-          <TopBannerNav />
-          <ProfileHeader
-            containerStyle={{ marginTop: -70, marginHorizontal: Dimentions.pageMargin }}
-            id={user.user_id ? user.user_id : ""}
-            name={user.name ?? ""}
+      <TopNavTemplate>
+        <ProfileHeader
+          containerStyle={{ marginHorizontal: Dimentions.pageMargin, marginBottom: Dimentions.marginL }}
+          id={user.user_id ? user.user_id : ""}
+          name={user.name ?? ""} />
+        <View style={styles.statisticsContainer}>
+          <SectionTitle text={"Statistics"} />
+          <View style={styles.resultRow}>
+            <StatCard
+              title="Total Points"
+              stat={user.total_score}
+            />
+            <View style={{ width: 8 }} />
+            <LuckySymbolCard />
+          </View>
+          <RaffleTicketCard containerStyle={{ marginTop: 8 }} score={user.total_score} ticketCount={user.ticket_balance} />
+          <GameButton
+            style={{ marginTop: Dimentions.marginL, width: "100%" }}
+            text="Play Now"
+            onPress={() => handleStartGame()}
           />
         </View>
-        <View style={styles.container}>
-          <View style={styles.statisticsContainer}>
-            <SectionTitle text={"Statistics"} />
-            <View style={styles.resultRow}>
-              <StatCard
-                title="Total Points"
-                stat={user.total_score}
-              />
-              <View style={{ width: 8 }} />
-              <LuckySymbolCard />
-            </View>
-            <RaffleTicketCard containerStyle={{ marginTop: 8 }} score={user.total_score} ticketCount={user.ticket_balance} />
-            <GameButton
-              style={{ marginTop: Dimentions.marginL, width: "100%" }}
-              text="Play Now"
-              onPress={() => handleStartGame()}
-            />
-          </View>
-          <View style={styles.restContainer}>
-            <SectionTitle
-              text="LeaderBard"
-              viewAllText="View All"
-              viewAllAction={handleViewAllPress}
-            />
-            <LeaderBoardList numberOfItems={5} />
-            <GamesAvailableCard
-              style={{ marginVertical: 24 }}
-              cardsLeft={user.card_balance}
-            />
-            <NextDrawCard style={{ marginVertical: 24 }} />
-          </View>
+        <View style={styles.restContainer}>
+          <SectionTitle
+            text="LeaderBard"
+            viewAllText="View All"
+            viewAllAction={handleViewAllPress}
+          />
+          <LeaderBoardList numberOfItems={5} />
+          <GamesAvailableCard
+            style={{ marginVertical: 24 }}
+            cardsLeft={user.card_balance}
+          />
+          <NextDrawCard style={{ marginVertical: 24 }} />
         </View>
-      </ScrollView>
+      </TopNavTemplate>
     );
   } else return (<LoadingView />);
 
