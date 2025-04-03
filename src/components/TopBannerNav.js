@@ -16,7 +16,7 @@ import { useNavigate } from "react-router";
 const TopBannerNav = ({
   title = "Be in to win Prizes!",
   subtitle = "Scratch for more chances to win!",
-  backgroundImage = AssetPack.backgrounds.TOP_NAV_BACKGROUND,
+  backgroundImage = AssetPack.backgrounds.TOP_NAV_HEROES,
   onBackPress,
   hasBackButton = false,
 }) => {
@@ -31,11 +31,12 @@ const TopBannerNav = ({
   };
 
   return (
-    <ImageBackground style={{ alignItems: "start" }} resizeMode="cover" source={backgroundImage} >
+    <ImageBackground style={{ alignItems: "start", height: 284 }} resizeMode="cover" source={backgroundImage} >
       <LinearGradient
-        colors={[Colors.transparent, Colors.transparent, Colors.background]}
+        colors={[Colors.transparent, Colors.transparent, Colors.background, Colors.background]}
+        locations={[0, 0.5, 0.9, 1]}
         style={styles.linearGradient}>
-        <View style={{ flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
+        <View style={{ flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center", }}>
           {hasBackButton && (
             <TouchableOpacity onPress={onBackPressLocal}>
               <Image

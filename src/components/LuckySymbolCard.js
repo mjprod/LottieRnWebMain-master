@@ -18,14 +18,7 @@ const LuckySymbolCard = () => {
 };
 
 const styles = StyleSheet.create({
-    imageBackgroundLuckySymbol: {
-        width: 100,
-        height: 45,
-        alignItems: "center",
-    },
-    luckySymbols: {
-        flexDirection: "row",
-    },
+
 });
 
 export default LuckySymbolCard;

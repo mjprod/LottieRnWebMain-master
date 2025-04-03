@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AssetPack from '../util/AssetsPack';
-import { DailyCardStatus } from '../util/constants';
+import { DailyCardStatus, Fonts } from '../util/constants';
 
 
 const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
@@ -109,11 +109,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#1B1B1B66',
         width: '100%',
         height: '100%',
-
     },
     dayTextStyle: {
         color: "#FFFFFF",
-        fontFamily: "Teko-Medium",
+        fontFamily: Fonts.TekoMedium,
         fontSize: 18,
         backgroundColor: '#3D3D3D',
         flex: 1,
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
     },
     dayTextStyleActive: {
         color: "#382E23",
-        fontFamily: "Teko-Medium",
+        fontFamily: Fonts.TekoMedium,
         fontSize: 18,
         backgroundColor: '#FFEEC0',
         flex: 1,
@@ -144,6 +143,7 @@ const styles = StyleSheet.create({
         fontFamily: "Teko-Medium",
         fontSize: 18,
         backgroundColor: '#3EDA41',
+        borderColor: '#3EDA41',
         flex: 1,
         borderTopRightRadius: 12,
         borderTopLeftRadius: 12,
