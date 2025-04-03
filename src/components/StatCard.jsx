@@ -31,11 +31,11 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 16,
-        fontFamily: Fonts.InterRegular,
+        fontFamily: Fonts.InterSemiBold,
         color: Colors.jokerWhite50,
         justifyContent: "center",
         alignItems: "center",
-        marginLeft: 5,
+        marginLeft: 8,
         marginTop: 3,
     },
     statText: {

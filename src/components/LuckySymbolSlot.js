@@ -18,8 +18,8 @@ const LuckySymbolSlot = ({ showCoin = false }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: 40,
-        height: 40,
+        width: 34,
+        height: 34,
         borderRadius: "50%",
         boxShadow: '0px 2px 1px #FFFFFF1A, inset 0px 2px 1px #000000',
         backgroundColor: "#1E1E1E",
