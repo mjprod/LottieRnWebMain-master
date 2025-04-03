@@ -1,6 +1,6 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
-import { TouchableOpacity, FlatList, View, Text } from "react-native";
-import Slide from "./items/Slide";
+import React, { useState, useRef, useCallback } from "react";
+import { FlatList, View, Text, Pressable } from "react-native";
+import Slide from "./Slide";
 
 function ShowCaseCarousel({ slideList = [], style }) {
   const [index, setIndex] = useState(0);
@@ -44,12 +44,8 @@ function ShowCaseCarousel({ slideList = [], style }) {
     }
   }, []);
 
-  useEffect(() => {
-    console.warn(index);
-  }, [index]);
-
   return (
-    <View style={{ flex: 1, overflow: "visible", ...style }}>
+    <View style={{ flex: 1, overflow: "visible", ...style }} >
       <FlatList
         ref={listRef}
         onLayout={(event) => {
@@ -62,8 +58,7 @@ function ShowCaseCarousel({ slideList = [], style }) {
             <Slide
               data={item}
               width={dimensions.width}
-              height={dimensions.height}
-            />
+              height={dimensions.height}/>
           );
         }}
         pagingEnabled
@@ -80,8 +75,7 @@ function ShowCaseCarousel({ slideList = [], style }) {
           fontSize: 14,
           height: 50,
           textAlign: "center",
-        }}
-      >
+        }}>
         {slideList[index].description}
       </Text>
 
@@ -93,27 +87,24 @@ function ShowCaseCarousel({ slideList = [], style }) {
           flexDirection: "row",
           justifyContent: "space-between",
           paddingHorizontal: 20,
-        }}
-      >
-        <TouchableOpacity onPress={prevSlide} disabled={index === 0}>
+        }}>
+        <Pressable onPress={prevSlide} disabled={index === 0}>
           <Text style={{ fontSize: 50, color: index === 0 ? "black" : "white" }}>
             {"‹"}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity
+        <Pressable
           onPress={nextSlide}
-          disabled={index === slideList.length - 1}
-        >
+          disabled={index === slideList.length - 1}>
           <Text
             style={{
               fontSize: 50,
               color: index === slideList.length - 1 ? "black" : "white",
-            }}
-          >
+            }}>
             {"›"}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

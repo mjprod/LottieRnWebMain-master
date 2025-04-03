@@ -2,7 +2,6 @@ import React from "react";
 import { Image } from "react-native";
 
 function Slide({ data, height, width }) {
-  console.log("Slide Data", data);
   return (
     <Image
       resizeMode="contain"
