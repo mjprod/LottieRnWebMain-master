@@ -16,7 +16,7 @@ import { useNavigate } from "react-router";
 const TopBannerNav = ({
   title = "Be in to win Prizes!",
   subtitle = "Scratch for more chances to win!",
-  backgroundImage = AssetPack.backgrounds.TOP_NAV_BACKGROUND,
+  backgroundImage = AssetPack.backgrounds.TOP_NAV_HEROES,
   onBackPress,
   hasBackButton = false,
 }) => {
