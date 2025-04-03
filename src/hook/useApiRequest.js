@@ -1,14 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { fetchUserDetailsAPI, getDailyQuestionAPI, getWinnerAPI, loginAPI, postDailyAnswerAPI } from "../api/api";
-import { showConsoleError, showConsoleMessage } from "../util/ConsoleMessage";
-import { Endpoint } from "../util/constants";
-import { decrypt, encrypt } from "../util/crypto";
+import { fetchUserDetailsAPI, getDailyQuestionAPI, getGamesAPI, getLeaderBoardAPI, getWinnerAPI, loginAPI, postDailyAnswerAPI, updateCardBalanceAPI, updateCardPlayedAPI, updateLuckySymbolAPI, updateScoreAPI } from "../api/api";
+import { showConsoleError } from "../util/ConsoleMessage";
 import useStorage from "./useStorage";
 
 const useApiRequest = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const [response, setResponse] = useState(null);
   const { loadData, saveData } = useStorage();
 
@@ -101,166 +100,106 @@ const useApiRequest = () => {
     return postDailyAnswerMutation.mutateAsync({ user_id, question_id, answer, cards_won, beta_block_id });
   };
 
-  // ###############################################################
-  // ################# OLD API Request Function #######################
-  // ###############################################################
-
-  const fetchData = async (config, silent = false) => {
-    const { url, method = "GET", headers, body } = config;
-    showConsoleMessage("API Request Config:", config)
-    const encryptData = encrypt(body);
-    const accessToken = await loadData("accessToken");
-
-    const options = {
-      method,
-      headers: accessToken ? {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + accessToken,
-        ...headers,
-      } : headers,
-      body: JSON.stringify({ data: encryptData }),
-    }
-
-    if (!silent) setLoading(true);
-
-    try {
-      const res = await fetch(url, options);
-      showConsoleMessage("API Response:", res)
-      if (res.status === 401 && !options._retry) {
-        options._retry = true;
-        const refreshToken = loadData('refreshToken');
-
-        const refreshResponse = await fetch(Endpoint.token, {
-          method: 'POST',
-          body: JSON.stringify({ data: encrypt({ refreshToken: refreshToken }) }),
-        });
-
-        if (refreshResponse.ok) {
-          const data = await refreshResponse.json();
-          const newAccessToken = data.accessToken;
-          saveData('accessToken', newAccessToken);
-          options.headers['Authorization'] = `Bearer ${newAccessToken}`;
-          res = await fetch(url, options);
-        }
-      }
-
-      const data = await res.json();
-
-      setResponse(JSON.parse(decrypt(data)));
-      setError(null);
-      showConsoleMessage("API Response Data:", JSON.parse(decrypt(data)));
-    } catch (err) {
-      setError(err.message);
-      showConsoleError("API Error:", err)
-    } finally {
-      if (!silent) setLoading(false);
-    }
-  };
+  const getGamesMutation = useMutation({
+    mutationFn: getGamesAPI,
+    onSuccess: (data) => {
+      console.log('Games fetched successfully!');
+      queryClient.invalidateQueries(['games']);
+    },
+    onError: (error) => {
+      const errorMessage =
+        error.response?.data?.error || 'Error fetching games';
+      showConsoleError(errorMessage);
+    },
+  });
 
   const getGames = async (user_id, beta_block_id) => {
-    const config = {
-      url: Endpoint.games,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        user_id,
-        beta_block_id,
-      },
-    };
-
-    await fetchData(config);
+    return getGamesMutation.mutateAsync({ user_id, beta_block_id });
   };
 
-  const updateLuckySymbol = async (user_id, lucky_symbol) => {
-    const config = {
-      url: Endpoint.update_lucky_symbol,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        user_id,
-        lucky_symbol,
-      },
-    };
-
-    await fetchData(config, true);
-  };
-
-  const getLeaderBoard = async (limit, page = 1) => {
-    const config = {
-      url: Endpoint.leader_board,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        limit,
-        page
-      },
-    };
-    await fetchData(config);
-  };
+  const updateCardPlayedMutation = useMutation({
+    mutationFn: updateCardPlayedAPI,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['cardPlayed']);
+    },
+    onError: (error) => {
+      const errorMessage = error.response?.data?.error || 'Error updating card played';
+      showConsoleError(errorMessage);
+    },
+  });
 
   const updateCardPlayed = async (beta_block_id, user_id, game_id) => {
-    const config = {
-      url: Endpoint.update_card_played,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        beta_block_id,
-        user_id,
-        game_id
-      },
-    };
-    await fetchData(config, true);
+    return updateCardPlayedMutation.mutateAsync({ beta_block_id, user_id, game_id });
   };
+
+  const updateScoreMutation = useMutation({
+    mutationFn: updateScoreAPI,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['score']);
+    },
+    onError: (error) => {
+      const errorMessage = error.response?.data?.error || 'Error updating score';
+      showConsoleError(errorMessage);
+    },
+  });
 
   const updateScore = async (user_id, score, game_id, combo_played) => {
-    const config = {
-      url: Endpoint.update_score,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        user_id,
-        score,
-        game_id,
-        combo_played
-      },
-    };
-    await fetchData(config, true);
+    return updateScoreMutation.mutateAsync({ user_id, score, game_id, combo_played });
   };
 
+  const updateLuckySymbolMutation = useMutation({
+    mutationFn: updateLuckySymbolAPI,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['luckySymbol']);
+    },
+    onError: (error) => {
+      const errorMessage = error.response?.data?.error || 'Error updating Lucky Symbol';
+      showConsoleError(errorMessage);
+    },
+  });
+
+  const updateLuckySymbol = async (user_id, lucky_symbol) => {
+    return updateLuckySymbolMutation.mutateAsync({ user_id, lucky_symbol });
+  };
+
+  const updateCardBalanceMutation = useMutation({
+    mutationFn: updateCardBalanceAPI,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['cardBalance']);
+    },
+    onError: (error) => {
+      const errorMessage = error.response?.data?.error || 'Error updating card balance';
+      showConsoleError(errorMessage);
+    },
+  });
+
   const updateCardBalance = async (user_id, beta_block_id, card_balance) => {
-    const config = {
-      url: Endpoint.update_card_balance,
-      method: "POST",
-      body: {
-        user_id: user_id,
-        beta_block_id: beta_block_id,
-        increase_card_balance: card_balance
-      },
-    };
-    await fetchData(config, true);
+    return updateCardBalanceMutation.mutateAsync({ user_id, beta_block_id, card_balance });
+  };
+
+  const getLeaderBoardMutation = useMutation({
+    mutationFn: getLeaderBoardAPI,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['leaderBoard']);
+    },
+    onError: (error) => {
+      const errorMessage = error.response?.data?.error || 'Error fetching leader board';
+      showConsoleError(errorMessage);
+    },
+  });
+
+  const getLeaderBoard = async (limit, page = 1) => {
+    return getLeaderBoardMutation.mutateAsync({ limit, page });
   };
 
   return {
     loading,
     error,
     response,
-    fetchData,
     updateLuckySymbol,
     getLeaderBoard,
-    updateCardPlayed,
     updateScore,
     updateCardBalance,
-    getGames,
     login,
     loginLoading: loginMutation.isLoading,
     loginError: loginMutation.error,
@@ -276,6 +215,13 @@ const useApiRequest = () => {
     postDailyAnswer,
     postDailyAnswerLoading: postDailyAnswerMutation.isLoading,
     postDailyAnswerError: postDailyAnswerMutation.error,
+    getGames,
+    getGamesLoading: getGamesMutation.isLoading,
+    getGamesError: getGamesMutation.error,
+    updateCardPlayed,
+    updateCardPlayedLoading: updateCardPlayedMutation.isLoading,
+    updateCardPlayedError: updateCardPlayedMutation.error,
+
   };
 };
 
