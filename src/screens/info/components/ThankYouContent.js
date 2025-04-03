@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import AssetPack from "../../../util/AssetsPack";
-import PurplePill from "../../../components/PurplePill";
+import PurplePill from "../../../components/BetaCompetitionPill";
 import { Dimentions, Fonts, Colors } from "../../../util/constants";
 import LinkButton from "../../../components/LinkButton";
 import LinearGradient from "react-native-web-linear-gradient";

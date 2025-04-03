@@ -1,21 +1,21 @@
 import React from "react";
 import {
-  TouchableOpacity,
   Text,
   Image,
   StyleSheet,
   View,
   ImageBackground,
+  Pressable,
 } from "react-native";
 import AssetPack from "../util/AssetsPack";
-import PurplePill from "./PurplePill";
+import PurplePill from "./BetaCompetitionPill";
 import LinearGradient from "react-native-web-linear-gradient";
 import { Colors, Dimentions, Fonts } from "../util/constants";
 import { useNavigate } from "react-router";
 
 const TopBannerNav = ({
-  title = "Be in to win Prizes!",
-  subtitle = "Scratch for more chances to win!",
+  title = "Scratch to win!",
+  subtitle = "Your next prize awaits.",
   backgroundImage = AssetPack.backgrounds.TOP_NAV_HEROES,
   onBackPress,
   hasBackButton = false,
@@ -36,14 +36,14 @@ const TopBannerNav = ({
         colors={[Colors.transparent, Colors.transparent, Colors.background, Colors.background]}
         locations={[0, 0.5, 0.9, 1]}
         style={styles.linearGradient}>
-        <View style={{ flexDirection: "row", justifyContent: "center", alignContent: "center", alignItems: "center", }}>
+        <View style={styles.topContainer}>
           {hasBackButton && (
-            <TouchableOpacity onPress={onBackPressLocal}>
+            <Pressable onPress={onBackPressLocal} style={{ alignContent: "center", alignItems: "center" }}>
               <Image
                 resizeMode="contain"
                 style={styles.arrowIcon}
                 source={AssetPack.icons.ARROW_LEFT} />
-            </TouchableOpacity>
+            </Pressable>
           )}
           <PurplePill
             text={"Beta Competition"}
@@ -57,29 +57,32 @@ const TopBannerNav = ({
 };
 
 const styles = StyleSheet.create({
+  topContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    marginTop: Dimentions.marginL,
+    marginBottom: Dimentions.marginM
+  },
   arrowIcon: {
     width: 21,
     height: 21,
-    marginRight: Dimentions.marginS
+    marginRight: Dimentions.marginL,
   },
   betaCompetitionText: {
-    marginBottom: Dimentions.pageMargin,
-    marginTop: 20,
     letterSpacing: 1,
-    zIndex: 9999,
   },
   title: {
     fontFamily: Fonts.TekoMedium,
     color: "#fff",
-    fontSize: 28,
+    fontSize: 36,
     textTransform: "uppercase",
   },
   subtitle: {
     fontFamily: Fonts.InterRegular,
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 20,
+    color: "#FFFFFFB8",
+    fontSize: 18,
   },
   linearGradient: {
     width: "100%",
@@ -87,6 +90,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dimentions.pageMargin,
     flex: 1,
     alignItems: "start",
+    justifyContent: "start",
     paddingBottom: Dimentions.sectionMargin,
     paddingTop: Dimentions.pageMargin,
   },

@@ -177,7 +177,7 @@ const LauchScreenEncrypted = () => {
               <LoadingView />
             ) : (
               <ProfileHeader
-                containerStyle={{ marginTop: -100, marginHorizontal: Dimentions.pageMargin }}
+                containerStyle={{ marginTop: -70, marginHorizontal: Dimentions.pageMargin }}
                 id={user.user_id ? user.user_id : ""}
                 name={user.name ?? ""}
               />
