@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { fetchUserDetailsAPI, getWinnerAPI, loginAPI } from "../api/api";
+import { fetchUserDetailsAPI, getDailyQuestionAPI, getWinnerAPI, loginAPI, postDailyAnswerAPI } from "../api/api";
 import { showConsoleError, showConsoleMessage } from "../util/ConsoleMessage";
 import { Endpoint } from "../util/constants";
 import { decrypt, encrypt } from "../util/crypto";
@@ -40,7 +40,6 @@ const useApiRequest = () => {
   const fetchUserDetailsMutation = useMutation({
     mutationFn: fetchUserDetailsAPI,
     onSuccess: (data) => {
-      console.log("User details fetched successfully!");
       queryClient.invalidateQueries(['userDetails']);
     },
     onError: (error) => {
@@ -56,7 +55,6 @@ const useApiRequest = () => {
     return fetchUserDetailsMutation.mutateAsync({ user_id, name, email });
   };
 
-
   const getWinnerMutation = useMutation({
     mutationFn: getWinnerAPI,
     onSuccess: (data) => {
@@ -70,6 +68,37 @@ const useApiRequest = () => {
 
   const getWinner = async () => {
     return getWinnerMutation.mutateAsync();
+  };
+
+  const dailyQuestionMutation = useMutation({
+    mutationFn: getDailyQuestionAPI,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['dailyQuestion']);
+    },
+    onError: (error) => {
+      const errorMessage = error.response?.data?.error || 'Error fetching daily question';
+      showConsoleError(errorMessage);
+    },
+  });
+
+  const getDailyQuestion = async (user_id) => {
+    return dailyQuestionMutation.mutateAsync({ user_id });
+  };
+
+  const postDailyAnswerMutation = useMutation({
+    mutationFn: postDailyAnswerAPI,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['dailyAnswer']);
+    },
+    onError: (error) => {
+      const errorMessage =
+        error.response?.data?.error || 'Error posting daily answer';
+      showConsoleError(errorMessage);
+    },
+  });
+
+  const postDailyAnswer = async (user_id, question_id, answer, cards_won, beta_block_id) => {
+    return postDailyAnswerMutation.mutateAsync({ user_id, question_id, answer, cards_won, beta_block_id });
   };
 
   // ###############################################################
@@ -160,41 +189,6 @@ const useApiRequest = () => {
     await fetchData(config, true);
   };
 
-
-
-
-  const getDailyQuestion = async (user_id) => {
-    const config = {
-      url: Endpoint.get_daily_question,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        user_id,
-      },
-    };
-    await fetchData(config);
-  };
-
-  const postDailyAnswer = async (user_id, question_id, answer, cards_won, beta_block_id) => {
-    const config = {
-      url: Endpoint.post_daily_answer,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        user_id,
-        question_id,
-        answer,
-        cards_won,
-        beta_block_id
-      },
-    };
-    await fetchData(config);
-  };
-
   const getLeaderBoard = async (limit, page = 1) => {
     const config = {
       url: Endpoint.leader_board,
@@ -256,15 +250,12 @@ const useApiRequest = () => {
     await fetchData(config, true);
   };
 
-
   return {
     loading,
     error,
     response,
     fetchData,
     updateLuckySymbol,
-    getDailyQuestion,
-    postDailyAnswer,
     getLeaderBoard,
     updateCardPlayed,
     updateScore,
@@ -279,6 +270,12 @@ const useApiRequest = () => {
     getWinner,
     getWinnerLoading: getWinnerMutation.isLoading,
     getWinnerError: getWinnerMutation.error,
+    getDailyQuestion,
+    getDailyQuestionLoading: dailyQuestionMutation.isLoading,
+    getDailyQuestionError: dailyQuestionMutation.error,
+    postDailyAnswer,
+    postDailyAnswerLoading: postDailyAnswerMutation.isLoading,
+    postDailyAnswerError: postDailyAnswerMutation.error,
   };
 };
 

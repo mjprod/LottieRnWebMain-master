@@ -1,23 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, ScrollView, StyleSheet, Platform } from "react-native";
+import { Animated, Platform, ScrollView, StyleSheet } from "react-native";
 import { ActivityIndicator, View } from "react-native-web";
-import ProfileHeader from "../components/ProfileHeader";
-import { useSnackbar } from "../components/SnackbarContext";
-import useApiRequest from "../hook/useApiRequest";
-import QuestionOfTheDay from "../components/QuestionOfTheDay";
-import DailyCardsContainer from "../components/DailyCardsContainer";
-import { useLocation } from "react-router-dom";
-import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
+import { useLocation } from "react-router-dom";
+import DailyCardsContainer from "../components/DailyCardsContainer";
+import GamesAvailableCard from "../components/GamesAvailableCard";
 import LinkButton from "../components/LinkButton";
 import NextDrawCard from "../components/NextDrawCard";
+import ProfileHeader from "../components/ProfileHeader";
+import QuestionOfTheDay from "../components/QuestionOfTheDay";
+import { useSnackbar } from "../components/SnackbarContext";
 import TopBannerNav from "../components/TopBannerNav";
-import { isValidAnswer } from "../util/Validator";
-import { getCurrentDate, convertUTCToLocal, } from "../util/Helpers";
 import { DailySetData } from "../data/DailyCardData";
-import { DailyCardStatus, Dimentions } from "../util/constants";
-import GamesAvailableCard from "../components/GamesAvailableCard";
+import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
+import AssetPack from "../util/AssetsPack";
+import { DailyCardStatus, Dimentions } from "../util/constants";
+import { convertUTCToLocal, getCurrentDate, } from "../util/Helpers";
+import { isValidAnswer } from "../util/Validator";
 
 const DailyScreen = () => {
   const appNavigation = useAppNavigation()
@@ -56,12 +56,15 @@ const DailyScreen = () => {
   const [numberOfSetsInCurrentWeek, setNumberOfSetsInCurrentWeek] = useState(1);
 
   const {
-    loading,
-    error,
-    response,
+    getDailyQuestionLoading,
+    postDailyAnswerLoading,
+    fetchUserDetailsLoading,
     fetchUserDetails,
+    fetchUserDetailsError,
     getDailyQuestion,
+    getDailyQuestionError,
     postDailyAnswer,
+    postDailyAnswerError,
   } = useApiRequest();
 
   const { showSnackbar } = useSnackbar();
@@ -91,14 +94,18 @@ const DailyScreen = () => {
             setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
           }
           setUserData(response.user);
-        }
+        };
       });
     }
   }, [location]);
 
   useEffect(() => {
     if (userData.user_id && !isSubmitted) {
-      getDailyQuestion(userData.user_id);
+      getDailyQuestion(userData.user_id).then((response) => {
+        if (response.question) {
+          setQuestion(response);
+        }
+      });
     }
   }, [userData, isSubmitted]);
 
@@ -112,27 +119,16 @@ const DailyScreen = () => {
   }, [dailySetData])
 
   useEffect(() => {
-    if (response) {
-
-      if (response.question) {
-        setQuestion(response);
-      }
-
-      if (response.answer_id) {
-        setIsSubmitted(true);
-        setDays((prevDays) => [...prevDays, getCurrentDate()]);
-        if (response.message) {
-          showSnackbar(response.message);
-        }
-      }
+    if (getDailyQuestionError && getDailyQuestionError.length > 0) {
+      showSnackbar(getDailyQuestionError);
     }
-  }, [response]);
-
-  useEffect(() => {
-    if (error && error.length > 0) {
-      showSnackbar(error);
+    if (postDailyAnswerError && postDailyAnswerError.length > 0) {
+      showSnackbar(postDailyAnswerError);
     }
-  }, [error]);
+    if (fetchUserDetailsError && fetchUserDetailsError.length > 0) {
+      showSnackbar(fetchUserDetailsError);
+    }
+  }, [getDailyQuestionError, postDailyAnswerError, fetchUserDetailsError]);
 
   const LoadingView = () => {
     return (
@@ -145,7 +141,12 @@ const DailyScreen = () => {
   const onSubmit = (answer) => {
     const { isValid, message } = isValidAnswer(answer);
     if (isValid) {
-      postDailyAnswer(userData.user_id, question.question_id, answer, noOfCardsInSet * numberOfSetsInCurrentWeek, userData.current_beta_block);
+      postDailyAnswer(userData.user_id, question.question_id, answer, noOfCardsInSet * numberOfSetsInCurrentWeek, userData.current_beta_block).then((response) => {
+        if (response.answer_id) {
+          setIsSubmitted(true);
+          setDays((prevDays) => [...prevDays, getCurrentDate()]);
+        }
+      });
     } else {
       showSnackbar(message);
     }
@@ -165,7 +166,7 @@ const DailyScreen = () => {
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <TopBannerNav />
-        {loading ? (
+        {getDailyQuestionLoading || postDailyAnswerLoading || fetchUserDetailsLoading ? (
           <LoadingView />
         ) : (
           <ProfileHeader

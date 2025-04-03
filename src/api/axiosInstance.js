@@ -24,7 +24,6 @@ instance.interceptors.response.use(
   (error) => {
     if (error.response && error.response.data) {
       try {
-        // Tenta descriptografar a mensagem de erro, se necessário
         if (typeof error.response.data === 'string') {
           error.response.data = JSON.parse(decrypt(error.response.data));
         } else if (error.response.data.error && typeof error.response.data.error === 'string') {
@@ -32,7 +31,6 @@ instance.interceptors.response.use(
         }
       } catch (err) {
         console.error('Erro ao processar o erro:', err);
-        // Se falhar, mantém o objeto de erro original
       }
     }
     return Promise.reject(error);
