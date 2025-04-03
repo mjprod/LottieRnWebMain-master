@@ -14,18 +14,29 @@ const HowToPlayScreen = () => {
   };
   const carouselItems = [
     {
-      description:
-        "Write some text about this stage in the game for users to follow",
+      title: "Reveal card",
+      description: "Scratch the surface to reveal the full card underneath.",
       image: AssetPack.images.CAROUSEL_ITEM_1,
     },
     {
-      description: "Scratch off the symbols to begin your game.",
+      title: "Lvl 1 combos",
+      description: "Match 3 of the same symbol to earn 1 scratch ticket.",
       image: AssetPack.images.CAROUSEL_ITEM_2,
     },
     {
-      description:
-        "Write some text about this stage in the game for users to follow",
+      title: "Lvl 2 combos",
+      description: "Match 3 of the same symbol to earn 1 scratch ticket.",
       image: AssetPack.images.CAROUSEL_ITEM_3,
+    },
+    {
+      title: "Lvl 3 combos",
+      description: "Write some text about this stage in the game for users to follow",
+      image: AssetPack.images.CAROUSEL_ITEM_4,
+    },
+    {
+      title: "Lvl 4 combos",
+      description: "Write some text about this stage in the game for users to follow",
+      image: AssetPack.images.CAROUSEL_ITEM_5,
     },
   ];
   return (
