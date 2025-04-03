@@ -8,14 +8,14 @@ import { Dimentions, Fonts } from "../util/constants";
 
 const NextDrawCard = ({ style }) => {
   return (
-    <View style={{ ...styles.container, ...style }}>
+    <ImageBackground style={{ ...styles.container, ...style }} source={AssetPack.backgrounds.GOLD_SACK} blurRadius={6}>
       <Image
         style={{ width: 145, height: 46 }}
         source={AssetPack.logos.TURBO_SCRATCH} />
       <Text style={{ color: "#fff", fontSize: 28, fontFamily: Fonts.TekoMedium, textTransform: 'uppercase' }}>
         Win Amazon Gift Cards
       </Text>
-      <Text style={{ color: "#FFFFFFCC", fontSize: 16, fontFamily: Fonts.InterMedium }}>
+      <Text style={{ color: "#FFFFFFCC", fontSize: 16, fontFamily: Fonts.InterMedium, marginBottom: Dimentions.marginM }}>
         Scratch for more chances to win!
       </Text>
       <TimerComponent />
@@ -25,7 +25,7 @@ const NextDrawCard = ({ style }) => {
         speed={1}
         loop={true}
         autoPlay={true} />
-    </View>
+    </ImageBackground>
   );
 };
 

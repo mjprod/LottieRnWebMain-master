@@ -12,7 +12,6 @@ const AssetPack = {
     TURBO_SCRATCH: require("./../assets/image/turbo_scratch_logo.png"),
   },
   backgrounds: {
-    GAME: require("./../assets/image/background_game.png"),
     DAILY_CARD_BACKGROUND: require("./../assets/image/day_card_background.png"),
     DAILY_CARD_EXTRA_BACKGROUND: require("./../assets/image/day_card_extra_background.png"),
     CARD_NUMBER_SET: require("./../assets/image/card_set_number_background.svg").default,
@@ -27,6 +26,10 @@ const AssetPack = {
     GAME_TOP_LAYOUT_RED: require("./../assets/image/background_top_layout_red.png"),
     GAME_TOP_LAYOUT_YELLOW: require("./../assets/image/background_top_layout_yellow.png"),
     GAME_TOP_LAYOUT_GREEN: require("./../assets/image/background_top_layout_green.png"),
+    CHEST: require("./../assets/image/background_chest.jpg"),
+    CLOCK: require("./../assets/image/background_clock.jpg"),
+    GOLD_SACK: require("./../assets/image/background_gold_sack.jpg"),
+    SCRACHIE: require("./../assets/image/background_scrachie.jpg"),
   },
   videos: {
     WIN_LUCKY_SYMBOL: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4"),
