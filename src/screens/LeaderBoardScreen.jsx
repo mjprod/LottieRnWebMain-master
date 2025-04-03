@@ -13,6 +13,8 @@ import { Colors, Dimentions } from "../util/constants";
 import useAppNavigation from "../hook/useAppNavigation";
 import { useGame } from "../context/GameContext";
 import { useSnackbar } from "../components/SnackbarContext";
+import TopNavTemplate from "../templates/TopNavTemplate";
+import AssetPack from "../util/AssetsPack";
 
 const LeaderBoardScreen = () => {
   const location = useLocation();
@@ -47,9 +49,8 @@ const LeaderBoardScreen = () => {
     }
   }
   return (
-    <ScrollView style={styles.container}>
-      <TopBannerNav hasBackButton={true} />
-      <View style={{ marginTop: -20, paddingHorizontal: Dimentions.marginS, backgroundColor: "#131313", borderColor: "#3D3D3D", paddingVertical: Dimentions.marginL, borderRadius: 16, borderWidth: 1 }}>
+    <TopNavTemplate title="Champions Rise" subtitle="The top players of the realm." navBackgroudImage={AssetPack.backgrounds.TOP_NAV_LEADER_BOARD} hasBackButton={true}>
+      <View style={{ paddingHorizontal: Dimentions.marginS, backgroundColor: Colors.jokerBlack800, borderColor: Colors.jokerBlack200, paddingVertical: Dimentions.marginL, borderTopRightRadius: 16, borderTopLeftRadius: 16, borderTopWidth: 1 }}>
         <SectionTitle text="LeaderBard" style={{ marginBottom: 10 }} />
         <LeaderBoardList
           style={{ marginBottom: 30 }}
@@ -62,7 +63,7 @@ const LeaderBoardScreen = () => {
         <GamesAvailableCard style={{ marginBottom: 30 }} cardsLeft={user ? user.card_balance : 0} />
         <NextDrawCard style={{ marginBottom: 30 }} />
       </View>
-    </ScrollView>
+    </TopNavTemplate>
   );
 };
 
