@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Text, View, StyleSheet, Animated, ActivityIndicator, Platform } from 'react-native';
+import { Text, View, StyleSheet, Animated, Platform } from 'react-native';
 import LottieView from "react-native-web-lottie";
 import ProgressBar from './ProgressBar';
-import DiagonalGradientCard from './DiagonalGradientCard';
 import AssetPack from '../util/AssetsPack';
 import { Colors, Fonts } from '../util/constants';
 
-const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle }) => {
+const RaffleTicketCard = ({ score = 0, ticketCount = 0, containerStyle }) => {
     const nextTicketIn = ticketCount * 20000 + 20000
     const [progress, setProgress] = useState(0);
 
@@ -26,15 +25,6 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle 
         setProgress(score);
     }, [score])
 
-
-    const LoadingView = () => {
-        return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size="small" color="#00ff00" />
-            </View>
-        );
-    };
-
     return (
         <View style={{ ...styles.ticketsSection, ...containerStyle }}>
             <View style={styles.containerTotalTicket}>
@@ -46,12 +36,7 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle 
                         loop={false} />
                     <Text style={styles.ticketTitle}>Tickets Earned</Text>
                 </View>
-
-                {loading ? (
-                    <LoadingView />
-                ) : (
-                    <Text style={styles.resultPoints}>{ticketCount}</Text>
-                )}
+                <Text style={styles.resultPoints}>{ticketCount}</Text>
             </View>
             <View style={{
                 backgroundColor: "#FFFFFF1A",
@@ -101,7 +86,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         width: "100%",
-        marginVertical: -10
     },
     containerNextTicket: {
         flexDirection: "row",
@@ -125,6 +109,7 @@ const styles = StyleSheet.create({
     resultPoints: {
         fontFamily: Fonts.TekoRegular,
         fontSize: 30,
+        marginVertical: -15,
         color: Colors.jokerGold400,
     },
 });

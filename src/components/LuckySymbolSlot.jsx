@@ -7,7 +7,7 @@ const LuckySymbolSlot = ({ showCoin = false }) => {
         <View style={styles.container}>
             {showCoin && <LottieView
                 style={{ margin: -3 }}
-                source={require("./../assets/lotties/lottie3DCoinSlot.json")}
+                source={require("../assets/lotties/lottie3DCoinSlot.json")}
                 autoPlay
                 speed={1}
                 loop={false}

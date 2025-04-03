@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
         height: 15,
         flexDirection: "row",
         width: '100%',
+        boxShadow: 'inset 0px 2px 1px #000000',
         backgroundColor: '#131313',
         borderBottomColor: '#C0E8FF33',
         borderBottomWidth: 2,
