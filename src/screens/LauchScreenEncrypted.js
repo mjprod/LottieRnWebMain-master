@@ -34,70 +34,72 @@ const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
 
   const { user, setUser, setLuckySymbolCount } = useGame();
-  const [initialUserData, setInitialUserData] = useState(null);
   const { showSnackbar } = useSnackbar();
   const [searchParams] = useSearchParams();
   const params = useParams();
 
-  const { fetchUserDetails, fetchUserDetailsError,
-    getWinner, getWinnerError,
-    login, loginError } = useApiRequest();
+  const {
+    fetchUserDetails,
+    fetchUserDetailsError,
+    getWinner,
+    getWinnerError,
+    login,
+    loginError
+  } = useApiRequest();
+
+  const fetchAndProcessUserDetails = (userDetails) => {
+    fetchUserDetails(userDetails.user_id, userDetails.name, userDetails.email).then((response) => {
+      setUser(response.user);
+      setLuckySymbolCount(response.user.lucky_symbol_balance);
+      const gameStatus = response.user.time_result;
+
+      if (gameStatus === GameStatus.drawing) {
+        appNavigation.goToInProgressPage();
+      } else if (gameStatus === GameStatus.check_winner) {
+        getWinner().then((response) => {
+          const winner = response.winner
+          if (winner.user_id === user.user_id) {
+            appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
+          } else {
+            appNavigation.goToThankYouPage(InfoScreenContents.thank_you);
+          }
+        }).catch((error) => {
+          console.error('Login failed:', error);
+        });
+      }
+
+      const userData = response.user;
+      const currentWeek = response.current_week;
+      if (response.daily === null || response.daily.length === 0) {
+        appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+      } else {
+        const currentWeekDaily = response.daily.find(
+          (item) => item.current_week === currentWeek
+        );
+        if (currentWeekDaily != null) {
+          const localCurrentWeekDaily = currentWeekDaily.days.map((date) => convertUTCToLocal(date))
+          const hasCurrentDate = localCurrentWeekDaily.some((item) =>
+            item.includes(getCurrentDate())
+          );
+          if (!hasCurrentDate) {
+            appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+          }
+        } else {
+          appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+        }
+      }
+    }).catch((error) => {
+      console.error('User failed:', error);
+    });
+  }
 
   useEffect(() => {
     if (params.id && params.name && params.email) {
-      setInitialUserData({ user_id: params.id, name: params.name, email: params.email });
       login(params.id, params.name, params.email).then((data) => {
-        //get the user details
-        fetchUserDetails(params.id, params.name, params.email).then((response) => {
-          setUser(response.user);
-          setLuckySymbolCount(response.user.lucky_symbol_balance);
-          const gameStatus = response.user.time_result;
-
-          if (gameStatus === GameStatus.drawing) {
-            appNavigation.goToInProgressPage();
-          } else if (gameStatus === GameStatus.check_winner) {
-            getWinner().then((response) => {
-              const winner = response.winner
-              if (winner.user_id === user.user_id) {
-                appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
-              } else {
-                appNavigation.goToThankYouPage(InfoScreenContents.thank_you);
-              }
-            })
-              .catch((error) => {
-                console.error('Login failed:', error);
-              });
-          }
-
-          const userData = response.user;
-          const currentWeek = response.current_week;
-          if (response.daily === null || response.daily.length === 0) {
-            appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-          } else {
-            const currentWeekDaily = response.daily.find(
-              (item) => item.current_week === currentWeek
-            );
-            if (currentWeekDaily != null) {
-              const localCurrentWeekDaily = currentWeekDaily.days.map((date) => convertUTCToLocal(date))
-              const hasCurrentDate = localCurrentWeekDaily.some((item) =>
-                item.includes(getCurrentDate())
-              );
-              if (!hasCurrentDate) {
-                appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-              }
-            } else {
-              appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-            }
-          }
-        })
-          .catch((error) => {
-            console.error('User failed:', error);
-          });
-      })
-        .catch((error) => {
-          console.error('Login failed:', error);
-        });
-
+        fetchAndProcessUserDetails({ user_id: params.id, name: params.name, email: params.email })
+      }).catch((error) => {
+        console.error('Login failed:', error);
+      });
     } else if (searchParams.get('authToken')) {
       if (!user || user === null) {
         const authToken = searchParams.get('authToken');
@@ -106,23 +108,21 @@ const LauchScreenEncrypted = () => {
           return;
         }
         const authTokenData = JSON.parse(decrypt(authToken, true));
-        setInitialUserData(authTokenData);
         login(authTokenData.user_id, authTokenData.name, authTokenData.email)
           .then((data) => {
-            console.log("Login response 2: ", data);
-          })
-          .catch((error) => {
+            fetchAndProcessUserDetails(authTokenData)
+          }).catch((error) => {
             console.error('Login failed:', error);
           });
       } else {
-        fetchUserDetails(user.user_id, user.name, user.email);
+        fetchAndProcessUserDetails(user);
       }
       window.history.replaceState(null, '', window.location.pathname);
     } else {
       if (!user || user === null) {
         appNavigation.goToNotFoundPage();
       } else {
-        fetchUserDetails(user.user_id, user.name, user.email);
+        fetchAndProcessUserDetails(user);
       }
     }
   }, [params, searchParams]);
