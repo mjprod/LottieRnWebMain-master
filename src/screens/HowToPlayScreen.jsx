@@ -1,16 +1,9 @@
 import React from "react";
-import { View } from "react-native";
-import { useNavigate } from "react-router-dom";
-import TopBannerNav from "../components/TopBannerNav";
 import AssetPack from "../util/AssetsPack";
 import ShowCaseCarousel from "../components/ShowCaseCarousel";
+import TopNavTemplate from "../templates/TopNavTemplate";
 
 const HowToPlayScreen = () => {
-  const navigate = useNavigate();
-
-  const handleBackPress = () => {
-    navigate(-1);
-  };
   const carouselItems = [
     {
       description:
@@ -27,17 +20,14 @@ const HowToPlayScreen = () => {
       image: AssetPack.images.CAROUSEL_ITEM_3,
     },
   ];
+  
   return (
-    <View style={{ flex: 1, paddingBottom: 20 }}>
-      <TopBannerNav
-        title="How to play?"
-        subtitle="Learn step-by-step instructions on how to play."
-        backgroundImage={AssetPack.backgrounds.GOLD_RUSH}
-        hasBackButton={true}
-        onBackPress={handleBackPress}
-      />
-      <ShowCaseCarousel slideList={carouselItems} style={{ marginTop: -30 }} />
-    </View>
+    <TopNavTemplate title="How to play?"
+      subtitle="Learn step-by-step instructions on how to play."
+      navBackgroudImage={AssetPack.backgrounds.TOP_NAV_LEARN}
+      hasBackButton={true}>
+      <ShowCaseCarousel slideList={carouselItems} />
+    </TopNavTemplate>
   );
 };
 

@@ -21,7 +21,6 @@ const AssetPack = {
     BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg").default,
     NEXT_DRAW_CARD: require("./../assets/image/next_draw_card_background.png"),
     BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg").default,
-    GOLD_RUSH: require("./../assets/image/gold_rush.jpg"),
     GAME_TOP_LAYOUT: require("./../assets/image/background_top_layout.png"),
     GAME_TOP_LAYOUT_RED: require("./../assets/image/background_top_layout_red.png"),
     GAME_TOP_LAYOUT_YELLOW: require("./../assets/image/background_top_layout_yellow.png"),
