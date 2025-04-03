@@ -4,7 +4,7 @@ const AssetPack = {
     CARDS_GREEN: require("./../assets/icons/icon_cards_green.svg").default,
     ICON_404: require("./../assets/icons/404.svg").default,
     ARROW_LEFT: require("./../assets/icons/icon_back.svg").default,
-    LUCKY_SYMBOL: require("./../assets/image/icon_lucky_symbol.png"),
+    LUCKY_SYMBOL: require("./../assets/icons/iconLuckyNumber.svg").default,
     TICKET: require("./../assets/image/icon_ticket.png"),
     DOUBLE_DASH: require("./../assets/icons/double_dash.svg").default,
     COPY: require("../assets/icons/iconCopy.svg").default,

@@ -53,22 +53,22 @@ const styles = StyleSheet.create({
     borderColor: Colors.jokerBlack200,
   },
   avatarText: {
-    fontFamily: Fonts.TekoRecular,
+    fontFamily: Fonts.TekoRegular,
     color: Colors.jokerGold400,
-    fontWeight: 'bold',
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 24,
     margin: -5,
   },
   username: {
-    fontFamily: Fonts.InterBold,
-    color: Colors.whiteText,
+    fontFamily: Fonts.InterSemiBold,
+    color: Colors.jokerWhite50,
     fontSize: 16,
   },
   idText: {
+    fontFamily: Fonts.InterSemiBold,
     color: Colors.jokerBlack50,
-    fontSize: 12,
+    fontSize: 14,
     marginTop: 2,
   },
   textContainer: {

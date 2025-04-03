@@ -4,7 +4,7 @@ import LottieView from "react-native-web-lottie";
 import ProgressBar from './ProgressBar';
 import DiagonalGradientCard from './DiagonalGradientCard';
 import AssetPack from '../util/AssetsPack';
-import { Fonts } from '../util/constants';
+import { Colors, Fonts } from '../util/constants';
 
 const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle }) => {
     const nextTicketIn = ticketCount * 20000 + 20000
@@ -76,25 +76,25 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, loading, containerStyle 
 const styles = StyleSheet.create({
     ticketsSection: {
         padding: 24,
-        borderColor: "#3D3D3D",
-        backgroundColor: "#131313",
+        borderColor: Colors.jokerBlack200,
+        backgroundColor: Colors.jokerBlack800,
         borderWidth: 1,
         borderRadius: 8,
     },
     ticketTitle: {
         fontFamily: Fonts.InterRegular,
         fontSize: 16,
-        color: "#fff",
+        color: Colors.jokerWhite50,
     },
     nextTicketText: {
         fontFamily: Fonts.InterRegular,
         fontSize: 14,
-        color: "#fff",
+        color: Colors.jokerWhite50,
     },
     ticketProgress: {
         fontFamily: Fonts.InterRegular,
         fontSize: 14,
-        color: "#fff",
+        color: Colors.jokerWhite50,
     },
     containerTotalTicket: {
         justifyContent: "space-between",
@@ -123,9 +123,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 0,
     },
     resultPoints: {
-        fontFamily: Fonts.TekoRecular,
+        fontFamily: Fonts.TekoRegular,
         fontSize: 30,
-        color: "#FFEEC0",
+        color: Colors.jokerGold400,
     },
 });
 export default RaffleTicketCard;

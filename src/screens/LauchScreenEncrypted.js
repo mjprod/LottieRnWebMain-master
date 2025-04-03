@@ -23,12 +23,12 @@ import TopBannerNav from "../components/TopBannerNav";
 import { useGame } from "../context/GameContext";
 import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
-import AssetPack from "../util/AssetsPack";
 import { Colors, Dimentions, GameStatus } from "../util/constants";
 import { decrypt } from "../util/crypto";
 import { convertUTCToLocal, getCurrentDate } from "../util/Helpers";
 import { InfoScreenContents } from "./info/InfoScreen";
 import LuckySymbolCard from "../components/LuckySymbolCard";
+import LoadingView from "../components/LoadingView";
 
 const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
@@ -39,9 +39,9 @@ const LauchScreenEncrypted = () => {
   const [searchParams] = useSearchParams();
   const params = useParams();
 
-  const { fetchUserDetails, fetchUserDetailsLoading, fetchUserDetailsError,
-    getWinner, getWinnerLoading, getWinnerError,
-    login, loginLoading, loginError } = useApiRequest();
+  const { fetchUserDetails, fetchUserDetailsError,
+    getWinner, getWinnerError,
+    login, loginError } = useApiRequest();
 
   useEffect(() => {
     if (params.id && params.name && params.email) {
@@ -153,13 +153,6 @@ const LauchScreenEncrypted = () => {
 
   }, [loginError, fetchUserDetailsError, getWinnerError]);
 
-  const LoadingView = () => {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="small" color="#00ff00" />
-      </View>
-    );
-  };
 
   const handleViewAllPress = () => {
     appNavigation.goToLeaderBoardPage(user.user_id, user.name, user.email)
@@ -170,35 +163,21 @@ const LauchScreenEncrypted = () => {
       <ScrollView style={{ backgroundColor: Colors.background }}>
         <View style={styles.header}>
           <TopBannerNav />
-          {
-            fetchUserDetailsLoading ||
-              loginLoading ||
-              getWinnerLoading ? (
-              <LoadingView />
-            ) : (
-              <ProfileHeader
-                containerStyle={{ marginTop: -70, marginHorizontal: Dimentions.pageMargin }}
-                id={user.user_id ? user.user_id : ""}
-                name={user.name ?? ""}
-              />
-            )}
+          <ProfileHeader
+            containerStyle={{ marginTop: -70, marginHorizontal: Dimentions.pageMargin }}
+            id={user.user_id ? user.user_id : ""}
+            name={user.name ?? ""}
+          />
         </View>
-        <View style={{ ...styles.container }}>
-          <View
-            style={{
-              marginLeft: Dimentions.pageMargin,
-              marginRight: Dimentions.pageMargin,
-              marginBottom: Dimentions.sectionMargin,
-              marginTop: Dimentions.sectionMargin,
-            }}
-          >
+        <View style={styles.container}>
+          <View style={styles.statisticsContainer}>
             <SectionTitle text={"Statistics"} />
             <View style={styles.resultRow}>
               <StatCard
                 title="Total Points"
                 stat={user.total_score}
               />
-              <View style={{ width: 10 }} />
+              <View style={{ width: 8 }} />
               <LuckySymbolCard />
             </View>
             <RaffleTicketCard containerStyle={{ marginTop: 8 }} score={user.total_score} ticketCount={user.ticket_balance} />
@@ -208,17 +187,7 @@ const LauchScreenEncrypted = () => {
               onPress={() => handleStartGame()}
             />
           </View>
-          <View style={{
-            paddingTop: Dimentions.sectionMargin,
-            paddingHorizontal:
-              Dimentions.pageMargin,
-            paddingBottom: Dimentions.sectionMargin,
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-            backgroundColor: "#131313",
-            borderTopWidth: 1,
-            borderColor: "#3D3D3D",
-          }}>
+          <View style={styles.restContainer}>
             <SectionTitle
               text="LeaderBard"
               viewAllText="View All"
@@ -234,17 +203,29 @@ const LauchScreenEncrypted = () => {
         </View>
       </ScrollView>
     );
-  } else {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#FFD89E" />
-      </View>
-    );
-  }
+  } else return (<LoadingView />);
 
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginVertical: Dimentions.marginL
+  },
+  statisticsContainer: {
+    marginLeft: Dimentions.pageMargin,
+    marginRight: Dimentions.pageMargin,
+    marginBottom: Dimentions.marginL,
+  },
+  restContainer: {
+    paddingTop: Dimentions.sectionMargin,
+    paddingHorizontal: Dimentions.pageMargin,
+    paddingBottom: Dimentions.sectionMargin,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    backgroundColor: "#131313",
+    borderTopWidth: 1,
+    borderColor: "#3D3D3D",
+  },
   imageBackground: {
     width: "100%",
     height: "100%",

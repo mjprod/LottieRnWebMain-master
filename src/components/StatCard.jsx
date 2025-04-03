@@ -1,8 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { IconStarResultScreen } from "../assets/icons/IconStarResultScreen";
-import { ActivityIndicator } from "react-native-web";
-import { Dimentions, Fonts } from "../util/constants";
+import { Colors, Dimentions, Fonts } from "../util/constants";
 
 const StatCard = ({ title = "Title", titleIcon = <IconStarResultScreen />, stat = "0", children }) => {
     return (<View style={styles.card}>
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         fontFamily: Fonts.InterRegular,
-        color: "#fff",
+        color: Colors.jokerWhite50,
         justifyContent: "center",
         alignItems: "center",
         marginLeft: 5,
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     statText: {
         fontFamily: Fonts.TekoMedium,
         fontSize: 40,
-        color: "#FFEEC0",
+        color: Colors.jokerGold400,
         margin: -5,
     }
 });
