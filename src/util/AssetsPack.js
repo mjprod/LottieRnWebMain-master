@@ -37,6 +37,7 @@ const AssetPack = {
     TOP_NAV_LEADER_BOARD: require("./../assets/image/scratch_leaderboard.jpg"),
     TOP_NAV_LEARN: require("./../assets/image/scratch_learn.jpg"),
     TOP_NAV_THANK_YOU: require("./../assets/image/scratch_thank_you.jpg"),
+    TOP_NAV_GODS_ARE_IMPRESSED: require("./../assets/image/scratch_gods_are_impressed.jpg"),
   },
   videos: {
     WIN_LUCKY_SYMBOL: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4"),
