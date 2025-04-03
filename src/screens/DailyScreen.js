@@ -146,7 +146,9 @@ const DailyScreen = () => {
           setIsSubmitted(true);
           setDays((prevDays) => [...prevDays, getCurrentDate()]);
         }
-      });
+      }).catch((error) => {
+        showSnackbar(error.message || "An error occurred while submitting the answer.");
+      });;
     } else {
       showSnackbar(message);
     }
