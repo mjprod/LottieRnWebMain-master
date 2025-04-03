@@ -54,6 +54,11 @@ export const Dimentions = {
 export const Colors = {
   background: "#0A0A0A",
   transparent: "#00000000",
+  jokerGold400: "#FFDEA8",
+  jokerBlack50: "#A6A6A6",
+  jokerBlack200: "#3D3D3D",
+  jokerBlack800: "#131313",
+  whiteText: "#FFFFFF"
 };
 
 export const Fonts = {
