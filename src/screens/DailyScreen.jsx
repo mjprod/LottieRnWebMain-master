@@ -10,7 +10,6 @@ import NextDrawCard from "../components/NextDrawCard";
 import ProfileHeader from "../components/ProfileHeader";
 import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import { useSnackbar } from "../components/SnackbarContext";
-import TopBannerNav from "../components/TopBannerNav";
 import { DailySetData } from "../data/DailyCardData";
 import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
@@ -131,14 +130,6 @@ const DailyScreen = () => {
     }
   }, [getDailyQuestionError, postDailyAnswerError, fetchUserDetailsError]);
 
-  const LoadingView = () => {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="small" color="#00ff00" />
-      </View>
-    );
-  };
-
   const onSubmit = (answer) => {
     const { isValid, message } = isValidAnswer(answer);
     if (isValid) {
@@ -167,7 +158,12 @@ const DailyScreen = () => {
 
   return (
     <TopNavScreenTemplate title={"Answer to unlock"} subtitle={"Your words hold the reward."} navBackgroudImage={AssetPack.backgrounds.TOP_NAV_DAILY}>
-      <View style={[styles.container, { marginLeft: Dimentions.pageMargin, marginRight: Dimentions.pageMargin, marginBottom: Dimentions.sectionMargin }]}>
+      <ProfileHeader
+        containerStyle={{ marginHorizontal: Dimentions.pageMargin }}
+        id={userData.user_id ? userData.user_id : ""}
+        name={userData.name ?? ""}
+      />
+      <View style={[styles.container, { marginLeft: Dimentions.pageMargin, marginRight: Dimentions.pageMargin, marginBottom: Dimentions.sectionMargin, marginTop: Dimentions.sectionMargin }]}>
         {!isSubmitted && (
           <QuestionOfTheDay
             numberOfCardsInSet={noOfCardsInSet}
