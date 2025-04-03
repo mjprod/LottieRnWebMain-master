@@ -119,9 +119,6 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (user) {
-      console.log("user", user);
-      console.log("user.current_game_id", user.current_beta_block);
-
       getGames(user.user_id, user.current_beta_block)
         .then((response) => {
           if (response.games) {
