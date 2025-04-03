@@ -1,34 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList } from "react-native-web";
-import LeaderBoardItem from "./items/LeaderBoardItem";
+import { FlatList, View } from "react-native-web";
 import useApiRequest from "../hook/useApiRequest";
-import Pagination from "./Pagination";
 import { Dimentions } from "../util/constants";
+import LeaderBoardItem from "./items/LeaderBoardItem";
+import Pagination from "./Pagination";
 
 const LeaderBoardList = ({ username, style, numberOfItems = 10 }) => {
-  const { response, getLeaderBoard } = useApiRequest();
+  const { getLeaderBoard } = useApiRequest();
 
   const [leaderboardData, setLeaderBoardData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    getLeaderBoard(numberOfItems, currentPage);
+    getLeaderBoard(numberOfItems, currentPage).then((response) => {
+      if (response) {
+        setTotalPages(response.totalPages);
+        const newData = Object.values(response.data,).map((item) => ({
+          id: item.user_id,
+          rank: item.current_rank,
+          username: item.name,
+          points: item.total_score,
+          status: item.trend,
+        }));
+        setLeaderBoardData(newData);
+      }
+    }
+    ).catch((error) => {
+      console.error("Error fetching leaderboard data:", error);
+    }
+    );
   }, [currentPage]);
 
-  useEffect(() => {
-    if (response) {
-      setTotalPages(response.totalPages);
-      const newData = Object.values(response.data,).map((item) => ({
-        id: item.user_id,
-        rank: item.current_rank,
-        username: item.name,
-        points: item.total_score,
-        status: item.trend,
-      }));
-      setLeaderBoardData(newData);
-    }
-  }, [response]);
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
