@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   valueText: {
-    fontFamily: Fonts.TekoRecular,
+    fontFamily: Fonts.TekoRegular,
     fontSize: 30,
     marginTop: -15,
     marginBottom: -20,
