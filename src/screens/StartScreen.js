@@ -12,8 +12,10 @@ import { useGame } from "../context/GameContext";
 import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
 import LuckySymbolCard from "../components/LuckySymbolCard";
-import { Dimentions } from "../util/constants";
+import LinearGradient from "react-native-web-linear-gradient";
 import AssetPack from "../util/AssetsPack";
+import { ImageBackground } from "react-native-web";
+import { Colors, Dimentions, Fonts } from "../util/constants";
 
 const StartScreen = () => {
     const appNavigation = useAppNavigation();
@@ -57,44 +59,51 @@ const StartScreen = () => {
     }
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView style={{ backgroundColor: Colors.background }}>
             <View>
-                <View style={styles.header}>
-                    <Image
-                        style={{ width: 175, height: 46, marginBottom: 20 }}
-                        source={AssetPack.logos.TURBO_SCRATCH}
-                    />
-                    <Text style={styles.title}>Welcome</Text>
-                    <Text style={styles.userNameText}>{initialUserData.name}</Text>
-                </View>
-                <Text style={styles.statsTitle}>total game stats</Text>
-                <View style={styles.resultRow}>
-                    <StatCard title="Total Points" stat={initialScore} />
-                    <View style={{ width: 10 }} />
-                    <LuckySymbolCard />
-                </View>
-                <View style={styles.ticketsSection}>
-                    <GamesAvailableCard style={{ width: "100%" }} cardsLeft={initialScratchCardLeft} />
-                </View>
-                <TimerComponent style={{ marginVertical: 30 }} />
-                <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column" }}>
-                    <View style={styles.buttonContainer}>
-                        <View style={{ flex: 0.4, justifyContent: "flex-start" }}>
-                            <RoundedButton title="Back" onPress={handleBackPress} />
-                        </View>
-                        <View style={{ flex: 0.6, justifyContent: "flex-end" }} >
-                            <GameButton
-                                buttonSize={ButtonSize.HALF}
-                                text="Play Now"
-                                onPress={handlePlayNow}
-                            />
-                        </View>
+                <ImageBackground style={styles.header} source={AssetPack.backgrounds.TOP_NAV_HEROES}>
+                    <LinearGradient
+                        colors={[Colors.transparent, Colors.transparent, Colors.background, Colors.background]}
+                        locations={[0, 0.5, 0.9, 1]}
+                        style={styles.linearGradient}>
+                        <Image
+                            style={{ width: 175, height: 46, marginBottom: 20 }}
+                            source={AssetPack.logos.TURBO_SCRATCH}
+                        />
+                        <Text style={styles.title}>Welcome</Text>
+                        <Text style={styles.userNameText}>{initialUserData.name}</Text>
+                    </LinearGradient>
+                </ImageBackground>
+                <View style={styles.statsSection}>
+                    <Text style={styles.statsTitle}>Total game stats</Text>
+                    <View style={styles.resultRow}>
+                        <StatCard title="Total Points" stat={initialScore} />
+                        <View style={{ width: 10 }} />
+                        <LuckySymbolCard />
                     </View>
-                    <LinkButton
-                        style={{ marginBottom: 30 }}
-                        text={"How To Play Turbo Scratch >"}
-                        handlePress={appNavigation.goToHowToPlayPage}
-                    />
+                    <View style={styles.ticketsSection}>
+                        <GamesAvailableCard style={{ width: "100%" }} cardsLeft={initialScratchCardLeft} />
+                    </View>
+                    <TimerComponent style={{ marginVertical: 30 }} />
+                    <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column" }}>
+                        <View style={styles.buttonContainer}>
+                            <View style={{ flex: 0.4, justifyContent: "flex-start" }}>
+                                <RoundedButton title="Back" onPress={handleBackPress} />
+                            </View>
+                            <View style={{ flex: 0.6, justifyContent: "flex-end" }} >
+                                <GameButton
+                                    buttonSize={ButtonSize.TWO_THIRD}
+                                    text="Play Now"
+                                    onPress={handlePlayNow}
+                                />
+                            </View>
+                        </View>
+                        <LinkButton
+                            style={{ marginBottom: 30 }}
+                            text={"How To Play Turbo Scratch >"}
+                            handlePress={appNavigation.goToHowToPlayPage}
+                        />
+                    </View>
                 </View>
             </View>
         </ScrollView >
@@ -102,16 +111,25 @@ const StartScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        margin: Dimentions.marginS,
+    statsSection: {
+        marginTop: -100,
+        marginHorizontal: Dimentions.marginS
     },
-    header: {
+    linearGradient: {
+        width: "100%",
+        height: "auto",
+        paddingHorizontal: Dimentions.pageMargin,
+        flex: 1,
+        alignItems: "start",
+        justifyContent: "start",
+        paddingBottom: Dimentions.sectionMargin,
+        paddingTop: Dimentions.pageMargin,
         justifyContent: "center",
         alignItems: "center",
-        marginVertical: 10,
-        paddingBottom: 20,
-        borderBottomWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.15)',
+        resizeMode: "cover",
+    },
+    header: {
+        height: 367,
     },
     headerIcon: {
         width: 50,
@@ -126,12 +144,12 @@ const styles = StyleSheet.create({
     userNameText: {
         fontFamily: "Inter-Medium",
         fontSize: 20,
-        color: "#fff"
+        color: Colors.jokerWhite50,
     },
     statsTitle: {
-        fontFamily: "Teko-Medium",
+        fontFamily: Fonts.TekoMedium,
         fontSize: 30,
-        color: "#fff",
+        color: Colors.jokerWhite50,
         textTransform: "uppercase",
         textAlign: "center",
     },
@@ -139,6 +157,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         width: "100%",
+        marginTop: Dimentions.sectionMargin,
     },
     resultCard: {
         flex: 1,
@@ -168,7 +187,7 @@ const styles = StyleSheet.create({
         height: 50,
     },
     ticketsSection: {
-        marginVertical: 20,
+        marginVertical: 8,
     },
     ticketTitle: {
         fontFamily: "Teko-Medium",
