@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { View, StyleSheet, Image, Text, ImageBackground } from "react-native";
 import useApiRequest from "../../hook/useApiRequest";
 import { Colors } from "../../util/constants";
@@ -25,7 +25,7 @@ const InfoScreen = ({ contentName }) => {
 
     const { user, setUser } = useGame()
 
-    const { fetchUserDetails, response } = useApiRequest();
+    const { fetchUserDetails } = useApiRequest();
 
     const [content, setContent] = useState();
     const [title, setTitle] = useState();
@@ -34,11 +34,24 @@ const InfoScreen = ({ contentName }) => {
     const [backgroundImage, setBackgroundImage] = useState();
 
     useEffect(() => {
-        if (response && response.user) {
-            console.log(response.user)
-            setUser(response.user);
+        if (location.state && location.state !== null) {
+            const id = location.state.user_id;
+            const username = location.state.name;
+            const email = location.state.email;
+
+            fetchUserDetails(id, username, email).then((response) => {
+                if (response.user) {
+                    setUser(response.user);
+                };
+            });
         }
-    }, [response]);
+    }, [location]);
+
+    useEffect(() => {
+        if (!user) {
+            appNavigation.goToNotFoundPage();
+        }
+    }, [user]);
 
     useEffect(() => {
         switch (contentName) {
@@ -74,7 +87,7 @@ const InfoScreen = ({ contentName }) => {
         }
     }, [contentName]);
 
-    if (!content) {
+    if (!user) {
         return (
             <LoadingView />
         );
