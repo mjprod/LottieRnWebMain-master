@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import TopBannerNav from "../../components/TopBannerNav";
 import useApiRequest from "../../hook/useApiRequest";
 import { Colors } from "../../util/constants";
 import useAppNavigation from "../../hook/useAppNavigation";
@@ -12,6 +11,8 @@ import LoadingView from "../../components/LoadingView";
 import Congratulations from "./components/Congratulations";
 import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 import AssetPack from "../../util/AssetsPack";
+import { Dimentions } from "../../util/constants";
+import { Image, ImageBackground } from "react-native-web";
 
 export const InfoScreenContents = {
     extending: "we_are_extending",
@@ -65,8 +66,7 @@ const InfoScreen = ({ contentName }) => {
                 setSubtitle("Claim your prize. You've earned it.")
                 setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_GODS_ARE_IMPRESSED)
                 break;
-            default:
-                appNavigation.goToNotFoundPage()
+            default: appNavigation.goToNotFoundPage()
         }
     }, [contentName]);
 
@@ -84,8 +84,16 @@ const InfoScreen = ({ contentName }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: Colors.background,
+        overflow: "hidden",
+        height: "100%",
+        width: "100%",
+        paddingHorizontal: Dimentions.marginS,
+        backgroundColor: Colors.jokerBlack800,
+        borderColor: Colors.jokerBlack200,
+        paddingVertical: Dimentions.marginL,
+        borderTopRightRadius: 16,
+        borderTopLeftRadius: 16,
+        borderTopWidth: 1
     }
 });
 

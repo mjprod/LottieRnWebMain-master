@@ -3,21 +3,21 @@ import { Animated, Platform, ScrollView, StyleSheet } from "react-native";
 import { ActivityIndicator, View } from "react-native-web";
 import LottieView from "react-native-web-lottie";
 import { useLocation } from "react-router-dom";
-import DailyCardsContainer from "../components/DailyCardsContainer";
-import GamesAvailableCard from "../components/GamesAvailableCard";
-import LinkButton from "../components/LinkButton";
-import NextDrawCard from "../components/NextDrawCard";
-import ProfileHeader from "../components/ProfileHeader";
-import QuestionOfTheDay from "../components/QuestionOfTheDay";
-import { useSnackbar } from "../components/SnackbarContext";
-import { DailySetData } from "../data/DailyCardData";
-import useApiRequest from "../hook/useApiRequest";
-import useAppNavigation from "../hook/useAppNavigation";
-import AssetPack from "../util/AssetsPack";
-import { DailyCardStatus, Dimentions } from "../util/constants";
-import { convertUTCToLocal, getCurrentDate, } from "../util/Helpers";
-import { isValidAnswer } from "../util/Validator";
-import TopNavScreenTemplate from "../templates/TopNavTemplate";
+import DailyCardsContainer from "./components/DailyCardsContainer";
+import GamesAvailableCard from "../../components/GamesAvailableCard";
+import LinkButton from "../../components/LinkButton";
+import NextDrawCard from "../../components/NextDrawCard";
+import ProfileHeader from "../../components/ProfileHeader";
+import QuestionOfTheDay from "../../components/QuestionOfTheDay";
+import { useSnackbar } from "../../components/SnackbarContext";
+import { DailySetData } from "../../data/DailyCardData";
+import useApiRequest from "../../hook/useApiRequest";
+import useAppNavigation from "../../hook/useAppNavigation";
+import AssetPack from "../../util/AssetsPack";
+import { DailyCardStatus, Dimentions } from "../../util/constants";
+import { convertUTCToLocal, getCurrentDate, } from "../../util/Helpers";
+import { isValidAnswer } from "../../util/Validator";
+import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 
 const DailyScreen = () => {
   const appNavigation = useAppNavigation()
@@ -84,11 +84,13 @@ const DailyScreen = () => {
         if (response.user) {
           setCurrentWeek(response.current_week);
           setTotalWeeks(response.total_weeks);
+          console.log("user", response);
           const currentWeekDaily = response.daily.find(
             (item) => item.current_week === response.current_week
           );
           if (currentWeekDaily) {
             setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
+            console.log("Conveted Daily", convertUTCToLocal(date))
           }
           setUserData(response.user);
         };

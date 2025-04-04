@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import AssetPack from '../util/AssetsPack';
-import { DailyCardStatus, Fonts } from '../util/constants';
+import AssetPack from '../../../util/AssetsPack';
+import { DailyCardStatus, Fonts } from '../../../util/constants';
 
 
 const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {

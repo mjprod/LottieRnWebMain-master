@@ -10,7 +10,7 @@ import { GameProvider } from "./context/GameContext";
 import { SoundProvider } from "./hook/useSoundPlayer";
 import { ThemeProvider } from "./hook/useTheme";
 import "./index.css";
-import DailyScreen from "./screens/DailyScreen";
+import DailyScreen from "./screens/daily/DailyScreen";
 import GameOverScreen from "./screens/GameOverScreen";
 import HowToPlayScreen from "./screens/learn/HowToPlayScreen";
 import LauchScreenEncrypted from "./screens/LauchScreenEncrypted";
