@@ -1,25 +1,23 @@
 import React from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import AssetPack from "../../../util/AssetsPack";
-import { ImageBackground } from "react-native-web";
 import { Colors, Dimentions, Fonts } from "../../../util/constants";
 
 const WeAreExtendingContent = () => {
 
-  return (
-    <ImageBackground style={styles.container} resizeMode='cover' source={AssetPack.backgrounds.CLOCK}>
-      <Image
-        style={{ width: 175, height: 46, marginBottom: 20 }}
-        source={AssetPack.logos.TURBO_SCRATCH} />
-      <Text style={styles.text}>
-        Playtime extended by 1 week — more chances to win gift cards! You’ve also received <Text style={{ fontFamily: Fonts.InterBold, color: Colors.jokerWhite50 }}>2 FREE ENTRIES</Text> into this
-        week’s draw.
-      </Text>
-      <View style={{ flexGrow: 1 }} />
-      <View style={styles.roundedTextContainer}>
-        <Text style={styles.roundedText}>7 Day Extension</Text>
-      </View>
-    </ImageBackground>
+  return (<>
+    <Image
+      style={{ width: 175, height: 46, marginBottom: 20 }}
+      source={AssetPack.logos.TURBO_SCRATCH} />
+    <Text style={styles.text}>
+      Playtime extended by 1 week — more chances to win gift cards! You’ve also received <Text style={{ fontFamily: Fonts.InterBold, color: Colors.jokerWhite50 }}>2 FREE ENTRIES</Text> into this
+      week’s draw.
+    </Text>
+    <View style={{ flexGrow: 1 }} />
+    <View style={styles.roundedTextContainer}>
+      <Text style={styles.roundedText}>7 Day Extension</Text>
+    </View>
+  </>
   );
 };
 

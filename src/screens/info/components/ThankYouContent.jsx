@@ -1,25 +1,21 @@
 import React from "react";
-import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import AssetPack from "../../../util/AssetsPack";
-import PurplePill from "../../../components/BetaCompetitionPill";
 import { Dimentions, Fonts, Colors } from "../../../util/constants";
-import LinkButton from "../../../components/LinkButton";
-import LinearGradient from "react-native-web-linear-gradient";
-import LottieView from "react-native-web-lottie";
 import TimerComponent from "../../../components/TimerComponent";
 
 const ThankYouContent = () => {
-
-    return (
-        <View style={styles.container}>
-            <Text style={styles.topText}>Thank You For Playing!</Text>
-            <Text style={styles.text}>
-                We appreciate you joining this round of the game. Get ready to play again, as the next round starts Monday. Stay tuned and best of luck!
-            </Text>
-            <Image style={{ width: "100%", height: 200, marginBottom: 20,  marginTop: 30 }} resizeMode='contain' source={AssetPack.images.TURBO_GAME_CARDS_SHOW} />
-            <TimerComponent />
-        </View>
-    );
+    return (<>
+        <Image
+            style={{ width: 175, height: 46, marginBottom: 20 }}
+            source={AssetPack.logos.TURBO_SCRATCH} />
+        <Text style={styles.topText}>Thank You For Playing!</Text>
+        <Text style={styles.text}>
+            Thanks for playing! The next round starts Monday. Stay tuned.
+        </Text>
+        <View style={{ flexGrow: 1 }} />
+        <TimerComponent />
+    </>);
 };
 
 const styles = StyleSheet.create({
@@ -32,7 +28,7 @@ const styles = StyleSheet.create({
     topText: {
         fontFamily: Fonts.TekoMedium,
         fontSize: 32,
-        color: "#FFDEA8",
+        color: Colors.jokerWhite50,
         textTransform: "uppercase",
         textAlign: "center",
         marginHorizontal: Dimentions.pageMargin,
