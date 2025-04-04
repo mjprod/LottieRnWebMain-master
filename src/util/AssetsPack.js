@@ -60,6 +60,7 @@ const AssetPack = {
     EXTENDING_PLAY: require("./../assets/image/extending_play_image.png"),
     AMAZON_GOLD_GIFT_CARD: require("./../assets/image/amazon_gift_card_golden.png"),
     TURBO_GAME_CARDS_SHOW: require("./../assets/image/turbo_game_cards_show.png"),
+    SCRATCH_CARD_FOREGROUND: require("./../assets/image/scratch_foreground.jpg"),
   },
   lotties: {
     CTA_BUTTON_FULL_WIDTH: require("./../assets/lotties/buttonCallToActionFullWidth.json"),
@@ -75,6 +76,8 @@ const AssetPack = {
     COMBO_4X: require("../assets/lotties/ComboHolderMaxVersion-4x.json"),
     WIN: require("../assets/lotties/lottieMagicLetterWINheader.json"),
     SPIN_WHEEL: require("../assets/lotties/specialEventsCasinoHomeCarousel.json"),
+    CARD_COUNT_DOWN: require("../assets/lotties/lottieCardCountdown.json"),
+    SCRATCHIE_BUBBLE_POP_ERROR : require("../assets/lotties/lottieScratchieBubblePopError.json"),
   }
 };
 

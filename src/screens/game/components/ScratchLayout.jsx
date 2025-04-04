@@ -3,10 +3,8 @@ import { StyleSheet, View, Image } from "react-native";
 import ScratchCardLeft from "./ScratchCardLeft";
 import ScratchGame from "./ScratchGame";
 import ScratchCard from "./ScratchCard";
-import { eraserShouldBeScratched, heightScratch, widthScratch } from "../global/Settings";
-import { useGame } from "../context/GameContext";
-
-const scratchForeground = require("./../assets/image/scratch_foreground.jpg");
+import { eraserShouldBeScratched, heightScratch, widthScratch } from "../../../global/Settings";
+import { useGame } from "../../../context/GameContext";
 
 const ScratchLayout = ({
   reset,
@@ -90,7 +88,6 @@ const ScratchLayout = ({
           <View style={styles.scratchCardContainer}>
             <ScratchCard
               setReset={setReset}
-              imageSource={scratchForeground}
               autoScratch={autoScratch}
               onScratch={handleScratch}
               onLoading={setImageLoading}

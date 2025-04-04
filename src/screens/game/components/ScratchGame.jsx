@@ -7,7 +7,6 @@ import {
 } from "react-native";
 
 import {
-  generateRandomLuckySymbolPercentage,
   finishPopUpToVideoTimer,
   maxCountWin,
   maxOtherCount,
@@ -15,13 +14,14 @@ import {
   totalPositions,
   columns,
   maxRepeatedIcons,
-} from "../global/Settings";
-import themes from "../global/themeConfig";
-import { useTheme } from "../hook/useTheme";
-import { useSound } from "../hook/useSoundPlayer";
-import { useGame } from "../context/GameContext";
+} from "../../../global/Settings";
+import themes from "../../../global/themeConfig";
+import { useTheme } from "../../../hook/useTheme";
+import { useSound } from "../../../hook/useSoundPlayer";
+import { useGame } from "../../../context/GameContext";
 import GameGrid from "./GameGrid";
-import useClickSounds from "../hook/useClickSounds";
+import useClickSounds from "../../../hook/useClickSounds";
+import AssetPack from "../../../util/AssetsPack";
 
 const ScratchGame = ({
   setIsWinner,
@@ -73,7 +73,7 @@ const ScratchGame = ({
     lottieScratchieBubbleGreen: lottiePopGreen,
     lottieScratchieBubblePink: lottiePopPink,
     lottieScratchieBubbleOrange: lottiePopOrange,
-    lottieScratchieBubblePopError: require("./../assets/lotties/lottieScratchieBubblePopError.json"),
+    lottieScratchieBubblePopError: AssetPack.lotties.LOTTIE_SCRATCHIE_BUBBLE_POP_ERROR,
   };
 
   useEffect(() => {

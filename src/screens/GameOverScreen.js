@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import { ImageBackground } from "react-native-web";
 import { useLocation } from "react-router";
 import { IconJokerPlus } from "../assets/icons/IconJokerPlus";
 import GameButton from "../components/GameButton";
-import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
 import TimerComponent from "../components/TimerComponent";
 import LinearGradient from 'react-native-web-linear-gradient';
-import AssetPack from "../util/AssetsPack";
 import { Dimentions } from "../util/constants";
 import RaffleTicketCard from "../components/RaffleTicketCard";
 import useAppNavigation from "../hook/useAppNavigation";
@@ -66,15 +63,7 @@ const GameOverScreen = () => {
             <View style={styles.resultRow}>
               <StatCard title="Total Points" stat={userData.total_score} />
               <View style={{ width: 10 }} />
-              <StatCard title="LUCKY SYMBOLS">
-                <ImageBackground
-                  resizeMode="contain"
-                  source={AssetPack.backgrounds.LUCKY_SYMBOL}
-                  style={styles.imageBackgroundLuckySymbol}>
-                  <LottieLuckySymbolCoinSlot topLayout={false} />
-                </ImageBackground>
-                <View style={styles.luckySymbols}></View>
-              </StatCard>
+              <LuckySymbolCard />
             </View>
             <RaffleTicketCard
               score={userData.total_score}

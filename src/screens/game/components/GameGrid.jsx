@@ -1,7 +1,7 @@
 
 import React, { useMemo } from "react";
 import { View, ImageBackground, Animated, StyleSheet } from "react-native";
-import AnimatedIcon from "./AnimatedIcon";
+import AnimatedIcon from "../../../components/AnimatedIcon";
 import LottieView from "react-native-web-lottie";
 
 const GameGrid = ({
