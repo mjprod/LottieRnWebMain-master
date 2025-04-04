@@ -1,75 +1,53 @@
 import React from "react";
-import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text } from "react-native";
 import AssetPack from "../../../util/AssetsPack";
-import PurplePill from "../../../components/BetaCompetitionPill";
 import { Dimentions, Fonts, Colors } from "../../../util/constants";
 import LinkButton from "../../../components/LinkButton";
-import LinearGradient from "react-native-web-linear-gradient";
 import LottieView from "react-native-web-lottie";
+import { useGame } from "../../../context/GameContext";
+import LoadingView from "../../../components/LoadingView";
 
 const Congratulations = () => {
-    return (
-        <View style={styles.mainContainer}>
-            <Text style={styles.heading}>Congratulations to</Text>
-            <Text style={styles.title}>Shirish Koirala</Text>
-            <ImageBackground
-                blurRadius={10}
-                resizeMode="cover"
-                source={AssetPack.backgrounds.GOLD_RUSH}
-                style={{
-                    flex: 1,
-                    justifyContent: "stretch",
-                    backgroundColor: "#000",
-                    overflow: "hidden",
-                    borderColor: "#FFEEC0",
-                    borderWidth: 1,
-                    borderRadius: 12,
-                }}>
-                <View style={{
-                    backgroundColor: "#00000099",
-                    height: "100%",
-                    padding: 10,
-                    paddingTop: 25,
-                    alignItems: "center",
-                    justifyContent: "center"
-                }}>
-                    <Image
-                        style={styles.backgroundImage}
-                        source={AssetPack.images.AMAZON_GOLD_GIFT_CARD}
-                    />
-                    <LinearGradient style={styles.backgroundGradient}
-                        colors={[Colors.transparent, Colors.transparent, Colors.background]}
-                        start={{ x: 0.0, y: 0.0 }}
-                        end={{ x: 0.0, y: 1.0 }}
-                        locations={[0.2, 0.4, 1.0]} />
+    const { user } = useGame();
 
-                    <PurplePill text={"Beta Winner"} style={{ marginBottom: 20 }} />
-                    <Text style={styles.text}>$1000 Amazon Voucher</Text>
+    if (!user) {
+        return <LoadingView />;
+    } else {
+        return (
+            <>
+                <Image
+                    style={{ width: 175, height: 46, marginBottom: 20 }}
+                    source={AssetPack.logos.TURBO_SCRATCH} />
+                <Text style={styles.heading}>Congratulations to</Text>
+                <Text style={styles.title}>{user && user.name}</Text>
+                <Image
+                    style={styles.backgroundImage}
+                    source={AssetPack.images.AMAZON_GOLD_GIFT_CARD}
+                    resizeMode={"contain"}
+                />
+                <Text style={styles.message}>
+                    Your <Text style={styles.textHighlighted}>Amazon Gift Card </Text>will be sent to your email within three business days.
+                </Text>
+                <LinkButton
+                    style={{ marginVertical: Dimentions.sectionMargin }}
+                    text={"Contact us for any concerns"} />
+                <LottieView
+                    style={{ flex: 1, position: "absolute", right: 0, top: 0, width: "100%", height: "100%" }}
+                    source={AssetPack.lotties.CONFETTI}
+                    speed={1}
+                    loop={true}
+                    autoPlay={true} />
+            </>
+        );
+    }
 
-                    <Text style={styles.message}>
-                        Your <Text style={styles.textHighlighted}>Amazon Gift Card </Text>will be sent to your email within three business days.
-                    </Text>
-                    <LinkButton
-                        style={{ marginVertical: Dimentions.sectionMargin }}
-                        text={"Contact us for any concerns"} />
-                    <LottieView
-                        style={{ position: "absolute", right: 0, bottom: 0 }}
-                        source={AssetPack.lotties.CONFETTI}
-                        speed={1}
-                        loop={true}
-                        resizeMode="cover"
-                        autoPlay={true} />
-                </View>
-            </ImageBackground>
-        </View>
-    );
 };
 
 const styles = StyleSheet.create({
     heading: {
         fontFamily: Fonts.TekoMedium,
         fontSize: 32,
-        color: "#FFDEA8",
+        color: Colors.jokerWhite50,
         textTransform: "uppercase",
         textAlign: "center",
         marginHorizontal: Dimentions.pageMargin,
@@ -84,7 +62,6 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         alignItems: "center",
-        marginBottom: Dimentions.pageMargin * 3.5
     },
     text: {
         fontFamily: Fonts.InterSemiBold,
@@ -92,19 +69,13 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     backgroundImage: {
-        position: "absolute",
         flex: 1,
-        top: 100,
-        left: 0,
-        resizeMode: "contain",
         margin: Dimentions.pageMargin,
         width: "80%",
-        height: 300,
     },
     message: {
-        marginTop: 270,
         fontFamily: Fonts.InterRegular,
-        color: "#FFFFFF",
+        color: Colors.jokerBlack50,
         fontSize: 16,
         textAlign: "center"
     },

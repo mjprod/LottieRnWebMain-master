@@ -49,8 +49,12 @@ const LeaderBoardScreen = () => {
     }
   }
   return (
-    <TopNavTemplate title="Champions Rise" subtitle="The top players of the realm." navBackgroudImage={AssetPack.backgrounds.TOP_NAV_LEADER_BOARD} hasBackButton={true}>
-      <View style={{ paddingHorizontal: Dimentions.marginS, backgroundColor: Colors.jokerBlack800, borderColor: Colors.jokerBlack200, paddingVertical: Dimentions.marginL, borderTopRightRadius: 16, borderTopLeftRadius: 16, borderTopWidth: 1 }}>
+    <TopNavTemplate
+      title="Champions Rise"
+      subtitle="The top players of the realm."
+      navBackgroudImage={AssetPack.backgrounds.TOP_NAV_LEADER_BOARD}
+      hasBackButton={true}>
+      <View style={styles.container}>
         <SectionTitle text="LeaderBard" style={{ marginBottom: 10 }} />
         <LeaderBoardList
           style={{ marginBottom: 30 }}
@@ -69,8 +73,13 @@ const LeaderBoardScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: Colors.background,
+    paddingHorizontal: Dimentions.marginS,
+    backgroundColor: Colors.jokerBlack800,
+    borderColor: Colors.jokerBlack200,
+    paddingVertical: Dimentions.marginL,
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
+    borderTopWidth: 1
   }
 });
 

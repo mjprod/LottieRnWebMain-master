@@ -65,8 +65,14 @@ const useAppNavigation = () => {
         goToInfoPage: (info) => {
             navigate(`/${info}`);
         },
-        goToCongratulationsPage: () => {
-            navigate(`/${InfoScreenContents.congratulations}`);
+        goToCongratulationsPage: (user_id, name, email) => {
+            navigate(`/${InfoScreenContents.congratulations}`, {
+                state: {
+                    user_id: user_id,
+                    name: name,
+                    email: email
+                },
+            });
         },
         goToThankYouPage: () => {
             navigate(`/${InfoScreenContents.thank_you}`);

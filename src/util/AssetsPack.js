@@ -28,6 +28,7 @@ const AssetPack = {
     CHEST: require("./../assets/image/background_chest.jpg"),
     CLOCK: require("./../assets/image/background_clock.jpg"),
     GOLD_SACK: require("./../assets/image/background_gold_sack.jpg"),
+    CONGRATS_BACKGROUND: require("./../assets/image/congratulations_background.jpg"),
     SCRACHIE: require("./../assets/image/background_scrachie.jpg"),
     TOP_NAV_DAILY: require("./../assets/image/scratch_daily.jpg"),
     TOP_NAV_DRAW_IN_PROGRESS: require("./../assets/image/scratch_draw_in_progress.jpg"),

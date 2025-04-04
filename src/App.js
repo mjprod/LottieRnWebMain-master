@@ -10,10 +10,10 @@ import { GameProvider } from "./context/GameContext";
 import { SoundProvider } from "./hook/useSoundPlayer";
 import { ThemeProvider } from "./hook/useTheme";
 import "./index.css";
-import DailyScreen from "./screens/DailyScreen";
+import DailyScreen from "./screens/daily/DailyScreen";
 import GameOverScreen from "./screens/GameOverScreen";
 import HowToPlayScreen from "./screens/learn/HowToPlayScreen";
-import LauchScreenEncrypted from "./screens/LauchScreenEncrypted";
+import LauchScreen from "./screens/LauchScreen";
 import LeaderBoardScreen from "./screens/LeaderBoardScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import StartScreen from "./screens/StartScreen";
@@ -59,12 +59,12 @@ export default function App() {
                       <Route path="/game_over" element={<GameOverScreen />} />
                       <Route path="/how_to_play" element={<HowToPlayScreen />} />
                       <Route path="/leader_board" element={<LeaderBoardScreen />} />
-                      <Route path="/:id/:name/:email" element={<LauchScreenEncrypted />} />
+                      <Route path="/:id/:name/:email" element={<LauchScreen />} />
+                      <Route path="/" element={<LauchScreen />} />
                       <Route path={InfoScreenContents.extending} element={<InfoScreen contentName={InfoScreenContents.extending} />} />
                       <Route path={InfoScreenContents.thank_you} element={<InfoScreen contentName={InfoScreenContents.thank_you} />} />
                       <Route path={InfoScreenContents.in_progress} element={<InfoScreen contentName={InfoScreenContents.in_progress} />} />
                       <Route path={InfoScreenContents.congratulations} element={<InfoScreen contentName={InfoScreenContents.congratulations} />} />
-                      <Route path="/" element={<LauchScreenEncrypted />} />
                     </Routes>
                   </SnackbarProvider>
                 </SoundProvider>

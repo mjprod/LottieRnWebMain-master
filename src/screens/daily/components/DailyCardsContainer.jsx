@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import DayCard from "./DayCard";
-import SectionTitle from "./SectionTitle";
-import { DailyCardStatus } from "../util/constants";
+import SectionTitle from "../../../components/SectionTitle";
+import { DailyCardStatus } from "../../../util/constants";
 import {
   getCurrentDate,
   getCurrentWeekDates,
-} from "../util/Helpers";
+} from "../../../util/Helpers";
 
-import AssetPack from "../util/AssetsPack";
+import AssetPack from "../../../util/AssetsPack";
 
 const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [], onCardPressed }) => {
   const currentWeekDates = getCurrentWeekDates();
