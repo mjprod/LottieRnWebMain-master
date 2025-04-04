@@ -12,7 +12,6 @@ import Congratulations from "./components/Congratulations";
 import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 import AssetPack from "../../util/AssetsPack";
 import { Dimentions } from "../../util/constants";
-import { Image, ImageBackground } from "react-native-web";
 
 export const InfoScreenContents = {
     extending: "we_are_extending",
@@ -84,14 +83,10 @@ const InfoScreen = ({ contentName }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1,
         overflow: "hidden",
-        height: "100%",
-        width: "100%",
-        paddingHorizontal: Dimentions.marginS,
-        backgroundColor: Colors.jokerBlack800,
+        backgroundColor: Colors.background,
         borderColor: Colors.jokerBlack200,
-        paddingVertical: Dimentions.marginL,
         borderTopRightRadius: 16,
         borderTopLeftRadius: 16,
         borderTopWidth: 1

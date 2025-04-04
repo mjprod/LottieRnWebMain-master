@@ -5,9 +5,9 @@ import { Colors } from "../util/constants";
 
 const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, children }) => {
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
             <TopBannerNav title={title} subtitle={subtitle} backgroundImage={navBackgroudImage} hasBackButton={hasBackButton} />
-            <View style={{ marginTop: -70 }}>
+            <View style={{ flex: 1, marginTop: -70 }}>
                 {children}
             </View>
         </ScrollView>

@@ -1,29 +1,32 @@
 import React from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import AssetPack from "../../../util/AssetsPack";
-import { Fonts } from "../../../util/constants";
+import { ImageBackground } from "react-native-web";
+import { Colors, Dimentions, Fonts } from "../../../util/constants";
 
 const WeAreExtendingContent = () => {
 
   return (
-    <View style={styles.container}>
+    <ImageBackground style={styles.container} resizeMode='cover' source={AssetPack.backgrounds.CLOCK}>
       <Image
-        style={{ width: 175, height: 46, marginBottom: 20, marginTop: -30 }}
+        style={{ width: 175, height: 46, marginBottom: 20 }}
         source={AssetPack.logos.TURBO_SCRATCH} />
       <Text style={styles.text}>
-        We’ve added 1 week to the playtime and opportunity to win more gift cards. As a thank you we have also given you 2 FREE tickets entries into this week’s draw.
+        Playtime extended by 1 week — more chances to win gift cards! You’ve also received <Text style={{ fontFamily: Fonts.InterBold, color: Colors.jokerWhite50 }}>2 FREE ENTRIES</Text> into this
+        week’s draw.
       </Text>
-      <Image style={{ width: "100%", height: 200, marginBottom: 20, marginTop: 30}} resizeMode='contain' source={AssetPack.images.EXTENDING_PLAY} />
-      
+      <View style={{ flexGrow: 1 }} />
       <View style={styles.roundedTextContainer}>
         <Text style={styles.roundedText}>7 Day Extension</Text>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
+    padding: Dimentions.marginL,
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center"
