@@ -68,7 +68,7 @@ const InfoScreen = ({ contentName }) => {
                 setTitle("The gods are impressed");
                 setSubtitle("Claim your prize. You've earned it.")
                 setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_GODS_ARE_IMPRESSED)
-                setBackgroundImage(AssetPack.backgrounds.CHEST)
+                setBackgroundImage(AssetPack.backgrounds.CONGRATS_BACKGROUND)
                 break;
             default: appNavigation.goToNotFoundPage()
         }
