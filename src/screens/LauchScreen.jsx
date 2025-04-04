@@ -1,29 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import {
-  ActivityIndicator,
-  ImageBackground,
-  ScrollView,
-  View,
-} from "react-native-web";
+import { View } from "react-native-web";
 
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import GameButton from "../components/GameButton";
 import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
-import LottieLuckySymbolCoinSlot from "../components/LottieLuckySymbolCoinSlot";
 import NextDrawCard from "../components/NextDrawCard";
 import ProfileHeader from "../components/ProfileHeader";
 import RaffleTicketCard from "../components/RaffleTicketCard";
 import SectionTitle from "../components/SectionTitle";
 import { useSnackbar } from "../components/SnackbarContext";
 import StatCard from "../components/StatCard";
-import TopBannerNav from "../components/TopBannerNav";
 import { useGame } from "../context/GameContext";
 import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
-import { Colors, Dimentions, GameStatus } from "../util/constants";
+import { Dimentions, GameStatus } from "../util/constants";
 import { decrypt } from "../util/crypto";
 import { convertUTCToLocal, getCurrentDate } from "../util/Helpers";
 import { InfoScreenContents } from "./info/InfoScreen";

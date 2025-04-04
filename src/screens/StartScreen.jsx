@@ -3,7 +3,6 @@ import { Image, Platform, ScrollView, StyleSheet, Text, View } from "react-nativ
 import { useLocation } from "react-router";
 import GameButton, { ButtonSize } from "../components/GameButton";
 import GamesAvailableCard from "../components/GamesAvailableCard";
-import LinkButton from "../components/LinkButton";
 import RoundedButton from "../components/RoundedButton";
 import { useSnackbar } from "../components/SnackbarContext";
 import StatCard from "../components/StatCard";

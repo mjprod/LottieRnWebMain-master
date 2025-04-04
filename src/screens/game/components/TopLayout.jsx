@@ -8,12 +8,12 @@ import {
   View,
 } from "react-native";
 import LottieView from "react-native-web-lottie";
-import { useGame } from "../context/GameContext";
-import { useTheme } from "../hook/useTheme";
+import { useGame } from "../../../context/GameContext";
+import { useTheme } from "../../../hook/useTheme";
 import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import NumberTicker from "./NumberTicker";
-import AssetPack from "../util/AssetsPack";
-import useComboSounds from "../hook/useComboSounds";
+import AssetPack from "../../../util/AssetsPack";
+import useComboSounds from "../../../hook/useComboSounds";
 
 const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) => (
   <View style={styles.container}>

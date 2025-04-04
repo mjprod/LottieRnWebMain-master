@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import LottieView from "react-native-web-lottie";
-import { useSound } from "../hook/useSoundPlayer";
-import { useTheme } from "../hook/useTheme";
+import { useSound } from "../../../hook/useSoundPlayer";
+import { useTheme } from "../../../hook/useTheme";
+import AssetPack from "../../../util/AssetsPack";
 
 const ScratchCardLeft = ({ scratchCardLeft }) => {
   const { soundMuteOnBackground, soundMuteOffBackground } = useTheme();
@@ -61,7 +62,7 @@ const ScratchCardLeft = ({ scratchCardLeft }) => {
         {showLottie && (
           <LottieView
             style={styles.lottieAnimation}
-            source={require("./../assets/lotties/lottieCardCountdown.json")}
+            source={AssetPack.lotties.CARD_COUNT_DOWN}
             autoPlay={true}
             loop={false}
             speed={1}

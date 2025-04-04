@@ -3,23 +3,22 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Dimensions, Platform, StyleSheet, View } from "react-native";
 
 import { Easing } from "react-native";
-import LinearGradient from "react-native-web-linear-gradient";
 import { useLocation } from "react-router";
 import { BackgroundGame } from "../../components/BackgroundGame.js";
 import IntroThemeVideo from "../../components/IntroThemeVideo.js";
 import LoadingView from "../../components/LoadingView.js";
 import LuckySymbolCollect from "../../components/LuckySymbolCollect.js";
-import ScratchLayout from "../../components/ScratchLayout.js";
-import TopLayout from "../../components/TopLayout.js";
+import ScratchLayout from "./components/ScratchLayout";
+import TopLayout from "./components/TopLayout";
 import { useGame } from "../../context/GameContext.js";
 import useApiRequest from "../../hook/useApiRequest.js";
 import useAppNavigation from "../../hook/useAppNavigation.js";
 import { useSound } from "../../hook/useSoundPlayer.js";
 import { useTheme } from "../../hook/useTheme.js";
-import { BONUS_PACK_NUMBER_OF_CARDS } from "../../util/constants.js";
+import { BONUS_PACK_NUMBER_OF_CARDS, Colors } from "../../util/constants";
 import BottomDrawer from "./components/BottomDrawer";
-import InitialCountDownView from "./components/InitialCountDownView.jsx";
-import WinLuckySymbolView from "./components/WinLuckySymbolView.jsx";
+import InitialCountDownView from "./components/InitialCountDownView";
+import WinLuckySymbolView from "./components/WinLuckySymbolView";
 
 const { width } = Dimensions.get("window");
 
@@ -323,13 +322,8 @@ const ScratchLuckyGame = () => {
         <Animated.View
           style={[styles.background, { transform: [{ translateX }] }]}
         >
-          <LinearGradient
-            start={{ x: 0.0, y: 0.5 }}
-            end={{ x: 0.5, y: 1.0 }}
-            locations={[0, 0.3, 0.45, 0.55, 1.0]}
-            colors={["#212121", "#262E33", "#1D4A64", "#24282B", "#212121"]}
-            style={styles.imageBackground}
-          >
+          <View
+            style={styles.imageBackground}>
             <Animated.View style={{ marginTop: marginTopAnim }}>
               <TopLayout setTimerGame={setTimerGame} clickCount={clickCount} />
             </Animated.View>
@@ -355,7 +349,7 @@ const ScratchLuckyGame = () => {
               setTotalComboCount={setTotalComboCount}
               setComboPlayed={setComboPlayed}
             />
-          </LinearGradient>
+          </View>
         </Animated.View>
       </View>
       <BottomDrawer />
@@ -421,8 +415,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8,
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
-    borderColor: "#A88C5D",
-    borderWidth: 1,
+    borderColor: Colors.jokerGold600,
+    backgroundColor: Colors.jokerBlack800,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderLeftWidth: 1,
   },
 });
 

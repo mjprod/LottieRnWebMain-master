@@ -1,7 +1,7 @@
 import React from "react";
 import LottieView from "react-native-web-lottie";
 import { StyleSheet, View } from "react-native";
-import { useGame } from "../context/GameContext";
+import { useGame } from "../../../context/GameContext";
 
 const LottieLuckySymbolCoinSlot = ({ topLayout }) => {
   const { luckySymbolCount } = useGame();
@@ -16,7 +16,7 @@ const LottieLuckySymbolCoinSlot = ({ topLayout }) => {
               ? styles.lottieLuckyAnimation
               : styles.lottieLuckyResultAnimation
           }
-          source={require("./../assets/lotties/lottie3DCoinSlot.json")}
+          source={require("../../../assets/lotties/lottie3DCoinSlot.json")}
           autoPlay
           speed={1}
           loop={false}
