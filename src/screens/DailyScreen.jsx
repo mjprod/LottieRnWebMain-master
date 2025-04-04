@@ -56,9 +56,6 @@ const DailyScreen = () => {
   const [numberOfSetsInCurrentWeek, setNumberOfSetsInCurrentWeek] = useState(1);
 
   const {
-    getDailyQuestionLoading,
-    postDailyAnswerLoading,
-    fetchUserDetailsLoading,
     fetchUserDetails,
     fetchUserDetailsError,
     getDailyQuestion,
