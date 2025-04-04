@@ -12,7 +12,7 @@ import { ThemeProvider } from "./hook/useTheme";
 import "./index.css";
 import DailyScreen from "./screens/DailyScreen";
 import GameOverScreen from "./screens/GameOverScreen";
-import HowToPlayScreen from "./screens/HowToPlayScreen";
+import HowToPlayScreen from "./screens/learn/HowToPlayScreen";
 import LauchScreenEncrypted from "./screens/LauchScreenEncrypted";
 import LeaderBoardScreen from "./screens/LeaderBoardScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";

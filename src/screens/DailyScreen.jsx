@@ -10,7 +10,6 @@ import NextDrawCard from "../components/NextDrawCard";
 import ProfileHeader from "../components/ProfileHeader";
 import QuestionOfTheDay from "../components/QuestionOfTheDay";
 import { useSnackbar } from "../components/SnackbarContext";
-import TopBannerNav from "../components/TopBannerNav";
 import { DailySetData } from "../data/DailyCardData";
 import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
@@ -18,6 +17,7 @@ import AssetPack from "../util/AssetsPack";
 import { DailyCardStatus, Dimentions } from "../util/constants";
 import { convertUTCToLocal, getCurrentDate, } from "../util/Helpers";
 import { isValidAnswer } from "../util/Validator";
+import TopNavScreenTemplate from "../templates/TopNavTemplate";
 
 const DailyScreen = () => {
   const appNavigation = useAppNavigation()
@@ -56,9 +56,6 @@ const DailyScreen = () => {
   const [numberOfSetsInCurrentWeek, setNumberOfSetsInCurrentWeek] = useState(1);
 
   const {
-    getDailyQuestionLoading,
-    postDailyAnswerLoading,
-    fetchUserDetailsLoading,
     fetchUserDetails,
     fetchUserDetailsError,
     getDailyQuestion,
@@ -130,14 +127,6 @@ const DailyScreen = () => {
     }
   }, [getDailyQuestionError, postDailyAnswerError, fetchUserDetailsError]);
 
-  const LoadingView = () => {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="small" color="#00ff00" />
-      </View>
-    );
-  };
-
   const onSubmit = (answer) => {
     const { isValid, message } = isValidAnswer(answer);
     if (isValid) {
@@ -165,20 +154,13 @@ const DailyScreen = () => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <TopBannerNav />
-        {getDailyQuestionLoading || postDailyAnswerLoading || fetchUserDetailsLoading ? (
-          <LoadingView />
-        ) : (
-          <ProfileHeader
-            containerStyle={{ marginTop: -50, marginHorizontal: Dimentions.pageMargin, marginBottom: Dimentions.sectionMargin }}
-            id={userData.user_id}
-            name={userData.name}
-          />
-        )}
-      </View>
-      <View style={[styles.container, { marginLeft: Dimentions.pageMargin, marginRight: Dimentions.pageMargin, marginBottom: Dimentions.sectionMargin }]}>
+    <TopNavScreenTemplate title={"Answer to unlock"} subtitle={"Your words hold the reward."} navBackgroudImage={AssetPack.backgrounds.TOP_NAV_DAILY}>
+      <ProfileHeader
+        containerStyle={{ marginHorizontal: Dimentions.pageMargin }}
+        id={userData.user_id ? userData.user_id : ""}
+        name={userData.name ?? ""}
+      />
+      <View style={[styles.container, { marginLeft: Dimentions.pageMargin, marginRight: Dimentions.pageMargin, marginBottom: Dimentions.sectionMargin, marginTop: Dimentions.sectionMargin }]}>
         {!isSubmitted && (
           <QuestionOfTheDay
             numberOfCardsInSet={noOfCardsInSet}
@@ -218,14 +200,13 @@ const DailyScreen = () => {
           cardsLeft={userData.card_balance} />
         <NextDrawCard />
       </View>
-    </ScrollView>
+    </TopNavScreenTemplate>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#131313",
   },
   headerIcon: {
     width: 50,
