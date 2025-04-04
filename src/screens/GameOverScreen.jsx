@@ -12,33 +12,35 @@ import StatCard from "../components/StatCard";
 import LuckySymbolCard from "../components/LuckySymbolCard";
 import AssetPack from "../util/AssetsPack";
 import LinearGradient from "react-native-web-linear-gradient";
+import { useGame } from "../context/GameContext";
+import LoadingView from "../components/LoadingView";
 const GameOverScreen = () => {
   const appNavigation = useAppNavigation()
-  const {
-    response,
-    fetchUserDetails,
-  } = useApiRequest();
+  const { fetchUserDetails } = useApiRequest();
 
   const location = useLocation()
-  const [userData, setUserData] = useState("");
+  const { user, setUser } = useGame();
 
   useEffect(() => {
-    if (location.state !== null) {
-      const id = location.state.user_id;
-      const username = location.state.username;
-      const email = location.state.email;
-
-      fetchUserDetails(id, username, email);
+    if (location.state) {
+      const { username, email, user_id } = location.state;
+      if (user_id && username && email) {
+        fetchUserDetails(user_id, username, email).then((response) => {
+          setUser(response.user);
+        }).catch((error) => {
+          console.error('Login failed:', error);
+        });
+      } else {
+        appNavigation.goToNotFoundPage();
+      }
+    } else {
+      appNavigation.goToNotFoundPage();
     }
   }, [location]);
 
-  useEffect(() => {
-    if (response) {
-      if (response.user) {
-        setUserData(response.user);
-      }
-    }
-  }, [response]);
+  if (!user) {
+    return <LoadingView />;
+  }
 
   return (
     <View style={styles.container}>
@@ -55,14 +57,14 @@ const GameOverScreen = () => {
       </ImageBackground>
       <View style={styles.body}>
         <View style={styles.resultRow}>
-          <StatCard title="Total Points" stat={userData.total_score} />
+          <StatCard title="Total Points" stat={user.total_score} />
           <View style={{ width: 10 }} />
           <LuckySymbolCard />
         </View>
         <RaffleTicketCard
           containerStyle={{ marginTop: 8 }}
-          score={userData.total_score}
-          ticketCount={userData.ticket_balance}
+          score={user.total_score}
+          ticketCount={user.ticket_balance}
         />
         <TimerComponent
           style={styles.timerContainer} />
@@ -70,9 +72,9 @@ const GameOverScreen = () => {
           text="BACK HOME"
           onPress={() => {
             appNavigation.goToLaunchScreen(
-              userData.user_id,
-              userData.name,
-              userData.email
+              user.user_id,
+              user.name,
+              user.email
             );
           }}
         />
