@@ -7,13 +7,14 @@ const WeAreExtendingContent = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        We’ve added 1 week to the playtime and opportunity to win more gift cards. As a thank you we have also given you 2 FREE tickets entries into this week’s draw.
-      </Text>
-      <Image style={{ width: "100%", height: 200, marginBottom: 20, marginTop: 30 }} resizeMode='contain' source={AssetPack.images.EXTENDING_PLAY} />
       <Image
         style={{ width: 175, height: 46, marginBottom: 20, marginTop: -30 }}
         source={AssetPack.logos.TURBO_SCRATCH} />
+      <Text style={styles.text}>
+        We’ve added 1 week to the playtime and opportunity to win more gift cards. As a thank you we have also given you 2 FREE tickets entries into this week’s draw.
+      </Text>
+      <Image style={{ width: "100%", height: 200, marginBottom: 20, marginTop: 30}} resizeMode='contain' source={AssetPack.images.EXTENDING_PLAY} />
+      
       <View style={styles.roundedTextContainer}>
         <Text style={styles.roundedText}>7 Day Extension</Text>
       </View>
@@ -23,9 +24,7 @@ const WeAreExtendingContent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, width: "100%",
     alignItems: "center",
-    justifyContent: "center",
     alignContent: "center",
     justifyContent: "center"
   },

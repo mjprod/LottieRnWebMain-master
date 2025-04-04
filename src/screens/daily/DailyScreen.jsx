@@ -90,7 +90,6 @@ const DailyScreen = () => {
           );
           if (currentWeekDaily) {
             setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
-            console.log("Conveted Daily", convertUTCToLocal(date))
           }
           setUserData(response.user);
         };

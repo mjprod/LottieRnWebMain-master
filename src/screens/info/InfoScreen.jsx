@@ -77,13 +77,14 @@ const InfoScreen = ({ contentName }) => {
     }
     return (
         <TopNavScreenTemplate title={title} subtitle={subtitle} navBackgroudImage={navBackgroudImage} hasBackButton={true}>
-            {content}
+            <View style={styles.container}>{content}</View>
         </TopNavScreenTemplate>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         overflow: "hidden",
         height: "100%",
         width: "100%",
