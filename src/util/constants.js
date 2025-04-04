@@ -13,11 +13,11 @@ export const Endpoint = {
   update_card_played: SERVER + "/game/update_card_played",
   update_lucky_symbol: SERVER + "/game/update_lucky_symbol",
   update_card_balance: SERVER + "/game/update_card_balance",
-  update_score:  SERVER + "/game/update_score",
+  update_score: SERVER + "/game/update_score",
   login: SERVER + "/login",
   token: SERVER + "/login/token",
   logout: SERVER + "/login/logout",
-  winners : SERVER + "/winners"
+  winners: SERVER + "/winners"
 }
 
 
@@ -56,11 +56,14 @@ export const Colors = {
   transparent: "#00000000",
 
   jokerGold400: "#FFDEA8",
-  
+
   jokerBlack50: "#A6A6A6",
   jokerBlack200: "#3D3D3D",
   jokerBlack800: "#131313",
-  jokerWhite50: "#FFFFFF"
+
+  jokerWhite50: "#FFFFFF",
+
+  jokerGreen400: "#3EDB58"
 };
 
 export const Fonts = {

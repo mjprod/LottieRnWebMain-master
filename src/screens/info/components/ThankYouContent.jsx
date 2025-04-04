@@ -34,14 +34,15 @@ const styles = StyleSheet.create({
         marginHorizontal: Dimentions.pageMargin,
     },
     container: {
-        flex: 1, width: "100%",
+        flex: 1,
+        width: "100%",
         alignItems: "center",
         justifyContent: "center",
         alignContent: "center",
         justifyContent: "center"
     },
     text: {
-        color: "#A6A6A6",
+        color: Colors.jokerBlack50,
         fontFamily: Fonts.InterRegular,
         textAlign: "center",
         fontSize: 16,
