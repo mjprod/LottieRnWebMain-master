@@ -26,10 +26,13 @@ export const BackgroundGame = ({ source, showAlphaView }) => {
           ref={videoRef}
           src={source}
           style={styles.video}
-          loop
-          autoPlay
-          muted
-          playsInline
+          loop={true}
+          autoPlay={true}
+          controls={false}
+          muted={false}
+          allowsInlineMediaPlayback={true}
+          playsInline={true}
+          webkit-playsinline={true}
         />
       </View>
 
