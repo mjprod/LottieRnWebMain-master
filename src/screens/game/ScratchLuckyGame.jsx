@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       web: {
         position: "absolute",
-        top: 50,
+        top: 60,
         left: 0,
         right: 0,
         bottom: 0,
