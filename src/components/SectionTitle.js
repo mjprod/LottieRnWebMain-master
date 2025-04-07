@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 10,
   },
   text: {
     marginBottom: -10,
@@ -37,11 +36,11 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   viewAllText: {
-    fontFamily: "Inter-Medium",
-    fontSize: 14,
+    fontFamily: Fonts.InterSemiBold,
+    fontSize: 16,
     textDecoration: "underline",
     WebkitTextDecorationLine: "underline",
-    color: "#D6BC9E",
+    color: Colors.jokerGold400,
   },
 });
 

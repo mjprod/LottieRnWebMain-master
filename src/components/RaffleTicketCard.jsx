@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Animated, Platform } from 'react-native';
 import LottieView from "react-native-web-lottie";
 import ProgressBar from './ProgressBar';
 import AssetPack from '../util/AssetsPack';
-import { Colors, Fonts } from '../util/constants';
+import { Colors, Dimentions, Fonts } from '../util/constants';
 
 const RaffleTicketCard = ({ score = 0, ticketCount = 0, containerStyle }) => {
     const nextTicketIn = ticketCount * 20000 + 20000
@@ -42,7 +42,7 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, containerStyle }) => {
                 backgroundColor: "#FFFFFF1A",
                 height: 1,
                 width: "100%",
-                marginVertical: 16,
+                marginVertical: Dimentions.marginS,
             }} />
             <View style={styles.containerNextTicket}>
                 <Text style={styles.nextTicketText}>Next ticket</Text>
@@ -73,12 +73,12 @@ const styles = StyleSheet.create({
     },
     nextTicketText: {
         fontFamily: Fonts.InterRegular,
-        fontSize: 14,
+        fontSize: 16,
         color: Colors.jokerWhite50,
     },
     ticketProgress: {
         fontFamily: Fonts.InterRegular,
-        fontSize: 14,
+        fontSize: 16,
         color: Colors.jokerWhite50,
     },
     containerTotalTicket: {
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     progressBar: {
         width: "100%",
         justifyContent: "center",
-        marginTop: 8,
+        marginTop: Dimentions.marginS,
         paddingHorizontal: 0,
     },
     resultPoints: {
