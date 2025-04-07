@@ -31,7 +31,7 @@ const TopBannerNav = ({
   };
 
   return (
-    <ImageBackground style={{ alignItems: "start", height: 284 }} resizeMode="cover" source={backgroundImage} >
+    <ImageBackground style={{ alignItems: "start", height: 284}} resizeMode="cover" source={backgroundImage} >
       <LinearGradient
         colors={[Colors.transparent, Colors.transparent, Colors.background, Colors.background]}
         locations={[0, 0.5, 0.9, 1]}
@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignItems: "center",
     marginTop: Dimentions.marginL,
-    marginBottom: Dimentions.marginM
   },
   arrowIcon: {
     width: 21,
@@ -72,17 +71,22 @@ const styles = StyleSheet.create({
   },
   betaCompetitionText: {
     letterSpacing: 1,
+    marginBottom: 28,
   },
   title: {
     fontFamily: Fonts.TekoMedium,
-    color: "#fff",
+    color: Colors.jokerWhite50,
     fontSize: 36,
+    letterSpacing: 2,
     textTransform: "uppercase",
+    marginVertical: -10
   },
   subtitle: {
     fontFamily: Fonts.InterRegular,
-    color: "#FFFFFFB8",
+    color: Colors.jokerBlack50,
     fontSize: 18,
+    letterSpacing: "1%",
+    marginTop: 2
   },
   linearGradient: {
     width: "100%",

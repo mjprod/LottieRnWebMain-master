@@ -20,10 +20,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   frostedGlass: {
-    fontFamily: Fonts.InterMedium,
+    fontFamily: Fonts.InterSemiBold,
     borderRadius: 63,
     borderColor: '#FFDEA8',
     borderWidth: 1,
+    lineHeight: "150%",
     paddingVertical: 8,
     paddingHorizontal: 12,
     backdropFilter: 'blur(10px)',

@@ -7,7 +7,7 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, chi
     return (
         <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
             <TopBannerNav title={title} subtitle={subtitle} backgroundImage={navBackgroudImage} hasBackButton={hasBackButton} />
-            <View style={{ flex: 1, marginTop: -70 }}>
+            <View style={{ flex: 1, marginTop: -80 }}>
                 {children}
             </View>
         </ScrollView>
