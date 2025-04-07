@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { View, Text, TouchableOpacity } from "react-native-web";
+import { Colors, Fonts } from "../util/constants";
 
 const SectionTitle = ({
   text,
@@ -13,7 +14,7 @@ const SectionTitle = ({
       <Text style={{ ...styles.text }}>{text}</Text>
       {viewAllAction && (
         <TouchableOpacity onPress={viewAllAction}>
-          <Text style={styles.viewAllText}>{`${viewAllText} >`}</Text>
+          <Text style={styles.viewAllText}>{`${viewAllText}`}</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -28,14 +29,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   text: {
-    fontFamily: "Teko-Medium",
+    marginBottom: -10,
+    fontFamily: Fonts.TekoMedium,
     fontSize: 24,
-    color: "#fff",
+    letterSpacing: "4.5%",
+    color: Colors.jokerWhite50,
     textTransform: "uppercase",
   },
   viewAllText: {
     fontFamily: "Inter-Medium",
     fontSize: 14,
+    textDecoration: "underline",
+    WebkitTextDecorationLine: "underline",
     color: "#D6BC9E",
   },
 });

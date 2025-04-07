@@ -34,7 +34,7 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, containerStyle }) => {
                         autoPlay
                         speed={1}
                         loop={false} />
-                    <Text style={styles.ticketTitle}>Tickets Earned</Text>
+                    <Text style={styles.ticketTitle}>Tickets earned</Text>
                 </View>
                 <Text style={styles.resultPoints}>{ticketCount}</Text>
             </View>
@@ -45,7 +45,7 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, containerStyle }) => {
                 marginVertical: 16,
             }} />
             <View style={styles.containerNextTicket}>
-                <Text style={styles.nextTicketText}>Next Ticket</Text>
+                <Text style={styles.nextTicketText}>Next ticket</Text>
                 <Text style={styles.ticketProgress}>
                     {`${parseInt(progress, 10)} / ${nextTicketIn}`}{" "}
                 </Text>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     ticketTitle: {
-        fontFamily: Fonts.InterRegular,
+        fontFamily: Fonts.InterSemiBold,
         fontSize: 16,
         color: Colors.jokerWhite50,
     },
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         height: 25,
         marginTop: 0,
         marginLeft: 0,
-        marginRight: 8,
+        marginRight: 4,
     },
     progressBar: {
         width: "100%",
@@ -107,8 +107,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 0,
     },
     resultPoints: {
-        fontFamily: Fonts.TekoRegular,
+        fontFamily: Fonts.TekoMedium,
         fontSize: 30,
+        letterSpacing: "1%",
         marginVertical: -15,
         color: Colors.jokerGold400,
     },

@@ -160,10 +160,10 @@ const LauchScreenEncrypted = () => {
           id={user.user_id ? user.user_id : ""}
           name={user.name ?? ""} />
         <View style={styles.statisticsContainer}>
-          <SectionTitle text={"Statistics"} />
+          <SectionTitle text={"Statistics"} style={{marginBottom: Dimentions.marginM}}/>
           <View style={styles.resultRow}>
             <StatCard
-              title="Total Points"
+              title="Total points"
               stat={user.total_score}
             />
             <View style={{ width: 8 }} />
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   statisticsContainer: {
     marginLeft: Dimentions.pageMargin,
     marginRight: Dimentions.pageMargin,
-    marginBottom: Dimentions.marginL,
+    marginBottom: Dimentions.marginM,
   },
   restContainer: {
     paddingTop: Dimentions.sectionMargin,

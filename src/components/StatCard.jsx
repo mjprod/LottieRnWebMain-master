@@ -6,7 +6,7 @@ import { Colors, Dimentions, Fonts } from "../util/constants";
 const StatCard = ({ title = "Title", titleIcon = <IconStarResultScreen />, stat = "0", children }) => {
     return (<View style={styles.card}>
         <View style={styles.viewRow}>
-            {titleIcon}
+            <View style={styles.viewIcon}>{titleIcon}</View>
             <Text style={styles.title}>{title}</Text>
         </View>
         <View style={{ borderBottomWidth: 1, width: "100%", borderColor: "#3D3D3D", marginVertical: Dimentions.marginS }} />
@@ -20,27 +20,29 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         border: "1px solid #3D3D3D",
-        borderRadius: 12,
+        borderRadius: 8,
         backgroundColor: "#131313",
-        padding: Dimentions.contentPadding,
+        padding: Dimentions.marginM,
     },
     viewRow: {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
     },
+    viewIcon: {
+        marginTop: 2,
+        width: 16,
+        height: 16,
+    },
     title: {
         fontSize: 16,
         fontFamily: Fonts.InterSemiBold,
         color: Colors.jokerWhite50,
-        justifyContent: "center",
-        alignItems: "center",
         marginLeft: 8,
-        marginTop: 3,
     },
     statText: {
         fontFamily: Fonts.TekoMedium,
-        fontSize: 40,
+        fontSize: 38,
         color: Colors.jokerGold400,
         margin: -5,
     }

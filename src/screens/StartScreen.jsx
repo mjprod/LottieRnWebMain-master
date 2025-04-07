@@ -77,7 +77,7 @@ const StartScreen = () => {
                     <Text style={styles.statsTitle}>Total Game Stats</Text>
                     <View style={styles.resultRow}>
                         <StatCard title="Total Points" stat={initialScore} />
-                        <View style={{ width: 10 }} />
+                        <View style={{ width: 8 }} />
                         <LuckySymbolCard />
                     </View>
                     <View style={styles.ticketsSection}>

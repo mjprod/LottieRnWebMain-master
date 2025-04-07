@@ -9,7 +9,7 @@ import { IconFourLeafClover } from "../assets/icons/IconFourLeafClover";
 const LuckySymbolCard = () => {
     const { luckySymbolCount } = useGame();
     return (
-        <StatCard title="Lucky Charm" titleIcon={<IconFourLeafClover />}>
+        <StatCard title="Lucky charm" titleIcon={<IconFourLeafClover />}>
             <View style={{ flexDirection: "row" }}>
                 <LuckySymbolSlot showCoin={luckySymbolCount >= 1} />
                 <LuckySymbolSlot showCoin={luckySymbolCount >= 2} />
