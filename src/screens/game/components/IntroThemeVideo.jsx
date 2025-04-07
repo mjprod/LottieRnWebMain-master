@@ -1,5 +1,5 @@
 import React, { } from "react";
-import { View, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet, Platform, Pressable } from "react-native";
 import Video from "../../../components/Video";
 import BrowserDetection from "react-browser-detection";
 import { useTheme } from "../../../hook/useTheme";
@@ -37,7 +37,8 @@ const IntroThemeVideo = ({ handleVideoEnd, style }) => {
   };
 
   return (
-    <View
+    <Pressable
+      onPress={handleVideoEnd}
       key="overlay"
       style={{
         ...style,
@@ -49,7 +50,7 @@ const IntroThemeVideo = ({ handleVideoEnd, style }) => {
     >
       <BrowserDetection>{browserHandler}</BrowserDetection>
       <View style={styles.transparentOverlay} />
-    </View>
+    </Pressable>
   );
 };
 
@@ -83,12 +84,12 @@ const styles = StyleSheet.create({
   transparentVideo: {
     ...Platform.select({
       web: {
-        width: "100vw", // Full viewport width for web
-        height: "100vh", // Full viewport height for web
-        objectFit: "cover", // Makes sure the video scales proportionally on web
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
       },
       default: {
-        ...StyleSheet.absoluteFillObject, // For mobile, full-screen video scaling
+        ...StyleSheet.absoluteFillObject,
         resizeMode: "cover",
       },
     }),

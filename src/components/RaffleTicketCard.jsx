@@ -6,7 +6,8 @@ import AssetPack from '../util/AssetsPack';
 import { Colors, Dimentions, Fonts } from '../util/constants';
 
 const RaffleTicketCard = ({ score = 0, ticketCount = 0, containerStyle }) => {
-    const nextTicketIn = ticketCount * 20000 + 20000
+    const nextTicketIn = 20000
+
     const [progress, setProgress] = useState(0);
 
     const animatedProgress = useRef(new Animated.Value(0)).current;
@@ -17,12 +18,12 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, containerStyle }) => {
 
     useEffect(() => {
         Animated.timing(animatedProgress, {
-            toValue: score,
+            toValue: score - ticketCount * 20000,
             duration: 3000,
             useNativeDriver: Platform.OS !== 'web',
         }).start();
 
-        setProgress(score);
+        setProgress(score - ticketCount * 20000);
     }, [score])
 
     return (
