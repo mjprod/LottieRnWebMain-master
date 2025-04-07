@@ -61,3 +61,7 @@ html, body {
   font-family: 'Teko-Regular';
   src: url('./assets/fonts/Teko-Regular.ttf') format('truetype');
 }
+
+video::-webkit-media-controls-overlay-play-button {
+  display: none;
+}

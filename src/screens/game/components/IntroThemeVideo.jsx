@@ -1,15 +1,15 @@
 import React, { } from "react";
 import { View, StyleSheet, Platform } from "react-native";
-import Video from "./Video";
+import Video from "../../../components/Video";
 import BrowserDetection from "react-browser-detection";
-import { useTheme } from "../hook/useTheme";
-import { useSound } from "../hook/useSoundPlayer";
+import { useTheme } from "../../../hook/useTheme";
+import { useSound } from "../../../hook/useSoundPlayer";
+import { isAndroidWebView } from "../../../util/Helpers";
 
 const IntroThemeVideo = ({ handleVideoEnd, style }) => {
 
   const { introThemeNext, introChromeThemeNext } = useTheme();
   const { isSoundEnabled } = useSound();
-
 
   const browserHandler = {
     chrome: () => (
@@ -26,7 +26,7 @@ const IntroThemeVideo = ({ handleVideoEnd, style }) => {
     default: (browser) => (
       <Video
         source={
-          introThemeNext
+          isAndroidWebView() ? introChromeThemeNext : introThemeNext
         } // Play the win video
         muted={isSoundEnabled}
         style={styles.transparentVideo} // Video styling
