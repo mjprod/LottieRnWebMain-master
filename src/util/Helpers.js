@@ -1,5 +1,5 @@
-export function maskString(str) {
-    return str.length > 4 ? str.substring(0, 4) + "***" : str + "***";
+export function maskString(str, showLetters = 3) {
+    return str.length > showLetters ? str.substring(0, showLetters) + "***" : str + "***";
   }
   
   export function getCurrentDate() {

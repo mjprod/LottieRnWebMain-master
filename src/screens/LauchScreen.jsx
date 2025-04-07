@@ -23,6 +23,7 @@ import { InfoScreenContents } from "./info/InfoScreen";
 import LuckySymbolCard from "../components/LuckySymbolCard";
 import LoadingView from "../components/LoadingView";
 import TopNavTemplate from "../templates/TopNavTemplate";
+import LinkButton from "../components/LinkButton";
 
 const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
@@ -160,7 +161,7 @@ const LauchScreenEncrypted = () => {
           id={user.user_id ? user.user_id : ""}
           name={user.name ?? ""} />
         <View style={styles.statisticsContainer}>
-          <SectionTitle text={"Statistics"} style={{marginBottom: 20}}/>
+          <SectionTitle text={"Statistics"} style={{ marginBottom: 20 }} />
           <View style={styles.resultRow}>
             <StatCard
               title="Total points"
@@ -175,13 +176,17 @@ const LauchScreenEncrypted = () => {
             text="Play Now"
             onPress={() => handleStartGame()}
           />
+          <LinkButton
+            style={{ marginTop: 28 }}
+            text={"How to play Turbo scratch"}
+            handlePress={appNavigation.goToHowToPlayPage} />
         </View>
         <View style={styles.restContainer}>
           <SectionTitle
             text="LeaderBoard"
             viewAllText="View All"
             viewAllAction={handleViewAllPress}
-            style={{marginBottom: 20}}
+            style={{ marginBottom: 20 }}
           />
           <LeaderBoardList numberOfItems={5} />
           <GamesAvailableCard

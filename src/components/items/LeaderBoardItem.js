@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, ImageBackground, Image, View } from "react-native";
-import { LeaderBoardStatus } from "../../util/constants";
+import { Colors, Fonts, LeaderBoardStatus } from "../../util/constants";
 import { maskString } from "../../util/Helpers";
 import { IconTypeLeaderBoardArrow } from "../../assets/icons/ArrowSolid";
 import { PointsIcon } from "../../assets/icons/PointsIcon";
@@ -64,7 +64,7 @@ const LeaderBoardItem = ({ rank, username, points, status, selected}) => {
         {!selected ? maskString(username) : username}
       </Text>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "start", width: 130 }}>
-        <PointsIcon style={{ width: 15, height: 15, marginRight: 10 }} />
+        <PointsIcon style={{ width: 16, height: 16, marginRight: 10 }} />
         <Text
           style={[
             styles.text,
@@ -79,7 +79,7 @@ const LeaderBoardItem = ({ rank, username, points, status, selected}) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 12,
+    borderRadius: 8,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     borderColor: "#FFFFFF33",
   },
   containerSelected: {
-    borderRadius: 12,
+    borderRadius: 8,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -103,25 +103,26 @@ const styles = StyleSheet.create({
     borderColor: "#FFDEA8",
   },
   rankText: {
-    fontFamily: "Inter-Medium",
-    fontSize: 14,
-    width: "10%",
+    fontFamily: Fonts.InterSemiBold,
+    fontSize: 16,
+    width: 35,
+    marginRight: 22,
   },
   usernameText: {
-    fontFamily: "Inter-Medium",
-    fontSize: 14,
+    fontFamily: Fonts.InterRegular,
+    fontSize: 16,
     flex: 1,
-    width: "15%",
+    width: 80,
   },
   pointsText: {
-    fontFamily: "Teko-Medium",
+    fontFamily: Fonts.TekoMedium,
     fontSize: 18,
     paddingTop: 3,
+    
     textTransform: "uppercase",
   },
   text: {
-    fontFamily: "Inter-Medium",
-    color: "#fff",
+    color: Colors.jokerWhite50,
   }
 });
 
