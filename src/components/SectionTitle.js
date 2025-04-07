@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   viewAllText: {
     fontFamily: Fonts.InterSemiBold,
     fontSize: 16,
-    textDecoration: "underline",
+    textDecorationLine: "underline",
     WebkitTextDecorationLine: "underline",
     color: Colors.jokerGold400,
   },

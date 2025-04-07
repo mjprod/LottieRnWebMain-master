@@ -44,8 +44,8 @@ const IntroThemeVideo = ({ handleVideoEnd, style }) => {
         ...style,
         ...styles.blackOverlayWin,
         flex: 1,
-        zIndex: 9999, // Makes sure the overlay is on top of all other elements
-        elevation: 10, // Ensures the overlay has proper visual depth on Android
+        zIndex: 9999,
+        elevation: 10,
       }}
     >
       <BrowserDetection>{browserHandler}</BrowserDetection>

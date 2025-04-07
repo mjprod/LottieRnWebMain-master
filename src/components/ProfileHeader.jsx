@@ -4,6 +4,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { Colors, Dimentions, Fonts } from '../util/constants';
 import AssetPack from '../util/AssetsPack';
 import { useSnackbar } from './SnackbarContext';
+import Avatar, { AvatarSize } from './Avatar';
 
 const ProfileHeader = ({ id, name, containerStyle }) => {
   const { showSnackbar } = useSnackbar()
@@ -16,9 +17,7 @@ const ProfileHeader = ({ id, name, containerStyle }) => {
 
   return (
     <View style={{ ...styles.container, ...containerStyle }}>
-      <View style={styles.avatarContainer}>
-        <Text style={styles.avatarText}>{name ? name.charAt(0).toUpperCase() : '?'}</Text>
-      </View>
+      <Avatar size={AvatarSize.big} name={name} />
       <View style={styles.textContainer}>
         <Text style={styles.username}>{name}</Text>
         <Text style={styles.idText}>{id ? `ID: ${id}` : ""}</Text>
@@ -40,25 +39,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderTopWidth: 1,
     borderTopColor: Colors.jokerBlack200,
-  },
-  avatarContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: "50%",
-    backgroundColor: Colors.jokerBlack800,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 8,
-    borderWidth: 1,
-    borderColor: Colors.jokerBlack200,
-  },
-  avatarText: {
-    fontFamily: Fonts.TekoMedium,
-    color: Colors.jokerGold400,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 26,
-    paddingTop: 3,
   },
   username: {
     fontFamily: Fonts.InterSemiBold,
