@@ -57,6 +57,7 @@ export const Colors = {
 
   jokerGold400: "#FFDEA8",
   jokerGold600: "#A88C5D",
+  jokerGold1000: "#1D1A11",
   jokerBlack50: "#A6A6A6",
   jokerBlack200: "#3D3D3D",
   jokerBlack800: "#131313",

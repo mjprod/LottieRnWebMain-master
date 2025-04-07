@@ -47,7 +47,9 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, containerStyle }) => {
             <View style={styles.containerNextTicket}>
                 <Text style={styles.nextTicketText}>Next ticket</Text>
                 <Text style={styles.ticketProgress}>
-                    {`${parseInt(progress, 10)} / ${nextTicketIn}`}{" "}
+                    <Text style={styles.ticketProgressNumber}>{parseInt(progress, 10)}</Text>
+                    <Text style={styles.ticketProgressDivider}>/</Text>
+                    <Text style={styles.ticketProgressNext}>{nextTicketIn}</Text>
                 </Text>
             </View>
             <ProgressBar progress={progress / nextTicketIn} color="#FFDEA8" trackColor="#131313" style={styles.progressBar} />
@@ -59,6 +61,22 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, containerStyle }) => {
 };
 
 const styles = StyleSheet.create({
+    ticketProgressNumber: {
+        fontFamily: Fonts.InterRegular,
+        fontSize: 16,
+        color: Colors.jokerBlack50
+    },
+    ticketProgressDivider:{
+        fontFamily: Fonts.InterRegular,
+        fontSize: 16,
+        color: Colors.jokerWhite50,
+        marginHorizontal: 8,
+    },
+    ticketProgressNext:{
+        fontFamily: Fonts.InterSemiBold,
+        fontSize: 16,
+        color: Colors.jokerWhite50
+    },
     ticketsSection: {
         padding: 24,
         borderColor: Colors.jokerBlack200,
@@ -79,7 +97,7 @@ const styles = StyleSheet.create({
     ticketProgress: {
         fontFamily: Fonts.InterRegular,
         fontSize: 16,
-        color: Colors.jokerWhite50,
+        color: Colors.jokerBlack50,
     },
     containerTotalTicket: {
         justifyContent: "space-between",

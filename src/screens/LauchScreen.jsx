@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import { View } from "react-native-web";
+import { View, Text } from "react-native-web";
 
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
@@ -16,7 +16,7 @@ import StatCard from "../components/StatCard";
 import { useGame } from "../context/GameContext";
 import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
-import { Dimentions, GameStatus } from "../util/constants";
+import { Colors, Dimentions, GameStatus } from "../util/constants";
 import { decrypt } from "../util/crypto";
 import { convertUTCToLocal, getCurrentDate } from "../util/Helpers";
 import { InfoScreenContents } from "./info/InfoScreen";
@@ -190,10 +190,12 @@ const LauchScreenEncrypted = () => {
           />
           <LeaderBoardList numberOfItems={5} />
           <GamesAvailableCard
-            style={{ marginVertical: 24 }}
+            style={{ marginVertical: Dimentions.marginL }}
             cardsLeft={user.card_balance}
           />
-          <NextDrawCard style={{ marginVertical: 24 }} />
+          <NextDrawCard />
+          <Text style={styles.copyright}>Copyright ©2025 JokerPlus.{"\n"}
+          All rights reserved.</Text>
         </View>
       </TopNavTemplate>
     );
@@ -245,6 +247,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
+  },
+  copyright: {
+    lineHeight: "150%",
+    alignContent: "center",
+    textAlign: "center",
+    fontSize: 16,
+    marginTop: Dimentions.marginL,
+    marginBottom: Dimentions.marginL,
+    color: Colors.jokerBlack200
   }
 });
 
