@@ -31,14 +31,15 @@ const TopBannerNav = ({
   };
 
   return (
-    <ImageBackground style={{ alignItems: "start", height: 284}} resizeMode="cover" source={backgroundImage} >
+    <View style={{ alignItems: "start", height: 284}} >
+      <Image source={backgroundImage} style={{ width: "100%", height: 284 , position: "absolute", top: -40}} />
       <LinearGradient
         colors={[Colors.transparent, Colors.transparent, Colors.background, Colors.background]}
         locations={[0, 0.5, 0.9, 1]}
         style={styles.linearGradient}>
         <View style={styles.topContainer}>
           {hasBackButton && (
-            <Pressable onPress={onBackPressLocal} style={{ alignContent: "center", alignItems: "center" }}>
+            <Pressable onPress={onBackPressLocal} style={{ alignContent: "center", alignItems: "center", justifyContent: "center" }}>
               <Image
                 resizeMode="contain"
                 style={styles.arrowIcon}
@@ -52,7 +53,7 @@ const TopBannerNav = ({
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subtitle}>{subtitle}</Text>
       </LinearGradient>
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -63,6 +64,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignItems: "center",
     marginTop: Dimentions.marginL,
+    marginBottom: 28,
   },
   arrowIcon: {
     width: 21,
@@ -71,7 +73,6 @@ const styles = StyleSheet.create({
   },
   betaCompetitionText: {
     letterSpacing: 1,
-    marginBottom: 28,
   },
   title: {
     fontFamily: Fonts.TekoMedium,
