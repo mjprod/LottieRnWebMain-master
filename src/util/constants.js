@@ -58,7 +58,9 @@ export const Colors = {
   jokerGold400: "#FFDEA8",
   jokerGold40040: "#FFDEA866",
   jokerGold600: "#A88C5D",
+  jokerGold900: "#382E23",
   jokerGold1000: "#1D1A11",
+
   jokerBlack50: "#A6A6A6",
   jokerBlack100: "#5F5F5F",
   jokerBlack200: "#3D3D3D",
@@ -69,7 +71,7 @@ export const Colors = {
 
   jokerWhite50: "#FFFFFF",
 
-  jokerGreen400: "#3EDB58"
+  jokerGreen400: "#3EDA41",
 };
 
 export const Fonts = {

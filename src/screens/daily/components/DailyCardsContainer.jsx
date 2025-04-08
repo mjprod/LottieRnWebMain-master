@@ -43,7 +43,7 @@ const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [], onCardPressed
       ) {
         cardData.push(generateCardSet(day, DailyCardStatus.active));
       } else {
-        cardData.push(generateCardSet(day));
+        cardData.push(generateCardSet(day, DailyCardStatus.inactive));
       }
     });
     setDailyCardData(cardData);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AssetPack from '../../../util/AssetsPack';
-import { DailyCardStatus, Fonts } from '../../../util/constants';
+import { Colors, DailyCardStatus, Fonts } from '../../../util/constants';
 
 
 const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
@@ -13,7 +13,7 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
             case DailyCardStatus.completed:
                 return styles.dayTextStyleCompleted;
             default:
-                return styles.dayTextStyle;
+                return styles.dayTextNormal;
         }
     };
     const getMainContainerStyle = () => {
@@ -42,7 +42,7 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
             case DailyCardStatus.completed:
                 return AssetPack.backgrounds.CARD_NUMBER_SET_COMPLETED;
             default:
-                return AssetPack.backgrounds.CARD_NUMBER_SET_INACTIVE;
+                return AssetPack.backgrounds.CARD_NUMBER_SET;
         }
     }
 
@@ -83,18 +83,16 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
 
     const getMainContent = () => {
         return <View style={getMainContainerStyle()}>
-            {getSubContent(cardSet, "Card Set", cardSet * cardsInASet, "Scratch Cards", cardBackground)}
+            {getSubContent(cardSet, "Coming Soon", cardSet * cardsInASet, "Scratch Cards", cardBackground)}
             {extras !== null && getSubContent(extras.number, extras.name, extras.number, extras.name, extras.background)}
+            {status === "active" || status === "completed" ? null : <View style={styles.inactiveOverlay} />}
         </View>;
     }
 
-    const inactiveOverlayView = status === "active" || status === "completed" ? null : <View style={styles.inactiveOverlay} />;
-
     return (
         <TouchableOpacity onPress={onPress} style={styles.parentContainer}>
-            <Text style={getDayTagStyle()}>{`DAY ${day}`}</Text>
+            <Text style={[styles.dayTextStyle,getDayTagStyle()]}>{`DAY ${day}`}</Text>
             {getMainContent()}
-            {inactiveOverlayView}
         </TouchableOpacity>
     );
 };
@@ -106,51 +104,38 @@ const styles = StyleSheet.create({
     },
     inactiveOverlay: {
         position: 'absolute',
-        backgroundColor: '#1B1B1B66',
+        backgroundColor: '#13131399',
         width: '100%',
         height: '100%',
+        borderBottomRightRadius: 12,
+        borderBottomLeftRadius: 12,
     },
     dayTextStyle: {
-        color: "#FFFFFF",
+        height: 24,
+        color: Colors.jokerWhite50,
         fontFamily: Fonts.TekoMedium,
         fontSize: 18,
-        backgroundColor: '#3D3D3D',
-        flex: 1,
+        backgroundColor: Colors.jokerBlack200,
         borderTopRightRadius: 12,
         borderTopLeftRadius: 12,
         textAlign: 'center',
         paddingTop: 5,
         lineHeight: 15,
-        borderColor: '#3D3D3D',
+        borderColor: Colors.jokerBlack200,
         borderWidth: 1,
+    },
+    dayTextNormal: {
+        borderColor: Colors.jokerBlack200,
     },
     dayTextStyleActive: {
         color: "#382E23",
-        fontFamily: Fonts.TekoMedium,
-        fontSize: 18,
         backgroundColor: '#FFEEC0',
-        flex: 1,
-        borderTopRightRadius: 12,
-        borderTopLeftRadius: 12,
-        textAlign: 'center',
-        paddingTop: 5,
-        lineHeight: 15,
         borderColor: '#FFDEA8',
-        borderWidth: 1,
     },
     dayTextStyleCompleted: {
-        color: "#382E23",
-        fontFamily: "Teko-Medium",
-        fontSize: 18,
-        backgroundColor: '#3EDA41',
-        borderColor: '#3EDA41',
-        flex: 1,
-        borderTopRightRadius: 12,
-        borderTopLeftRadius: 12,
-        textAlign: 'center',
-        paddingTop: 5,
-        lineHeight: 15,
-        borderWidth: 1,
+        color: Colors.jokerBlack800,
+        backgroundColor: Colors.jokerGreen400,
+        borderColor: Colors.jokerGreen400,
     },
     mainContainer: {
         flexDirection: 'row',
