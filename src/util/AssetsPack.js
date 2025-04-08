@@ -8,6 +8,7 @@ const AssetPack = {
     TICKET: require("./../assets/image/icon_ticket.png"),
     DOUBLE_DASH: require("./../assets/icons/double_dash.svg").default,
     COPY: require("../assets/icons/iconCopy.svg").default,
+    TICK: require("../assets/icons/icon-tick.svg").default,
   },
   logos: {
     TURBO_SCRATCH: require("./../assets/image/turbo_scratch_logo.png"),

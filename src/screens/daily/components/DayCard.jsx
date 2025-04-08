@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AssetPack from '../../../util/AssetsPack';
 import { Colors, DailyCardStatus, Fonts } from '../../../util/constants';
-
+import LinearGradient from "react-native-web-linear-gradient";
 
 const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
     const cardsInASet = 12;
@@ -50,7 +50,7 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
         switch (status) {
             case DailyCardStatus.completed:
                 return <View>
-                    <Text style={{ color: "#3EDA41" }}>{"Completed"}</Text>
+                    <Text style={{ color: Colors.jokerGreen400 }}>{"Completed"}</Text>
                 </View>;
             default:
                 return <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, }}>
@@ -63,10 +63,15 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
     const getTopSection = (number, text) => {
         return <View style={styles.topSection}>
             <ImageBackground source={{ uri: getBadgeBackground() }} style={styles.cardSetNumberBackground}>
-                <Text style={styles.cardSetValue}>{`${number}`}</Text>
-                <Text style={styles.cardSetX}>{"x"}</Text>
+                {status === DailyCardStatus.completed ?
+                    <Image source={AssetPack.icons.TICK} style={{ height: 24, width: 24 }} /> :
+                    (<>
+                        <Text style={styles.cardSetValue}>{`${number}`}</Text>
+                        <Text style={styles.cardSetX}>{"x"}</Text>
+                    </>)
+                }
             </ImageBackground>
-            <Text style={styles.cardSet}>{`${text}`}</Text>
+            <Text style={styles.cardSet}>{DailyCardStatus.completed === status ? "SET DONE" : DailyCardStatus.active === status ? "Card Set" : text}</Text>
         </View>;
     }
 
@@ -74,10 +79,13 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
         return <ImageBackground style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', paddingTop: 30 }}
             source={{ uri: background }}>
             {getTopSection(number, text)}
-            <ImageBackground source={{ uri: AssetPack.backgrounds.BOTTOM_GRADIENT }} style={styles.bottomSection}>
+            <LinearGradient
+                colors={[Colors.transparent, "#00000080", Colors.background]}
+                locations={[0, 0.5, 1]}
+                style={styles.linearGradient}>
                 <Image source={getCardIcon()} style={styles.scratchCardIcon} />
                 {getBottomSection(footerNumber, footerText)}
-            </ImageBackground>
+            </LinearGradient>
         </ImageBackground>
     }
 
@@ -91,7 +99,7 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
 
     return (
         <TouchableOpacity onPress={onPress} style={styles.parentContainer}>
-            <Text style={[styles.dayTextStyle,getDayTagStyle()]}>{`DAY ${day}`}</Text>
+            <Text style={[styles.dayTextStyle, getDayTagStyle()]}>{`DAY ${day}`}</Text>
             {getMainContent()}
         </TouchableOpacity>
     );
@@ -139,8 +147,7 @@ const styles = StyleSheet.create({
     },
     mainContainer: {
         flexDirection: 'row',
-        backgroundColor: '#FFDEA8',
-        borderColor: '#3D3D3D',
+        borderColor: Colors.jokerBlack200,
         overflow: "hidden",
         borderWidth: 1,
         borderBottomRightRadius: 12,
@@ -157,12 +164,12 @@ const styles = StyleSheet.create({
     },
     mainContainerCompleted: {
         flexDirection: 'row',
-        backgroundColor: '#FFDEA8',
+        backgroundColor: Colors.jokerGreen400,
         overflow: "hidden",
         borderWidth: 1,
         borderBottomRightRadius: 12,
         borderBottomLeftRadius: 12,
-        borderColor: '#3EDA41',
+        borderColor: Colors.jokerGreen400,
     },
     topSection: {
         flexDirection: 'row',
@@ -171,7 +178,7 @@ const styles = StyleSheet.create({
         paddingRight: 16,
         paddingLeft: 16,
     },
-    bottomSection: {
+    linearGradient: {
         flex: 1,
         flexDirection: 'row',
         width: '100%',
@@ -189,28 +196,30 @@ const styles = StyleSheet.create({
         height: 61,
         justifyContent: 'center',
         alignItems: 'center',
+        alignContent: "center",
         marginRight: 8,
-        paddingTop: 4,
         flexDirection: 'row',
     },
     cardSetValue: {
-        fontFamily: "Teko-Medium",
-        color: '#FFFFFF',
+        fontFamily: Fonts.TekoMedium,
+        color: Colors.jokerWhite50,
         fontSize: 38,
         textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
         elevation: 2,
+        paddingTop: 4
     },
     cardSetX: {
-        fontFamily: "Inter-SemiBold",
-        color: '#FFFFFF',
+        fontFamily: Fonts.InterBold,
+        color: Colors.jokerWhite50,
         fontSize: 25,
         paddingBottom: 5,
         textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
         elevation: 2,
     },
     cardSet: {
-        fontFamily: "Teko-Medium",
-        color: '#FFFFFF',
+        paddingTop: 4,
+        fontFamily: Fonts.TekoMedium,
+        color: Colors.jokerWhite50,
         fontSize: 30,
         textTransform: "uppercase",
         textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
@@ -218,17 +227,17 @@ const styles = StyleSheet.create({
         lineHeight: 25,
     },
     scratchCardValue: {
-        color: '#FFDEA8',
-        fontSize: 12,
-        fontFamily: "Inter-SemiBold",
+        color: Colors.jokerGold400,
+        fontSize: 14,
+        fontFamily: Fonts.InterBold,
     },
     scratchCard: {
-        color: '#FFFFFF',
-        fontSize: 12,
+        color: Colors.jokerWhite50,
+        fontSize: 14,
     },
     scratchCardIcon: {
-        width: 25,
-        height: 20,
+        width: 20,
+        height: 16,
     }
 });
 
