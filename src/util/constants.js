@@ -56,11 +56,13 @@ export const Colors = {
   transparent: "#00000000",
 
   jokerGold400: "#FFDEA8",
+  jokerGold40040: "#FFDEA866",
   jokerGold600: "#A88C5D",
   jokerGold1000: "#1D1A11",
   jokerBlack50: "#A6A6A6",
   jokerBlack100: "#5F5F5F",
   jokerBlack200: "#3D3D3D",
+  jokerBlack300: "#262626",
   jokerBlack600: "#1B1B1B",
   jokerBlack700: "#171717",
   jokerBlack800: "#131313",
