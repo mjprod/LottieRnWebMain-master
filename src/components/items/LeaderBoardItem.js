@@ -13,37 +13,23 @@ const LeaderBoardItem = ({ rank, username, points, status, selected }) => {
       case LeaderBoardStatus.up:
         return (
           <IconTypeLeaderBoardArrow
-            style={{
-              width: 15,
-              height: 10,
-              marginLeft: 10,
-            }}
+            style={selected ? styles.statusIconSelected : styles.statusIcon}
           />
         );
       case LeaderBoardStatus.down:
         return (
           <IconTypeLeaderBoardArrow
             fill="red"
-            style={{
-              transform: [{ rotate: "180deg" }],
-              width: 15,
-              height: 10,
-              marginLeft: 10,
-            }}
+            style={[selected ? styles.statusIconSelected : styles.statusIcon, { transform: [{ rotate: "180deg" }] }]}
           />
         );
       case LeaderBoardStatus.same:
-        return <Image style={{ height: 10, width: 15, marginLeft: 10 }} source={AssetPack.icons.DOUBLE_DASH} />
+        return <Image style={selected ? styles.statusIconSelected : styles.statusIcon} source={AssetPack.icons.DOUBLE_DASH} />
       default:
         return (
           <IconTypeLeaderBoardArrow
             fill="red"
-            style={{
-              transform: [{ rotate: "180deg" }],
-              width: 15,
-              height: 10,
-              marginLeft: 10,
-            }}
+            style={[selected ? styles.statusIconSelected : styles.statusIcon, { transform: [{ rotate: "180deg" }] }]}
           />
         );
     }
@@ -52,7 +38,7 @@ const LeaderBoardItem = ({ rank, username, points, status, selected }) => {
     <ImageBackground
       style={[styles.container, selected && styles.selectedContainer]}>
       <Text
-        style={[styles.text, styles.rankText]}
+        style={[styles.text, styles.rankText, selected && styles.rankTextSelected]}
       >
         {rank}
       </Text>
@@ -60,9 +46,15 @@ const LeaderBoardItem = ({ rank, username, points, status, selected }) => {
         style={[
           styles.text,
           styles.usernameText,
+          selected && styles.usernameTextSelected,
         ]}
       >
-        {!selected ? maskString(username) : <View style={{ flexDirection: "row" }}><Avatar size={AvatarSize.small} name={username} /><Text style={{ paddingTop: 2 }}>You</Text></View>}
+        {!selected ? maskString(username) :
+          <View style={{ flexDirection: "row" }}>
+            <Avatar size={AvatarSize.small} name={username} />
+            <Text style={{paddingTop: 2}}>You</Text>
+          </View>
+        }
       </Text>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "start", width: 130 }}>
         <PointsIcon style={{ width: 16, height: 16, marginRight: 10 }} />
@@ -70,6 +62,7 @@ const LeaderBoardItem = ({ rank, username, points, status, selected }) => {
           style={[
             styles.text,
             styles.pointsText,
+            selected && styles.pointsTextSelected,
           ]}
         >{`${points} Points`}</Text>
       </View>
@@ -92,8 +85,6 @@ const styles = StyleSheet.create({
     borderColor: Colors.jokerBlack200,
   },
   selectedContainer: {
-    paddingHorizontal: 25,
-    paddingVertical: 14,
     backgroundColor: Colors.jokerGold1000,
     borderColor: Colors.jokerGold400,
   },
@@ -103,11 +94,18 @@ const styles = StyleSheet.create({
     width: 35,
     marginRight: 22,
   },
+  rankTextSelected: {
+    fontSize: 16,
+  },
   usernameText: {
     fontFamily: Fonts.InterRegular,
     fontSize: 16,
     flex: 1,
     width: 80,
+  },
+  usernameTextSelected: {
+    fontFamily: Fonts.InterSemiBold,
+    fontSize: 16,
   },
   pointsText: {
     fontFamily: Fonts.TekoMedium,
@@ -115,8 +113,21 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     textTransform: "uppercase",
   },
+  pointsTextSelected: {
+    fontSize: 18,
+  },
   text: {
     color: Colors.jokerWhite50,
+  },
+  statusIcon: {
+    width: 15,
+    height: 10,
+    marginLeft: 10,
+  },
+  statusIconSelected: {
+    width: 15,
+    height: 10,
+    marginLeft: 10,
   }
 });
 
