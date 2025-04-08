@@ -26,12 +26,12 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
                 return styles.mainContainer;
         }
     };
-    const getCardIcon = () => {
+    const getCardIcon = (isForExtra) => {
         switch (status) {
             case DailyCardStatus.completed:
-                return AssetPack.icons.CARDS_GREEN;
+                return isForExtra ? AssetPack.icons.GREEN_TICKET : AssetPack.icons.CARDS_GREEN;
             default:
-                return AssetPack.icons.CARDS;
+                return isForExtra ? AssetPack.icons.GOLDEN_TICKET : AssetPack.icons.CARDS;
         }
     };
 
@@ -46,11 +46,11 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
         }
     }
 
-    const getBottomSection = (number, text) => {
+    const getBottomSection = (number, text, isForExtra = false) => {
         switch (status) {
             case DailyCardStatus.completed:
                 return <View>
-                    <Text style={{ color: Colors.jokerGreen400 }}>{"Completed"}</Text>
+                    <Text style={{ color: Colors.jokerWhite50 }}>{isForExtra ? "Draw entered" : "Completed"}</Text>
                 </View>;
             default:
                 return <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, }}>
@@ -60,10 +60,10 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
         }
     }
 
-    const getTopSection = (number, text) => {
+    const getTopSection = (number, text, isForExtra = false) => {
         return <View style={styles.topSection}>
             <ImageBackground source={{ uri: getBadgeBackground() }} style={styles.cardSetNumberBackground}>
-                {status === DailyCardStatus.completed ?
+                {(status === DailyCardStatus.completed )?
                     <Image source={AssetPack.icons.TICK} style={{ height: 24, width: 24 }} /> :
                     (<>
                         <Text style={styles.cardSetValue}>{`${number}`}</Text>
@@ -71,20 +71,20 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
                     </>)
                 }
             </ImageBackground>
-            <Text style={styles.cardSet}>{DailyCardStatus.completed === status ? "SET DONE" : DailyCardStatus.active === status ? "Card Set" : text}</Text>
+            {isForExtra ? <Text style={styles.cardSet}>{text}</Text> : <Text style={styles.cardSet}>{DailyCardStatus.completed === status ? "SET DONE" : DailyCardStatus.active === status ? "Card Set" : text}</Text>}
         </View>;
     }
 
-    const getSubContent = (number, text, footerNumber, footerText, background) => {
+    const getSubContent = (number, text, footerNumber, footerText, background, isForExtra = false) => {
         return <ImageBackground style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', paddingTop: 30 }}
             source={{ uri: background }}>
-            {getTopSection(number, text)}
+            {getTopSection(number, text, isForExtra)}
             <LinearGradient
                 colors={[Colors.transparent, "#00000080", Colors.background]}
                 locations={[0, 0.5, 1]}
                 style={styles.linearGradient}>
-                <Image source={getCardIcon()} style={styles.scratchCardIcon} />
-                {getBottomSection(footerNumber, footerText)}
+                <Image source={getCardIcon(isForExtra)} style={styles.scratchCardIcon} />
+                {getBottomSection(footerNumber, footerText, isForExtra)}
             </LinearGradient>
         </ImageBackground>
     }
@@ -92,7 +92,7 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
     const getMainContent = () => {
         return <View style={getMainContainerStyle()}>
             {getSubContent(cardSet, "Coming Soon", cardSet * cardsInASet, "Scratch Cards", cardBackground)}
-            {extras !== null && getSubContent(extras.number, extras.name, extras.number, extras.name, extras.background)}
+            {extras !== null && getSubContent(extras.number, extras.name, extras.number, "Draw ticket", extras.background, true)}
             {status === "active" || status === "completed" ? null : <View style={styles.inactiveOverlay} />}
         </View>;
     }

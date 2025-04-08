@@ -23,7 +23,7 @@ const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [], onCardPressed
       extras:
         day === 7
           ? {
-            name: "Gift Card",
+            name: "Turbo Ticket",
             number: 1,
             background: AssetPack.backgrounds.DAILY_CARD_EXTRA_BACKGROUND,
           }

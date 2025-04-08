@@ -49,11 +49,7 @@ const DailyScreen = () => {
   const [userData, setUserData] = useState("");
   const [currentWeek, setCurrentWeek] = useState("");
   const [totalWeeks, setTotalWeeks] = useState("");
-  const [days, setDays] = useState([
-    "2025-04-07",
-    "2025-04-08",
-    "2025-04-04"
-  ]);
+  const [days, setDays] = useState([]);
 
   const [dailySetData] = useState(DailySetData);
   const [noOfCardsInSet, setNumberOfCardsInSet] = useState(12);
@@ -93,7 +89,7 @@ const DailyScreen = () => {
             (item) => item.current_week === response.current_week
           );
           if (currentWeekDaily) {
-            // setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
+            setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
           }
           setUserData(response.user);
         };

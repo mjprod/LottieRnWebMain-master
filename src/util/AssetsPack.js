@@ -9,13 +9,15 @@ const AssetPack = {
     DOUBLE_DASH: require("./../assets/icons/double_dash.svg").default,
     COPY: require("../assets/icons/iconCopy.svg").default,
     TICK: require("../assets/icons/icon-tick.svg").default,
+    GOLDEN_TICKET: require("../assets/icons/gold-ticket.svg").default,
+    GREEN_TICKET: require("../assets/icons/green-ticket.svg").default,
   },
   logos: {
     TURBO_SCRATCH: require("./../assets/image/turbo_scratch_logo.png"),
   },
   backgrounds: {
     DAILY_CARD_BACKGROUND: require("./../assets/image/day_card_background.png"),
-    DAILY_CARD_EXTRA_BACKGROUND: require("./../assets/image/day_card_extra_background.png"),
+    DAILY_CARD_EXTRA_BACKGROUND: require("./../assets/image/day_card_extra_background.webp"),
     CARD_NUMBER_SET: require("./../assets/image/card_set_number_background.svg").default,
     CARD_NUMBER_SET_COMPLETED: require("./../assets/image/card_set_number_completed.svg").default,
     CARD_NUMBER_SET_INACTIVE: require("./../assets/image/card_set_number_inactive.svg").default,
