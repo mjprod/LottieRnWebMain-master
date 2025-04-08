@@ -20,8 +20,8 @@ export const getWinnerAPI = async () => {
   return response.data;
 };
 
-export const getDailyQuestionAPI = async ({ user_id }) => {
-  const response = await axiosInstance.post(Endpoint.get_daily_question, { user_id });
+export const getDailyQuestionAPI = async ({ user_id, beta_block_id }) => {
+  const response = await axiosInstance.post(Endpoint.get_daily_question, { user_id, beta_block_id });
   return response.data;
 };
 

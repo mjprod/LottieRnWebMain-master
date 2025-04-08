@@ -99,7 +99,7 @@ const DailyScreen = () => {
 
   useEffect(() => {
     if (userData.user_id && !isSubmitted) {
-      getDailyQuestion(userData.user_id).then((response) => {
+      getDailyQuestion(userData.user_id, userData.current_beta_block).then((response) => {
         if (response.question) {
           setQuestion(response);
         }
