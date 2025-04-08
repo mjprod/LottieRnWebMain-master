@@ -79,12 +79,11 @@ const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [], onCardPressed
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 16,
     width: "100%",
     flexDirection: "column",
     alignItems: "start",
     justifyContent: "flex-start",
-    gap: 16,
+    gap: 24,
     marginBottom: 16,
   },
   item: {
