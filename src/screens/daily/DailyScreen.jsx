@@ -8,7 +8,7 @@ import GamesAvailableCard from "../../components/GamesAvailableCard";
 import LinkButton from "../../components/LinkButton";
 import NextDrawCard from "../../components/NextDrawCard";
 import ProfileHeader from "../../components/ProfileHeader";
-import QuestionOfTheDay from "../../components/QuestionOfTheDay";
+import QuestionOfTheDay from "./components/QuestionOfTheDay";
 import { useSnackbar } from "../../components/SnackbarContext";
 import { DailySetData } from "../../data/DailyCardData";
 import useApiRequest from "../../hook/useApiRequest";

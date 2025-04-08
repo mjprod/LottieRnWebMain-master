@@ -65,3 +65,14 @@ html, body {
 video::-webkit-media-controls-overlay-play-button {
   display: none;
 }
+
+input::selection {
+  background: #ffb7b7; /* Your highlight color */
+  color: #000;         /* Color for the selected text */
+}
+
+/* If needed, target Firefox separately */
+input::-moz-selection {
+  background: #ffb7b7;
+  color: #000;
+}

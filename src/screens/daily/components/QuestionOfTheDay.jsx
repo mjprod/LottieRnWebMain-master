@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import GameButton from "./GameButton";
+import GameButton from "../../../components/GameButton";
+import { Colors, Fonts } from "../../../util/constants";
 
 const QuestionOfTheDay = ({ question, onSubmit, style, numberOfSets, numberOfCardsInSet }) => {
   const [text, setText] = useState("");
@@ -11,10 +12,10 @@ const QuestionOfTheDay = ({ question, onSubmit, style, numberOfSets, numberOfCar
         <Text style={styles.topTagText}>{"Question of the day"}</Text>
       </View>
       <View style={styles.questionContainer}>
-        <Text style={styles.question}>{question ? `Q: ${question}` : ""}</Text>
+        <Text style={styles.question}><Text style={styles.qText}>Q: </Text>{question ? `${question}` : ""}</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="Minium 20 words..."
+          placeholder="Scratch set unlocks after 20 words.."
           multiline={true}
           numberOfLines={4}
           textAlignVertical="top"
@@ -37,10 +38,8 @@ const styles = StyleSheet.create({
   topTag: {
     color: "#FFFFFF",
     alignItems: "center",
-    paddingTop: 8,
-    paddingBottom: 8,
-    paddingLeft: 16,
-    paddingRight: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     borderColor: "#FFDEA866",
@@ -48,11 +47,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
   topTagText: {
-    fontFamily: "Teko-Medium",
-    color: "#FFFFFF",
+    fontFamily: Fonts.TekoMedium,
+    color: Colors.jokerWhite50,
     justifyContent: "center",
     alignItems: "center",
-    fontSize: 20,
+    fontSize: 24,
     textTransform: "uppercase",
     letterSpacing: 1.5,
   },
@@ -61,42 +60,46 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignContent: "center",
-    paddingTop: 32,
-    paddingBottom: 32,
-    paddingRight: 16,
-    paddingLeft: 16,
+    backgroundColor: Colors.jokerBlack800,
+    paddingVertical: 24,
+    paddingHorizontal: 16,
     borderWidth: 1,
     borderColor: "#3D3D3D",
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
   },
+  qText: {
+    color: Colors.jokerWhite50,
+  },
   question: {
-    fontFamily: "Inter-Medium",
-    color: "#A6A6A6",
+    fontFamily: Fonts.InterRegular,
+    color: Colors.jokerBlack50,
     fontSize: 16,
-    marginBottom: 16,
+    marginBottom: 8,
   },
   textInput: {
-    fontFamily: "Inter-Medium",
+    fontFamily: Fonts.InterMedium,
     color: "#fff",
     fontSize: 16,
+    height: 136,
+    backgroundColor: Colors.jokerBlack600,
     justifyContent: "top",
-    borderColor: "#262626",
+    borderColor: Colors.jokerBlack200,
     borderWidth: 1,
     padding: 16,
     marginTop: 8,
     borderRadius: 8,
-    placeholderTextColor: "#5F5F5F",
+    placeholderTextColor: Colors.jokerBlack200,
     marginBottom: 24,
-    backgroundColor: "#212121",
+    selectionColor: Colors.jokerGold400
   },
   bottomText: {
     fontFamily: "Inter-Medium",
     color: "#A6A6A6",
     textAlign: "center",
     fontSize: 16,
-    marginTop: 8,
+    marginTop: 12,
   },
 });
 
