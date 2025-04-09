@@ -4,7 +4,7 @@ import useStorage from '../hook/useStorage';
 import { decrypt, encrypt } from '../util/crypto';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8083/api/v1',
+  baseURL: 'http://54.206.216.180:8083/api/v1',//'http://localhost:8083/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },

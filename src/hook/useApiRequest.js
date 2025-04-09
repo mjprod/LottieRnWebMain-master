@@ -1,14 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 import { fetchUserDetailsAPI, getDailyQuestionAPI, getGamesAPI, getLeaderBoardAPI, getWinnerAPI, loginAPI, postDailyAnswerAPI, updateCardBalanceAPI, updateCardPlayedAPI, updateLuckySymbolAPI, updateScoreAPI } from "../api/api";
 import { showConsoleError } from "../util/ConsoleMessage";
 import useStorage from "./useStorage";
 
 const useApiRequest = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  const [response, setResponse] = useState(null);
   const { loadData, saveData } = useStorage();
 
   const queryClient = useQueryClient();
@@ -193,9 +189,6 @@ const useApiRequest = () => {
   };
 
   return {
-    loading,
-    error,
-    response,
     updateLuckySymbol,
     getLeaderBoard,
     updateScore,
