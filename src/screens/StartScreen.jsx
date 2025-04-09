@@ -81,7 +81,7 @@ const StartScreen = () => {
                         <LuckySymbolCard />
                     </View>
                     <View style={styles.ticketsSection}>
-                        <ResourceTile style={{ width: "100%" }} cardsLeft={initialScratchCardLeft} />
+                        <ResourceTile style={{ width: "100%" }} number={initialScratchCardLeft} />
                     </View>
                     <TimerComponent style={{ paddingVertical: Dimentions.marginL }} />
                     <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column", marginBottom: Dimentions.marginL }}>

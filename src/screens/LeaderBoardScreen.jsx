@@ -63,7 +63,7 @@ const LeaderBoardScreen = () => {
           style={{ marginBottom: 48 }}
           text={"How To Play Turbo Scratch >"}
           handlePress={appNavigation.goToHowToPlayPage} />
-        <ResourceTile style={{ marginBottom: 32 }} cardsLeft={user ? user.card_balance : 0} />
+        <ResourceTile style={{ marginBottom: 32 }} number={user ? user.card_balance : 0} />
         <NextDrawCard style={{ marginBottom: 48 }} />
       </View>
     </TopNavTemplate>

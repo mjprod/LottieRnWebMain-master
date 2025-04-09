@@ -199,7 +199,7 @@ const DailyScreen = () => {
             handlePress={appNavigation.goToHowToPlayPage} />
           <ResourceTile
             style={{ marginVertical: 24 }}
-            cardsLeft={userData.card_balance} />
+            number={userData.card_balance} />
           <NextDrawCard />
         </View>
 

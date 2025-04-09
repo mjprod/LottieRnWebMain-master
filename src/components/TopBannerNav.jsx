@@ -14,8 +14,8 @@ import { Colors, Dimentions, Fonts } from "../util/constants";
 import { useNavigate } from "react-router";
 
 const TopBannerNav = ({
-  title = "Scratch to win!",
-  subtitle = "Your next prize awaits.",
+  title,
+  subtitle,
   backgroundImage = AssetPack.backgrounds.TOP_NAV_HEROES,
   onBackPress,
   hasBackButton = false,
