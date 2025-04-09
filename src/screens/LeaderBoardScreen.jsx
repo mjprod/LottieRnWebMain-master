@@ -4,9 +4,8 @@ import SectionTitle from "../components/SectionTitle";
 import GameButton from "../components/GameButton";
 import LeaderBoardList from "../components/LeaderBoardList";
 import { useLocation } from "react-router-dom";
-import TopBannerNav from "../components/TopBannerNav";
 import LinkButton from "../components/LinkButton";
-import GamesAvailableCard from "../components/GamesAvailableCard";
+import ResourceTile from "../components/ResourceTile";
 import NextDrawCard from "../components/NextDrawCard";
 import useApiRequest from "../hook/useApiRequest";
 import { Colors, Dimentions } from "../util/constants";
@@ -55,17 +54,17 @@ const LeaderBoardScreen = () => {
       navBackgroudImage={AssetPack.backgrounds.TOP_NAV_LEADER_BOARD}
       hasBackButton={true}>
       <View style={styles.container}>
-        <SectionTitle text="LeaderBard" style={{ marginBottom: 10 }} />
+        <SectionTitle text="LeaderBard" style={{ marginBottom: 24 }} />
         <LeaderBoardList
-          style={{ marginBottom: 30 }}
+          style={{ marginBottom: 32 }}
           username={user && user.name} />
-        <GameButton style={{ marginBottom: 30 }} text="Play Now" onPress={handlePlayNowButtonPress} />
+        <GameButton style={{ marginBottom: 32 }} text="Play Now" onPress={handlePlayNowButtonPress} />
         <LinkButton
-          style={{ marginBottom: 30 }}
+          style={{ marginBottom: 48 }}
           text={"How To Play Turbo Scratch >"}
           handlePress={appNavigation.goToHowToPlayPage} />
-        <GamesAvailableCard style={{ marginBottom: 30 }} cardsLeft={user ? user.card_balance : 0} />
-        <NextDrawCard style={{ marginBottom: 30 }} />
+        <ResourceTile style={{ marginBottom: 32 }} number={user ? user.card_balance : 0} />
+        <NextDrawCard style={{ marginBottom: 48 }} />
       </View>
     </TopNavTemplate>
   );
@@ -73,7 +72,7 @@ const LeaderBoardScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: Dimentions.marginS,
+    paddingHorizontal: 20,
     backgroundColor: Colors.jokerBlack800,
     borderColor: Colors.jokerBlack200,
     paddingVertical: Dimentions.marginL,

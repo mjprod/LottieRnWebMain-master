@@ -23,7 +23,7 @@ const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [], onCardPressed
       extras:
         day === 7
           ? {
-            name: "Gift Card",
+            name: "Turbo Ticket",
             number: 1,
             background: AssetPack.backgrounds.DAILY_CARD_EXTRA_BACKGROUND,
           }
@@ -43,7 +43,7 @@ const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [], onCardPressed
       ) {
         cardData.push(generateCardSet(day, DailyCardStatus.active));
       } else {
-        cardData.push(generateCardSet(day));
+        cardData.push(generateCardSet(day, DailyCardStatus.inactive));
       }
     });
     setDailyCardData(cardData);
@@ -79,12 +79,11 @@ const DailyCardsContainer = ({ currentWeek, totalWeeks, days = [], onCardPressed
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 16,
     width: "100%",
     flexDirection: "column",
     alignItems: "start",
     justifyContent: "flex-start",
-    gap: 16,
+    gap: 24,
     marginBottom: 16,
   },
   item: {

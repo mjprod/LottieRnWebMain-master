@@ -6,6 +6,7 @@ import LinkButton from "../../../components/LinkButton";
 import LottieView from "react-native-web-lottie";
 import { useGame } from "../../../context/GameContext";
 import LoadingView from "../../../components/LoadingView";
+import GameButton from "../../../components/GameButton";
 
 const Congratulations = () => {
     const { user } = useGame();
@@ -16,7 +17,7 @@ const Congratulations = () => {
         return (
             <>
                 <Image
-                    style={{ width: 175, height: 46, marginBottom: 20 }}
+                    style={{ width: 175, height: 46, marginBottom: 8, marginTop: 22 }}
                     source={AssetPack.logos.TURBO_SCRATCH} />
                 <Text style={styles.heading}>Congratulations to</Text>
                 <Text style={styles.title}>{user && user.name}</Text>
@@ -28,9 +29,10 @@ const Congratulations = () => {
                 <Text style={styles.message}>
                     Your <Text style={styles.textHighlighted}>Amazon Gift Card </Text>will be sent to your email within three business days.
                 </Text>
-                <LinkButton
-                    style={{ marginVertical: Dimentions.sectionMargin }}
-                    text={"Contact us for any concerns"} />
+                <GameButton
+                    style={{ width: "100%", marginBottom: Dimentions.marginXL }}
+                    text="TAKE ME BACK"
+                    onPress={() => { }} />
                 <LottieView
                     style={{ flex: 1, position: "absolute", right: 0, top: 0, width: "100%", height: "100%" }}
                     source={AssetPack.lotties.CONFETTI}
@@ -53,10 +55,9 @@ const styles = StyleSheet.create({
         marginHorizontal: Dimentions.pageMargin,
     },
     title: {
-        fontFamily: Fonts.InterMedium,
+        fontFamily: Fonts.InterSemiBold,
         fontSize: 18,
-        color: "#FFFFFF",
-        marginBottom: Dimentions.pageMargin,
+        color: Colors.jokerBlack50,
         textAlign: "center",
     },
     mainContainer: {
@@ -70,27 +71,21 @@ const styles = StyleSheet.create({
     },
     backgroundImage: {
         flex: 1,
-        margin: Dimentions.pageMargin,
-        width: "80%",
+        height: 242,
+        width: 298,
     },
     message: {
         fontFamily: Fonts.InterRegular,
         color: Colors.jokerBlack50,
         fontSize: 16,
-        textAlign: "center"
+        textAlign: "center",
+        marginBottom: 48
     },
     textHighlighted: {
         fontFamily: Fonts.InterRegular,
-        color: "#FFEEC0",
+        color: Colors.jokerGold400,
         textAlign: "center",
         fontSize: 16,
-    },
-    backgroundGradient: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
     },
 });
 

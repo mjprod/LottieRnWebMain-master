@@ -7,13 +7,17 @@ const WeAreExtendingContent = () => {
 
   return (<>
     <Image
-      style={{ width: 175, height: 46, marginBottom: 20 }}
+      style={{ width: 175, height: 46, marginBottom: 20, marginTop: 22 }}
       source={AssetPack.logos.TURBO_SCRATCH} />
     <Text style={styles.text}>
       Playtime extended by 1 week — more chances to win gift cards! You’ve also received <Text style={{ fontFamily: Fonts.InterBold, color: Colors.jokerWhite50 }}>2 FREE ENTRIES</Text> into this
       week’s draw.
     </Text>
-    <View style={{ flexGrow: 1 }} />
+    <View style={{ flexGrow: 1, justifyContent: "center", marginVertical: 32 }} >
+      <Image
+        style={{ width: 242, height: 242 }}
+        source={AssetPack.images.TIME_IS_ON_YOUR_SIDE} />
+    </View>
     <View style={styles.roundedTextContainer}>
       <Text style={styles.roundedText}>7 Day Extension</Text>
     </View>
@@ -33,6 +37,7 @@ const styles = StyleSheet.create({
     color: "#A6A6A6",
     fontFamily: Fonts.InterRegular,
     textAlign: "center",
+    lineHeight: "160%",
     fontSize: 16,
   },
   roundedTextContainer: {
@@ -45,8 +50,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 35.5,
     paddingVertical: 15,
     borderRadius: 30,
-    boxShadow: "1px 2px 3.84px 0 rgba(255, 222, 168, 0.25)",
+    boxShadow: "0px 2px 10px #FFDEA84D",
     elevation: 5,
+    marginBottom: 22
   },
   roundedText: {
     color: "#FFDEA8",

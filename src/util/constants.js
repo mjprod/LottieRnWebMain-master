@@ -41,7 +41,7 @@ export const LeaderBoardStatus = {
 
 
 export const Dimentions = {
-  pageMargin: 16,
+  pageMargin: 20,
   contentPadding: 24,
   sectionMargin: 32,
   marginXS: 8,
@@ -53,17 +53,27 @@ export const Dimentions = {
 
 export const Colors = {
   background: "#0A0A0A",
+  black: "#000000",
   transparent: "#00000000",
 
   jokerGold400: "#FFDEA8",
+  jokerGold40040: "#FFDEA866",
   jokerGold600: "#A88C5D",
+  jokerGold900: "#382E23",
+  jokerGold1000: "#1D1A11",
+
   jokerBlack50: "#A6A6A6",
+  jokerBlack100: "#5F5F5F",
   jokerBlack200: "#3D3D3D",
+  jokerBlack300: "#262626",
+  jokerBlack600: "#1B1B1B",
+  jokerBlack700: "#171717",
   jokerBlack800: "#131313",
+  jokerBlack1100: "#0A0A0A",
 
   jokerWhite50: "#FFFFFF",
 
-  jokerGreen400: "#3EDB58"
+  jokerGreen400: "#3EDA41",
 };
 
 export const Fonts = {

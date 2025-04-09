@@ -1,14 +1,13 @@
 import React from "react";
 import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
-import RotatingCirclesBackground from "../components/RotatingCirclesBackground";
 import AssetPack from "../util/AssetsPack";
 import GameButton from "../components/GameButton";
-import { Dimentions } from "../util/constants";
+import { Colors, Dimentions, Fonts } from "../util/constants";
 
 const NotFoundScreen = () => {
   return (
     <ImageBackground
-      source={AssetPack.backgrounds.SCRACHIE}
+      source={AssetPack.backgrounds.SCRACHIE_404}
       style={styles.rotatingBackgroundContainer}>
       <View
         style={{
@@ -17,14 +16,14 @@ const NotFoundScreen = () => {
           justifyContent: "center",
         }}>
         <Image
-          style={{ width: 175, height: 46, marginBottom: 20 }}
+          style={{ width: 175, height: 46, marginBottom: 28 }}
           source={AssetPack.logos.TURBO_SCRATCH} />
         <Image
           style={{
             padding: 35,
             width: 269,
             height: 120,
-            marginBottom: 35,
+            marginBottom: 28,
           }}
           source={AssetPack.icons.ICON_404}
           resizeMode="center"
@@ -47,13 +46,14 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    overflow: "hidden"
+    overflow: "hidden",
+    paddingHorizontal: Dimentions.pageMargin
   },
   message: {
-    fontFamily: "Inter-SemiBold",
-    color: "#FFEEC0",
+    fontFamily: Fonts.InterBold,
+    color: Colors.jokerWhite50,
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 20,
     marginBottom: 20,
     marginHorizontal: 35,
   },

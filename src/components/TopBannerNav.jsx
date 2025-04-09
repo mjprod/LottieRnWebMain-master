@@ -14,11 +14,12 @@ import { Colors, Dimentions, Fonts } from "../util/constants";
 import { useNavigate } from "react-router";
 
 const TopBannerNav = ({
-  title = "Scratch to win!",
-  subtitle = "Your next prize awaits.",
+  title,
+  subtitle,
   backgroundImage = AssetPack.backgrounds.TOP_NAV_HEROES,
   onBackPress,
   hasBackButton = false,
+  pillText = "Beta Competition",
 }) => {
   const navigate = useNavigate();
 
@@ -31,14 +32,15 @@ const TopBannerNav = ({
   };
 
   return (
-    <ImageBackground style={{ alignItems: "start", height: 284 }} resizeMode="cover" source={backgroundImage} >
+    <View style={{ alignItems: "start", height: 284 }} >
+      <Image source={backgroundImage} style={{ width: "100%", height: 284, position: "absolute", top: -40 }} />
       <LinearGradient
         colors={[Colors.transparent, Colors.transparent, Colors.background, Colors.background]}
-        locations={[0, 0.5, 0.9, 1]}
+        locations={[0, 0.4, 0.75, 1]}
         style={styles.linearGradient}>
         <View style={styles.topContainer}>
           {hasBackButton && (
-            <Pressable onPress={onBackPressLocal} style={{ alignContent: "center", alignItems: "center" }}>
+            <Pressable onPress={onBackPressLocal} style={{ alignContent: "center", alignItems: "center", justifyContent: "center", height: "100%" }}>
               <Image
                 resizeMode="contain"
                 style={styles.arrowIcon}
@@ -46,13 +48,13 @@ const TopBannerNav = ({
             </Pressable>
           )}
           <PurplePill
-            text={"Beta Competition"}
+            text={pillText}
             style={styles.betaCompetitionText} />
         </View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subtitle}>{subtitle}</Text>
       </LinearGradient>
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -62,27 +64,31 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    marginTop: Dimentions.marginL,
-    marginBottom: Dimentions.marginM
+    marginTop: 16,
+    marginBottom: 28,
   },
   arrowIcon: {
-    width: 21,
-    height: 21,
-    marginRight: Dimentions.marginL,
+    width: 24,
+    height: 24,
+    marginRight: 28,
   },
   betaCompetitionText: {
     letterSpacing: 1,
   },
   title: {
     fontFamily: Fonts.TekoMedium,
-    color: "#fff",
+    color: Colors.jokerWhite50,
     fontSize: 36,
+    letterSpacing: 2,
     textTransform: "uppercase",
+    marginVertical: -10
   },
   subtitle: {
     fontFamily: Fonts.InterRegular,
-    color: "#FFFFFFB8",
+    color: Colors.jokerBlack50,
     fontSize: 18,
+    letterSpacing: "1%",
+    marginTop: 2
   },
   linearGradient: {
     width: "100%",

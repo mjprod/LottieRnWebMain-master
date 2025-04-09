@@ -7,14 +7,18 @@ import TimerComponent from "../../../components/TimerComponent";
 const ThankYouContent = () => {
     return (<>
         <Image
-            style={{ width: 175, height: 46, marginBottom: 20 }}
+            style={{ width: 175, height: 46, marginBottom: 20, marginTop: 22 }}
             source={AssetPack.logos.TURBO_SCRATCH} />
         <Text style={styles.topText}>Thank You For Playing!</Text>
         <Text style={styles.text}>
             Thanks for playing! The next round starts Monday. Stay tuned.
         </Text>
-        <View style={{ flexGrow: 1 }} />
-        <TimerComponent />
+        <View style={{ flexGrow: 1, justifyContent: "center", marginVertical: 32 }} >
+            <Image
+                style={{ width: 242, height: 242 }}
+                source={AssetPack.images.CHEST} />
+        </View>
+        <TimerComponent style={{ marginBottom: 22 }} />
     </>);
 };
 

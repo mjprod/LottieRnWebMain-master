@@ -1,15 +1,15 @@
 import React, { } from "react";
-import { View, StyleSheet, Platform } from "react-native";
-import Video from "./Video";
+import { View, StyleSheet, Platform, Pressable } from "react-native";
+import Video from "../../../components/Video";
 import BrowserDetection from "react-browser-detection";
-import { useTheme } from "../hook/useTheme";
-import { useSound } from "../hook/useSoundPlayer";
+import { useTheme } from "../../../hook/useTheme";
+import { useSound } from "../../../hook/useSoundPlayer";
+import { isAndroidWebView } from "../../../util/Helpers";
 
 const IntroThemeVideo = ({ handleVideoEnd, style }) => {
 
   const { introThemeNext, introChromeThemeNext } = useTheme();
   const { isSoundEnabled } = useSound();
-
 
   const browserHandler = {
     chrome: () => (
@@ -26,7 +26,7 @@ const IntroThemeVideo = ({ handleVideoEnd, style }) => {
     default: (browser) => (
       <Video
         source={
-          introThemeNext
+          isAndroidWebView() ? introChromeThemeNext : introThemeNext
         } // Play the win video
         muted={isSoundEnabled}
         style={styles.transparentVideo} // Video styling
@@ -37,19 +37,20 @@ const IntroThemeVideo = ({ handleVideoEnd, style }) => {
   };
 
   return (
-    <View
+    <Pressable
+      onPress={handleVideoEnd}
       key="overlay"
       style={{
         ...style,
         ...styles.blackOverlayWin,
         flex: 1,
-        zIndex: 9999, // Makes sure the overlay is on top of all other elements
-        elevation: 10, // Ensures the overlay has proper visual depth on Android
+        zIndex: 9999,
+        elevation: 10,
       }}
     >
       <BrowserDetection>{browserHandler}</BrowserDetection>
       <View style={styles.transparentOverlay} />
-    </View>
+    </Pressable>
   );
 };
 
@@ -83,12 +84,12 @@ const styles = StyleSheet.create({
   transparentVideo: {
     ...Platform.select({
       web: {
-        width: "100vw", // Full viewport width for web
-        height: "100vh", // Full viewport height for web
-        objectFit: "cover", // Makes sure the video scales proportionally on web
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
       },
       default: {
-        ...StyleSheet.absoluteFillObject, // For mobile, full-screen video scaling
+        ...StyleSheet.absoluteFillObject,
         resizeMode: "cover",
       },
     }),

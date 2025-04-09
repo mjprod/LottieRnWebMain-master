@@ -76,8 +76,8 @@ const useApiRequest = () => {
     },
   });
 
-  const getDailyQuestion = async (user_id) => {
-    return dailyQuestionMutation.mutateAsync({ user_id });
+  const getDailyQuestion = async (user_id, beta_block_id) => {
+    return dailyQuestionMutation.mutateAsync({ user_id, beta_block_id});
   };
 
   const postDailyAnswerMutation = useMutation({

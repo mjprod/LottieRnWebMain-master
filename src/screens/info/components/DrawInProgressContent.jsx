@@ -4,8 +4,9 @@ import { Image } from "react-native-web";
 import AssetPack from "../../../util/AssetsPack";
 import { Colors, Dimentions, Fonts } from "../../../util/constants";
 import LottieView from "react-native-web-lottie";
+import ResourceTile from "../../../components/ResourceTile";
 
-const DrawInProgressContent = () => {
+const DrawInProgressContent = ({ ticketsEarned = 0 }) => {
     return (
         <>
             <View style={styles.topContainer}>
@@ -17,11 +18,12 @@ const DrawInProgressContent = () => {
                 <Text style={styles.topText}>Draw in progress</Text>
                 <Text style={styles.bottomText}>That’s a wrap! Winner revealed soon and via email.</Text>
             </View>
-            <View style={{ flexGrow: 1 }} />
-            <View style={styles.gradientCard}>
-                <Image style={{ width: 15, height: 15, alignContent: "center" }} source={AssetPack.icons.TICKET} />
-                <Text style={styles.gardientCardText}>You Have {" "} <Text style={styles.gradientCardTicketNumber}>12 </Text>{" "}Tickets in this week's draw</Text>
+            <View style={{ flexGrow: 1, justifyContent: "center", marginVertical: 32 }} >
+                <Image
+                    style={{ width: 242, height: 242 }}
+                    source={AssetPack.images.DRAW_IN_PROGRESS} />
             </View>
+            <ResourceTile title="Tickets in draw" icon={AssetPack.icons.GOLDEN_TICKET} number={ticketsEarned} unit="ENTRIES" />
         </>
     );
 };
@@ -39,7 +41,6 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         textAlign: "center",
         marginHorizontal: Dimentions.pageMargin,
-        marginBottom: Dimentions.marginS,
     },
     bottomText: {
         fontFamily: Fonts.InterRegular,
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     lottieAnimation: {
         width: 143,
         height: 65,
-        marginBottom: Dimentions.marginL
+        marginBottom: 8
     },
 });
 

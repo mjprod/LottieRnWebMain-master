@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
+import { Fonts } from "../util/constants";
 
 export const ButtonSize = {
   FULL: AssetPack.lotties.CTA_BUTTON_FULL_WIDTH,
@@ -25,10 +26,12 @@ const GameButton = ({ text, onPress, buttonSize = ButtonSize.FULL, loading = fal
           left: 0,
           width: "100%",
           height: "100%",
+          resizeMode:"cover"
         }}
         source={buttonSize}
         autoPlay
         speed={1}
+        resizeMode="cover"
         loop={true}
       />
       {loading ? (
@@ -63,9 +66,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     color: "#3E362A",
-    fontSize: 22,
+    paddingTop: 2,
+    fontSize: 28,
     textTransform: "uppercase",
-    fontFamily: "Teko-Medium",
+    fontFamily: Fonts.TekoMedium,
   },
 });
 

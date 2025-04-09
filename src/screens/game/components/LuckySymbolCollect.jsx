@@ -8,12 +8,12 @@ import {
   Text,
 } from "react-native";
 import LottieView from "react-native-web-lottie";
-import { useGame } from "../context/GameContext";
+import { useGame } from "../../../context/GameContext";
 
-const colectLuckyCoins = require("./../assets/image/lucky_coin.png");
-const lottieStars = require("./../assets/lotties/lottieStars.json");
-const lottieSymbolsAnim = require("./../assets/lotties/3LuckySymbolsPart01.json");
-const lottieBonusCard = require("./../assets/lotties/lottieBonusCard.json");
+const colectLuckyCoins = require("./../../../assets/image/lucky_coin.png");
+const lottieStars = require("./../../../assets/lotties/lottieStars.json");
+const lottieSymbolsAnim = require("./../../../assets/lotties/3LuckySymbolsPart01.json");
+const lottieBonusCard = require("./../../../assets/lotties/lottieBonusCard.json");
 
 const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo, onComplete }) => {
   const { setLuckySymbolCount } = useGame();
