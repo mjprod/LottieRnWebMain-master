@@ -7,7 +7,7 @@ const WeAreExtendingContent = () => {
 
   return (<>
     <Image
-      style={{ width: 175, height: 46, marginBottom: 20 }}
+      style={{ width: 175, height: 46, marginBottom: 20, marginTop: 22 }}
       source={AssetPack.logos.TURBO_SCRATCH} />
     <Text style={styles.text}>
       Playtime extended by 1 week — more chances to win gift cards! You’ve also received <Text style={{ fontFamily: Fonts.InterBold, color: Colors.jokerWhite50 }}>2 FREE ENTRIES</Text> into this
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     boxShadow: "0px 2px 10px #FFDEA84D",
     elevation: 5,
+    marginBottom: 22
   },
   roundedText: {
     color: "#FFDEA8",

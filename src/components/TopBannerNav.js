@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    marginTop: Dimentions.marginL,
+    marginTop: 16,
     marginBottom: 28,
   },
   arrowIcon: {

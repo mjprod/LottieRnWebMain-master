@@ -28,7 +28,7 @@ const AssetPack = {
     GAME_TOP_LAYOUT_RED: require("./../assets/image/background_top_layout_red.png"),
     GAME_TOP_LAYOUT_YELLOW: require("./../assets/image/background_top_layout_yellow.png"),
     GAME_TOP_LAYOUT_GREEN: require("./../assets/image/background_top_layout_green.png"),
-    CHEST: require("./../assets/image/background_chest.jpg"),
+    CHEST: require("./../assets/image/thank-you-for-playing.webp"),
     CLOCK: require("./../assets/image/background_clock.jpg"),
     GOLD_SACK: require("./../assets/image/background_gold_sack.jpg"),
     CONGRATS_BACKGROUND: require("./../assets/image/congratulations_background.jpg"),
@@ -39,7 +39,7 @@ const AssetPack = {
     TOP_NAV_HEROES: require("./../assets/image/scratch_heroes.webp"),
     TOP_NAV_LEADER_BOARD: require("./../assets/image/hero_leadeerboard.webp"),
     TOP_NAV_LEARN: require("./../assets/image/hero_learn.webp"),
-    TOP_NAV_THANK_YOU: require("./../assets/image/scratch_thank_you.jpg"),
+    TOP_NAV_THANK_YOU: require("./../assets/image/cowgril.webp"),
     TOP_NAV_GODS_ARE_IMPRESSED: require("./../assets/image/scratch_gods_are_impressed.jpg"),
     INFO_PAGE: require("./../assets/image/secondary-bg.webp")
   },
@@ -67,6 +67,7 @@ const AssetPack = {
     SCRATCH_CARD_FOREGROUND: require("./../assets/image/scratch_foreground.jpg"),
     TIME_IS_ON_YOUR_SIDE: require("./../assets/image/tim-is-on-your-side.webp"),
     DRAW_IN_PROGRESS: require("./../assets/image/draw-in-progress.webp"),
+    CHEST: require("./../assets/image/thank-you-for-playing.webp"),
   },
   lotties: {
     CTA_BUTTON_FULL_WIDTH: require("./../assets/lotties/buttonCallToActionFullWidth.json"),

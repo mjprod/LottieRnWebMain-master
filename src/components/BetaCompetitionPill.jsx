@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     WebkitBackdropFilter: 'blur(10px)',
   },
   text: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#fff',
   },
 });
