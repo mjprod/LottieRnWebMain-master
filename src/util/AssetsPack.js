@@ -41,6 +41,7 @@ const AssetPack = {
     TOP_NAV_LEARN: require("./../assets/image/hero_learn.webp"),
     TOP_NAV_THANK_YOU: require("./../assets/image/scratch_thank_you.jpg"),
     TOP_NAV_GODS_ARE_IMPRESSED: require("./../assets/image/scratch_gods_are_impressed.jpg"),
+    INFO_PAGE: require("./../assets/image/secondary-bg.webp")
   },
   videos: {
     WIN_LUCKY_SYMBOL: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4"),
@@ -64,6 +65,7 @@ const AssetPack = {
     AMAZON_GOLD_GIFT_CARD: require("./../assets/image/amazon_gift_card_golden.png"),
     TURBO_GAME_CARDS_SHOW: require("./../assets/image/turbo_game_cards_show.png"),
     SCRATCH_CARD_FOREGROUND: require("./../assets/image/scratch_foreground.jpg"),
+    TIME_IS_ON_YOUR_SIDE: require("./../assets/image/tim-is-on-your-side.webp"),
   },
   lotties: {
     CTA_BUTTON_FULL_WIDTH: require("./../assets/lotties/buttonCallToActionFullWidth.json"),

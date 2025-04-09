@@ -18,10 +18,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#00000033',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 100,
   },
   frostedGlass: {
     fontFamily: Fonts.InterSemiBold,
-    borderRadius: 63,
+    borderRadius: 100,
     borderColor: '#FFDEA8',
     borderWidth: 1,
     lineHeight: "150%",

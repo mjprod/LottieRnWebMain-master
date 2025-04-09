@@ -95,7 +95,7 @@ const InfoScreen = ({ contentName }) => {
     return (
         <TopNavScreenTemplate title={title} subtitle={subtitle} navBackgroudImage={navBackgroudImage} hasBackButton={true}>
             <View style={styles.container}>
-                <ImageBackground style={styles.backgroundImageContainer} resizeMode='contain' source={backgroundImage}>
+                <ImageBackground style={styles.backgroundImageContainer} resizeMode='cover' source={AssetPack.backgrounds.INFO_PAGE}>
                     {content}
                 </ImageBackground>
             </View>
