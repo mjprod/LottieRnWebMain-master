@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     lottieAnimation: {
         width: 143,
         height: 65,
-        marginBottom: 24
+        marginBottom: 8
     },
 });
 

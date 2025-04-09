@@ -34,7 +34,7 @@ const AssetPack = {
     CONGRATS_BACKGROUND: require("./../assets/image/congratulations_background.jpg"),
     SCRACHIE: require("./../assets/image/background_scrachie.jpg"),
     TOP_NAV_DAILY: require("./../assets/image/hero_question.webp"),
-    TOP_NAV_DRAW_IN_PROGRESS: require("./../assets/image/scratch_draw_in_progress.jpg"),
+    TOP_NAV_DRAW_IN_PROGRESS: require("./../assets/image/fortune.webp"),
     TOP_NAV_EXTENDING_PLAY: require("./../assets/image/hero_extend.webp"),
     TOP_NAV_HEROES: require("./../assets/image/scratch_heroes.webp"),
     TOP_NAV_LEADER_BOARD: require("./../assets/image/hero_leadeerboard.webp"),

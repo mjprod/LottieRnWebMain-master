@@ -31,15 +31,15 @@ const TopBannerNav = ({
   };
 
   return (
-    <View style={{ alignItems: "start", height: 284}} >
-      <Image source={backgroundImage} style={{ width: "100%", height: 284 , position: "absolute", top: -40}} />
+    <View style={{ alignItems: "start", height: 284 }} >
+      <Image source={backgroundImage} style={{ width: "100%", height: 284, position: "absolute", top: -40 }} />
       <LinearGradient
         colors={[Colors.transparent, Colors.transparent, Colors.background, Colors.background]}
         locations={[0, 0.4, 0.75, 1]}
         style={styles.linearGradient}>
         <View style={styles.topContainer}>
           {hasBackButton && (
-            <Pressable onPress={onBackPressLocal} style={{ alignContent: "center", alignItems: "center", justifyContent: "center" }}>
+            <Pressable onPress={onBackPressLocal} style={{ alignContent: "center", alignItems: "center", justifyContent: "center", height: "100%" }}>
               <Image
                 resizeMode="contain"
                 style={styles.arrowIcon}
@@ -67,9 +67,9 @@ const styles = StyleSheet.create({
     marginBottom: 28,
   },
   arrowIcon: {
-    width: 21,
-    height: 21,
-    marginRight: Dimentions.marginL,
+    width: 24,
+    height: 24,
+    marginRight: 28,
   },
   betaCompetitionText: {
     letterSpacing: 1,
