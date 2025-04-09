@@ -19,6 +19,7 @@ const TopBannerNav = ({
   backgroundImage = AssetPack.backgrounds.TOP_NAV_HEROES,
   onBackPress,
   hasBackButton = false,
+  pillText = "Beta Competition",
 }) => {
   const navigate = useNavigate();
 
@@ -47,7 +48,7 @@ const TopBannerNav = ({
             </Pressable>
           )}
           <PurplePill
-            text={"Beta Competition"}
+            text={pillText}
             style={styles.betaCompetitionText} />
         </View>
         <Text style={styles.title}>{title}</Text>

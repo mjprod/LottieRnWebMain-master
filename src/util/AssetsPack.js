@@ -31,8 +31,9 @@ const AssetPack = {
     CHEST: require("./../assets/image/thank-you-for-playing.webp"),
     CLOCK: require("./../assets/image/background_clock.jpg"),
     GOLD_SACK: require("./../assets/image/background_gold_sack.jpg"),
-    CONGRATS_BACKGROUND: require("./../assets/image/congratulations_background.jpg"),
+    CONGRATS_BACKGROUND: require("./../assets/image/winner-bg.webp"),
     SCRACHIE: require("./../assets/image/background_scrachie.jpg"),
+    SCRACHIE_404: require("./../assets/image/404-bg.webp"),
     TOP_NAV_DAILY: require("./../assets/image/hero_question.webp"),
     TOP_NAV_DRAW_IN_PROGRESS: require("./../assets/image/fortune.webp"),
     TOP_NAV_EXTENDING_PLAY: require("./../assets/image/hero_extend.webp"),
@@ -40,7 +41,7 @@ const AssetPack = {
     TOP_NAV_LEADER_BOARD: require("./../assets/image/hero_leadeerboard.webp"),
     TOP_NAV_LEARN: require("./../assets/image/hero_learn.webp"),
     TOP_NAV_THANK_YOU: require("./../assets/image/cowgril.webp"),
-    TOP_NAV_GODS_ARE_IMPRESSED: require("./../assets/image/scratch_gods_are_impressed.jpg"),
+    TOP_NAV_GODS_ARE_IMPRESSED: require("./../assets/image/gods_are_impressed.webp"),
     INFO_PAGE: require("./../assets/image/secondary-bg.webp")
   },
   videos: {
@@ -62,7 +63,7 @@ const AssetPack = {
     CAROUSEL_ITEM_4: require("../assets/image/carousel/carousel_item_3.png"),
     CAROUSEL_ITEM_5: require("../assets/image/carousel/carousel_item_3.png"),
     EXTENDING_PLAY: require("./../assets/image/extending_play_image.png"),
-    AMAZON_GOLD_GIFT_CARD: require("./../assets/image/amazon_gift_card_golden.png"),
+    AMAZON_GOLD_GIFT_CARD: require("./../assets/image/amazon-gift-card.webp"),
     TURBO_GAME_CARDS_SHOW: require("./../assets/image/turbo_game_cards_show.png"),
     SCRATCH_CARD_FOREGROUND: require("./../assets/image/scratch_foreground.jpg"),
     TIME_IS_ON_YOUR_SIDE: require("./../assets/image/tim-is-on-your-side.webp"),
