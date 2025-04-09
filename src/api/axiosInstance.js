@@ -1,8 +1,8 @@
 // src/api/axiosInstance.js
 import axios from 'axios';
 import useStorage from '../hook/useStorage';
-import { decrypt, encrypt } from '../util/crypto';
 import { SERVER } from '../util/constants';
+import { decrypt, encrypt } from '../util/crypto';
 
 const instance = axios.create({
   baseURL: SERVER,

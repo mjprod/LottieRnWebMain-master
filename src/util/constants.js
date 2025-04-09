@@ -5,19 +5,19 @@ export const API_KEY = process.env.REACT_APP_API_KEY;
 export const BONUS_PACK_NUMBER_OF_CARDS = 12;
 
 export const Endpoint = {
-  fetch_user_details:  "/users",
-  get_daily_question:  "/daily/question",
-  post_daily_answer:  "/daily/answer",
-  leader_board:  "/leaderboard",
-  games:  "/game",
-  update_card_played:  "/game/update_card_played",
-  update_lucky_symbol:  "/game/update_lucky_symbol",
-  update_card_balance:  "/game/update_card_balance",
-  update_score:  "/game/update_score",
-  login:  "/login",
-  token:  "/login/token",
-  logout:  "/login/logout",
-  winners:  "/winners"
+  fetch_user_details: "/users",
+  get_daily_question: "/daily/question",
+  post_daily_answer: "/daily/answer",
+  leader_board: "/leaderboard",
+  games: "/game",
+  update_card_played: "/game/update_card_played",
+  update_lucky_symbol: "/game/update_lucky_symbol",
+  update_card_balance: "/game/update_card_balance",
+  update_score: "/game/update_score",
+  login: "/login",
+  token: "/login/token",
+  logout: "/login/logout",
+  winners: "/winners"
 }
 
 
