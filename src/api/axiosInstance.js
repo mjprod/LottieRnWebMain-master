@@ -8,6 +8,7 @@ const instance = axios.create({
   baseURL: SERVER,
   headers: {
     'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': 'https://www.luckygamez.click/',
   },
 });
 
