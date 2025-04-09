@@ -3,21 +3,26 @@ import { Text, Image, StyleSheet, View } from "react-native";
 import AssetPack from "../util/AssetsPack";
 import { Colors, Fonts } from "../util/constants";
 
-const GamesAvailableCard = ({
-  cardsLeft = 0,
+const ResourceTile = ({
+  title = "Cards available",
+  icon = AssetPack.icons.CARDS,
+  number = 0,
+  unit = "CARDS",
   style,
 }) => {
   return (
     <View style={{ ...styles.backgroundRounded, ...style }}>
-      <View style={{ flexDirection: "row", alignItems: "center", flex: 1, gap: 8, }}>
+      <View style={styles.leftContainer}>
         <Image
-          style={{ width: 21, height: 16, marginTop: 2 }}
-          source={AssetPack.icons.CARDS} />
-        <Text style={styles.gamesAvailableText}>Cards available</Text>
+          style={{ width: 24, height: 20, marginTop: 2 }}
+          resizeMode="contain"
+          source={icon} />
+        <Text style={styles.gamesAvailableText}>{title}</Text>
       </View>
-      <View>
+      <View style={{ width: 1, backgroundColor: Colors.jokerGold400, height: 32, marginVertical: 16 }} />
+      <View style={styles.rightContainer}>
         <Text style={styles.valueText}>
-          {cardsLeft} CARDS
+          {number} {unit}
         </Text>
       </View>
     </View>
@@ -26,15 +31,24 @@ const GamesAvailableCard = ({
 
 const styles = StyleSheet.create({
   backgroundRounded: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    width: "100%",
     alignItems: "center",
     alignContent: "center",
-    padding: 24,
     borderColor: Colors.jokerGold400,
     backgroundColor: Colors.jokerGold1000,
     borderWidth: 1,
-    borderRadius: 8
+    borderRadius: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  leftContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 8,
+    paddingLeft: 24
+  },
+  rightContainer: {
+    paddingRight: 24
   },
   gamesAvailableText: {
     fontFamily: Fonts.InterSemiBold,
@@ -51,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GamesAvailableCard;
+export default ResourceTile;

@@ -70,7 +70,7 @@ const InfoScreen = ({ contentName }) => {
                 setBackgroundImage(AssetPack.backgrounds.CHEST)
                 break;
             case InfoScreenContents.in_progress:
-                setContent(<DrawInProgressContent />)
+                setContent(<DrawInProgressContent ticketsEarned={user.ticket_balance} />)
                 setTitle("Fortune Is Deciding");
                 setSubtitle("One player. One prize. One moment.")
                 setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_DRAW_IN_PROGRESS)
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     },
     backgroundImageContainer: {
         flexGrow: 1,
-        padding: Dimentions.marginL,
+        padding: 20,
         alignItems: "center",
         alignContent: "center",
         justifyContent: "center"

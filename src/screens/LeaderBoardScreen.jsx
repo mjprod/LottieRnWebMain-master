@@ -4,9 +4,8 @@ import SectionTitle from "../components/SectionTitle";
 import GameButton from "../components/GameButton";
 import LeaderBoardList from "../components/LeaderBoardList";
 import { useLocation } from "react-router-dom";
-import TopBannerNav from "../components/TopBannerNav";
 import LinkButton from "../components/LinkButton";
-import GamesAvailableCard from "../components/GamesAvailableCard";
+import ResourceTile from "../components/ResourceTile";
 import NextDrawCard from "../components/NextDrawCard";
 import useApiRequest from "../hook/useApiRequest";
 import { Colors, Dimentions } from "../util/constants";
@@ -64,7 +63,7 @@ const LeaderBoardScreen = () => {
           style={{ marginBottom: 48 }}
           text={"How To Play Turbo Scratch >"}
           handlePress={appNavigation.goToHowToPlayPage} />
-        <GamesAvailableCard style={{ marginBottom: 32 }} cardsLeft={user ? user.card_balance : 0} />
+        <ResourceTile style={{ marginBottom: 32 }} cardsLeft={user ? user.card_balance : 0} />
         <NextDrawCard style={{ marginBottom: 48 }} />
       </View>
     </TopNavTemplate>

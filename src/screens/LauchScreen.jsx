@@ -5,7 +5,7 @@ import { View, Text } from "react-native-web";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import GameButton from "../components/GameButton";
-import GamesAvailableCard from "../components/GamesAvailableCard";
+import GamesAvailableCard from "../components/ResourceTile";
 import LeaderBoardList from "../components/LeaderBoardList";
 import NextDrawCard from "../components/NextDrawCard";
 import ProfileHeader from "../components/ProfileHeader";
@@ -123,7 +123,7 @@ const LauchScreenEncrypted = () => {
   }, [params, searchParams]);
 
   const handleStartGame = () => {
-    appNavigation.goToWeAreExtendingPage()
+    appNavigation.goToInProgressPage()
     // if (user.name === undefined || user.name === "") {
     //   showSnackbar("Please complete your profile to play the game");
     //   appNavigation.goToNotFoundPage();

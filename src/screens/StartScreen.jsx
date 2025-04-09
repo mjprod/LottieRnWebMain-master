@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useLocation } from "react-router";
 import GameButton, { ButtonSize } from "../components/GameButton";
-import GamesAvailableCard from "../components/GamesAvailableCard";
+import ResourceTile from "../components/ResourceTile";
 import RoundedButton from "../components/RoundedButton";
 import { useSnackbar } from "../components/SnackbarContext";
 import StatCard from "../components/StatCard";
@@ -81,7 +81,7 @@ const StartScreen = () => {
                         <LuckySymbolCard />
                     </View>
                     <View style={styles.ticketsSection}>
-                        <GamesAvailableCard style={{ width: "100%" }} cardsLeft={initialScratchCardLeft} />
+                        <ResourceTile style={{ width: "100%" }} cardsLeft={initialScratchCardLeft} />
                     </View>
                     <TimerComponent style={{ paddingVertical: Dimentions.marginL }} />
                     <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column", marginBottom: Dimentions.marginL }}>

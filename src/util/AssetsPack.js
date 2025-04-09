@@ -66,6 +66,7 @@ const AssetPack = {
     TURBO_GAME_CARDS_SHOW: require("./../assets/image/turbo_game_cards_show.png"),
     SCRATCH_CARD_FOREGROUND: require("./../assets/image/scratch_foreground.jpg"),
     TIME_IS_ON_YOUR_SIDE: require("./../assets/image/tim-is-on-your-side.webp"),
+    DRAW_IN_PROGRESS: require("./../assets/image/draw-in-progress.webp"),
   },
   lotties: {
     CTA_BUTTON_FULL_WIDTH: require("./../assets/lotties/buttonCallToActionFullWidth.json"),

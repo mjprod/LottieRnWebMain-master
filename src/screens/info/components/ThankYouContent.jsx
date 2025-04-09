@@ -13,7 +13,11 @@ const ThankYouContent = () => {
         <Text style={styles.text}>
             Thanks for playing! The next round starts Monday. Stay tuned.
         </Text>
-        <View style={{ flexGrow: 1 }} />
+        <View style={{ flexGrow: 1, justifyContent: "center", marginVertical: 32 }} >
+            <Image
+                style={{ width: 242, height: 242 }}
+                source={AssetPack.images.TIME_IS_ON_YOUR_SIDE} />
+        </View>
         <TimerComponent />
     </>);
 };

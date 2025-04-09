@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Platform, ScrollView, StyleSheet } from "react-native";
-import { ActivityIndicator, View } from "react-native-web";
+import { Animated, Platform, StyleSheet } from "react-native";
+import { View } from "react-native-web";
 import LottieView from "react-native-web-lottie";
 import { useLocation } from "react-router-dom";
 import DailyCardsContainer from "./components/DailyCardsContainer";
-import GamesAvailableCard from "../../components/GamesAvailableCard";
+import ResourceTile from "../../components/ResourceTile";
 import LinkButton from "../../components/LinkButton";
 import NextDrawCard from "../../components/NextDrawCard";
 import ProfileHeader from "../../components/ProfileHeader";
@@ -197,7 +197,7 @@ const DailyScreen = () => {
             style={{ marginVertical: Dimentions.sectionMargin }}
             text={"How To Play Turbo Scratch"}
             handlePress={appNavigation.goToHowToPlayPage} />
-          <GamesAvailableCard
+          <ResourceTile
             style={{ marginVertical: 24 }}
             cardsLeft={userData.card_balance} />
           <NextDrawCard />
