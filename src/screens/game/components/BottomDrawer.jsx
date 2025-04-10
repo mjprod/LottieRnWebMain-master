@@ -66,6 +66,12 @@ const BottomDrawer = () => {
             }),
             bottom: bottomAnimation
           },
+          isExpanded && {
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
+            borderColor: Colors.jokerBlack200,
+            borderWidth: 1,
+          }
         ]}
       >
         <TouchableOpacity onPress={toggleDrawer} style={[styles.toggleButton, isExpanded && {
@@ -100,13 +106,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.jokerBlack800,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    borderColor: Colors.jokerBlack200,
-    borderWidth: 1,
+    borderTopColor: Colors.jokerBlack200,
+    borderTopWidth: 1,
   },
   toggleButton: {
     width: "100%",
@@ -115,7 +119,6 @@ const styles = StyleSheet.create({
   },
   arrow: {
     fontSize: 18,
-    color: Colors.jokerGold400,
     marginTop: 14,
   },
   title: {
@@ -134,75 +137,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     paddingBottom: 10,
-  },
-  timerSection: {
-    flex: 1.5,
-    flexWrap: "wrap",
-    borderRightColor: "#000000",
-    borderRightWidth: 1,
-  },
-  pointsSection: {
-    padding: 20,
-    flex: 1,
-    flexWrap: "wrap",
-    alignItems: "center",
-    borderLeftColor: "#3D3D3D",
-    borderLeftWidth: 1,
-  },
-
-  timerLabel: {
-    flex: 0,
-    fontSize: 12,
-    alignContent: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    backgroundColor: "#1D1811",
-    color: "#FFDEA8",
-    borderColor: "#382E23",
-    borderWidth: 1,
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 24,
-    marginVertical: 5,
-    marginHorizontal: 20,
-  },
-  timerValues: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginLeft: 20,
-  },
-  timerValue: {
-    fontFamily: Fonts.InterBold,
-    fontSize: 18,
-    color: "#00FF00",
-    marginRight: 5,
-  },
-  timerUnit: {
-    fontSize: 14,
-    color: "#A6A6A6",
-    marginRight: 10,
-  },
-
-  points: {
-    fontSize: 12,
-    color: "#BBBBBB",
-    marginBottom: 5,
-  },
-  ticketsSection: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  ticketIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 5,
-  },
-  tickets: {
-    fontSize: 14,
-    color: "#A6A6A6",
-  },
+  }
 });
 
 export default BottomDrawer;
