@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Animated, Easing, Platform } from 'react-native';
-import useTimeLeftForNextDraw from '../../../hook/useTimeLeftForNextDraw';
 import { useGame } from '../../../context/GameContext';
 import AssetPack from '../../../util/AssetsPack';
-import LinearGradient from 'react-native-web-linear-gradient';
-import { Fonts } from '../../../util/constants';
+import { Colors, Fonts } from '../../../util/constants';
+import TimerComponent from '../../../components/TimerComponent';
+import RaffleTicketCard from '../../../components/RaffleTicketCard';
 
 const BottomDrawer = () => {
+  const expandedHeight = 380;
+  const nonExpednedHeight = 90
+  const expandedWidth = 100;
+  const nonExpandedWidth = 95;
+
   const [isExpanded, setIsExpanded] = useState(false);
-  const heightAnimation = useState(new Animated.Value(60))[0];
-  const widthAnimation = useState(new Animated.Value(100))[0];
-  const [timeLeft] = useTimeLeftForNextDraw();
+  const heightAnimation = useState(new Animated.Value(nonExpednedHeight))[0];
+  const widthAnimation = useState(new Animated.Value(expandedHeight))[0];
+  const bottomAnimation = useState(new Animated.Value(0))[0];
   const { user } = useGame()
 
   const toggleDrawer = () => {
@@ -18,13 +23,19 @@ const BottomDrawer = () => {
 
     Animated.parallel([
       Animated.timing(heightAnimation, {
-        toValue: isExpanded ? 60 : 170,
+        toValue: isExpanded ? nonExpednedHeight : expandedHeight,
         duration: 300,
         easing: Easing.out(Easing.ease),
         useNativeDriver: Platform.OS !== 'web',
       }),
       Animated.timing(widthAnimation, {
-        toValue: isExpanded ? 100 : 98,
+        toValue: isExpanded ? expandedWidth : nonExpandedWidth,
+        duration: 300,
+        easing: Easing.out(Easing.ease),
+        useNativeDriver: Platform.OS !== 'web',
+      }),
+      Animated.timing(bottomAnimation, {
+        toValue: isExpanded ? 0 : 24,
         duration: 300,
         easing: Easing.out(Easing.ease),
         useNativeDriver: Platform.OS !== 'web',
@@ -33,99 +44,96 @@ const BottomDrawer = () => {
   };
 
   return (
-    <Animated.View
-      style={[
-        styles.drawer,
-        {
-          height: heightAnimation,
-          width: widthAnimation.interpolate({
-            inputRange: [98, 100],
-            outputRange: ['98%', '100%'],
-          }),
-        },
-      ]}
-    >
-      <TouchableOpacity onPress={toggleDrawer} style={styles.toggleButton}>
-        <View style={styles.arrow}>
-          <Image
-            source={AssetPack.icons.ARROW_LEFT}
-            style={{ width: 10, height: 20, transform: [isExpanded ? { rotate: "270deg" } : { rotate: "90deg" }], }}
-            resizeMode="contain" />
-        </View>
-        <Text style={styles.title}>MY DRAW TICKETS</Text>
-      </TouchableOpacity>
+    <>
+      {isExpanded && <View style={{
+        flex: 1,
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
+      }} />}
+      <Animated.View
+        style={[
+          styles.drawer,
+          {
+            height: heightAnimation,
+            width: widthAnimation.interpolate({
+              inputRange: [nonExpandedWidth, expandedWidth],
+              outputRange: [`${nonExpandedWidth}%`, `${expandedWidth}%`],
+            }),
+            bottom: bottomAnimation
+          },
+        ]}
+      >
+        <TouchableOpacity onPress={toggleDrawer} style={[styles.toggleButton, isExpanded && {
+          borderBottomWidth: 1,
+          borderBottomColor: Colors.jokerBlack200,
+        }]}>
+          <View style={styles.arrow}>
+            <Image
+              source={AssetPack.icons.ARROW_LEFT}
+              style={{ width: 10, height: 20, transform: [isExpanded ? { rotate: "270deg" } : { rotate: "90deg" }], }}
+              resizeMode="contain" />
+          </View>
+          <Text style={styles.title}>MY DRAW TICKETS</Text>
+        </TouchableOpacity>
 
-      {isExpanded && (
-        <LinearGradient style={styles.expandedContent} start={{ x: 0.0, y: 0.5 }} end={{ x: 0.5, y: 1.0 }}
-          locations={[0, 0.24, 0.54, 1.0]}
-          colors={['#212121', '#332C26', '#2B2724', '#212121', '#2121214D']}>
-          <View style={styles.timerSection}>
-            <Text style={styles.timerLabel}>Time till Next Draw</Text>
-            <View style={styles.timerValues}>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={styles.timerValue}>{timeLeft.days}</Text>
-                <Text style={styles.timerUnit}>Days</Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={styles.timerValue}>{timeLeft.hours}</Text>
-                <Text style={styles.timerUnit}>Hrs</Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={styles.timerValue}>{timeLeft.minutes}</Text>
-                <Text style={styles.timerUnit}>Mins</Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={styles.timerValue}>{timeLeft.seconds}</Text>
-                <Text style={styles.timerUnit}>Secs</Text>
-              </View>
-            </View>
+        {isExpanded && (
+          <View style={styles.expandedContent}>
+            <RaffleTicketCard ticketCount={user.ticket_balance} score={user.total_score} containerStyle={{ width: "100%" }} isCard={false} />
+            <View style={{ width: "100%", height: 1, backgroundColor: Colors.jokerBlack200, marginVertical: 24 }} />
+            <TimerComponent style={{ marginBottom: 24 }} />
           </View>
-          <View style={styles.pointsSection}>
-            <Text style={styles.points}><Text style={{ color: '#FFDEA8' }}>{(user.ticket_balance * 20000 + 20000) - user.total_score}</Text> Points to go</Text>
-            <View style={styles.ticketsSection}>
-              <Text style={{ color: "#A6A6A6", fontSize: 14, fontFamily: Fonts.InterRegular }}><Text style={{ color: '#FFDEA8', fontFamily: Fonts.TekoMedium, fontSize: 30 }} >{user.ticket_balance}</Text> Tickets</Text>
-            </View>
-          </View>
-        </LinearGradient>
-      )}
-    </Animated.View>
+        )}
+      </Animated.View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   drawer: {
     position: 'absolute',
-    bottom: 0,
     alignSelf: 'center',
-    backgroundColor: '#3D3D3D',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    backgroundColor: Colors.jokerBlack800,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
+    borderColor: Colors.jokerBlack200,
+    borderWidth: 1,
   },
   toggleButton: {
+    width: "100%",
     flexDirection: 'column',
     alignItems: 'center',
-    paddingVertical: 10,
   },
   arrow: {
     fontSize: 18,
-    color: '#E3CDA9',
-    marginRight: 8,
+    color: Colors.jokerGold400,
+    marginTop: 14,
   },
   title: {
+    fontFamily: Fonts.TekoMedium,
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 16
   },
   expandedContent: {
     flex: 1,
+    backgroundColor: Colors.jokerBlack700,
     alignItems: 'center',
-    flexDirection: "row",
+    padding: 24,
+    flexDirection: "column",
     justifyContent: "space-between",
     width: "100%",
-    paddingBottom: 10, 
+    paddingBottom: 10,
   },
   timerSection: {
     flex: 1.5,
@@ -154,7 +162,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingVertical: 5,
     paddingHorizontal: 15,
-    borderRadius: 12,
+    borderRadius: 24,
     marginVertical: 5,
     marginHorizontal: 20,
   },
@@ -175,7 +183,7 @@ const styles = StyleSheet.create({
     color: "#A6A6A6",
     marginRight: 10,
   },
- 
+
   points: {
     fontSize: 12,
     color: "#BBBBBB",

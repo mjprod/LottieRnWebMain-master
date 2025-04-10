@@ -5,7 +5,7 @@ import ProgressBar from './ProgressBar';
 import AssetPack from '../util/AssetsPack';
 import { Colors, Dimentions, Fonts } from '../util/constants';
 
-const RaffleTicketCard = ({ score = 0, ticketCount = 0, containerStyle }) => {
+const RaffleTicketCard = ({ score = 0, ticketCount = 0, isCard = true, containerStyle }) => {
     const nextTicketIn = 20000
 
     const [progress, setProgress] = useState(0);
@@ -27,7 +27,7 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, containerStyle }) => {
     }, [score])
 
     return (
-        <View style={{ ...styles.ticketsSection, ...containerStyle }}>
+        <View style={[isCard && styles.ticketsSection, containerStyle]}>
             <View style={styles.containerTotalTicket}>
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: "flex-start", alignItems: 'center' }}>
                     <LottieView style={styles.lottieLuckyResultAnimation}
@@ -67,13 +67,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: Colors.jokerBlack50
     },
-    ticketProgressDivider:{
+    ticketProgressDivider: {
         fontFamily: Fonts.InterRegular,
         fontSize: 16,
         color: Colors.jokerWhite50,
         marginHorizontal: 8,
     },
-    ticketProgressNext:{
+    ticketProgressNext: {
         fontFamily: Fonts.InterSemiBold,
         fontSize: 16,
         color: Colors.jokerWhite50
