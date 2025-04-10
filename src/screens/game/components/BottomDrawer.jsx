@@ -66,6 +66,12 @@ const BottomDrawer = () => {
             }),
             bottom: bottomAnimation
           },
+          isExpanded && {
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
+            borderColor: Colors.jokerBlack200,
+            borderWidth: 1,
+          }
         ]}
       >
         <TouchableOpacity onPress={toggleDrawer} style={[styles.toggleButton, isExpanded && {
@@ -100,13 +106,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.jokerBlack800,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    borderColor: Colors.jokerBlack200,
-    borderWidth: 1,
+    borderTopColor: Colors.jokerBlack200,
+    borderTopWidth: 1,
   },
   toggleButton: {
     width: "100%",
