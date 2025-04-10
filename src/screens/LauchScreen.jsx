@@ -222,31 +222,10 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: "#3D3D3D",
   },
-  imageBackground: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    marginTop: "0%",
-  },
-  imageBackgroundLuckySymbol: {
-    width: 100,
-    height: 45,
-    alignItems: "center",
-  },
   resultRow: {
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
-  },
-  luckySymbols: {
-    flexDirection: "row",
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 10,
   },
   copyright: {
     lineHeight: "150%",
