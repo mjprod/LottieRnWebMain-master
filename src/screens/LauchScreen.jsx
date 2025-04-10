@@ -191,7 +191,7 @@ const LauchScreenEncrypted = () => {
           <LeaderBoardList numberOfItems={5} />
           <GamesAvailableCard
             style={{ marginVertical: Dimentions.marginL }}
-            cardsLeft={user.card_balance}
+            number={user.card_balance}
           />
           <NextDrawCard />
           <Text style={styles.copyright}>Copyright ©2025 JokerPlus.{"\n"}
