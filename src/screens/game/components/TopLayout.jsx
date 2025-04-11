@@ -9,12 +9,12 @@ import {
 import LottieView from "react-native-web-lottie";
 import { useGame } from "../../../context/GameContext";
 import { useTheme } from "../../../hook/useTheme";
-import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import NumberTicker from "./NumberTicker";
 import AssetPack from "../../../util/AssetsPack";
 import useComboSounds from "../../../hook/useComboSounds";
 import { Colors, Fonts } from "../../../util/constants";
 import Svg, { Path } from "react-native-svg-web";
+import LuckySymbolsSlot from "../../../components/LuckySymbolsSlot";
 
 const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) => (
   <View style={styles.container}>
@@ -160,16 +160,12 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
               <View style={styles.topRightTextContainer}>
                 <Image
                   style={{ width: 14, height: 14, marginTop: 2 }}
-                  source={AssetPack.icons.LUCKY_SYMBOL}
-                />
+                  source={AssetPack.icons.LUCKY_SYMBOL}/>
                 <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
               </View>
             </View>
             <View style={styles.rowLuckySymbol}>
-              <LottieLuckySymbolCoinSlot
-                luckySymbolCount={luckySymbolCount}
-                topLayout={true}
-              />
+              <LuckySymbolsSlot/>
             </View>
             <View style={{
               flexDirection: "row",
@@ -287,7 +283,6 @@ const styles = StyleSheet.create({
   },
   rowCountDown: {
     paddingHorizontal: 20,
-    paddingVertical: 6,
     borderColor: Colors.jokerBlack200,
     borderWidth: 1,
     borderTopLeftRadius: 8,
@@ -305,8 +300,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderTopRightRadius: 8,
     width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-end",
     justifyContent: "start",
     height: 50,
     backgroundColor: Colors.jokerBlack300,
@@ -314,9 +308,9 @@ const styles = StyleSheet.create({
   countDownText: {
     userSelect: "none",
     fontFamily: Fonts.TekoMedium,
-    fontSize: 20,
+    fontSize: 25,
+    lineHeight: 25,
     marginBottom: -5,
-    marginTop: -2
   },
   pointValue: {
     userSelect: "none",
@@ -324,7 +318,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   centralImage: {
-    marginTop: -110,
+    marginTop: -100,
     width: 100,
     height: 100,
     zIndex: 998,
