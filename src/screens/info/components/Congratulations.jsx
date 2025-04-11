@@ -16,23 +16,16 @@ const Congratulations = () => {
     } else {
         return (
             <>
-                <Image
-                    style={{ width: 175, height: 46, marginBottom: 8, marginTop: 22 }}
-                    source={AssetPack.logos.TURBO_SCRATCH} />
                 <Text style={styles.heading}>Congratulations to</Text>
                 <Text style={styles.title}>{user && user.name}</Text>
                 <Image
-                    style={styles.backgroundImage}
+                    style={styles.image}
                     source={AssetPack.images.AMAZON_GOLD_GIFT_CARD}
                     resizeMode={"contain"}
                 />
                 <Text style={styles.message}>
                     Your <Text style={styles.textHighlighted}>Amazon Gift Card </Text>will be sent to your email within three business days.
                 </Text>
-                <GameButton
-                    style={{ width: "100%", marginBottom: Dimentions.marginXL }}
-                    text="TAKE ME BACK"
-                    onPress={() => { }} />
                 <LottieView
                     style={{ flex: 1, position: "absolute", right: 0, top: 0, width: "100%", height: "100%" }}
                     source={AssetPack.lotties.CONFETTI}
@@ -53,6 +46,7 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         textAlign: "center",
         marginHorizontal: Dimentions.pageMargin,
+        marginTop: 22
     },
     title: {
         fontFamily: Fonts.InterSemiBold,
@@ -69,10 +63,11 @@ const styles = StyleSheet.create({
         color: "#FFFFFF",
         marginBottom: 20,
     },
-    backgroundImage: {
+    image: {
         flex: 1,
         height: 242,
         width: 298,
+        marginVertical: 20
     },
     message: {
         fontFamily: Fonts.InterRegular,
