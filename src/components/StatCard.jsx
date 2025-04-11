@@ -9,7 +9,7 @@ const StatCard = ({ title = "Title", titleIcon = <IconStarResultScreen />, stat 
             <View style={styles.viewIcon}>{titleIcon}</View>
             <Text style={styles.title}>{title}</Text>
         </View>
-        <View style={{ borderBottomWidth: 1, width: "100%", borderColor: "#3D3D3D", marginVertical: Dimentions.marginS }} />
+        <View style={{ borderBottomWidth: 1, width: "100%", borderColor: Colors.jokerBlack200, marginVertical: Dimentions.marginS }} />
         {!children ? <Text style={styles.statText}>{stat}</Text> : children}
     </View>);
 }
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         border: "1px solid #3D3D3D",
         borderRadius: 8,
         backgroundColor: "#131313",
-        padding: Dimentions.marginM,
+        padding: Dimentions.innerCardPadding,
     },
     viewRow: {
         flexDirection: "row",

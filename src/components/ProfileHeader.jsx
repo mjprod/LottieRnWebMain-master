@@ -33,8 +33,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 24,
-    paddingBottom: 24,
+    paddingVertical: Dimentions.innerCardPadding,
     borderBottomColor: Colors.jokerBlack200,
     borderBottomWidth: 1,
     borderTopWidth: 1,

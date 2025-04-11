@@ -54,9 +54,6 @@ const RaffleTicketCard = ({ score = 0, ticketCount = 0, isCard = true, container
                 </Text>
             </View>
             <ProgressBar progress={progress / nextTicketIn} color="#FFDEA8" trackColor="#131313" style={styles.progressBar} />
-            <View style={styles.sliderContainer}>
-
-            </View>
         </View>
     );
 };
@@ -79,7 +76,7 @@ const styles = StyleSheet.create({
         color: Colors.jokerWhite50
     },
     ticketsSection: {
-        padding: 24,
+        padding: Dimentions.innerCardPadding,
         borderColor: Colors.jokerBlack200,
         backgroundColor: Colors.jokerBlack800,
         borderWidth: 1,

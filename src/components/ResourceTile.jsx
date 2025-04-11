@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, Image, StyleSheet, View } from "react-native";
 import AssetPack from "../util/AssetsPack";
-import { Colors, Fonts } from "../util/constants";
+import { Colors, Dimentions, Fonts } from "../util/constants";
 
 const ResourceTile = ({
   title = "Cards available",
@@ -19,10 +19,10 @@ const ResourceTile = ({
           source={icon} />
         <Text style={styles.gamesAvailableText}>{title}</Text>
       </View>
-      <View style={{ width: 1, backgroundColor: Colors.jokerGold400, height: 32, marginVertical: 16 }} />
+      <View style={{ width: 1, backgroundColor: Colors.jokerBlack200, height: "100%" }} />
       <View style={styles.rightContainer}>
         <Text style={styles.valueText}>
-          {number} {unit}
+          {number}
         </Text>
       </View>
     </View>
@@ -34,10 +34,11 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     alignContent: "center",
-    borderColor: Colors.jokerGold400,
-    backgroundColor: Colors.jokerGold1000,
+    borderColor: Colors.jokerBlack200,
+    backgroundColor: Colors.jokerBlack800,
     borderWidth: 1,
     borderRadius: 8,
+    padding: Dimentions.innerCardPadding,
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -45,10 +46,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 8,
-    paddingLeft: 24
   },
   rightContainer: {
-    paddingRight: 24
   },
   gamesAvailableText: {
     fontFamily: Fonts.InterSemiBold,

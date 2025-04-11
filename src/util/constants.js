@@ -41,6 +41,7 @@ export const LeaderBoardStatus = {
 
 
 export const Dimentions = {
+  innerCardPadding: 20,
   pageMargin: 20,
   contentPadding: 24,
   sectionMargin: 32,
