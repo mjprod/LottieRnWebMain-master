@@ -123,18 +123,16 @@ const LauchScreenEncrypted = () => {
   }, [params, searchParams]);
 
   const handleStartGame = () => {
-    appNavigation.goToCongratulationsPage(user.user_id, user.name, user.email);
-    // const authToken = encrypt(JSON.stringify({user_id: user.user_id, name: user.name, email: user.email}), true);
-    // if (user.name === undefined || user.name === "") {
-    //   showSnackbar("Please complete your profile to play the game");
-    //   appNavigation.goToNotFoundPage();
-    //   return;
-    // }
-    // if (user.card_balance <= 0) {
-    //   showSnackbar("You don't have any cards left. Please wait till next day to play the game!")
-    // } else {
-    //   appNavigation.goToStartPage(user.user_id, user.name, user.email);
-    // }
+    if (user.name === undefined || user.name === "") {
+      showSnackbar("Please complete your profile to play the game");
+      appNavigation.goToNotFoundPage();
+      return;
+    }
+    if (user.card_balance <= 0) {
+      showSnackbar("You don't have any cards left. Please wait till next day to play the game!")
+    } else {
+      appNavigation.goToStartPage(user.user_id, user.name, user.email);
+    }
   };
 
   useEffect(() => {
