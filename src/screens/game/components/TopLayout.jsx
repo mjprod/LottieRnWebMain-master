@@ -14,6 +14,8 @@ import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import NumberTicker from "./NumberTicker";
 import AssetPack from "../../../util/AssetsPack";
 import useComboSounds from "../../../hook/useComboSounds";
+import { Colors, Fonts } from "../../../util/constants";
+import Svg, { Path } from "react-native-svg-web";
 
 const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) => (
   <View style={styles.container}>
@@ -35,7 +37,7 @@ const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex,
 const TopLayout = ({ setTimerGame, clickCount }) => {
   const { score, luckySymbolCount, scratchStarted } = useGame();
 
-  const scaleAnim = useRef(new Animated.Value(1.8)).current;
+  const scaleAnim = useRef(new Animated.Value(1)).current;
   const [countdownTimer, setCountdownTimer] = useState(0);
   const { gameCenterIcon } = useTheme();
 
@@ -113,37 +115,42 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
   const backgroundSource = useMemo(() => getBackground(countdownTimer), [countdownTimer]);
 
   return (
-    <View style={{ marginTop: -25 }}>
-      <ImageBackground
-        source={backgroundSource}
-        resizeMode="contain"
-        style={styles.image_top}>
+    <View >
+      <View style={styles.mainWrapper}>
         <View style={styles.textContainer}>
-          <View style={styles.textColumn}>
-            <Text style={[styles.textTopLeft, { color: "#FFFFFF" }]}>
-              POP POINTS COUNTDOWN
-            </Text>
-
-            {scratchStarted && (
-              <View style={styles.rowCountDown}>
-                <LottieView
-                  style={styles.lottieAnimation}
-                  source={AssetPack.lotties.COUNT_DOWN_BONUS}
-                  autoPlay
-                  speed={1}
-                  loop={false}
-                />
-                <Animated.View
-                  style={[{ transform: [{ scale: scaleAnim }] }]}>
-                  <Text style={[styles.countDownText, { color: "#FFFFFF" }]}>
-                    {countdownTimer * 100}
-                  </Text>
-                </Animated.View>
-              </View>
-            )}
+          <View style={styles.leftContiner}>
+            <View style={styles.topLeftTag}>
+              <Svg width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute", top: 0}}>
+                <Path d="M141.818 0L7.27631 0C3.25771 0 0 3.25772 0 7.27632V40H155L141.818 0Z" fill="#262626" />
+              </Svg>
+              <Text style={styles.textTopLeft}>
+                POP POINTS COUNTDOWN
+              </Text>
+            </View>
+            <View style={styles.rowCountDown}>
+              {scratchStarted && (
+                <>
+                  <LottieView
+                    style={styles.lottieAnimation}
+                    source={AssetPack.lotties.COUNT_DOWN_BONUS}
+                    autoPlay
+                    speed={1}
+                    loop={false}
+                  />
+                  <Animated.View
+                    style={[{ transform: [{ scale: scaleAnim }] }]}>
+                    <Text style={[styles.countDownText]}>
+                      {countdownTimer * 100}
+                    </Text>
+                    <Text style={[styles.pointValue]}>
+                      Point value
+                    </Text>
+                  </Animated.View>
+                </>
+              )}
+            </View>
           </View>
-
-          <View style={styles.textColumnRigth}>
+          <View style={styles.rightContainer}>
             <View style={styles.viewRow}>
               <Image
                 style={{ width: 12, height: 12, marginBottom: 4 }}
@@ -166,7 +173,7 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
           animations={animations}
           onAnimationFinish={() => setPlayAnimation(false)}
         />
-      </ImageBackground>
+      </View>
       <View style={styles.containerBottom}>
         <View style={[styles.textWrapper, styles.textBottomLeft, { marginTop: -1 }]}>
           <NumberTicker number={score} duration={500} textSize={20} />
@@ -181,10 +188,10 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
             alignItems: "center",
           }}
         >
-          <Text style={styles.textBottomRight}>3x Symbols = 1x</Text>
+          <Text style={styles.textBottomRight}>3x Symbols = 12x</Text>
           <Image
-            style={{ marginLeft: 3, width: 22, height: 22 }}
-            source={AssetPack.icons.TICKET}
+            style={{ marginLeft: 3, width: 18, height: 14 }}
+            source={AssetPack.icons.CARDS}
           />
         </View>
       </View>
@@ -193,14 +200,8 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: "relative",
-  },
-  image_top: {
+  mainWrapper: {
     width: "100%",
-    marginTop: "-12%",
-    marginBottom: "3%",
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
@@ -209,36 +210,41 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
-    paddingHorizontal: 10,
-    marginBottom: 0,
+  },
+  leftContiner: {
+    position: "relative",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    width: "50%",
+  },
+  topLeftTag: {
+    width: "100%",
+    marginBottom: -15,
+  },
+  textTopLeft: {
+    fontFamily: Fonts.TekoMedium,
+    fontSize: 14,
+    color: Colors.jokerGreen400,
+    textAlign: "left",
+    userSelect: "none",
+    width: "100%",
+    paddingTop: 10,
+    paddingBottom: 20,
+    paddingLeft: 16,
+  },
+  rightContainer: {
+    position: "relative",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    userSelect: "none",
+    width: "50%",
   },
   viewRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 40,
   },
-  textColumn: {
-    position: "relative",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    marginTop: 45,
-  },
-  textColumnRigth: {
-    position: "relative",
-    flexDirection: "column",
-    alignItems: "flex-end",
-    marginTop: 45,
-    userSelect: "none",
-  },
-  textTopLeft: {
-    userSelect: "none",
-    color: "#43db47",
-    textAlign: "left",
-    fontFamily: "Teko-Medium",
-    fontSize: 15,
-    marginBottom: 85,
-  },
+
   textTopRight: {
     userSelect: "none",
     color: "white",
@@ -252,9 +258,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     position: "relative",
+    display: "none"
   },
   textWrapper: {
-    width: "50%",
   },
   textBottomRight: {
     userSelect: "none",
@@ -273,27 +279,33 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   lottieAnimation: {
-    width: "30%",
-    height: "30%",
+    width: 35,
+    marginRight: 6,
   },
   rowCountDown: {
-    position: "absolute",
-    top: 22,
-    left: -10,
-    right: 0,
+    paddingHorizontal: 20,
+    paddingVertical: 6,
+    borderColor: Colors.jokerBlack200,
+    borderWidth: 1,
+    borderTopLeftRadius: 8,
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "start",
+    height: 50,
+    backgroundColor: Colors.jokerGreen400,
   },
   countDownText: {
     userSelect: "none",
-    fontFamily: "Inter-Bold",
-    fontSize: 18,
-    color: "blue",
-    marginLeft: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 10,
+    fontFamily: Fonts.TekoMedium,
+    fontSize: 20,
+    marginBottom: -5,
+    marginTop: -2
+  },
+  pointValue: {
+    userSelect: "none",
+    fontFamily: Fonts.InterSemiBold,
+    fontSize: 12,
   },
   centralImage: {
     marginTop: -110,

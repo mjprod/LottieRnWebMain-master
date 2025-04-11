@@ -42,7 +42,8 @@ const AssetPack = {
     TOP_NAV_LEARN: require("./../assets/image/hero_learn.webp"),
     TOP_NAV_THANK_YOU: require("./../assets/image/cowgril.webp"),
     TOP_NAV_GODS_ARE_IMPRESSED: require("./../assets/image/gods_are_impressed.webp"),
-    INFO_PAGE: require("./../assets/image/secondary-bg.webp")
+    INFO_PAGE: require("./../assets/image/secondary-bg.webp"),
+    POINTS_TAB: require("./../assets/image/points-tab.svg"),
   },
   videos: {
     WIN_LUCKY_SYMBOL: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_safari.mp4"),
