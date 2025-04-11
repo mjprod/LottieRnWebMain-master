@@ -2,7 +2,6 @@ import React, { useMemo, useEffect, useRef, useState } from "react";
 import {
   Animated,
   Image,
-  ImageBackground,
   StyleSheet,
   Text,
   View,
@@ -115,12 +114,12 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
   const backgroundSource = useMemo(() => getBackground(countdownTimer), [countdownTimer]);
 
   return (
-    <View >
+    <View style={{ marginBottom: -30 }} >
       <View style={styles.mainWrapper}>
         <View style={styles.textContainer}>
           <View style={styles.leftContiner}>
-            <View style={styles.topLeftTag}>
-              <Svg width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute", top: 0}}>
+            <View style={styles.topTag}>
+              <Svg width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute", top: 0 }}>
                 <Path d="M141.818 0L7.27631 0C3.25771 0 0 3.25772 0 7.27632V40H155L141.818 0Z" fill="#262626" />
               </Svg>
               <Text style={styles.textTopLeft}>
@@ -149,20 +148,42 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
                 </>
               )}
             </View>
+            <View style={styles.numberTickerContainer}>
+              <NumberTicker number={score} duration={500} textSize={18} />
+            </View>
           </View>
           <View style={styles.rightContainer}>
-            <View style={styles.viewRow}>
-              <Image
-                style={{ width: 12, height: 12, marginBottom: 4 }}
-                source={AssetPack.icons.LUCKY_SYMBOL}
-              />
-              <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
+            <View style={styles.topTag}>
+              <Svg width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute", top: 0, right: 0, transform: [{ scaleX: -1 }] }}>
+                <Path d="M141.818 0L7.27631 0C3.25771 0 0 3.25772 0 7.27632V40H155L141.818 0Z" fill="#262626" />
+              </Svg>
+              <View style={styles.topRightTextContainer}>
+                <Image
+                  style={{ width: 14, height: 14, marginTop: 2 }}
+                  source={AssetPack.icons.LUCKY_SYMBOL}
+                />
+                <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
+              </View>
             </View>
-
-            <LottieLuckySymbolCoinSlot
-              luckySymbolCount={luckySymbolCount}
-              topLayout={true}
-            />
+            <View style={styles.rowLuckySymbol}>
+              <LottieLuckySymbolCoinSlot
+                luckySymbolCount={luckySymbolCount}
+                topLayout={true}
+              />
+            </View>
+            <View style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingRight: 16,
+              paddingTop: 8
+            }}>
+              <Text style={styles.textBottomRight}>3x Symbols = 12x</Text>
+              <Image
+                style={{ marginLeft: 3, width: 18, height: 14 }}
+                source={AssetPack.icons.CARDS}
+              />
+            </View>
           </View>
         </View>
         <CentralImageWithLottie
@@ -174,27 +195,6 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
           onAnimationFinish={() => setPlayAnimation(false)}
         />
       </View>
-      <View style={styles.containerBottom}>
-        <View style={[styles.textWrapper, styles.textBottomLeft, { marginTop: -1 }]}>
-          <NumberTicker number={score} duration={500} textSize={20} />
-        </View>
-
-        <View
-          style={{
-            flexDirection: "row",
-            bottom: 45,
-            right: 14,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={styles.textBottomRight}>3x Symbols = 12x</Text>
-          <Image
-            style={{ marginLeft: 3, width: 18, height: 14 }}
-            source={AssetPack.icons.CARDS}
-          />
-        </View>
-      </View>
     </View>
   );
 };
@@ -202,6 +202,7 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
 const styles = StyleSheet.create({
   mainWrapper: {
     width: "100%",
+    height: 104,
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
@@ -217,9 +218,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     width: "50%",
   },
-  topLeftTag: {
+  topTag: {
     width: "100%",
-    marginBottom: -15,
+    marginBottom: -8,
+    height: 40,
   },
   textTopLeft: {
     fontFamily: Fonts.TekoMedium,
@@ -228,9 +230,17 @@ const styles = StyleSheet.create({
     textAlign: "left",
     userSelect: "none",
     width: "100%",
-    paddingTop: 10,
+    paddingTop: 8,
     paddingBottom: 20,
     paddingLeft: 16,
+  },
+  textTopRight: {
+    userSelect: "none",
+    color: Colors.jokerWhite50,
+    fontFamily: Fonts.TekoMedium,
+    fontSize: 15,
+    marginTop: 4,
+    marginLeft: 6,
   },
   rightContainer: {
     position: "relative",
@@ -245,38 +255,31 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  textTopRight: {
-    userSelect: "none",
-    color: "white",
-    textAlign: "right",
-    fontFamily: "Teko-Medium",
-    fontSize: 15,
-    marginLeft: 26,
-  },
-  containerBottom: {
+  topRightTextContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    fontFamily: Fonts.TekoMedium,
+    fontSize: 14,
+    color: Colors.jokerGreen400,
+    userSelect: "none",
     width: "100%",
-    position: "relative",
-    display: "none"
-  },
-  textWrapper: {
+    marginTop: 2,
+    paddingBottom: 20,
+    paddingRight: 16,
   },
   textBottomRight: {
     userSelect: "none",
-    color: "#FFDFAC",
+    color: Colors.jokerGold400,
     textAlign: "right",
-    fontFamily: "Teko-Medium",
+    fontFamily: Fonts.InterSemiBold,
     fontSize: 12,
   },
-  textBottomLeft: {
+  numberTickerContainer: {
     userSelect: "none",
-    bottom: 45,
-    left: 14,
-    color: "#43db47",
-    textAlign: "left",
-    fontFamily: "Teko-Medium",
-    fontSize: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%"
   },
   lottieAnimation: {
     width: 35,
@@ -294,6 +297,19 @@ const styles = StyleSheet.create({
     justifyContent: "start",
     height: 50,
     backgroundColor: Colors.jokerGreen400,
+  },
+  rowLuckySymbol: {
+    paddingHorizontal: 20,
+    paddingVertical: 6,
+    borderColor: Colors.jokerBlack200,
+    borderWidth: 1,
+    borderTopRightRadius: 8,
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "start",
+    height: 50,
+    backgroundColor: Colors.jokerBlack300,
   },
   countDownText: {
     userSelect: "none",

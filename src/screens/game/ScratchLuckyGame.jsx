@@ -410,7 +410,8 @@ const styles = StyleSheet.create({
     margin: "auto",
   },
   imageBackground: {
-    paddingTop: 32,
+    zIndex: -1,
+    paddingTop: 38,
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
     borderColor: Colors.jokerGold600,

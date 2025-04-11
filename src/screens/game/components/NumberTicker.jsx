@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import { Animated, Text, View, StyleSheet } from 'react-native';
+import { Colors, Fonts } from '../../../util/constants';
 
-const DigitTicker = ({ digit, duration = 500, textSize = 40, textStyle }) => {
+const DigitTicker = ({ digit, duration = 500, textSize = 18, textStyle }) => {
   const animatedValue = useRef(new Animated.Value(0)).current;
   const [previousDigit, setPreviousDigit] = useState(digit);
 
@@ -41,7 +42,7 @@ const DigitTicker = ({ digit, duration = 500, textSize = 40, textStyle }) => {
   );
 };
 
-const NumberTicker = ({ number, duration = 1000, textSize = 20, textStyle }) => {
+const NumberTicker = ({ number, duration = 1000, textSize = 18, textStyle }) => {
   const digits = String(number).split('');
 
   return (
@@ -66,27 +67,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,
-    maxWidth: 100,
-    marginTop: -8,
-    minHeight: 34,
-    borderColor: '#5F5F5F',
-    borderWidth: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderColor: Colors.jokerBlack200,
+    backgroundColor: Colors.jokerBlack300,
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
     overflow: 'hidden',
     position: 'relative',
-    backgroundColor: '#000',
   },
   digitContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
     position: 'relative',
-    marginHorizontal: 0, // Remove margem horizontal
-    paddingHorizontal: 0, // Remover padding para compactar
+    margin: -2,
   },
   text: {
-    fontFamily: 'Teko-Medium',
+    fontFamily: Fonts.TekoMedium,
+    color: Colors.jokerWhite50,
     fontSize: 24,
-    color: '#FFFFFF',
     textAlign: 'center',
   },
 });
