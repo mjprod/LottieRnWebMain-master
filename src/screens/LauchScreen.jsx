@@ -190,8 +190,6 @@ const LauchScreenEncrypted = () => {
             style={{ marginBottom: 20 }} />
           <LeaderBoardList numberOfItems={5} style={{marginBottom: 32}} />
           <NextDrawCard />
-          <Text style={styles.copyright}>Copyright ©2025 JokerPlus.{"\n"}
-            All rights reserved.</Text>
         </View>
       </TopNavTemplate>
     );
@@ -210,7 +208,6 @@ const styles = StyleSheet.create({
   restContainer: {
     paddingTop: Dimentions.sectionMargin,
     paddingHorizontal: Dimentions.pageMargin,
-    paddingBottom: 20,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: "#131313",
