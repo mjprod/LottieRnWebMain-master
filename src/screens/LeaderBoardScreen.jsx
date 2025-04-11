@@ -63,8 +63,7 @@ const LeaderBoardScreen = () => {
           style={{ marginBottom: 48 }}
           text={"How To Play Turbo Scratch >"}
           handlePress={appNavigation.goToHowToPlayPage} />
-        <ResourceTile style={{ marginBottom: 32 }} number={user ? user.card_balance : 0} />
-        <NextDrawCard style={{ marginBottom: 48 }} />
+        <NextDrawCard />
       </View>
     </TopNavTemplate>
   );
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: Colors.jokerBlack800,
     borderColor: Colors.jokerBlack200,
-    paddingVertical: Dimentions.marginL,
+    paddingTop: Dimentions.marginL,
     borderTopRightRadius: 16,
     borderTopLeftRadius: 16,
     borderTopWidth: 1

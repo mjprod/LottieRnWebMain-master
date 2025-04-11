@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Fonts } from "../util/constants";
+import { Colors, Fonts } from "../util/constants";
 
 const PurplePill = ({ text = "Beta Competition", style }) => {
   return (
@@ -32,8 +32,9 @@ const styles = StyleSheet.create({
     WebkitBackdropFilter: 'blur(10px)',
   },
   text: {
+    fontFamily: Fonts.InterSemiBold,
     fontSize: 16,
-    color: '#fff',
+    color: Colors.jokerWhite50,
   },
 });
 

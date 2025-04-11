@@ -2,7 +2,6 @@ import React, { useMemo, useEffect, useRef, useState } from "react";
 import {
   Animated,
   Image,
-  ImageBackground,
   StyleSheet,
   Text,
   View,
@@ -10,10 +9,12 @@ import {
 import LottieView from "react-native-web-lottie";
 import { useGame } from "../../../context/GameContext";
 import { useTheme } from "../../../hook/useTheme";
-import LottieLuckySymbolCoinSlot from "./LottieLuckySymbolCoinSlot";
 import NumberTicker from "./NumberTicker";
 import AssetPack from "../../../util/AssetsPack";
 import useComboSounds from "../../../hook/useComboSounds";
+import { Colors, Fonts } from "../../../util/constants";
+import Svg, { Path } from "react-native-svg-web";
+import LuckySymbolsSlot from "../../../components/LuckySymbolsSlot";
 
 const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) => (
   <View style={styles.container}>
@@ -35,7 +36,7 @@ const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex,
 const TopLayout = ({ setTimerGame, clickCount }) => {
   const { score, luckySymbolCount, scratchStarted } = useGame();
 
-  const scaleAnim = useRef(new Animated.Value(1.8)).current;
+  const scaleAnim = useRef(new Animated.Value(1)).current;
   const [countdownTimer, setCountdownTimer] = useState(0);
   const { gameCenterIcon } = useTheme();
 
@@ -100,62 +101,85 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
 
   const getBackground = (value) => {
     if (value >= 1 && value <= 2) {
-      return AssetPack.backgrounds.GAME_TOP_LAYOUT_RED;
-    } else if (value >= 3 && value <= 4) {
-      return AssetPack.backgrounds.GAME_TOP_LAYOUT_YELLOW;
-    } else if (value >= 5 && value <= 10) {
-      return AssetPack.backgrounds.GAME_TOP_LAYOUT_GREEN;
+      return { backgroundColor: Colors.jokerRed400 };
+    } else if (value >= 3 && value <= 6) {
+      return { backgroundColor: Colors.jokerHoney400 };
+    } else if (value >= 7 && value <= 10) {
+      return { backgroundColor: Colors.jokerGreen400 };
     } else {
-      return AssetPack.backgrounds.GAME_TOP_LAYOUT;
+      return { backgroundColor: Colors.jokerBlack300 };
     }
   };
 
   const backgroundSource = useMemo(() => getBackground(countdownTimer), [countdownTimer]);
 
   return (
-    <View style={{ marginTop: -25 }}>
-      <ImageBackground
-        source={backgroundSource}
-        resizeMode="contain"
-        style={styles.image_top}>
+    <View style={{ marginBottom: -30 }} >
+      <View style={styles.mainWrapper}>
         <View style={styles.textContainer}>
-          <View style={styles.textColumn}>
-            <Text style={[styles.textTopLeft, { color: "#FFFFFF" }]}>
-              POP POINTS COUNTDOWN
-            </Text>
-
-            {scratchStarted && (
-              <View style={styles.rowCountDown}>
-                <LottieView
-                  style={styles.lottieAnimation}
-                  source={AssetPack.lotties.COUNT_DOWN_BONUS}
-                  autoPlay
-                  speed={1}
-                  loop={false}
-                />
-                <Animated.View
-                  style={[{ transform: [{ scale: scaleAnim }] }]}>
-                  <Text style={[styles.countDownText, { color: "#FFFFFF" }]}>
-                    {countdownTimer * 100}
-                  </Text>
-                </Animated.View>
-              </View>
-            )}
-          </View>
-
-          <View style={styles.textColumnRigth}>
-            <View style={styles.viewRow}>
-              <Image
-                style={{ width: 12, height: 12, marginBottom: 4 }}
-                source={AssetPack.icons.LUCKY_SYMBOL}
-              />
-              <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
+          <View style={styles.leftContiner}>
+            <View style={styles.topTag}>
+              <Svg width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute", top: 0 }}>
+                <Path d="M141.818 0L7.27631 0C3.25771 0 0 3.25772 0 7.27632V40H155L141.818 0Z" fill="#262626" />
+              </Svg>
+              <Text style={styles.textTopLeft}>
+                POP POINTS COUNTDOWN
+              </Text>
             </View>
-
-            <LottieLuckySymbolCoinSlot
-              luckySymbolCount={luckySymbolCount}
-              topLayout={true}
-            />
+            <View style={[styles.rowCountDown, backgroundSource]}>
+              {scratchStarted && (
+                <>
+                  <LottieView
+                    style={styles.lottieAnimation}
+                    source={AssetPack.lotties.COUNT_DOWN_BONUS}
+                    autoPlay
+                    speed={1}
+                    loop={false}
+                  />
+                  <Animated.View
+                    style={[{ transform: [{ scale: scaleAnim }] }]}>
+                    <Text style={[styles.countDownText]}>
+                      {countdownTimer * 100}
+                    </Text>
+                    <Text style={[styles.pointValue]}>
+                      Point value
+                    </Text>
+                  </Animated.View>
+                </>
+              )}
+            </View>
+            <View style={styles.numberTickerContainer}>
+              <NumberTicker number={score} duration={500} textSize={18} />
+            </View>
+          </View>
+          <View style={styles.rightContainer}>
+            <View style={styles.topTag}>
+              <Svg width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute", top: 0, right: 0, transform: [{ scaleX: -1 }] }}>
+                <Path d="M141.818 0L7.27631 0C3.25771 0 0 3.25772 0 7.27632V40H155L141.818 0Z" fill="#262626" />
+              </Svg>
+              <View style={styles.topRightTextContainer}>
+                <Image
+                  style={{ width: 14, height: 14, marginTop: 2 }}
+                  source={AssetPack.icons.LUCKY_SYMBOL} />
+                <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
+              </View>
+            </View>
+            <View style={styles.rowLuckySymbol}>
+              <LuckySymbolsSlot />
+            </View>
+            <View style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingRight: 16,
+              paddingTop: 8
+            }}>
+              <Text style={styles.textBottomRight}>3x Symbols = 12x</Text>
+              <Image
+                style={{ marginLeft: 3, width: 18, height: 14 }}
+                source={AssetPack.icons.CARDS}
+              />
+            </View>
           </View>
         </View>
         <CentralImageWithLottie
@@ -166,41 +190,15 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
           animations={animations}
           onAnimationFinish={() => setPlayAnimation(false)}
         />
-      </ImageBackground>
-      <View style={styles.containerBottom}>
-        <View style={[styles.textWrapper, styles.textBottomLeft, { marginTop: -1 }]}>
-          <NumberTicker number={score} duration={500} textSize={20} />
-        </View>
-
-        <View
-          style={{
-            flexDirection: "row",
-            bottom: 45,
-            right: 14,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={styles.textBottomRight}>3x Symbols = 1x</Text>
-          <Image
-            style={{ marginLeft: 3, width: 22, height: 22 }}
-            source={AssetPack.icons.TICKET}
-          />
-        </View>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: "relative",
-  },
-  image_top: {
+  mainWrapper: {
     width: "100%",
-    marginTop: "-12%",
-    marginBottom: "3%",
+    height: 104,
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
@@ -209,94 +207,117 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
-    paddingHorizontal: 10,
-    marginBottom: 0,
+  },
+  leftContiner: {
+    position: "relative",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    width: "50%",
+  },
+  topTag: {
+    width: "100%",
+    marginBottom: -8,
+    height: 40,
+  },
+  textTopLeft: {
+    fontFamily: Fonts.TekoMedium,
+    fontSize: 14,
+    color: Colors.jokerGreen400,
+    textAlign: "left",
+    userSelect: "none",
+    width: "100%",
+    paddingTop: 8,
+    paddingBottom: 20,
+    paddingLeft: 16,
+  },
+  textTopRight: {
+    userSelect: "none",
+    color: Colors.jokerWhite50,
+    fontFamily: Fonts.TekoMedium,
+    fontSize: 15,
+    marginTop: 4,
+    marginLeft: 6,
+  },
+  rightContainer: {
+    position: "relative",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    userSelect: "none",
+    width: "50%",
   },
   viewRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 40,
   },
-  textColumn: {
-    position: "relative",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    marginTop: 45,
-  },
-  textColumnRigth: {
-    position: "relative",
-    flexDirection: "column",
-    alignItems: "flex-end",
-    marginTop: 45,
-    userSelect: "none",
-  },
-  textTopLeft: {
-    userSelect: "none",
-    color: "#43db47",
-    textAlign: "left",
-    fontFamily: "Teko-Medium",
-    fontSize: 15,
-    marginBottom: 85,
-  },
-  textTopRight: {
-    userSelect: "none",
-    color: "white",
-    textAlign: "right",
-    fontFamily: "Teko-Medium",
-    fontSize: 15,
-    marginLeft: 26,
-  },
-  containerBottom: {
+
+  topRightTextContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    fontFamily: Fonts.TekoMedium,
+    fontSize: 14,
+    color: Colors.jokerGreen400,
+    userSelect: "none",
     width: "100%",
-    position: "relative",
-  },
-  textWrapper: {
-    width: "50%",
+    marginTop: 2,
+    paddingBottom: 20,
+    paddingRight: 16,
   },
   textBottomRight: {
     userSelect: "none",
-    color: "#FFDFAC",
+    color: Colors.jokerGold400,
     textAlign: "right",
-    fontFamily: "Teko-Medium",
+    fontFamily: Fonts.InterSemiBold,
     fontSize: 12,
   },
-  textBottomLeft: {
+  numberTickerContainer: {
     userSelect: "none",
-    bottom: 45,
-    left: 14,
-    color: "#43db47",
-    textAlign: "left",
-    fontFamily: "Teko-Medium",
-    fontSize: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%"
   },
   lottieAnimation: {
-    width: "30%",
-    height: "30%",
+    width: 35,
+    marginRight: 6,
   },
   rowCountDown: {
-    position: "absolute",
-    top: 22,
-    left: -10,
-    right: 0,
+    paddingHorizontal: 20,
+    borderColor: Colors.jokerBlack200,
+    borderWidth: 1,
+    borderTopLeftRadius: 8,
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "start",
+    height: 50,
+  },
+  rowLuckySymbol: {
+    paddingHorizontal: 20,
+    paddingVertical: 6,
+    borderColor: Colors.jokerBlack200,
+    borderWidth: 1,
+    borderTopRightRadius: 8,
+    width: "100%",
+    alignItems: "flex-end",
+    justifyContent: "start",
+    height: 50,
+    backgroundColor: Colors.jokerBlack300,
   },
   countDownText: {
     userSelect: "none",
-    fontFamily: "Inter-Bold",
-    fontSize: 18,
-    color: "blue",
-    marginLeft: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 10,
+    fontFamily: Fonts.TekoMedium,
+    fontSize: 25,
+    lineHeight: 25,
+    marginBottom: -5,
+  },
+  pointValue: {
+    userSelect: "none",
+    fontFamily: Fonts.InterSemiBold,
+    fontSize: 12,
   },
   centralImage: {
-    marginTop: -110,
+    marginTop: -100,
     width: 100,
     height: 100,
     zIndex: 998,

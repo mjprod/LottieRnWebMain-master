@@ -6,19 +6,16 @@ import TimerComponent from "../../../components/TimerComponent";
 
 const ThankYouContent = () => {
     return (<>
-        <Image
-            style={{ width: 175, height: 46, marginBottom: 20, marginTop: 22 }}
-            source={AssetPack.logos.TURBO_SCRATCH} />
         <Text style={styles.topText}>Thank You For Playing!</Text>
         <Text style={styles.text}>
             Thanks for playing! The next round starts Monday. Stay tuned.
         </Text>
+        <TimerComponent style={{ marginTop: 32 }} showPill={false} />
         <View style={{ flexGrow: 1, justifyContent: "center", marginVertical: 32 }} >
             <Image
                 style={{ width: 242, height: 242 }}
                 source={AssetPack.images.CHEST} />
         </View>
-        <TimerComponent style={{ marginBottom: 22 }} />
     </>);
 };
 
@@ -30,6 +27,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     topText: {
+        marginTop: 22,
         fontFamily: Fonts.TekoMedium,
         fontSize: 32,
         color: Colors.jokerWhite50,
@@ -45,12 +43,7 @@ const styles = StyleSheet.create({
         alignContent: "center",
         justifyContent: "center"
     },
-    text: {
-        color: Colors.jokerBlack50,
-        fontFamily: Fonts.InterRegular,
-        textAlign: "center",
-        fontSize: 16,
-    },
+
     roundedTextContainer: {
         width: 200,
         alignItems: "center",

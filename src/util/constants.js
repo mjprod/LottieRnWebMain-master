@@ -41,6 +41,7 @@ export const LeaderBoardStatus = {
 
 
 export const Dimentions = {
+  innerCardPadding: 20,
   pageMargin: 20,
   contentPadding: 24,
   sectionMargin: 32,
@@ -74,6 +75,9 @@ export const Colors = {
   jokerWhite50: "#FFFFFF",
 
   jokerGreen400: "#3EDA41",
+
+  jokerHoney400: "#DBA73E",
+  jokerRed400: "#DB3E3E",
 };
 
 export const Fonts = {

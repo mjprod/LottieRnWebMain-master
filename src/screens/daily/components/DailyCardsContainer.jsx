@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: "start",
     justifyContent: "flex-start",
     gap: 24,
-    marginBottom: 16,
+    marginBottom: 32,
   },
   item: {
     flex: 1,

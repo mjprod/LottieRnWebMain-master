@@ -6,20 +6,23 @@ import { Colors, Dimentions, Fonts } from "../../../util/constants";
 const WeAreExtendingContent = () => {
 
   return (<>
-    <Image
-      style={{ width: 175, height: 46, marginBottom: 20, marginTop: 22 }}
-      source={AssetPack.logos.TURBO_SCRATCH} />
-    <Text style={styles.text}>
-      Playtime extended by 1 week — more chances to win gift cards! You’ve also received <Text style={{ fontFamily: Fonts.InterBold, color: Colors.jokerWhite50 }}>2 FREE ENTRIES</Text> into this
-      week’s draw.
-    </Text>
+    <View style={styles.topContainer}>
+      <Text style={styles.topText}>Draw Extended</Text>
+
+      <Text style={styles.text}>
+        Play extended! You’ve got {" "}
+        <Text style={{ fontFamily: Fonts.InterBold, color: Colors.jokerWhite50 }}>
+          2 free entries
+        </Text> into this week’s draw.
+      </Text>
+    </View>
+    <View style={styles.roundedTextContainer}>
+      <Text style={styles.roundedText}>7 Day Extension</Text>
+    </View>
     <View style={{ flexGrow: 1, justifyContent: "center", marginVertical: 32 }} >
       <Image
         style={{ width: 242, height: 242 }}
         source={AssetPack.images.TIME_IS_ON_YOUR_SIDE} />
-    </View>
-    <View style={styles.roundedTextContainer}>
-      <Text style={styles.roundedText}>7 Day Extension</Text>
     </View>
   </>
   );
@@ -39,6 +42,27 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: "160%",
     fontSize: 16,
+  },
+  topContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: Dimentions.pageMargin,
+  },
+  topText: {
+    fontFamily: Fonts.TekoMedium,
+    fontSize: 32,
+    color: Colors.jokerWhite50,
+    textTransform: "uppercase",
+    textAlign: "center",
+    marginHorizontal: Dimentions.pageMargin,
+  },
+  bottomText: {
+    fontFamily: Fonts.InterRegular,
+    fontSize: 16,
+    color: Colors.jokerBlack50,
+    textAlign: "center",
+    marginBottom: 32,
+    marginHorizontal: Dimentions.pageMargin,
   },
   roundedTextContainer: {
     width: 200,

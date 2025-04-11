@@ -12,7 +12,11 @@ const QuestionOfTheDay = ({ question, onSubmit, style, numberOfSets, numberOfCar
         <Text style={styles.topTagText}>{"Question of the day"}</Text>
       </View>
       <View style={styles.questionContainer}>
-        <Text style={styles.question}><Text style={styles.qText}>Q: </Text>{question ? `${question}` : ""}</Text>
+        <View style={{ flexDirection: "column", flexWrap: "wrap" }}>
+          <Text style={styles.qText}>Q:</Text>
+          <Text style={styles.question}>{question ? `${question}` : ""}</Text>
+        </View>
+
         <TextInput
           style={styles.textInput}
           placeholder="Scratch set unlocks after 20 words.."
@@ -38,8 +42,9 @@ const styles = StyleSheet.create({
   topTag: {
     color: Colors.jokerWhite50,
     alignItems: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 6,
+    paddingHorizontal: 20,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     backgroundColor: Colors.jokerBlack800,
@@ -62,7 +67,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     backgroundColor: Colors.jokerBlack800,
-    paddingVertical: 24,
+    paddingVertical: 20,
     paddingHorizontal: 16,
     borderWidth: 1,
     borderColor: Colors.jokerBlack200,
@@ -71,13 +76,16 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 8,
   },
   qText: {
+    fontFamily: Fonts.InterRegular,
+    fontSize: 16,
+    paddingRight: 8,
     color: Colors.jokerWhite50,
   },
   question: {
     fontFamily: Fonts.InterRegular,
     color: Colors.jokerBlack50,
     fontSize: 16,
-    marginBottom: 8,
+    height: "100%",
   },
   textInput: {
     fontFamily: Fonts.InterMedium,
@@ -88,11 +96,10 @@ const styles = StyleSheet.create({
     borderColor: Colors.jokerBlack300,
     borderWidth: 1,
     padding: 16,
-    marginTop: 8,
     borderRadius: 8,
     placeholderTextColor: Colors.jokerBlack100,
     selectionColor: Colors.jokerGold400,
-    marginBottom: 24,
+    marginBottom: 20,
     justifyContent: "top",
   },
   bottomText: {

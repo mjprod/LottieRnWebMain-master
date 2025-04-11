@@ -10,20 +10,15 @@ const DrawInProgressContent = ({ ticketsEarned = 0 }) => {
     return (
         <>
             <View style={styles.topContainer}>
-                <LottieView style={styles.lottieAnimation}
-                    source={AssetPack.lotties.WIN}
-                    autoPlay
-                    loop={true}
-                    resizeMode="cover" />
                 <Text style={styles.topText}>Draw in progress</Text>
                 <Text style={styles.bottomText}>That’s a wrap! Winner revealed soon and via email.</Text>
+                <ResourceTile title="Tickets in draw" icon={AssetPack.icons.GOLDEN_TICKET} number={ticketsEarned} unit="ENTRIES" />
             </View>
             <View style={{ flexGrow: 1, justifyContent: "center", marginVertical: 32 }} >
                 <Image
                     style={{ width: 242, height: 242 }}
                     source={AssetPack.images.DRAW_IN_PROGRESS} />
             </View>
-            <ResourceTile title="Tickets in draw" icon={AssetPack.icons.GOLDEN_TICKET} number={ticketsEarned} unit="ENTRIES" />
         </>
     );
 };
@@ -47,6 +42,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: Colors.jokerBlack50,
         textAlign: "center",
+        marginBottom: 32,
         marginHorizontal: Dimentions.pageMargin,
     },
     gradientCard: {

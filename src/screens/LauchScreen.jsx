@@ -5,7 +5,7 @@ import { View, Text } from "react-native-web";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import GameButton from "../components/GameButton";
-import GamesAvailableCard from "../components/ResourceTile";
+import ResourceTile from "../components/ResourceTile";
 import LeaderBoardList from "../components/LeaderBoardList";
 import NextDrawCard from "../components/NextDrawCard";
 import ProfileHeader from "../components/ProfileHeader";
@@ -161,7 +161,8 @@ const LauchScreenEncrypted = () => {
           id={user.user_id ? user.user_id : ""}
           name={user.name ?? ""} />
         <View style={styles.statisticsContainer}>
-          <SectionTitle text={"Statistics"} style={{ marginBottom: 20 }} />
+          <SectionTitle text={"Game Summary"} style={{ marginBottom: 20 }} />
+          <ResourceTile number={user.card_balance} style={{ marginBottom: 8 }} />
           <View style={styles.resultRow}>
             <StatCard
               title="Total points"
@@ -177,7 +178,7 @@ const LauchScreenEncrypted = () => {
             onPress={() => handleStartGame()}
           />
           <LinkButton
-            style={{ marginTop: 28 }}
+            style={{ marginTop: 28, marginBottom: 48 }}
             text={"How to play Turbo scratch"}
             handlePress={appNavigation.goToHowToPlayPage} />
         </View>
@@ -186,16 +187,9 @@ const LauchScreenEncrypted = () => {
             text="LeaderBoard"
             viewAllText="View All"
             viewAllAction={handleViewAllPress}
-            style={{ marginBottom: 20 }}
-          />
-          <LeaderBoardList numberOfItems={5} />
-          <GamesAvailableCard
-            style={{ marginVertical: Dimentions.marginL }}
-            number={user.card_balance}
-          />
+            style={{ marginBottom: 20 }} />
+          <LeaderBoardList numberOfItems={5} style={{marginBottom: 32}} />
           <NextDrawCard />
-          <Text style={styles.copyright}>Copyright ©2025 JokerPlus.{"\n"}
-          All rights reserved.</Text>
         </View>
       </TopNavTemplate>
     );
@@ -210,17 +204,15 @@ const styles = StyleSheet.create({
   statisticsContainer: {
     marginLeft: Dimentions.pageMargin,
     marginRight: Dimentions.pageMargin,
-    marginBottom: Dimentions.marginXL,
   },
   restContainer: {
     paddingTop: Dimentions.sectionMargin,
     paddingHorizontal: Dimentions.pageMargin,
-    paddingBottom: Dimentions.sectionMargin,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: "#131313",
     borderTopWidth: 1,
-    borderColor: "#3D3D3D",
+    borderColor: Colors.jokerBlack200,
   },
   resultRow: {
     flexDirection: "row",
@@ -232,8 +224,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     textAlign: "center",
     fontSize: 16,
-    marginTop: Dimentions.marginL,
-    marginBottom: Dimentions.marginL,
+    marginTop: 20,
     color: Colors.jokerBlack200
   }
 });

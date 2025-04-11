@@ -17,7 +17,7 @@ const NextDrawCard = ({ style }) => {
           <Text style={{ color: Colors.jokerWhite50, fontSize: 30, fontFamily: Fonts.TekoMedium, textTransform: 'uppercase' }}>
             Win Amazon Gift Cards
           </Text>
-          <Text style={{ color: Colors.jokerWhite50, fontSize: 16, fontFamily: Fonts.InterMedium, marginBottom: Dimentions.marginM}}>
+          <Text style={{ color: Colors.jokerBlack50, fontSize: 16, fontFamily: Fonts.InterMedium, marginBottom: Dimentions.marginM}}>
             Scratch for more chances to win!
           </Text>
         </View>

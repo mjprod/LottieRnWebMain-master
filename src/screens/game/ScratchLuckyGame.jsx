@@ -319,15 +319,12 @@ const ScratchLuckyGame = () => {
     <View style={containerStyle}>
       {gameBackground}
       <View style={styles.containerOverlay}>
-        <Animated.View
-          style={[styles.background, { transform: [{ translateX }] }]}
-        >
+        <Animated.View style={[styles.background, { transform: [{ translateX }] }]}>
+          <Animated.View style={{ marginTop: marginTopAnim }}>
+            <TopLayout setTimerGame={setTimerGame} clickCount={clickCount} />
+          </Animated.View>
           <View
             style={styles.imageBackground}>
-            <Animated.View style={{ marginTop: marginTopAnim }}>
-              <TopLayout setTimerGame={setTimerGame} clickCount={clickCount} />
-            </Animated.View>
-
             <ScratchLayout
               reset={reset}
               setReset={setReset}
@@ -401,7 +398,7 @@ const styles = StyleSheet.create({
         top: 60,
         left: 0,
         right: 0,
-        bottom: 0,
+        bottom: 60,
         display: "flex",
         justifyContent: "center",
       },
@@ -409,10 +406,12 @@ const styles = StyleSheet.create({
     }),
     flexDirection: "row",
   },
-  imageBackground: {
+  background: {
     margin: "auto",
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+  },
+  imageBackground: {
+    zIndex: -1,
+    paddingTop: 38,
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
     borderColor: Colors.jokerGold600,

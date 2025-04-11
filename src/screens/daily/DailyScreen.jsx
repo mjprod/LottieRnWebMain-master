@@ -161,7 +161,7 @@ const DailyScreen = () => {
         id={userData.user_id ? userData.user_id : ""}
         name={userData.name ?? ""}
       />
-      <View style={[styles.container, { paddingBottom: Dimentions.sectionMargin, marginTop: Dimentions.sectionMargin }]}>
+      <View style={[styles.container, { marginTop: Dimentions.sectionMargin }]}>
         {!isSubmitted && (
           <QuestionOfTheDay
             numberOfCardsInSet={noOfCardsInSet}
@@ -193,16 +193,8 @@ const DailyScreen = () => {
             totalWeeks={totalWeeks}
             days={days}
             onCardPressed={handleCardPressed} />
-          <LinkButton
-            style={{ marginVertical: Dimentions.sectionMargin }}
-            text={"How To Play Turbo Scratch"}
-            handlePress={appNavigation.goToHowToPlayPage} />
-          <ResourceTile
-            style={{ marginVertical: 24 }}
-            number={userData.card_balance} />
           <NextDrawCard />
         </View>
-
       </View>
     </TopNavScreenTemplate>
   );
@@ -216,7 +208,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: Colors.jokerBlack800,
     borderColor: Colors.jokerBlack200,
-    paddingVertical: Dimentions.marginL,
+    paddingTop: Dimentions.marginL,
     borderTopRightRadius: 16,
     borderTopLeftRadius: 16,
     borderTopWidth: 1

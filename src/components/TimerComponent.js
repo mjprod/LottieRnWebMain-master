@@ -4,12 +4,12 @@ import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
 import { Colors, Fonts } from "../util/constants";
 import PurplePill from "./BetaCompetitionPill";
 
-const TimerComponent = ({ style }) => {
+const TimerComponent = ({ showPill = true, style }) => {
   const [timeLeft] = useTimeLeftForNextDraw();
 
   return (
     <View style={{ ...styles.timerSection, ...style }}>
-      <PurplePill text="Time to next draw" />
+      {showPill ? <PurplePill text="Time to next draw" /> : <Text style={styles.text}> Time to next draw </Text>}
       <Text style={styles.timerContainer}>
         <Text style={styles.timerNumberValue}>{timeLeft.days}</Text>
         <Text style={styles.timerStringValue}> Days </Text>
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
   },
-  timerContainer:{
+  timerContainer: {
     marginTop: 16,
   },
   timerSection: {
@@ -56,6 +56,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.jokerBlack50,
     marginRight: 8
+  },
+  text: {
+    fontFamily: Fonts.InterSemiBold,
+    fontSize: 16,
+    color: Colors.jokerGold400,
   },
 });
 

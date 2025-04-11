@@ -19,6 +19,7 @@ import NotFoundScreen from "./screens/NotFoundScreen";
 import StartScreen from "./screens/StartScreen";
 import ScratchLuckyGame from "./screens/game/ScratchLuckyGame";
 import InfoScreen, { InfoScreenContents } from "./screens/info/InfoScreen";
+import { Colors } from './util/constants';
 
 const { height } = Dimensions.get("window");
 
@@ -104,12 +105,12 @@ const smallStyles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     userSelect: "none",
-    backgroundColor: "#131313",
+    backgroundColor: Colors.jokerBlack800,
   },
   app: {
     overflow: "hidden",
     width: "100%",
     height: height,
-    backgroundColor: "#131313",
+    backgroundColor: Colors.jokerBlack800,
   },
 });

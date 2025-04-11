@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, ImageBackground, Image, View } from "react-native";
-import { Colors, Fonts, LeaderBoardStatus } from "../../util/constants";
+import { Colors, Dimentions, Fonts, LeaderBoardStatus } from "../../util/constants";
 import { maskString } from "../../util/Helpers";
 import { IconTypeLeaderBoardArrow } from "../../assets/icons/ArrowSolid";
 import { PointsIcon } from "../../assets/icons/PointsIcon";
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
+    paddingHorizontal: Dimentions.innerCardPadding,
     paddingVertical: 12,
     borderWidth: 1,
     overflow: "hidden",
@@ -109,12 +109,12 @@ const styles = StyleSheet.create({
   },
   pointsText: {
     fontFamily: Fonts.TekoMedium,
-    fontSize: 18,
+    fontSize: 20,
     paddingTop: 3,
     textTransform: "uppercase",
   },
   pointsTextSelected: {
-    fontSize: 18,
+    fontSize: 20,
   },
   text: {
     color: Colors.jokerWhite50,

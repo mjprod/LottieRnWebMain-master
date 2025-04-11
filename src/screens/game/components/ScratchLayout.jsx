@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 12,
-    marginTop: "-10%",
   },
   bottomView: {
     width: widthScratch,
