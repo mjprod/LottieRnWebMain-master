@@ -101,13 +101,13 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
 
   const getBackground = (value) => {
     if (value >= 1 && value <= 2) {
-      return AssetPack.backgrounds.GAME_TOP_LAYOUT_RED;
-    } else if (value >= 3 && value <= 4) {
-      return AssetPack.backgrounds.GAME_TOP_LAYOUT_YELLOW;
-    } else if (value >= 5 && value <= 10) {
-      return AssetPack.backgrounds.GAME_TOP_LAYOUT_GREEN;
+      return { backgroundColor: Colors.jokerRed400 };
+    } else if (value >= 3 && value <= 6) {
+      return { backgroundColor: Colors.jokerHoney400 };
+    } else if (value >= 7 && value <= 10) {
+      return { backgroundColor: Colors.jokerGreen400 };
     } else {
-      return AssetPack.backgrounds.GAME_TOP_LAYOUT;
+      return { backgroundColor: Colors.jokerBlack300 };
     }
   };
 
@@ -126,7 +126,7 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
                 POP POINTS COUNTDOWN
               </Text>
             </View>
-            <View style={styles.rowCountDown}>
+            <View style={[styles.rowCountDown, backgroundSource]}>
               {scratchStarted && (
                 <>
                   <LottieView
@@ -160,12 +160,12 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
               <View style={styles.topRightTextContainer}>
                 <Image
                   style={{ width: 14, height: 14, marginTop: 2 }}
-                  source={AssetPack.icons.LUCKY_SYMBOL}/>
+                  source={AssetPack.icons.LUCKY_SYMBOL} />
                 <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
               </View>
             </View>
             <View style={styles.rowLuckySymbol}>
-              <LuckySymbolsSlot/>
+              <LuckySymbolsSlot />
             </View>
             <View style={{
               flexDirection: "row",
@@ -291,7 +291,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "start",
     height: 50,
-    backgroundColor: Colors.jokerGreen400,
   },
   rowLuckySymbol: {
     paddingHorizontal: 20,

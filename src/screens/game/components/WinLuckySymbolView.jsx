@@ -3,6 +3,7 @@ import { View, StyleSheet, Platform, Pressable, } from "react-native";
 import Video from "../../../components/Video";
 import BrowserDetection from "react-browser-detection";
 import AssetPack from "../../../util/AssetsPack";
+import { isAndroidWebView } from "../../../util/Helpers";
 
 const WinLuckySymbolView = ({ videoRef, style, onSkipClicked, onVideoEnd }) => {
     return (

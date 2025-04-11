@@ -75,6 +75,9 @@ export const Colors = {
   jokerWhite50: "#FFFFFF",
 
   jokerGreen400: "#3EDA41",
+
+  jokerHoney400: "#DBA73E",
+  jokerRed400: "#DB3E3E",
 };
 
 export const Fonts = {
