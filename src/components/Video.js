@@ -22,7 +22,7 @@ const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyl
   const attrs = {
     src: source,
     autoPlay: true,
-    muted: false,
+    muted: muted,
     loop: false,
     playsInline: true,
     controls: false,

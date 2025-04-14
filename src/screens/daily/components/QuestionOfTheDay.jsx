@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import GameButton from "../../../components/GameButton";
 import { Colors, Fonts } from "../../../util/constants";
+import { Dimentions } from "../../../util/constants";
 
 const QuestionOfTheDay = ({ question, onSubmit, style, numberOfSets, numberOfCardsInSet }) => {
   const [text, setText] = useState("");
@@ -12,7 +13,7 @@ const QuestionOfTheDay = ({ question, onSubmit, style, numberOfSets, numberOfCar
         <Text style={styles.topTagText}>{"Question of the day"}</Text>
       </View>
       <View style={styles.questionContainer}>
-        <View style={{ flexDirection: "column", flexWrap: "wrap" }}>
+        <View style={{ flexDirection: "column", flexWrap: "wrap", marginRight: Dimentions.pageMargin }}>
           <Text style={styles.qText}>Q:</Text>
           <Text style={styles.question}>{question ? `${question}` : ""}</Text>
         </View>
