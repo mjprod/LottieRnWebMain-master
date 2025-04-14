@@ -4,10 +4,10 @@ import { Colors } from "../util/constants";
 import CopyrightText from "../components/CopyrightText";
 
 
-const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, children, pillText, showCopyright = true }) => {
+const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, children, pillText, showCopyright = true, type }) => {
     return (
         <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
-            <TopBannerNav title={title} subtitle={subtitle} backgroundImage={navBackgroudImage} hasBackButton={hasBackButton} pillText={pillText} />
+            <TopBannerNav title={title} subtitle={subtitle} backgroundImage={navBackgroudImage} hasBackButton={hasBackButton} pillText={pillText} type={type} />
             <View style={{ flex: 1, marginTop: -80 }}>
                 {children}
                 {showCopyright && <CopyrightText style={{ padding: 20 }} />}
