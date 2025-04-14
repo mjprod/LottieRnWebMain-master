@@ -38,6 +38,8 @@ const AssetPack = {
     TOP_NAV_DRAW_IN_PROGRESS: require("./../assets/image/fortune.webp"),
     TOP_NAV_EXTENDING_PLAY: require("./../assets/image/hero_extend.webp"),
     TOP_NAV_HEROES: require("./../assets/image/scratch_heroes.webp"),
+    TOP_NAV_START: require("./../assets/image/start_hero.webp"),
+    TOP_NAV_FINISH: require("./../assets/image/fin_hero.webp"),
     TOP_NAV_LEADER_BOARD: require("./../assets/image/hero_leadeerboard.webp"),
     TOP_NAV_LEARN: require("./../assets/image/hero_learn.webp"),
     TOP_NAV_THANK_YOU: require("./../assets/image/cowgril.webp"),

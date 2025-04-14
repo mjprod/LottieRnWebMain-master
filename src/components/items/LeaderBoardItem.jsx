@@ -52,11 +52,11 @@ const LeaderBoardItem = ({ rank, username, points, status, selected }) => {
         {!selected ? maskString(username) :
           <View style={{ flexDirection: "row" }}>
             <Avatar size={AvatarSize.small} name={username} />
-            <Text style={{paddingTop: 2}}>You</Text>
+            <Text style={{ paddingTop: 2 }}>You</Text>
           </View>
         }
       </Text>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "start", width: 130 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "start", width: 150 }}>
         <PointsIcon style={{ width: 16, height: 16, marginRight: 10 }} />
         <Text
           style={[
