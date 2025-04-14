@@ -14,6 +14,10 @@ import AssetPack from "../util/AssetsPack";
 import LinearGradient from "react-native-web-linear-gradient";
 import { useGame } from "../context/GameContext";
 import LoadingView from "../components/LoadingView";
+import TopNavTemplate from "../templates/TopNavTemplate";
+import { TopBannerNavType } from "../components/TopBannerNav";
+import SectionTitle from "../components/SectionTitle";
+
 const GameOverScreen = () => {
   const appNavigation = useAppNavigation()
   const { fetchUserDetails } = useApiRequest();
@@ -43,19 +47,9 @@ const GameOverScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <ImageBackground style={styles.header} source={AssetPack.backgrounds.TOP_NAV_HEROES}>
-        <LinearGradient
-          colors={[Colors.transparent, Colors.transparent, Colors.background, Colors.background]}
-          locations={[0, 0.5, 0.9, 1]}
-          style={styles.linearGradient}>
-          <View style={styles.iconWrapper}>
-            <IconJokerPlus />
-          </View>
-          <Text style={styles.title}>TURBO SCRATCH RESULTS</Text>
-        </LinearGradient>
-      </ImageBackground>
+    <TopNavTemplate title={user.name} subtitle={"Claim what’s yours"} type={TopBannerNavType.startFinish} navBackgroudImage={AssetPack.backgrounds.TOP_NAV_FINISH} showCopyright={false}>
       <View style={styles.body}>
+        <SectionTitle style={{ marginBottom: 24 }} text={"Game summary"} />
         <View style={styles.resultRow}>
           <StatCard title="Total Points" stat={user.total_score} />
           <View style={{ width: 10 }} />
@@ -66,9 +60,9 @@ const GameOverScreen = () => {
           score={user.total_score}
           ticketCount={user.ticket_balance}
         />
-        <TimerComponent
-          style={styles.timerContainer} />
+        <View style={{ flexGrow: 1 }} />
         <GameButton
+          style={{ marginBottom: Dimentions.marginL, marginTop: 48 }}
           text="BACK HOME"
           onPress={() => {
             appNavigation.goToLaunchScreen(
@@ -79,7 +73,7 @@ const GameOverScreen = () => {
           }}
         />
       </View>
-    </View>
+    </TopNavTemplate>
   );
 };
 
@@ -114,8 +108,11 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   body: {
-    marginTop: -150,
-    paddingHorizontal: Dimentions.pageMargin,
+    flex: 1,
+    borderTopColor: Colors.jokerBlack200,
+    borderTopWidth: 1,
+    paddingTop: 32,
+    marginHorizontal: Dimentions.pageMargin,
   },
   resultRow: {
     flexDirection: "row",
