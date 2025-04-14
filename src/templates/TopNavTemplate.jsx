@@ -5,8 +5,8 @@ import { Colors } from "../util/constants";
 import CopyrightText from "../components/CopyrightText";
 import { useGame } from "../context/GameContext";
 import ProfileHeader from "../components/ProfileHeader";
-import BrowserDetection from "react-browser-detection";
 import useIsIosWebview from "../hook/useIosWebview";
+import { Platform } from "react-native";
 
 const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, children, pillText, showCopyright = true, type, showProfileHeader = true }) => {
     const { user } = useGame()
@@ -18,11 +18,7 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, chi
         outputRange: [1, 0],
         extrapolate: 'clamp',
     });
-    const topPadding = scrollY.interpolate({
-        inputRange: [0, 100],
-        outputRange: [52, 0],
-        extrapolate: 'clamp'
-    });
+    
     const headerBackgroundColor = scrollY.interpolate({
         inputRange: [0, 100],
         outputRange: [Colors.transparent, Colors.jokerBlack1100],
@@ -36,7 +32,7 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, chi
             stickyHeaderIndices={[1]}
             onScroll={Animated.event(
                 [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                { useNativeDriver: true }
+                { useNativeDriver: Platform.OS !== 'web', }
             )}
             scrollEventThrottle={16}
             bounces={false}
