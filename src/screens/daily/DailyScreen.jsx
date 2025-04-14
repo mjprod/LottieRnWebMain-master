@@ -156,11 +156,6 @@ const DailyScreen = () => {
 
   return (
     <TopNavScreenTemplate title={"Answer to unlock"} subtitle={"Your words hold the reward."} navBackgroudImage={AssetPack.backgrounds.TOP_NAV_DAILY}>
-      <ProfileHeader
-        containerStyle={{ marginHorizontal: Dimentions.pageMargin }}
-        id={userData.user_id ? userData.user_id : ""}
-        name={userData.name ?? ""}
-      />
       <View style={[styles.container, { marginTop: Dimentions.sectionMargin }]}>
         {!isSubmitted && (
           <QuestionOfTheDay
