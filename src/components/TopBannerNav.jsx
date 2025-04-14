@@ -49,7 +49,7 @@ const TopBannerNav = ({
           style={styles.linearGradient}>
           <View style={[styles.topContainer, isIosWebview && { paddingTop: 58 }]}>
             {hasBackButton && (
-              <Pressable onPress={onBackPressLocal} style={{ alignContent: "center", alignItems: "center", justifyContent: "center", height: "100%", zIndex: 9999 }}>
+              <Pressable onPress={onBackPressLocal} style={{ alignContent: "center", alignItems: "center", justifyContent: "center", height: "100%" }}>
                 <Image
                   resizeMode="contain"
                   style={styles.arrowIcon}
@@ -79,8 +79,7 @@ const TopBannerNav = ({
             flex: 1,
             alignItems: "center",
             justifyContent: "flex-end",
-            paddingBottom: 58,
-          }, isIosWebview && { paddingTop: 58 }]}>
+          }, isIosWebview ? { paddingTop: 58, paddingBottom: 58,} : { paddingBottom: 58 + 38 }]}>
           <Text style={{ fontFamily: Fonts.InterSemiBold, color: Colors.jokerWhite50, fontSize: 16 }}>{subtitle}</Text>
           <Text style={{ fontFamily: Fonts.TekoMedium, color: Colors.jokerGold400, fontSize: 38, textTransform: "uppercase" }}>{title}</Text>
         </LinearGradient>
