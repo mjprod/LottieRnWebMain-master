@@ -18,7 +18,7 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, chi
         outputRange: [1, 0],
         extrapolate: 'clamp',
     });
-    
+
     const headerBackgroundColor = scrollY.interpolate({
         inputRange: [0, 100],
         outputRange: [Colors.transparent, Colors.jokerBlack1100],
@@ -45,18 +45,24 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, chi
                     hasBackButton={hasBackButton}
                     pillText={pillText}
                     type={type}
-                    style={{ marginBottom: -88 }}
+                    style={{ marginBottom: -10 }}
                 />
             </Animated.View>
             {
                 showProfileHeader &&
-                <Animated.View style={{ backgroundColor: headerBackgroundColor, paddingTop: isIosWebview ? 52 : 0, paddingHorizontal: 20, boxShadow: `0px 6px 10px 2px rgba(0, 0, 0, 0.6)`, }}>
+                <Animated.View style={{
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)',
+                    backgroundColor: "#0A0A0AE6",
+                    paddingHorizontal: 20,
+                    boxShadow: `0px 6px 10px 2px rgba(0, 0, 0, 0.6)`
+                }}>
                     <Animated.View style={{ borderTopWidth: topNavOpacity, borderTopColor: Colors.jokerBlack200 }}>
                         <ProfileHeader id={user.user_id} name={user.name} />
                     </Animated.View>
                 </Animated.View>
             }
-            <View style={showProfileHeader ? { paddingTop: 32 } : { paddingTop: isIosWebview ? 52 : 0 }}>{children}</View>
+            <View style={showProfileHeader && { paddingTop: 32 }}>{children}</View>
             {showCopyright && <CopyrightText style={{ padding: 20 }} />}
         </Animated.ScrollView>
     );

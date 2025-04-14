@@ -52,6 +52,7 @@ const AssetPack = {
     WIN_LUCKY_SYMBOL_CHROME: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_chrome.webm"),
     LUCKY_SYMBOL_FINAL: require("./../assets/video/lucky_symbol_3d_coin_cut.mp4"),
     DRAW_IN_PROGRESS_BACKGROUND: require("./../assets/video/draw_in_progress_background.mp4"),
+    TOP_NAV_LANDING: require("./../assets/video/landing.mp4"),
   },
   sounds: {
     COMBO: require(`./../assets/sounds/combo.mp3`),
