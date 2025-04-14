@@ -52,7 +52,8 @@ const LeaderBoardScreen = () => {
       title="Champions Rise"
       subtitle="The top players of the realm."
       navBackgroudImage={AssetPack.backgrounds.TOP_NAV_LEADER_BOARD}
-      hasBackButton={true}>
+      hasBackButton={true}
+      showProfileHeader={false}>
       <View style={styles.container}>
         <SectionTitle text="LeaderBard" style={{ marginBottom: 24 }} />
         <LeaderBoardList

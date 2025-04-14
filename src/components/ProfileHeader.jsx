@@ -16,28 +16,29 @@ const ProfileHeader = ({ id, name, containerStyle }) => {
   };
 
   return (
-    <View style={{ ...styles.container, ...containerStyle }}>
-      <Avatar size={AvatarSize.big} name={name} />
-      <View style={styles.textContainer}>
-        <Text style={styles.username}>{name}</Text>
-        <Text style={styles.idText}>{id ? `ID: ${id}` : ""}</Text>
+    <View style={{ ...containerStyle}}>
+      <View style={{ ...styles.container, }}>
+        <Avatar size={AvatarSize.big} name={name} />
+        <View style={styles.textContainer}>
+          <Text style={styles.username}>{name}</Text>
+          <Text style={styles.idText}>{id ? `ID: ${id}` : ""}</Text>
+        </View>
+        <Pressable onPress={handleCopy} style={styles.copyButton}>
+          <Image style={{ height: 22, width: 22, marginRight: Dimentions.marginM }} source={AssetPack.icons.COPY} />
+        </Pressable>
       </View>
-      <Pressable onPress={handleCopy} style={styles.copyButton}>
-        <Image style={{ height: 22, width: 22, marginRight: Dimentions.marginM }} source={AssetPack.icons.COPY} />
-      </Pressable>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: Colors.jokerBlack1100,
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: Dimentions.innerCardPadding,
     borderBottomColor: Colors.jokerBlack200,
     borderBottomWidth: 1,
-    borderTopWidth: 1,
-    borderTopColor: Colors.jokerBlack200,
   },
   username: {
     fontFamily: Fonts.InterSemiBold,

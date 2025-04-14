@@ -156,10 +156,6 @@ const LauchScreenEncrypted = () => {
   if (user) {
     return (
       <TopNavTemplate title={"Scratch to win!"} subtitle={"Your next prize awaits."}>
-        <ProfileHeader
-          containerStyle={{ marginHorizontal: Dimentions.pageMargin, marginBottom: Dimentions.marginL }}
-          id={user.user_id ? user.user_id : ""}
-          name={user.name ?? ""} />
         <View style={styles.statisticsContainer}>
           <SectionTitle text={"Game Summary"} style={{ marginBottom: 20 }} />
           <ResourceTile number={user.card_balance} style={{ marginBottom: 8 }} />

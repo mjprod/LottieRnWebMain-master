@@ -4,7 +4,6 @@ import {
   Image,
   StyleSheet,
   View,
-  ImageBackground,
   Pressable,
 } from "react-native";
 import AssetPack from "../util/AssetsPack";
@@ -26,6 +25,7 @@ const TopBannerNav = ({
   hasBackButton = false,
   pillText = "Beta Competition",
   type = TopBannerNavType.home,
+  style = {},
 }) => {
   const navigate = useNavigate();
 
@@ -39,8 +39,8 @@ const TopBannerNav = ({
 
   if (type === TopBannerNavType.home) {
     return (
-      <View style={{ alignItems: "start", height: 284 }} >
-        <Image source={backgroundImage} style={{ width: "100%", height: 284, position: "absolute", top: -40 }} />
+      <View style={[style, { overflow: "hidden", alignItems: "start", height: 284 }]} >
+        <Image source={backgroundImage} style={{ width: "100%", height: 284, position: "absolute"}} />
         <LinearGradient
           colors={[Colors.transparent, Colors.transparent, Colors.background, Colors.background]}
           locations={[0, 0.4, 0.75, 1]}
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
   linearGradient: {
     width: "100%",
     height: "auto",
+    marginTop: 50,
     paddingHorizontal: Dimentions.pageMargin,
     flex: 1,
     alignItems: "start",
