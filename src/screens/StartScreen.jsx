@@ -11,7 +11,6 @@ import { useGame } from "../context/GameContext";
 import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
 import LuckySymbolCard from "../components/LuckySymbolCard";
-import LinearGradient from "react-native-web-linear-gradient";
 import AssetPack from "../util/AssetsPack";
 import { ImageBackground } from "react-native-web";
 import { Colors, Dimentions, Fonts } from "../util/constants";
@@ -61,36 +60,39 @@ const StartScreen = () => {
     }
 
     return (
-        <TopNavTemplate title={"Scratch to win!"} subtitle={"Your next prize awaits."} type={TopBannerNavType.startFinish} navBackgroudImage={AssetPack.backgrounds.TOP_NAV_START} showCopyright={false}>
-            <View>
-                <View style={styles.statsSection}>
-                    <View style={styles.timerSection}>
-                        <TimerComponent style={{ paddingVertical: Dimentions.marginL }} />
-                    </View>
+        <TopNavTemplate
+            title={"Scratch to win!"}
+            subtitle={"Your next prize awaits."}
+            type={TopBannerNavType.startFinish}
+            navBackgroudImage={AssetPack.backgrounds.TOP_NAV_START}
+            showCopyright={false}
+            showProfileHeader={false}>
+            <View style={styles.statsSection}>
+                <View style={styles.timerSection}>
+                    <TimerComponent style={{ paddingVertical: Dimentions.marginL }} />
+                </View>
 
-                    <SectionTitle text={"Game Summary"} />
-
-                    <View style={styles.resultRow}>
-                        <StatCard title="Total Points" stat={initialScore} />
-                        <View style={{ width: 8 }} />
-                        <LuckySymbolCard />
-                    </View>
-                    <View style={styles.ticketsSection}>
-                        <ResourceTile style={{ width: "100%" }} number={initialScratchCardLeft} />
-                    </View>
-
-                    <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column", marginBottom: Dimentions.marginL, marginTop: 48 }}>
-                        <View style={styles.buttonContainer}>
-                            <View style={{ flex: 0.4, justifyContent: "flex-start" }}>
-                                <RoundedButton title="Back" onPress={handleBackPress} />
-                            </View>
-                            <View style={{ flex: 0.6, justifyContent: "flex-end" }} >
-                                <GameButton
-                                    buttonSize={ButtonSize.TWO_THIRD}
-                                    text="Play Now"
-                                    onPress={handlePlayNow}
-                                />
-                            </View>
+                <SectionTitle text={"Game Summary"} />
+                <View style={styles.resultRow}>
+                    <StatCard title="Total Points" stat={initialScore} />
+                    <View style={{ width: 8 }} />
+                    <LuckySymbolCard />
+                </View>
+                <View style={styles.ticketsSection}>
+                    <ResourceTile style={{ width: "100%" }} number={initialScratchCardLeft} />
+                </View>
+                <View style={{ flexGrow: 1 }} />
+                <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column", marginBottom: 48, marginTop: 48 }}>
+                    <View style={styles.buttonContainer}>
+                        <View style={{ flex: 0.4, justifyContent: "flex-start" }}>
+                            <RoundedButton title="Back" onPress={handleBackPress} />
+                        </View>
+                        <View style={{ flex: 0.6, justifyContent: "flex-end" }} >
+                            <GameButton
+                                buttonSize={ButtonSize.TWO_THIRD}
+                                text="Play Now"
+                                onPress={handlePlayNow}
+                            />
                         </View>
                     </View>
                 </View>
@@ -109,27 +111,6 @@ const styles = StyleSheet.create({
         borderBottomColor: Colors.jokerBlack200,
         borderBottomWidth: 1,
         marginBottom: 32
-    },
-    linearGradient: {
-        width: "100%",
-        paddingHorizontal: Dimentions.pageMargin,
-        flex: 1,
-        alignItems: "start",
-        justifyContent: "start",
-        marginTop: 60,
-        paddingBottom: Dimentions.sectionMargin,
-        paddingTop: Dimentions.marginXL,
-        alignItems: "center",
-        resizeMode: "cover",
-    },
-    header: {
-        height: 284,
-    },
-    headerImage: {
-        position: "absolute",
-        top: -40,
-        width: "100%",
-        height: 270,
     },
     title: {
         color: Colors.jokerGold400,
