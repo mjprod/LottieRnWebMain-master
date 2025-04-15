@@ -20,7 +20,7 @@ import { TopBannerNavType } from "../components/TopBannerNav";
 
 const StartScreen = () => {
     const appNavigation = useAppNavigation();
-    const { setUser, setLuckySymbolCount } = useGame();
+    const { user, setUser, setLuckySymbolCount } = useGame();
     const { showSnackbar } = useSnackbar();
     const { fetchUserDetails } = useApiRequest();
 
@@ -61,8 +61,8 @@ const StartScreen = () => {
 
     return (
         <TopNavTemplate
-            title={"Scratch to win!"}
-            subtitle={"Your next prize awaits."}
+            title={user.name}
+            subtitle={"Welcome back"}
             type={TopBannerNavType.startFinish}
             navBackgroudImage={AssetPack.backgrounds.TOP_NAV_START}
             navBackgroudVideo={AssetPack.videos.TOP_NAV_START}
@@ -82,7 +82,7 @@ const StartScreen = () => {
                 <View style={styles.ticketsSection}>
                     <ResourceTile style={{ width: "100%" }} number={initialScratchCardLeft} />
                 </View>
-                <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column", marginTop: 24}}>
+                <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column", marginTop: 24 }}>
                     <View style={styles.buttonContainer}>
                         <View style={{ flex: 0.4, justifyContent: "flex-start" }}>
                             <RoundedButton title="Back" onPress={handleBackPress} />
