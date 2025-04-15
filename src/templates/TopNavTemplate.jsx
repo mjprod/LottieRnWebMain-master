@@ -10,7 +10,7 @@ import LinearGradient from 'react-native-web-linear-gradient';
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
 
-const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, children, pillText, showCopyright = true, type, showProfileHeader = true }) => {
+const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo, hasBackButton, children, pillText, showCopyright = true, type, showProfileHeader = true }) => {
     const { user } = useGame()
     const scrollY = useRef(new Animated.Value(0)).current;
     const [bottomChevronStyles, setBottomChevronStyles] = useState(styles.bottomChevronContainer);
@@ -52,6 +52,7 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, chi
                     title={title}
                     subtitle={subtitle}
                     backgroundImage={navBackgroudImage}
+                    backgroundVideo={navBackgroudVideo}
                     hasBackButton={hasBackButton}
                     pillText={pillText}
                     type={type}
@@ -73,7 +74,6 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, chi
                 </Animated.View>
             }
             <View style={showProfileHeader && { paddingTop: 32 }}>{children}</View>
-            {children}
             {showCopyright && <CopyrightText style={{ padding: 20 }} />}
         </Animated.ScrollView>
         <LinearGradient

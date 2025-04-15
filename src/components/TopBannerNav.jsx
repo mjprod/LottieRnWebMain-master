@@ -23,6 +23,7 @@ const TopBannerNav = ({
   title,
   subtitle,
   backgroundImage = AssetPack.backgrounds.TOP_NAV_HEROES,
+  backgroundVideo = AssetPack.videos.TOP_NAV_HEROES,
   onBackPress,
   hasBackButton = false,
   pillText = "Beta Competition",
@@ -44,7 +45,8 @@ const TopBannerNav = ({
     return (
       <View style={[style, { overflow: "hidden", alignItems: "start", height: 226 }]} >
         <Video
-          source={AssetPack.videos.TOP_NAV_LANDING}
+          source={backgroundVideo}
+          poster={backgroundImage}
           loop={true}
           style={[{ width: "100%", height: 284, position: "absolute" }]} />
         <LinearGradient

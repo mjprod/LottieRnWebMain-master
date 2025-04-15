@@ -37,7 +37,7 @@ const AssetPack = {
     TOP_NAV_DAILY: require("./../assets/image/hero_question.webp"),
     TOP_NAV_DRAW_IN_PROGRESS: require("./../assets/image/fortune.webp"),
     TOP_NAV_EXTENDING_PLAY: require("./../assets/image/hero_extend.webp"),
-    TOP_NAV_HEROES: require("./../assets/image/scratch_heroes.webp"),
+    TOP_NAV_HEROES: require("./../assets/image/img_landing_hero.webp"),
     TOP_NAV_START: require("./../assets/image/start_hero.webp"),
     TOP_NAV_FINISH: require("./../assets/image/fin_hero.webp"),
     TOP_NAV_LEADER_BOARD: require("./../assets/image/hero_leadeerboard.webp"),
@@ -52,7 +52,8 @@ const AssetPack = {
     WIN_LUCKY_SYMBOL_CHROME: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_chrome.webm"),
     LUCKY_SYMBOL_FINAL: require("./../assets/video/lucky_symbol_3d_coin_cut.mp4"),
     DRAW_IN_PROGRESS_BACKGROUND: require("./../assets/video/draw_in_progress_background.mp4"),
-    TOP_NAV_LANDING: require("./../assets/video/landing.mp4"),
+    TOP_NAV_HEROES: require("./../assets/video/landing.mp4"),
+    TOP_NAV_LEADER_BOARD: require("./../assets/video/leaderboard.mp4"),
   },
   sounds: {
     COMBO: require(`./../assets/sounds/combo.mp3`),

@@ -52,6 +52,7 @@ const LeaderBoardScreen = () => {
       title="Champions Rise"
       subtitle="The top players of the realm."
       navBackgroudImage={AssetPack.backgrounds.TOP_NAV_LEADER_BOARD}
+      navBackgroudVideo={AssetPack.videos.TOP_NAV_LEADER_BOARD}
       hasBackButton={true}
       showProfileHeader={false}>
       <View style={styles.container}>
