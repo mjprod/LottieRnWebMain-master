@@ -14,6 +14,7 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
     const { user } = useGame()
     const scrollY = useRef(new Animated.Value(0)).current;
     const [bottomChevronStyles, setBottomChevronStyles] = useState(styles.bottomChevronContainer);
+    const [showDropShadow, setShowDropShadow] = useState(false);
 
     const topNavOpacity = scrollY.interpolate({
         inputRange: [0, 160],
@@ -21,16 +22,32 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
         extrapolate: 'clamp',
     });
 
+    const paddingHorizontal = scrollY.interpolate({
+        inputRange: [0, 160],
+        outputRange: [20, 0],
+        extrapolate: 'clamp',
+    });
+
+    const marginHorizontal = scrollY.interpolate({
+        inputRange: [0, 160],
+        outputRange: [0, 20],
+        extrapolate: 'clamp',
+    });
+
     const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
         const paddingToBottom = 20;
-        return layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom;
+        console.log('layoutMeasurement', layoutMeasurement.height);
+        console.log('contentOffset', contentOffset.y);
+        console.log('contentSize', contentSize.height);
+        return layoutMeasurement.height + contentOffset.y >= contentSize.height - 30;
+    };
+
+    const isCloseToTop = ({ layoutMeasurement, contentOffset, contentSize }) => {
+        return contentOffset.y <= 0;
     };
 
     const handleScroll = (event) => {
-        Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            { useNativeDriver: Platform.OS !== 'web', }
-        )
+        setShowDropShadow(!isCloseToTop(event.nativeEvent))
         if (isCloseToBottom(event.nativeEvent)) {
             setBottomChevronStyles({ ...bottomChevronStyles, display: 'none' })
         } else {
@@ -43,7 +60,15 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
             style={styles.container}
             contentContainerStyle={{ flexGrow: 1 }}
             stickyHeaderIndices={[1]}
-            onScroll={handleScroll}
+            onScroll={
+                Animated.event(
+                    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                    {
+                        listener: handleScroll,
+                        useNativeDriver: Platform.OS !== 'web',
+                    },
+                )
+            }
             scrollEventThrottle={16}
             bounces={false}
             overScrollMode="never">
@@ -65,12 +90,12 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)',
                     backgroundColor: "#0A0A0AE6",
-                    paddingHorizontal: 20,
-                    boxShadow: `0px 6px 10px 2px rgba(0, 0, 0, 0.6)`,
-                }]}>
-                    <Animated.View style={{ borderTopWidth: topNavOpacity, borderTopColor: Colors.jokerBlack200 }}>
-                        <ProfileHeader id={user.user_id} name={user.name} />
-                    </Animated.View>
+                    marginHorizontal: paddingHorizontal,
+                    paddingHorizontal: marginHorizontal,
+                    borderTopWidth: topNavOpacity, borderTopColor: Colors.jokerBlack200,
+                    borderBottomWidth: 1, borderBottomColor: Colors.jokerBlack200
+                }, showDropShadow && { boxShadow: `0px 6px 10px 2px rgba(0, 0, 0, 0.7` }]}>
+                    <ProfileHeader id={user.user_id} name={user.name} />
                 </Animated.View>
             }
             <View style={showProfileHeader && { paddingTop: 32 }}>{children}</View>
@@ -105,6 +130,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
         paddingBottom: 10,
+        display: "none"
     },
     lottieAnimation: {
         height: 20,

@@ -49,7 +49,7 @@ const HowToPlayScreen = () => {
         hasBackButton={true}
         onBackPress={handleBackPress}
       />
-      <ShowCaseCarousel slideList={carouselItems} style={{ marginTop: -70 }} />
+      <ShowCaseCarousel slideList={carouselItems} />
     </View>
   );
 };

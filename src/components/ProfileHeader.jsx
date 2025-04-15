@@ -16,7 +16,7 @@ const ProfileHeader = ({ id, name, containerStyle }) => {
   };
 
   return (
-    <View style={{ ...containerStyle}}>
+    <View style={{ ...containerStyle }}>
       <View style={{ ...styles.container, }}>
         <Avatar size={AvatarSize.big} name={name} />
         <View style={styles.textContainer}>
@@ -24,7 +24,7 @@ const ProfileHeader = ({ id, name, containerStyle }) => {
           <Text style={styles.idText}>{id ? `ID: ${id}` : ""}</Text>
         </View>
         <Pressable onPress={handleCopy} style={styles.copyButton}>
-          <Image style={{ height: 22, width: 22, marginRight: Dimentions.marginM }} source={AssetPack.icons.COPY} />
+          <Image style={{ height: 22, width: 22 }} source={AssetPack.icons.COPY} />
         </Pressable>
       </View>
     </View>
@@ -36,8 +36,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: Dimentions.innerCardPadding,
-    borderBottomColor: Colors.jokerBlack200,
-    borderBottomWidth: 1,
   },
   username: {
     fontFamily: Fonts.InterSemiBold,
