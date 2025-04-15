@@ -394,6 +394,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   background: {
+    marginTop: -20,
     margin: "auto",
   },
   imageBackground: {
