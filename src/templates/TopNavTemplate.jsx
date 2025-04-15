@@ -5,24 +5,16 @@ import { Colors } from "../util/constants";
 import CopyrightText from "../components/CopyrightText";
 import { useGame } from "../context/GameContext";
 import ProfileHeader from "../components/ProfileHeader";
-import useIsIosWebview from "../hook/useIosWebview";
 import { Platform } from "react-native";
 
 const TopNavTemplate = ({ title, subtitle, navBackgroudImage, hasBackButton, children, pillText, showCopyright = true, type, showProfileHeader = true }) => {
     const { user } = useGame()
     const scrollY = useRef(new Animated.Value(0)).current;
-    const isIosWebview = useIsIosWebview();
 
     const topNavOpacity = scrollY.interpolate({
-        inputRange: [0, 100],
+        inputRange: [0, 200],
         outputRange: [1, 0],
         extrapolate: 'clamp',
-    });
-
-    const headerBackgroundColor = scrollY.interpolate({
-        inputRange: [0, 100],
-        outputRange: [Colors.transparent, Colors.jokerBlack1100],
-        extrapolate: 'clamp'
     });
 
     return (
