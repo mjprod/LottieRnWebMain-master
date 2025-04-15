@@ -34,7 +34,7 @@ const AssetPack = {
     CONGRATS_BACKGROUND: require("./../assets/image/winner-bg.webp"),
     SCRACHIE: require("./../assets/image/background_scrachie.jpg"),
     SCRACHIE_404: require("./../assets/image/404-bg.webp"),
-    TOP_NAV_DAILY: require("./../assets/image/hero_question.webp"),
+    TOP_NAV_DAILY: require("./../assets/image/question_hero.webp"),
     TOP_NAV_DRAW_IN_PROGRESS: require("./../assets/image/fortune.webp"),
     TOP_NAV_EXTENDING_PLAY: require("./../assets/image/hero_extend.webp"),
     TOP_NAV_HEROES: require("./../assets/image/img_landing_hero.webp"),
@@ -54,6 +54,8 @@ const AssetPack = {
     DRAW_IN_PROGRESS_BACKGROUND: require("./../assets/video/draw_in_progress_background.mp4"),
     TOP_NAV_HEROES: require("./../assets/video/landing.mp4"),
     TOP_NAV_LEADER_BOARD: require("./../assets/video/leaderboard.mp4"),
+    TOP_NAV_DAILY: require("./../assets/video/question.mp4"),
+    TOP_NAV_LEARN: require("./../assets/video/learn.mp4"),
   },
   sounds: {
     COMBO: require(`./../assets/sounds/combo.mp3`),

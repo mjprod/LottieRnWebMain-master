@@ -4,10 +4,7 @@ import { View } from "react-native-web";
 import LottieView from "react-native-web-lottie";
 import { useLocation } from "react-router-dom";
 import DailyCardsContainer from "./components/DailyCardsContainer";
-import ResourceTile from "../../components/ResourceTile";
-import LinkButton from "../../components/LinkButton";
 import NextDrawCard from "../../components/NextDrawCard";
-import ProfileHeader from "../../components/ProfileHeader";
 import QuestionOfTheDay from "./components/QuestionOfTheDay";
 import { useSnackbar } from "../../components/SnackbarContext";
 import { DailySetData } from "../../data/DailyCardData";
@@ -155,8 +152,12 @@ const DailyScreen = () => {
   }
 
   return (
-    <TopNavScreenTemplate title={"Answer to unlock"} subtitle={"Your words hold the reward."} navBackgroudImage={AssetPack.backgrounds.TOP_NAV_DAILY}>
-      <View style={[styles.container, { marginTop: Dimentions.sectionMargin }]}>
+    <TopNavScreenTemplate
+      title={"Answer to unlock"}
+      subtitle={"Your words hold the reward."}
+      navBackgroudImage={AssetPack.backgrounds.TOP_NAV_DAILY}
+      navBackgroudVideo={AssetPack.videos.TOP_NAV_DAILY}>
+      <View style={[styles.container]}>
         {!isSubmitted && (
           <QuestionOfTheDay
             numberOfCardsInSet={noOfCardsInSet}

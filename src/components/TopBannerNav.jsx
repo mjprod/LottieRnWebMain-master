@@ -31,7 +31,6 @@ const TopBannerNav = ({
   style = {},
 }) => {
   const navigate = useNavigate();
-  const isIosWebview = useIsIosWebview();
 
   const onBackPressLocal = () => {
     if (onBackPress) {
