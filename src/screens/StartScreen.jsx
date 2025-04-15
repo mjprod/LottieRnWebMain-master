@@ -65,6 +65,7 @@ const StartScreen = () => {
             subtitle={"Your next prize awaits."}
             type={TopBannerNavType.startFinish}
             navBackgroudImage={AssetPack.backgrounds.TOP_NAV_START}
+            navBackgroudVideo={AssetPack.videos.TOP_NAV_START}
             showCopyright={false}
             showProfileHeader={false}>
             <View style={styles.statsSection}>

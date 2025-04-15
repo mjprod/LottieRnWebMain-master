@@ -56,6 +56,11 @@ const AssetPack = {
     TOP_NAV_LEADER_BOARD: require("./../assets/video/leaderboard.mp4"),
     TOP_NAV_DAILY: require("./../assets/video/question.mp4"),
     TOP_NAV_LEARN: require("./../assets/video/learn.mp4"),
+    TOP_NAV_EXTENDING_PLAY: require("./../assets/video/extend-play.mp4"),
+    TOP_NAV_DRAW_IN_PROGRESS: require("./../assets/video/fortune.mp4"),
+    TOP_NAV_THANK_YOU: require("./../assets/video/cowgril.mp4"),
+    TOP_NAV_GODS_ARE_IMPRESSED: require("./../assets/video/gods_are_impressed.mp4"),
+    TOP_NAV_START: require("./../assets/video/start_hero.mp4"),
   },
   sounds: {
     COMBO: require(`./../assets/sounds/combo.mp3`),

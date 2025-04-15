@@ -73,10 +73,11 @@ const TopBannerNav = ({
   } else if (type === TopBannerNavType.startFinish) {
     return (
       <View style={[style, { alignItems: "start", height: 226 }]} >
-        <Video
-          source={AssetPack.videos.TOP_NAV_LANDING}
+         <Video
+          source={backgroundVideo}
+          poster={backgroundImage}
           loop={true}
-          style={[{ width: "100%", height: 284, position: "absolute" }]} />
+          style={[{ width: "100%", height: 226, position: "absolute" }]} />
         <LinearGradient
           colors={[Colors.transparent, Colors.background]}
           locations={[0, 1]}
