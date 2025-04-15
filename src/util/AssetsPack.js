@@ -34,10 +34,10 @@ const AssetPack = {
     CONGRATS_BACKGROUND: require("./../assets/image/winner-bg.webp"),
     SCRACHIE: require("./../assets/image/background_scrachie.jpg"),
     SCRACHIE_404: require("./../assets/image/404-bg.webp"),
-    TOP_NAV_DAILY: require("./../assets/image/hero_question.webp"),
+    TOP_NAV_DAILY: require("./../assets/image/question_hero.webp"),
     TOP_NAV_DRAW_IN_PROGRESS: require("./../assets/image/fortune.webp"),
     TOP_NAV_EXTENDING_PLAY: require("./../assets/image/hero_extend.webp"),
-    TOP_NAV_HEROES: require("./../assets/image/scratch_heroes.webp"),
+    TOP_NAV_HEROES: require("./../assets/image/img_landing_hero.webp"),
     TOP_NAV_START: require("./../assets/image/start_hero.webp"),
     TOP_NAV_FINISH: require("./../assets/image/fin_hero.webp"),
     TOP_NAV_LEADER_BOARD: require("./../assets/image/hero_leadeerboard.webp"),
@@ -52,6 +52,15 @@ const AssetPack = {
     WIN_LUCKY_SYMBOL_CHROME: require("./../assets/video/3D_Lucky_Coin_Spin_Win_intro_chrome.webm"),
     LUCKY_SYMBOL_FINAL: require("./../assets/video/lucky_symbol_3d_coin_cut.mp4"),
     DRAW_IN_PROGRESS_BACKGROUND: require("./../assets/video/draw_in_progress_background.mp4"),
+    TOP_NAV_HEROES: require("./../assets/video/landing.mp4"),
+    TOP_NAV_LEADER_BOARD: require("./../assets/video/leaderboard.mp4"),
+    TOP_NAV_DAILY: require("./../assets/video/question.mp4"),
+    TOP_NAV_LEARN: require("./../assets/video/learn.mp4"),
+    TOP_NAV_EXTENDING_PLAY: require("./../assets/video/extend-play.mp4"),
+    TOP_NAV_DRAW_IN_PROGRESS: require("./../assets/video/fortune.mp4"),
+    TOP_NAV_THANK_YOU: require("./../assets/video/cowgril.mp4"),
+    TOP_NAV_GODS_ARE_IMPRESSED: require("./../assets/video/gods_are_impressed.mp4"),
+    TOP_NAV_START: require("./../assets/video/start_hero.mp4"),
   },
   sounds: {
     COMBO: require(`./../assets/sounds/combo.mp3`),
@@ -88,7 +97,8 @@ const AssetPack = {
     WIN: require("../assets/lotties/lottieMagicLetterWINheader.json"),
     SPIN_WHEEL: require("../assets/lotties/specialEventsCasinoHomeCarousel.json"),
     CARD_COUNT_DOWN: require("../assets/lotties/lottieCardCountdown.json"),
-    SCRATCHIE_BUBBLE_POP_ERROR : require("../assets/lotties/lottieScratchieBubblePopError.json"),
+    SCRATCHIE_BUBBLE_POP_ERROR: require("../assets/lotties/lottieScratchieBubblePopError.json"),
+    SCROLL_DOWN_CHEVRON: require("../assets/lotties/scroll_down_chevron.json")
   }
 };
 

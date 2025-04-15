@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     maxHeight: 750,
     borderRadius: 44,
     overflow: "hidden",
-    backgroundColor: "#131313",
+    backgroundColor: Colors.jokerBlack1100,
     boxShadow: "0 4px 6px rgba(0,0,0,0.5)",
   },
 });
@@ -105,12 +105,12 @@ const smallStyles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     userSelect: "none",
-    backgroundColor: Colors.jokerBlack800,
+    backgroundColor: Colors.jokerBlack1100,
   },
   app: {
     overflow: "hidden",
     width: "100%",
     height: height,
-    backgroundColor: Colors.jokerBlack800,
+    backgroundColor: Colors.jokerBlack1100,
   },
 });

@@ -47,7 +47,13 @@ const GameOverScreen = () => {
   }
 
   return (
-    <TopNavTemplate title={user.name} subtitle={"Claim what’s yours"} type={TopBannerNavType.startFinish} navBackgroudImage={AssetPack.backgrounds.TOP_NAV_FINISH} showCopyright={false}>
+    <TopNavTemplate
+      title={user.name} subtitle={"Claim what’s yours"}
+      type={TopBannerNavType.startFinish}
+      navBackgroudImage={AssetPack.backgrounds.TOP_NAV_LEARN}
+      navBackgroudVideo={AssetPack.videos.TOP_NAV_LEARN}
+      showProfileHeader={false}
+      showCopyright={false}>
       <View style={styles.body}>
         <SectionTitle style={{ marginBottom: 24 }} text={"Game summary"} />
         <View style={styles.resultRow}>

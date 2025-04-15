@@ -32,7 +32,9 @@ const InfoScreen = ({ contentName }) => {
     const [title, setTitle] = useState();
     const [subtitle, setSubtitle] = useState();
     const [navBackgroudImage, setNavBackgroundImage] = useState();
+    const [navBackgroudVideo, setNavBackgroundVideo] = useState();
     const [backgroundImage, setBackgroundImage] = useState();
+
     const [pillText, setPillText] = useState("Beta Competition");
 
     useEffect(() => {
@@ -62,6 +64,7 @@ const InfoScreen = ({ contentName }) => {
                 setTitle("Time Is on Your Side");
                 setSubtitle("One more week. Let’s go.")
                 setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_EXTENDING_PLAY)
+                setNavBackgroundVideo(AssetPack.videos.TOP_NAV_EXTENDING_PLAY)
                 setBackgroundImage(AssetPack.backgrounds.INFO_PAGE)
                 break;
             case InfoScreenContents.thank_you:
@@ -69,6 +72,7 @@ const InfoScreen = ({ contentName }) => {
                 setTitle("Round complete");
                 setSubtitle("Get ready to scratch again soon.")
                 setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_THANK_YOU)
+                setNavBackgroundVideo(AssetPack.videos.TOP_NAV_THANK_YOU)
                 setBackgroundImage(AssetPack.backgrounds.INFO_PAGE)
                 break;
             case InfoScreenContents.in_progress:
@@ -76,6 +80,7 @@ const InfoScreen = ({ contentName }) => {
                 setTitle("Fortune Is Deciding");
                 setSubtitle("One player. One prize. One moment.")
                 setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_DRAW_IN_PROGRESS)
+                setNavBackgroundVideo(AssetPack.videos.TOP_NAV_DRAW_IN_PROGRESS)
                 setBackgroundImage(AssetPack.backgrounds.INFO_PAGE)
                 break;
             case InfoScreenContents.congratulations:
@@ -83,6 +88,7 @@ const InfoScreen = ({ contentName }) => {
                 setTitle("The gods are impressed");
                 setSubtitle("Claim your prize. You've earned it.")
                 setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_GODS_ARE_IMPRESSED)
+                setNavBackgroundVideo(AssetPack.videos.TOP_NAV_GODS_ARE_IMPRESSED)
                 setBackgroundImage(AssetPack.backgrounds.CONGRATS_BACKGROUND)
                 setPillText("Beta Winner")
                 break;
@@ -96,7 +102,15 @@ const InfoScreen = ({ contentName }) => {
         );
     }
     return (
-        <TopNavScreenTemplate title={title} subtitle={subtitle} navBackgroudImage={navBackgroudImage} hasBackButton={true} pillText={pillText} showCopyright={false}>
+        <TopNavScreenTemplate 
+        title={title} 
+        subtitle={subtitle} 
+        navBackgroudImage={navBackgroudImage} 
+        navBackgroudVideo={navBackgroudVideo}
+        hasBackButton={true} 
+        pillText={pillText} 
+        showProfileHeader={false} 
+        showCopyright={false}>
             <View style={styles.container}>
                 <ImageBackground style={styles.backgroundImageContainer} resizeMode='cover' source={backgroundImage}>
                     {content}

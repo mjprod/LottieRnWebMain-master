@@ -65,6 +65,7 @@ const StartScreen = () => {
             subtitle={"Your next prize awaits."}
             type={TopBannerNavType.startFinish}
             navBackgroudImage={AssetPack.backgrounds.TOP_NAV_START}
+            navBackgroudVideo={AssetPack.videos.TOP_NAV_START}
             showCopyright={false}
             showProfileHeader={false}>
             <View style={styles.statsSection}>
@@ -82,7 +83,7 @@ const StartScreen = () => {
                     <ResourceTile style={{ width: "100%" }} number={initialScratchCardLeft} />
                 </View>
                 <View style={{ flexGrow: 1 }} />
-                <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column", marginBottom: 48, marginTop: 48 }}>
+                <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column", marginBottom: 58, marginTop: 48}}>
                     <View style={styles.buttonContainer}>
                         <View style={{ flex: 0.4, justifyContent: "flex-start" }}>
                             <RoundedButton title="Back" onPress={handleBackPress} />

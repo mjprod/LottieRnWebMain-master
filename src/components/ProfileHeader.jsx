@@ -33,7 +33,6 @@ const ProfileHeader = ({ id, name, containerStyle }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.jokerBlack1100,
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: Dimentions.innerCardPadding,
