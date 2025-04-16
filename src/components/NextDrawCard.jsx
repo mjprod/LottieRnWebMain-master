@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, StyleSheet, ImageBackground, View } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import TimerComponent from "./TimerComponent";
 import AssetPack from "../util/AssetsPack";
 import { Colors, Dimentions, Fonts } from "../util/constants";
@@ -15,9 +15,9 @@ const NextDrawCard = ({ style }) => {
         objectFit='cover' />
       <View style={styles.topSection}>
         <View style={styles.headingContainer}>
-          <Text style={styles.headingText}>Your {" "}</Text>
+          <Text style={styles.headingText}>Your</Text>
           <Text style={styles.headingTextHighlighted}>Fortune</Text>
-          <Text style={styles.headingText}>{" "} Awaits</Text>
+          <Text style={styles.headingText}>Awaits</Text>
         </View>
         <Text style={styles.subtitle}>
           Play daily to enter the draw for amazon prizes!
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     marginBottom: 123,
   },
   timerContainer: {
-    paddingVertical: 8,
+    paddingVertical: 16,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
@@ -72,27 +72,27 @@ const styles = StyleSheet.create({
   },
   headingText: {
     color: Colors.jokerWhite50,
-    fontSize: 30,
+    fontSize: 38,
     fontFamily: Fonts.TekoMedium,
     textTransform: 'uppercase',
-    lineHeight: 28,
+    lineHeight: 48,
     paddingTop: 4
   },
   headingTextHighlighted: {
-    color: Colors.jokerWhite50,
-    fontSize: 30, 
+    fontSize: 38,
     fontFamily: Fonts.TekoMedium,
     textTransform: 'uppercase',
-    lineHeight: 28,
+    lineHeight: 38,
+    marginHorizontal: 8,
     color: Colors.jokerGold400,
     borderColor: Colors.jokerGold400,
     borderTopWidth: 2,
     borderBottomWidth: 2,
-    paddingTop: 4
+    paddingTop: 4,
   },
   subtitle: {
-    color: Colors.jokerBlack50,
-    fontSize: 16,
+    color: Colors.jokerWhite50,
+    fontSize: 18,
     textAlign: "center",
     fontFamily: Fonts.InterMedium,
     marginBottom: Dimentions.marginM

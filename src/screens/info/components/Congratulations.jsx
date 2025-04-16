@@ -2,11 +2,9 @@ import React from "react";
 import { Image, StyleSheet, Text } from "react-native";
 import AssetPack from "../../../util/AssetsPack";
 import { Dimentions, Fonts, Colors } from "../../../util/constants";
-import LinkButton from "../../../components/LinkButton";
 import LottieView from "react-native-web-lottie";
 import { useGame } from "../../../context/GameContext";
 import LoadingView from "../../../components/LoadingView";
-import GameButton from "../../../components/GameButton";
 
 const Congratulations = () => {
     const { user } = useGame();

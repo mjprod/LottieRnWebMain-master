@@ -41,6 +41,8 @@ const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyl
   );
 });
 
+Video.displayName = "Video";
+
 const styles = StyleSheet.create({
   videoContainer: {
     justifyContent: "center",

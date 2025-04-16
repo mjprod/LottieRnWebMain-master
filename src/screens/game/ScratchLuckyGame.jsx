@@ -44,8 +44,6 @@ const ScratchLuckyGame = () => {
   const [games, setGames] = useState();
   const [maxCombinations, setMaxCombinations] = useState(0);
   const [hasLuckySymbol, setHasLuckySymbol] = useState(false);
-  const [luckySymbolWon, setLuckySymbolWon] = useState(0);
-  const [totalComboCount, setTotalComboCount] = useState(0);
   const [comboPlayed, setComboPlayed] = useState(0);
   const [nextCardAnimationFinished, setNextCardAnimationFinished] =
     useState(true);
@@ -342,8 +340,6 @@ const ScratchLuckyGame = () => {
               nextCard={nextCard}
               maxCombinations={maxCombinations}
               hasLuckySymbol={hasLuckySymbol}
-              setLuckySymbolWon={setLuckySymbolWon}
-              setTotalComboCount={setTotalComboCount}
               setComboPlayed={setComboPlayed}
             />
           </View>

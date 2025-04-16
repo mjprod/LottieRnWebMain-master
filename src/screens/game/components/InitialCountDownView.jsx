@@ -1,6 +1,5 @@
 import React from "react";
 import { View, StyleSheet, Platform, Pressable, } from "react-native";
-import Video from "../../../components/Video";
 import AssetPack from "../../../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
 

@@ -23,7 +23,7 @@ const IntroThemeVideo = ({ handleVideoEnd, style }) => {
         onEnded={handleVideoEnd} // Web: Trigger callback when video ends
       />
     ),
-    default: (browser) => (
+    default: () => (
       <Video
         source={
           isAndroidWebView() ? introChromeThemeNext : introThemeNext

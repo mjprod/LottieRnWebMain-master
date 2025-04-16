@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useLocation } from "react-router";
 import GameButton, { ButtonSize } from "../components/GameButton";
 import ResourceTile from "../components/ResourceTile";
@@ -12,7 +12,6 @@ import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
 import LuckySymbolCard from "../components/LuckySymbolCard";
 import AssetPack from "../util/AssetsPack";
-import { ImageBackground } from "react-native-web";
 import { Colors, Dimentions, Fonts } from "../util/constants";
 import SectionTitle from "../components/SectionTitle";
 import TopNavTemplate from "../templates/TopNavTemplate";

@@ -1,9 +1,5 @@
-import React from 'react';
+const audioCache = {}; 
 
-
-const audioCache = {}; // Object to cache preloaded audio files
-
-// Function to preload audio files
 export const preloadAudio = (fileName) => {
     if (!audioCache[fileName]) {
         const audio = new Audio(fileName);

@@ -7,7 +7,6 @@ const ResourceTile = ({
   title = "Cards available",
   icon = AssetPack.icons.CARDS,
   number = 0,
-  unit = "CARDS",
   style,
 }) => {
   return (

@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { View, Text } from "react-native-web";
+import { View } from "react-native-web";
 
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import GameButton from "../components/GameButton";
-import ResourceTile from "../components/ResourceTile";
 import LeaderBoardList from "../components/LeaderBoardList";
 import NextDrawCard from "../components/NextDrawCard";
-import ProfileHeader from "../components/ProfileHeader";
 import RaffleTicketCard from "../components/RaffleTicketCard";
 import SectionTitle from "../components/SectionTitle";
 import { useSnackbar } from "../components/SnackbarContext";
@@ -90,7 +88,7 @@ const LauchScreenEncrypted = () => {
 
   useEffect(() => {
     if (params.id && params.name && params.email) {
-      login(params.id, params.name, params.email).then((data) => {
+      login(params.id, params.name, params.email).then(() => {
         fetchAndProcessUserDetails({ user_id: params.id, name: params.name, email: params.email })
       }).catch((error) => {
         console.error('Login failed:', error);
@@ -104,7 +102,7 @@ const LauchScreenEncrypted = () => {
         }
         const authTokenData = JSON.parse(decrypt(authToken, true));
         login(authTokenData.user_id, authTokenData.name, authTokenData.email)
-          .then((data) => {
+          .then(() => {
             fetchAndProcessUserDetails(authTokenData)
           }).catch((error) => {
             console.error('Login failed:', error);
@@ -183,7 +181,7 @@ const LauchScreenEncrypted = () => {
             viewAllText="View All"
             viewAllAction={handleViewAllPress}
             style={{ marginBottom: 20 }} />
-          <LeaderBoardList numberOfItems={5} style={{marginBottom: 32}} />
+          <LeaderBoardList numberOfItems={5} style={{ marginBottom: 32 }} />
           <NextDrawCard />
         </View>
       </TopNavTemplate>

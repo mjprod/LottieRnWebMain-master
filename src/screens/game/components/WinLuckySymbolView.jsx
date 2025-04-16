@@ -10,6 +10,7 @@ const WinLuckySymbolView = ({ videoRef, style, onSkipClicked, onVideoEnd }) => {
         <View
             key="overlay"
             style={{
+                ...style,
                 ...styles.blackOverlayWin,
                 flex: 1,
                 zIndex: 9999,
@@ -28,7 +29,7 @@ const WinLuckySymbolView = ({ videoRef, style, onSkipClicked, onVideoEnd }) => {
                             onEnded={onVideoEnd}
                         />
                     ),
-                    default: (browser) => (
+                    default: () => (
                         <Video
                             ref={videoRef}
                             source={isAndroidWebView() ? AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME : AssetPack.videos.WIN_LUCKY_SYMBOL}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native-web';
+import { View, Text, Image, StyleSheet } from 'react-native-web';
 import AssetPack from '../util/AssetsPack';
 import { Pressable } from 'react-native';
 

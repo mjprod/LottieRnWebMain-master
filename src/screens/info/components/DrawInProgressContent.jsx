@@ -3,7 +3,6 @@ import { View, StyleSheet, Text } from "react-native";
 import { Image } from "react-native-web";
 import AssetPack from "../../../util/AssetsPack";
 import { Colors, Dimentions, Fonts } from "../../../util/constants";
-import LottieView from "react-native-web-lottie";
 import ResourceTile from "../../../components/ResourceTile";
 
 const DrawInProgressContent = ({ ticketsEarned = 0 }) => {
