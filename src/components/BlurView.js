@@ -8,7 +8,7 @@ const BlurView = ({ children, blurAmount, style }) => {
         style={{
           ...style,
           backdropFilter: `blur(${blurAmount}px)`,
-          WebkitBackdropFilter: `blur(${blurAmount}px)`, // For Safari
+          WebkitBackdropFilter: `blur(${blurAmount}px)`,
           position: 'absolute',
           width: '100%',
           height: '100%',
