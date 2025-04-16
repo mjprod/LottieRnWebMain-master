@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Platform, ImageBackground } from 'react-native';
+import { View, Platform } from 'react-native';
 
 const BlurView = ({ children, blurAmount, style }) => {
   if (Platform.OS === 'web') {

@@ -1,5 +1,5 @@
-import React, { use, useEffect, useState } from "react";
-import { View, StyleSheet, Image, Text, ImageBackground } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, ImageBackground } from "react-native";
 import useApiRequest from "../../hook/useApiRequest";
 import { Colors } from "../../util/constants";
 import useAppNavigation from "../../hook/useAppNavigation";

@@ -27,7 +27,6 @@ const ScratchLayout = ({
 }) => {
   const { luckySymbolCount } = useGame();
 
-  const [imageLoading, setImageLoading] = useState(false);
   const [isWinner, setIsWinner] = useState(false);
   const [isLuckySymbolTrue, setIsLuckySymbolTrue] = useState(false);
   const [triggerAutoPop, setTriggerAutoPop] = useState(false);
@@ -90,7 +89,6 @@ const ScratchLayout = ({
               setReset={setReset}
               autoScratch={autoScratch}
               onScratch={handleScratch}
-              onLoading={setImageLoading}
               setScratchStarted={setScratchStarted}
             />
           </View>)}

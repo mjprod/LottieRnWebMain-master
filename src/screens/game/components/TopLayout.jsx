@@ -34,7 +34,7 @@ const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex,
 );
 
 const TopLayout = ({ setTimerGame, clickCount }) => {
-  const { score, luckySymbolCount, scratchStarted } = useGame();
+  const { score, scratchStarted } = useGame();
 
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const [countdownTimer, setCountdownTimer] = useState(0);

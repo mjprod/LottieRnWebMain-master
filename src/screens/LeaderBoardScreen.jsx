@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import React, { useEffect} from "react";
+import { View, StyleSheet} from "react-native";
 import SectionTitle from "../components/SectionTitle";
 import GameButton from "../components/GameButton";
 import LeaderBoardList from "../components/LeaderBoardList";
 import { useLocation } from "react-router-dom";
 import LinkButton from "../components/LinkButton";
-import ResourceTile from "../components/ResourceTile";
 import NextDrawCard from "../components/NextDrawCard";
 import useApiRequest from "../hook/useApiRequest";
 import { Colors, Dimentions } from "../util/constants";

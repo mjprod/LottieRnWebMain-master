@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, StyleSheet, ImageBackground, View } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import TimerComponent from "./TimerComponent";
 import AssetPack from "../util/AssetsPack";
 import { Colors, Dimentions, Fonts } from "../util/constants";
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   headingTextHighlighted: {
     color: Colors.jokerWhite50,
-    fontSize: 30, 
+    fontSize: 30,
     fontFamily: Fonts.TekoMedium,
     textTransform: 'uppercase',
     lineHeight: 28,

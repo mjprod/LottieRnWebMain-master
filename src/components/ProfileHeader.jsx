@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { Colors, Dimentions, Fonts } from '../util/constants';
 import AssetPack from '../util/AssetsPack';

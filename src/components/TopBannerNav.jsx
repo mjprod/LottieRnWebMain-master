@@ -11,7 +11,6 @@ import PurplePill from "./BetaCompetitionPill";
 import LinearGradient from "react-native-web-linear-gradient";
 import { Colors, Dimentions, Fonts } from "../util/constants";
 import { useNavigate } from "react-router";
-import useIsIosWebview from "../hook/useIosWebview";
 import Video from "./Video";
 
 export const TopBannerNavType = {
