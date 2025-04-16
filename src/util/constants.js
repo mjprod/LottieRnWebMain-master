@@ -37,6 +37,7 @@ export const LeaderBoardStatus = {
   up: "up",
   down: "down",
   same: "same",
+  new: "new",
 };
 
 

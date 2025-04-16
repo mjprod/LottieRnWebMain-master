@@ -9,7 +9,7 @@ const TimerComponent = ({ showPill = true, onlyTimer = false, style }) => {
 
   return (
     <View style={{ ...styles.timerSection, ...style }}>
-      {onlyTimer && (showPill ? <PurplePill text="Time to next draw" style={{ marginBottom: 16 }} /> : <Text style={styles.text}> Time to next draw </Text>)}
+      {!onlyTimer && (showPill ? <PurplePill text="Time to next draw" style={{ marginBottom: 16 }} /> : <Text style={styles.text}> Time to next draw </Text>)}
       <Text style={styles.timerContainer}>
         <Text style={styles.timerNumberValue}>{timeLeft.days}</Text>
         <Text style={styles.timerStringValue}> Days </Text>
@@ -33,7 +33,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   timerContainer: {
-    width: "100%"
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   timerSection: {
     justifyContent: "center",

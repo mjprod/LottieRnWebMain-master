@@ -11,6 +11,7 @@ const AssetPack = {
     TICK: require("../assets/icons/icon-tick.svg").default,
     GOLDEN_TICKET: require("../assets/icons/gold-ticket.svg").default,
     GREEN_TICKET: require("../assets/icons/green-ticket.svg").default,
+    STARS: require("../assets/icons/new.svg").default,
   },
   logos: {
     TURBO_SCRATCH: require("./../assets/image/turbo_scratch_logo.png"),
