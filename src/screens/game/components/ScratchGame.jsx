@@ -32,8 +32,6 @@ const ScratchGame = ({
   setWinLuckySymbolVideo,
   clickCount,
   setClickCount,
-  setLuckySymbolWon,
-  setTotalComboCount,
   setComboPlayed,
   maxCombinations = 4,
   hasLuckySymbol = false
@@ -109,13 +107,6 @@ const ScratchGame = ({
       const winners = checkWinCondition(generatedArray);
       setWinningIcons(winners);
       setIsWinner(winners.length > 0);
-
-      setLuckySymbolWon(!!icons)
-      if (winners.length > 0) {
-        setTotalComboCount(winners.length)
-      } else {
-        setTotalComboCount(0)
-      }
     }, 400);
 
   }, [setIsWinner, reset, setIsLuckySymbolTrue, maxCombinations, hasLuckySymbol]);

@@ -19,8 +19,6 @@ const ScratchLayout = ({
   clickCount,
   setClickCount,
   nextCard,
-  setLuckySymbolWon,
-  setTotalComboCount,
   setComboPlayed,
   maxCombinations,
   hasLuckySymbol
@@ -80,8 +78,6 @@ const ScratchLayout = ({
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
           clickCount={clickCount}
           setClickCount={setClickCount}
-          setLuckySymbolWon={setLuckySymbolWon}
-          setTotalComboCount={setTotalComboCount}
           setComboPlayed={setComboPlayed} />
         {isScratchCardVisible && (
           <View style={styles.scratchCardContainer}>
