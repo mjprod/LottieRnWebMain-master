@@ -1,70 +1,102 @@
 import React from "react";
-import { Text, Image, StyleSheet, ImageBackground, View } from "react-native";
+import { Text, StyleSheet, ImageBackground, View } from "react-native";
 import TimerComponent from "./TimerComponent";
 import AssetPack from "../util/AssetsPack";
-import LottieView from "react-native-web-lottie";
 import { Colors, Dimentions, Fonts } from "../util/constants";
+import Video from "./Video";
 
 const NextDrawCard = ({ style }) => {
   return (
-    <ImageBackground style={{ ...styles.imageContainer, ...style }} source={AssetPack.backgrounds.GOLD_SACK} blurRadius={6}>
-      <View style={styles.container}>
-        <Image
-          style={{ width: 145, height: 46 }}
-          source={AssetPack.logos.TURBO_SCRATCH} />
-        <View style={{ marginTop: Dimentions.marginS, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.jokerWhite50, fontSize: 30, fontFamily: Fonts.TekoMedium, textTransform: 'uppercase' }}>
-            Win Amazon Gift Cards
-          </Text>
-          <Text style={{ color: Colors.jokerBlack50, fontSize: 16, fontFamily: Fonts.InterMedium, marginBottom: Dimentions.marginM}}>
-            Scratch for more chances to win!
-          </Text>
+    <View style={[styles.container, style]}>
+      <Video
+        source={AssetPack.videos.TIMER_CARD}
+        style={styles.video}
+        muted={true} loop={true}
+        objectFit='cover' />
+      <View style={styles.topSection}>
+        <View style={styles.headingContainer}>
+          <Text style={styles.headingText}>Your {" "}</Text>
+          <Text style={styles.headingTextHighlighted}>Fortune</Text>
+          <Text style={styles.headingText}>{" "} Awaits</Text>
         </View>
-        <TimerComponent />
-        <LottieView
-          style={{ position: "absolute", top: 0, left: 0 }}
-          source={AssetPack.lotties.CONFETTI}
-          speed={1}
-          loop={true}
-          autoPlay={true} />
+        <Text style={styles.subtitle}>
+          Play daily to enter the draw for amazon prizes!
+        </Text>
       </View>
-    </ImageBackground>
+      <View style={styles.timerContainer}>
+        <TimerComponent showPill={false} onlyTimer={false} />
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#0000004D",
-    padding: Dimentions.marginL,
     alignContent: "center",
     justifyContent: "center",
     alignItems: "center",
-  },
-  imageContainer: {
     borderRadius: 8,
     borderWidth: 1,
     borderColor: Colors.jokerBlack200,
-    overflow: "hidden",
+    overflow: "hidden"
   },
   topSection: {
-    flex: 1,
-    flexDirection: "column",
-    paddingTop: 30,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingBottom: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    marginTop: 32,
+    marginHorizontal: 48,
+    marginBottom: 123,
   },
-  bottomSection: {
+  timerContainer: {
+    paddingVertical: 8,
     width: "100%",
-    alignItems: "center",
     justifyContent: "center",
-    paddingTop: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingBottom: 30,
+    alignItems: "center",
+    backgroundColor: "#00000099",
+    borderTopColor: Colors.jokerBlack200,
+    borderTopWidth: 1,
+    backdropFilter: 'blur(10px)',
+    WebkitBackdropFilter: 'blur(10px)',
   },
+  video: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+  headingContainer: {
+    marginTop: Dimentions.marginS,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  headingText: {
+    color: Colors.jokerWhite50,
+    fontSize: 30,
+    fontFamily: Fonts.TekoMedium,
+    textTransform: 'uppercase',
+    lineHeight: 28,
+    paddingTop: 4
+  },
+  headingTextHighlighted: {
+    color: Colors.jokerWhite50,
+    fontSize: 30, 
+    fontFamily: Fonts.TekoMedium,
+    textTransform: 'uppercase',
+    lineHeight: 28,
+    color: Colors.jokerGold400,
+    borderColor: Colors.jokerGold400,
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+    paddingTop: 4
+  },
+  subtitle: {
+    color: Colors.jokerBlack50,
+    fontSize: 16,
+    textAlign: "center",
+    fontFamily: Fonts.InterMedium,
+    marginBottom: Dimentions.marginM
+  }
 });
 
 export default NextDrawCard;

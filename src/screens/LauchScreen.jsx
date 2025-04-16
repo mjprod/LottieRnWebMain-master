@@ -158,7 +158,6 @@ const LauchScreenEncrypted = () => {
       <TopNavTemplate title={"Scratch to win!"} subtitle={"Your next prize awaits."}>
         <View style={styles.statisticsContainer}>
           <SectionTitle text={"Game Summary"} style={{ marginBottom: 20 }} />
-          <ResourceTile number={user.card_balance} style={{ marginBottom: 8 }} />
           <View style={styles.resultRow}>
             <StatCard
               title="Total points"
