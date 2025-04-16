@@ -35,14 +35,14 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
     });
 
     const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
-        const paddingToBottom = 20;
+        const paddingToBottom = 30;
         console.log('layoutMeasurement', layoutMeasurement.height);
         console.log('contentOffset', contentOffset.y);
         console.log('contentSize', contentSize.height);
-        return layoutMeasurement.height + contentOffset.y >= contentSize.height - 30;
+        return layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom;
     };
 
-    const isCloseToTop = ({ layoutMeasurement, contentOffset, contentSize }) => {
+    const isCloseToTop = ({ contentOffset }) => {
         return contentOffset.y <= 0;
     };
 

@@ -49,7 +49,7 @@ if (type === TopBannerNavType.home) {
         source={backgroundVideo}
         poster={backgroundImage}
         loop={true}
-        style={[{ width: "100%", height: 284, position: "absolute" }]} />
+        style={[{ width: "100%", height: 226, position: "absolute" }]} />
       <LinearGradient
         colors={[Colors.transparent, Colors.background]}
         locations={[0, 1]}

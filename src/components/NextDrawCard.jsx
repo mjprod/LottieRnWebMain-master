@@ -3,7 +3,6 @@ import { Text, Image, StyleSheet, ImageBackground, View } from "react-native";
 import TimerComponent from "./TimerComponent";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
-import PurplePill from "./BetaCompetitionPill";
 import { Colors, Dimentions, Fonts } from "../util/constants";
 
 const NextDrawCard = ({ style }) => {
