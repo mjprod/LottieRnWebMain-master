@@ -25,6 +25,8 @@ const LeaderBoardItem = ({ rank, username, points, status, selected }) => {
         );
       case LeaderBoardStatus.same:
         return <Image style={selected ? styles.statusIconSelected : styles.statusIcon} source={AssetPack.icons.DOUBLE_DASH} />
+        case LeaderBoardStatus.new:
+          return <Image style={selected ? styles.statusIconSelected : styles.statusIcon} source={AssetPack.icons.STARS} />
       default:
         return (
           <IconTypeLeaderBoardArrow

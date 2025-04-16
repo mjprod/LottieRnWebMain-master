@@ -24,7 +24,7 @@ const NextDrawCard = ({ style }) => {
         </Text>
       </View>
       <View style={styles.timerContainer}>
-        <TimerComponent showPill={false} onlyTimer={false} />
+        <TimerComponent showPill={false} onlyTimer={true} />
       </View>
     </View>
   );
