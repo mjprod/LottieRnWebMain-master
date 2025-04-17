@@ -25,10 +25,6 @@ const AssetPack = {
     BOTTOM_GRADIENT: require("./../assets/image/background_bottom_gradient.svg").default,
     NEXT_DRAW_CARD: require("./../assets/image/next_draw_card_background.png"),
     BLUE_BACKGROUND_CARD: require("./../assets/image/resultsCard.svg").default,
-    GAME_TOP_LAYOUT: require("./../assets/image/background_top_layout.png"),
-    GAME_TOP_LAYOUT_RED: require("./../assets/image/background_top_layout_red.png"),
-    GAME_TOP_LAYOUT_YELLOW: require("./../assets/image/background_top_layout_yellow.png"),
-    GAME_TOP_LAYOUT_GREEN: require("./../assets/image/background_top_layout_green.png"),
     CHEST: require("./../assets/image/thank-you-for-playing.webp"),
     CLOCK: require("./../assets/image/background_clock.jpg"),
     GOLD_SACK: require("./../assets/image/background_gold_sack.jpg"),
@@ -82,6 +78,7 @@ const AssetPack = {
     TIME_IS_ON_YOUR_SIDE: require("./../assets/image/tim-is-on-your-side.webp"),
     DRAW_IN_PROGRESS: require("./../assets/image/draw-in-progress.webp"),
     CHEST: require("./../assets/image/thank-you-for-playing.webp"),
+    BLANK: require("./../assets/image/poster_blank.png"),
   },
   lotties: {
     CTA_BUTTON_FULL_WIDTH: require("./../assets/lotties/buttonCallToActionFullWidth.json"),

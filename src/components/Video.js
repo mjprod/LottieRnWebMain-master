@@ -1,8 +1,9 @@
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { unstable_createElement } from "react-native-web";
+import AssetPack from "../util/AssetsPack";
 
-const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyles, seekTime, loop = false, poster }, ref) => {
+const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyles, seekTime, loop = false, poster = AssetPack.images.BLANK }, ref) => {
   const videoRef = useRef(null);
 
   useImperativeHandle(ref, () => ({
@@ -31,7 +32,7 @@ const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyl
     onEnded,
     onLoadedMetadata: handleLoadedMetadata,
     style: style,
-    allowsInlineMediaPlayback: true,
+    'webkit-playsinline': 'true',
     ref: videoRef
   };
 
