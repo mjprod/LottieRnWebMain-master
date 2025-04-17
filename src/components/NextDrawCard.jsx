@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     overflow: "hidden"
   },
   topSection: {
-    marginTop: 32,
+    marginTop: 12,
     marginHorizontal: 48,
     marginBottom: 123,
   },
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: "row",
-    marginBottom: 20,
+    marginBottom: 8,
   },
   headingText: {
     color: Colors.jokerWhite50,
