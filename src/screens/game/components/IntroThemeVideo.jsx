@@ -5,6 +5,7 @@ import BrowserDetection from "react-browser-detection";
 import { useTheme } from "../../../hook/useTheme";
 import { useSound } from "../../../hook/useSoundPlayer";
 import { isAndroidWebView } from "../../../util/Helpers";
+import AssetPack from "../../../util/AssetsPack";
 
 const IntroThemeVideo = ({ handleVideoEnd, style }) => {
 
@@ -21,6 +22,7 @@ const IntroThemeVideo = ({ handleVideoEnd, style }) => {
         style={styles.transparentVideo} // Video styling
         onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
         onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+        poster={AssetPack.images.BLANK}
       />
     ),
     default: () => (
@@ -32,6 +34,7 @@ const IntroThemeVideo = ({ handleVideoEnd, style }) => {
         style={styles.transparentVideo} // Video styling
         onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
         onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+        poster={AssetPack.images.BLANK}
       />
     ),
   };
