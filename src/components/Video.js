@@ -31,6 +31,7 @@ const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyl
     onEnded,
     onLoadedMetadata: handleLoadedMetadata,
     style: style,
+    allowsInlineMediaPlayback: true,
     ref: videoRef
   };
 
