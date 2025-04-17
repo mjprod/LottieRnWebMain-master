@@ -28,7 +28,7 @@ const IntroThemeVideo = ({ handleVideoEnd, style }) => {
         source={
           isAndroidWebView() ? introChromeThemeNext : introThemeNext
         } // Play the win video
-        muted={isSoundEnabled}
+        muted={!isSoundEnabled}
         style={styles.transparentVideo} // Video styling
         onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
         onEnded={handleVideoEnd} // Web: Trigger callback when video ends
