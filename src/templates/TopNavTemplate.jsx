@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Animated, View, StyleSheet } from "react-native";
 import TopBannerNav from "../components/TopBannerNav";
 import { Colors } from "../util/constants";
@@ -15,6 +15,7 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
     const scrollY = useRef(new Animated.Value(0)).current;
     const [bottomChevronStyles, setBottomChevronStyles] = useState(styles.bottomChevronContainer);
     const [showDropShadow, setShowDropShadow] = useState(false);
+    const scrollViewRef = useRef();
 
     const topNavOpacity = scrollY.interpolate({
         inputRange: [0, 160],
@@ -36,16 +37,12 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
 
     const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
         const paddingToBottom = 30;
-        console.log('layoutMeasurement', layoutMeasurement.height);
-        console.log('contentOffset', contentOffset.y);
-        console.log('contentSize', contentSize.height);
         return layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom;
     };
 
     const isCloseToTop = ({ contentOffset }) => {
         return contentOffset.y <= 0;
     };
-
     const handleScroll = (event) => {
         setShowDropShadow(!isCloseToTop(event.nativeEvent))
         if (isCloseToBottom(event.nativeEvent)) {
@@ -57,9 +54,17 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
 
     return (<>
         <Animated.ScrollView
+            ref={scrollViewRef}
             style={styles.container}
             contentContainerStyle={{ flexGrow: 1 }}
             stickyHeaderIndices={[1]}
+            onLayout={()=>{
+                if (scrollViewRef.current) {
+                    scrollViewRef.current.measure((x, y, width, height, pageX, pageY) => {
+                        scrollViewRef.current.getScrollResponder().scrollResponderScrollTo({ y: 1, animated: false });
+                    });
+                }
+            }}
             onScroll={
                 Animated.event(
                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -130,11 +135,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
         paddingBottom: 10,
-        display: "none"
+        display: "none",
+        pointerEvents: "box-none"
     },
     lottieAnimation: {
         height: 20,
-        width: 20
+        width: 20,
+        pointerEvents: "box-none"
     }
 });
 
