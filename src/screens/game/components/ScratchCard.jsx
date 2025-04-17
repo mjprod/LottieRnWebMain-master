@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { View, StyleSheet } from "react-native";
 import { eraserRadius, heightScratch, widthScratch } from "../../../global/Settings";
 import AssetPack from "../../../util/AssetsPack";
@@ -7,14 +7,16 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
   const canvasRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [totalArea, setTotalArea] = useState(0);
-  const [erasedArea, setErasedArea] = useState(0);
+  // Refs for performance optimization
+  const ctxRef = useRef(null);
+  const animationFrameRef = useRef(null);
+  const erasedAreaRef = useRef(0);
+  const lastReportedPercentRef = useRef(0);
   const radius = eraserRadius;
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
-    const context = canvas.getContext("2d", { willReadFrequently: true });
 
     const img = new Image();
     img.src = AssetPack.images.SCRATCH_CARD_FOREGROUND;
@@ -23,6 +25,10 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
       // Set canvas dimensions
       canvas.width = widthScratch;
       canvas.height = heightScratch;
+
+      const context = canvas.getContext("2d", { willReadFrequently: true });
+      // Cache context for future drawing
+      ctxRef.current = context;
 
       // Draw the image on the canvas
       context.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -58,12 +64,18 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
           y = event.clientY - rect.top;
         }
 
-        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        const ctx = ctxRef.current;
         if (ctx) {
           ctx.beginPath();
           ctx.arc(x, y, radius, 0, 2 * Math.PI);
           ctx.fill();
-          updateErasedArea();
+          // Throttle erase-area calculation to animation frames
+          if (!animationFrameRef.current) {
+            animationFrameRef.current = requestAnimationFrame(() => {
+              updateErasedArea();
+              animationFrameRef.current = null;
+            });
+          }
         }
       };
 
@@ -83,43 +95,33 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    const ctx = ctxRef.current;
 
     // Get image data from the canvas
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const pixels = imageData.data;
 
     let erasedPixelCount = 0;
-
-    // Count transparent pixels
     for (let i = 3; i < pixels.length; i += 4) {
-      if (pixels[i] === 0) { // Alpha channel fully transparent
+      if (pixels[i] === 0) {
         erasedPixelCount++;
       }
     }
 
-    // Calculate the total number of pixels
     const totalPixelCount = canvas.width * canvas.height;
+    // Store in ref to avoid re-renders
+    erasedAreaRef.current = (erasedPixelCount / totalPixelCount) * totalArea;
 
-    // Calculate the erased area as a proportion of the total area
-    const erasedArea = erasedPixelCount / totalPixelCount;
-
-    setErasedArea(erasedArea * totalArea); // Update the erased area state
-  };
-
-  useEffect(() => {
-    if (totalArea > 0) {
-      const percentageErased = (erasedArea / totalArea) * 100;
-      //console.log("Percentage Erased:", percentageErased);
-      if (onScratch) {
-        onScratch(percentageErased);
-        if (percentageErased > 0) {
-          setScratchStarted(true);
-        }
+    // Compute percentage and only notify if >=1% change
+    const percent = (erasedAreaRef.current / totalArea) * 100;
+    if (onScratch && percent - lastReportedPercentRef.current >= 1) {
+      lastReportedPercentRef.current = percent;
+      onScratch(percent);
+      if (percent > 0) {
+        setScratchStarted(true);
       }
     }
-  }, [erasedArea, totalArea, onScratch]);
-
+  };
 
   return (
     <View style={styles.container}>
