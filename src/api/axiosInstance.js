@@ -1,10 +1,11 @@
 // src/api/axiosInstance.js
 import axios from 'axios';
 import useStorage from '../hook/useStorage';
+import { SERVER } from '../util/constants';
 import { decrypt, encrypt } from '../util/crypto';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8083/api/v1',
+  baseURL: SERVER,
   headers: {
     'Content-Type': 'application/json',
   },

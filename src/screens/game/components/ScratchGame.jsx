@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
-  StyleSheet,
   Animated,
   Easing,
   Platform,
@@ -17,7 +16,6 @@ import {
 } from "../../../global/Settings";
 import themes from "../../../global/themeConfig";
 import { useTheme } from "../../../hook/useTheme";
-import { useSound } from "../../../hook/useSoundPlayer";
 import { useGame } from "../../../context/GameContext";
 import GameGrid from "./GameGrid";
 import useClickSounds from "../../../hook/useClickSounds";
@@ -34,8 +32,6 @@ const ScratchGame = ({
   setWinLuckySymbolVideo,
   clickCount,
   setClickCount,
-  setLuckySymbolWon,
-  setTotalComboCount,
   setComboPlayed,
   maxCombinations = 4,
   hasLuckySymbol = false
@@ -56,8 +52,6 @@ const ScratchGame = ({
   const [arrayIcon, setArrayIcon] = useState();
 
   const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
-
-  const { isSoundEnabled } = useSound();
 
   const {
     currentTheme,
@@ -113,13 +107,6 @@ const ScratchGame = ({
       const winners = checkWinCondition(generatedArray);
       setWinningIcons(winners);
       setIsWinner(winners.length > 0);
-
-      setLuckySymbolWon(!!icons)
-      if (winners.length > 0) {
-        setTotalComboCount(winners.length)
-      } else {
-        setTotalComboCount(0)
-      }
     }, 400);
 
   }, [setIsWinner, reset, setIsLuckySymbolTrue, maxCombinations, hasLuckySymbol]);
@@ -352,10 +339,6 @@ const ScratchGame = ({
     setLastClickedIcon(icon);
   }, [clickedIcons]);
 
-  const updateSounds = () => {
-    setSoundShouldPlay(soundShouldPlay + 1);
-  };
-
   useEffect(() => {
     if (onLoading) {
       fadeAnim.setValue(0);
@@ -384,46 +367,5 @@ const ScratchGame = ({
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingVertical: 10,
-  },
-  gridContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
-    width: "100%",
-  },
-  iconContainer: {
-    flexBasis: "18%",
-    minWidth: "18%",
-    aspectRatio: 1,
-    marginTop: "1.2%",
-    marginLeft: "2%",
-    marginRight: "2%",
-    boxSizing: "border-box",
-  },
-  iconWrapper: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  lottieContainer: {
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  lottieAnimation: {
-    width: "100%",
-    height: "100%",
-  }
-});
 
 export default ScratchGame;

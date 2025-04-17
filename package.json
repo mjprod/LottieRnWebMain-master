@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
     "@react-native-clipboard/clipboard": "^1.16.2",
     "@tanstack/react-query": "^5.71.1",
     "axios": "^1.8.4",
@@ -24,6 +26,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "clean": "rm -rf node_modules yarn.lock && yarn install",
+    "lint": "eslint . --max-warnings=0",
     "start-expo": "expo start",
     "start-native": "react-native-scripts start",
     "eject-native": "react-native-scripts eject",
@@ -39,6 +42,10 @@
     "@babel/plugin-transform-react-jsx-source": "^7.22.5",
     "@tanstack/eslint-plugin-query": "^5.68.0",
     "add": "^2.0.6",
+    "eslint": "^9.24.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-webpack-plugin": "^5.0.1",
+    "globals": "^16.0.0",
     "metro-react-native-babel-preset": "^0.77.0",
     "react-scripts": "5.0.1",
     "yarn": "^1.22.22"

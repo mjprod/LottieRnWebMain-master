@@ -5,9 +5,9 @@ import { Animated, Dimensions, Platform, StyleSheet, View } from "react-native";
 import { Easing } from "react-native";
 import { useLocation } from "react-router";
 import { BackgroundGame } from "../../components/BackgroundGame.js";
-import IntroThemeVideo from "../../components/IntroThemeVideo.js";
+import IntroThemeVideo from "./components/IntroThemeVideo";
 import LoadingView from "../../components/LoadingView.js";
-import LuckySymbolCollect from "../../components/LuckySymbolCollect.js";
+import LuckySymbolCollect from "./components/LuckySymbolCollect";
 import ScratchLayout from "./components/ScratchLayout";
 import TopLayout from "./components/TopLayout";
 import { useGame } from "../../context/GameContext.js";
@@ -44,8 +44,6 @@ const ScratchLuckyGame = () => {
   const [games, setGames] = useState();
   const [maxCombinations, setMaxCombinations] = useState(0);
   const [hasLuckySymbol, setHasLuckySymbol] = useState(false);
-  const [luckySymbolWon, setLuckySymbolWon] = useState(0);
-  const [totalComboCount, setTotalComboCount] = useState(0);
   const [comboPlayed, setComboPlayed] = useState(0);
   const [nextCardAnimationFinished, setNextCardAnimationFinished] =
     useState(true);
@@ -319,15 +317,12 @@ const ScratchLuckyGame = () => {
     <View style={containerStyle}>
       {gameBackground}
       <View style={styles.containerOverlay}>
-        <Animated.View
-          style={[styles.background, { transform: [{ translateX }] }]}
-        >
+        <Animated.View style={[styles.background, { transform: [{ translateX }] }]}>
+          <Animated.View style={{ marginTop: marginTopAnim }}>
+            <TopLayout setTimerGame={setTimerGame} clickCount={clickCount} />
+          </Animated.View>
           <View
             style={styles.imageBackground}>
-            <Animated.View style={{ marginTop: marginTopAnim }}>
-              <TopLayout setTimerGame={setTimerGame} clickCount={clickCount} />
-            </Animated.View>
-
             <ScratchLayout
               reset={reset}
               setReset={setReset}
@@ -345,8 +340,6 @@ const ScratchLuckyGame = () => {
               nextCard={nextCard}
               maxCombinations={maxCombinations}
               hasLuckySymbol={hasLuckySymbol}
-              setLuckySymbolWon={setLuckySymbolWon}
-              setTotalComboCount={setTotalComboCount}
               setComboPlayed={setComboPlayed}
             />
           </View>
@@ -386,33 +379,27 @@ const styles = StyleSheet.create({
   fullScreen: {
     flex: 1,
     position: "relative",
-  },
-  musicButton: {
-    position: "absolute",
-    top: 50,
-    left: "50%",
-    transform: [{ translateX: -50 }],
-    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   containerOverlay: {
-    ...Platform.select({
-      web: {
-        position: "absolute",
-        top: 50,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        display: "flex",
-        justifyContent: "center",
-      },
-      default: StyleSheet.absoluteFillObject,
-    }),
-    flexDirection: "row",
+    position: "absolute",
+    top: "20%",
+    bottom: "20%",
+    left: 0,
+    right: 0,
+  },
+  background: {
+    marginTop: -20,
+    margin: "auto",
   },
   imageBackground: {
-    margin: "auto",
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    zIndex: -1,
+    flex: 1,
+    height: "auto",
+    paddingTop: 38,
+    justifyContent: "center",
+    alignItems: "center",
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
     borderColor: Colors.jokerGold600,

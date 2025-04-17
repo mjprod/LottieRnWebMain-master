@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Fonts } from "../util/constants";
+import { Colors, Fonts } from "../util/constants";
 
 const PurplePill = ({ text = "Beta Competition", style }) => {
   return (
@@ -18,20 +18,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#00000033',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 100,
   },
   frostedGlass: {
-    fontFamily: Fonts.InterMedium,
-    borderRadius: 63,
+    fontFamily: Fonts.InterSemiBold,
+    borderRadius: 100,
     borderColor: '#FFDEA8',
     borderWidth: 1,
+    lineHeight: "150%",
     paddingVertical: 8,
     paddingHorizontal: 12,
     backdropFilter: 'blur(10px)',
     WebkitBackdropFilter: 'blur(10px)',
   },
   text: {
-    fontSize: 14,
-    color: '#fff',
+    fontFamily: Fonts.InterSemiBold,
+    fontSize: 16,
+    color: Colors.jokerWhite50,
   },
 });
 

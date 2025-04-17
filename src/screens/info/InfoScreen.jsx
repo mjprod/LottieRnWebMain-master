@@ -1,5 +1,5 @@
-import React, { use, useEffect, useState } from "react";
-import { View, StyleSheet, Image, Text, ImageBackground } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, ImageBackground } from "react-native";
 import useApiRequest from "../../hook/useApiRequest";
 import { Colors } from "../../util/constants";
 import useAppNavigation from "../../hook/useAppNavigation";
@@ -12,6 +12,7 @@ import Congratulations from "./components/Congratulations";
 import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 import AssetPack from "../../util/AssetsPack";
 import { Dimentions, Fonts } from "../../util/constants";
+import GameButton from "../../components/GameButton";
 
 export const InfoScreenContents = {
     extending: "we_are_extending",
@@ -31,7 +32,10 @@ const InfoScreen = ({ contentName }) => {
     const [title, setTitle] = useState();
     const [subtitle, setSubtitle] = useState();
     const [navBackgroudImage, setNavBackgroundImage] = useState();
+    const [navBackgroudVideo, setNavBackgroundVideo] = useState();
     const [backgroundImage, setBackgroundImage] = useState();
+
+    const [pillText, setPillText] = useState("Beta Competition");
 
     useEffect(() => {
         if (location.state && location.state !== null) {
@@ -60,28 +64,33 @@ const InfoScreen = ({ contentName }) => {
                 setTitle("Time Is on Your Side");
                 setSubtitle("One more week. Let’s go.")
                 setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_EXTENDING_PLAY)
-                setBackgroundImage(AssetPack.backgrounds.CLOCK)
+                setNavBackgroundVideo(AssetPack.videos.TOP_NAV_EXTENDING_PLAY)
+                setBackgroundImage(AssetPack.backgrounds.INFO_PAGE)
                 break;
             case InfoScreenContents.thank_you:
                 setContent(<ThankYouContent />)
                 setTitle("Round complete");
                 setSubtitle("Get ready to scratch again soon.")
                 setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_THANK_YOU)
-                setBackgroundImage(AssetPack.backgrounds.CHEST)
+                setNavBackgroundVideo(AssetPack.videos.TOP_NAV_THANK_YOU)
+                setBackgroundImage(AssetPack.backgrounds.INFO_PAGE)
                 break;
             case InfoScreenContents.in_progress:
-                setContent(<DrawInProgressContent />)
+                setContent(<DrawInProgressContent ticketsEarned={user.ticket_balance} />)
                 setTitle("Fortune Is Deciding");
                 setSubtitle("One player. One prize. One moment.")
                 setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_DRAW_IN_PROGRESS)
-                setBackgroundImage(AssetPack.backgrounds.GOLD_SACK)
+                setNavBackgroundVideo(AssetPack.videos.TOP_NAV_DRAW_IN_PROGRESS)
+                setBackgroundImage(AssetPack.backgrounds.INFO_PAGE)
                 break;
             case InfoScreenContents.congratulations:
                 setContent(<Congratulations />)
                 setTitle("The gods are impressed");
                 setSubtitle("Claim your prize. You've earned it.")
                 setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_GODS_ARE_IMPRESSED)
+                setNavBackgroundVideo(AssetPack.videos.TOP_NAV_GODS_ARE_IMPRESSED)
                 setBackgroundImage(AssetPack.backgrounds.CONGRATS_BACKGROUND)
+                setPillText("Beta Winner")
                 break;
             default: appNavigation.goToNotFoundPage()
         }
@@ -93,10 +102,22 @@ const InfoScreen = ({ contentName }) => {
         );
     }
     return (
-        <TopNavScreenTemplate title={title} subtitle={subtitle} navBackgroudImage={navBackgroudImage} hasBackButton={true}>
+        <TopNavScreenTemplate 
+        title={title} 
+        subtitle={subtitle} 
+        navBackgroudImage={navBackgroudImage} 
+        navBackgroudVideo={navBackgroudVideo}
+        hasBackButton={true} 
+        pillText={pillText} 
+        showProfileHeader={false} 
+        showCopyright={false}>
             <View style={styles.container}>
-                <ImageBackground style={styles.backgroundImageContainer} resizeMode='contain' source={backgroundImage}>
+                <ImageBackground style={styles.backgroundImageContainer} resizeMode='cover' source={backgroundImage}>
                     {content}
+                    <GameButton
+                        style={{ width: "100%", marginBottom: Dimentions.marginXL }}
+                        text="TAKE ME BACK"
+                        onPress={() => { }} />
                 </ImageBackground>
             </View>
         </TopNavScreenTemplate>
@@ -115,7 +136,8 @@ const styles = StyleSheet.create({
     },
     backgroundImageContainer: {
         flexGrow: 1,
-        padding: Dimentions.marginL,
+        paddingHorizontal: 20,
+        paddingTop: 20,
         alignItems: "center",
         alignContent: "center",
         justifyContent: "center"

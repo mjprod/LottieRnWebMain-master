@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import AssetPack from "../util/AssetsPack";
+import { Colors, Fonts } from "../util/constants";
 
 const RoundedButton = ({
     title,
@@ -12,7 +13,7 @@ const RoundedButton = ({
             <TouchableOpacity style={styles.background} onPress={onPress}>
                 <Image
                     resizeMode="contain"
-                    style={{ width: 20, height: 19 }}
+                    style={{ width: 14, height: 14, marginLeft: -10 }}
                     source={AssetPack.icons.ARROW_LEFT} />
                 <Text style={styles.titleText}>
                     {title}
@@ -27,17 +28,18 @@ const styles = StyleSheet.create({
         gap: 8,
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: "center",
         borderRadius: 60,
-        paddingVertical: 22,
-        paddingHorizontal: 24,
-        backgroundColor: "#262626",
-        border: "2px solid #212121",
+        paddingVertical: 16,
+        paddingHorizontal: 42,
+        backgroundColor: Colors.jokerBlack800,
+        borderWidth: 1,
+        borderColor: Colors.jokerBlack100
     },
     titleText: {
-        flex: 1,
-        fontFamily: "Inter-Medium",
+        fontFamily: Fonts.InterMedium,
         fontSize: 16,
-        color: "#fff",
+        color: Colors.jokerWhite50,
     },
 });
 

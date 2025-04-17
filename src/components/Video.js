@@ -2,7 +2,7 @@ import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { unstable_createElement } from "react-native-web";
 
-const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyles, seekTime }, ref) => {
+const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyles, seekTime, loop = false, poster }, ref) => {
   const videoRef = useRef(null);
 
   useImperativeHandle(ref, () => ({
@@ -22,11 +22,12 @@ const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyl
   const attrs = {
     src: source,
     autoPlay: true,
-    muted: false,
-    loop: false,
+    muted: muted,
+    loop: loop,
     playsInline: true,
     controls: false,
     preload: "auto",
+    poster: poster,
     onEnded,
     onLoadedMetadata: handleLoadedMetadata,
     style: style,
@@ -40,6 +41,8 @@ const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyl
     </View>
   );
 });
+
+Video.displayName = "Video";
 
 const styles = StyleSheet.create({
   videoContainer: {

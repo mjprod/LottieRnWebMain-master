@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { eraserRadius, heightScratch, widthScratch } from "../../../global/Settings";
 import AssetPack from "../../../util/AssetsPack";
 
-const ScratchCard = ({ autoScratch, onScratch, onLoading, setScratchStarted }) => {
+const ScratchCard = ({ onScratch, setScratchStarted }) => {
   const canvasRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [totalArea, setTotalArea] = useState(0);
@@ -31,7 +31,6 @@ const ScratchCard = ({ autoScratch, onScratch, onLoading, setScratchStarted }) =
       context.globalCompositeOperation = "destination-out";
       setTotalArea(canvas.width * canvas.height);
       setImageLoaded(true);
-      onLoading(false);
     };
 
     return () => {

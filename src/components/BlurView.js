@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Platform, ImageBackground } from 'react-native';
+import { View, Platform } from 'react-native';
 
 const BlurView = ({ children, blurAmount, style }) => {
   if (Platform.OS === 'web') {
@@ -8,7 +8,7 @@ const BlurView = ({ children, blurAmount, style }) => {
         style={{
           ...style,
           backdropFilter: `blur(${blurAmount}px)`,
-          WebkitBackdropFilter: `blur(${blurAmount}px)`, // For Safari
+          WebkitBackdropFilter: `blur(${blurAmount}px)`,
           position: 'absolute',
           width: '100%',
           height: '100%',

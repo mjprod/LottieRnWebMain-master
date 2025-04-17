@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { View } from "react-native-web";
 
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import GameButton from "../components/GameButton";
-import GamesAvailableCard from "../components/GamesAvailableCard";
 import LeaderBoardList from "../components/LeaderBoardList";
 import NextDrawCard from "../components/NextDrawCard";
-import ProfileHeader from "../components/ProfileHeader";
 import RaffleTicketCard from "../components/RaffleTicketCard";
 import SectionTitle from "../components/SectionTitle";
 import { useSnackbar } from "../components/SnackbarContext";
@@ -16,13 +14,14 @@ import StatCard from "../components/StatCard";
 import { useGame } from "../context/GameContext";
 import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
-import { Dimentions, GameStatus } from "../util/constants";
+import { Colors, Dimentions, GameStatus } from "../util/constants";
 import { decrypt } from "../util/crypto";
 import { convertUTCToLocal, getCurrentDate } from "../util/Helpers";
 import { InfoScreenContents } from "./info/InfoScreen";
 import LuckySymbolCard from "../components/LuckySymbolCard";
 import LoadingView from "../components/LoadingView";
 import TopNavTemplate from "../templates/TopNavTemplate";
+import LinkButton from "../components/LinkButton";
 
 const LauchScreenEncrypted = () => {
   const appNavigation = useAppNavigation();
@@ -89,7 +88,7 @@ const LauchScreenEncrypted = () => {
 
   useEffect(() => {
     if (params.id && params.name && params.email) {
-      login(params.id, params.name, params.email).then((data) => {
+      login(params.id, params.name, params.email).then(() => {
         fetchAndProcessUserDetails({ user_id: params.id, name: params.name, email: params.email })
       }).catch((error) => {
         console.error('Login failed:', error);
@@ -103,7 +102,7 @@ const LauchScreenEncrypted = () => {
         }
         const authTokenData = JSON.parse(decrypt(authToken, true));
         login(authTokenData.user_id, authTokenData.name, authTokenData.email)
-          .then((data) => {
+          .then(() => {
             fetchAndProcessUserDetails(authTokenData)
           }).catch((error) => {
             console.error('Login failed:', error);
@@ -154,16 +153,12 @@ const LauchScreenEncrypted = () => {
 
   if (user) {
     return (
-      <TopNavTemplate>
-        <ProfileHeader
-          containerStyle={{ marginHorizontal: Dimentions.pageMargin, marginBottom: Dimentions.marginL }}
-          id={user.user_id ? user.user_id : ""}
-          name={user.name ?? ""} />
+      <TopNavTemplate title={"Scratch to win!"} subtitle={"Your next prize awaits."}>
         <View style={styles.statisticsContainer}>
-          <SectionTitle text={"Statistics"} />
+          <SectionTitle text={"Game Summary"} style={{ marginBottom: 20 }} />
           <View style={styles.resultRow}>
             <StatCard
-              title="Total Points"
+              title="Total points"
               stat={user.total_score}
             />
             <View style={{ width: 8 }} />
@@ -175,19 +170,19 @@ const LauchScreenEncrypted = () => {
             text="Play Now"
             onPress={() => handleStartGame()}
           />
+          <LinkButton
+            style={{ marginTop: 28, marginBottom: 48 }}
+            text={"How to play Turbo scratch"}
+            handlePress={appNavigation.goToHowToPlayPage} />
         </View>
         <View style={styles.restContainer}>
           <SectionTitle
-            text="LeaderBard"
+            text="LeaderBoard"
             viewAllText="View All"
             viewAllAction={handleViewAllPress}
-          />
-          <LeaderBoardList numberOfItems={5} />
-          <GamesAvailableCard
-            style={{ marginVertical: 24 }}
-            cardsLeft={user.card_balance}
-          />
-          <NextDrawCard style={{ marginVertical: 24 }} />
+            style={{ marginBottom: 20 }} />
+          <LeaderBoardList numberOfItems={5} style={{ marginBottom: 32 }} />
+          <NextDrawCard />
         </View>
       </TopNavTemplate>
     );
@@ -202,43 +197,28 @@ const styles = StyleSheet.create({
   statisticsContainer: {
     marginLeft: Dimentions.pageMargin,
     marginRight: Dimentions.pageMargin,
-    marginBottom: Dimentions.marginL,
   },
   restContainer: {
     paddingTop: Dimentions.sectionMargin,
     paddingHorizontal: Dimentions.pageMargin,
-    paddingBottom: Dimentions.sectionMargin,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: "#131313",
     borderTopWidth: 1,
-    borderColor: "#3D3D3D",
-  },
-  imageBackground: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    marginTop: "0%",
-  },
-  imageBackgroundLuckySymbol: {
-    width: 100,
-    height: 45,
-    alignItems: "center",
+    borderColor: Colors.jokerBlack200,
   },
   resultRow: {
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
   },
-  luckySymbols: {
-    flexDirection: "row",
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 10,
+  copyright: {
+    lineHeight: "150%",
+    alignContent: "center",
+    textAlign: "center",
+    fontSize: 16,
+    marginTop: 20,
+    color: Colors.jokerBlack200
   }
 });
 

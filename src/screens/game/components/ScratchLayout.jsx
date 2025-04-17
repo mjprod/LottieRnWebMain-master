@@ -19,15 +19,12 @@ const ScratchLayout = ({
   clickCount,
   setClickCount,
   nextCard,
-  setLuckySymbolWon,
-  setTotalComboCount,
   setComboPlayed,
   maxCombinations,
   hasLuckySymbol
 }) => {
   const { luckySymbolCount } = useGame();
 
-  const [imageLoading, setImageLoading] = useState(false);
   const [isWinner, setIsWinner] = useState(false);
   const [isLuckySymbolTrue, setIsLuckySymbolTrue] = useState(false);
   const [triggerAutoPop, setTriggerAutoPop] = useState(false);
@@ -81,8 +78,6 @@ const ScratchLayout = ({
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
           clickCount={clickCount}
           setClickCount={setClickCount}
-          setLuckySymbolWon={setLuckySymbolWon}
-          setTotalComboCount={setTotalComboCount}
           setComboPlayed={setComboPlayed} />
         {isScratchCardVisible && (
           <View style={styles.scratchCardContainer}>
@@ -90,7 +85,6 @@ const ScratchLayout = ({
               setReset={setReset}
               autoScratch={autoScratch}
               onScratch={handleScratch}
-              onLoading={setImageLoading}
               setScratchStarted={setScratchStarted}
             />
           </View>)}
@@ -107,7 +101,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 12,
-    marginTop: "-10%",
   },
   bottomView: {
     width: widthScratch,

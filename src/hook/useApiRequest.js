@@ -1,15 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 import { fetchUserDetailsAPI, getDailyQuestionAPI, getGamesAPI, getLeaderBoardAPI, getWinnerAPI, loginAPI, postDailyAnswerAPI, updateCardBalanceAPI, updateCardPlayedAPI, updateLuckySymbolAPI, updateScoreAPI } from "../api/api";
 import { showConsoleError } from "../util/ConsoleMessage";
 import useStorage from "./useStorage";
 
 const useApiRequest = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  const [response, setResponse] = useState(null);
-  const { loadData, saveData } = useStorage();
+  const { saveData } = useStorage();
 
   const queryClient = useQueryClient();
 
@@ -38,7 +34,7 @@ const useApiRequest = () => {
 
   const fetchUserDetailsMutation = useMutation({
     mutationFn: fetchUserDetailsAPI,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['userDetails']);
     },
     onError: (error) => {
@@ -56,7 +52,7 @@ const useApiRequest = () => {
 
   const getWinnerMutation = useMutation({
     mutationFn: getWinnerAPI,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['winner']);
     },
     onError: (error) => {
@@ -71,7 +67,7 @@ const useApiRequest = () => {
 
   const dailyQuestionMutation = useMutation({
     mutationFn: getDailyQuestionAPI,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['dailyQuestion']);
     },
     onError: (error) => {
@@ -80,13 +76,13 @@ const useApiRequest = () => {
     },
   });
 
-  const getDailyQuestion = async (user_id) => {
-    return dailyQuestionMutation.mutateAsync({ user_id });
+  const getDailyQuestion = async (user_id, beta_block_id) => {
+    return dailyQuestionMutation.mutateAsync({ user_id, beta_block_id });
   };
 
   const postDailyAnswerMutation = useMutation({
     mutationFn: postDailyAnswerAPI,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['dailyAnswer']);
     },
     onError: (error) => {
@@ -102,7 +98,7 @@ const useApiRequest = () => {
 
   const getGamesMutation = useMutation({
     mutationFn: getGamesAPI,
-    onSuccess: (data) => {
+    onSuccess: () => {
       console.log('Games fetched successfully!');
       queryClient.invalidateQueries(['games']);
     },
@@ -119,7 +115,7 @@ const useApiRequest = () => {
 
   const updateCardPlayedMutation = useMutation({
     mutationFn: updateCardPlayedAPI,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['cardPlayed']);
     },
     onError: (error) => {
@@ -134,7 +130,7 @@ const useApiRequest = () => {
 
   const updateScoreMutation = useMutation({
     mutationFn: updateScoreAPI,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['score']);
     },
     onError: (error) => {
@@ -149,7 +145,7 @@ const useApiRequest = () => {
 
   const updateLuckySymbolMutation = useMutation({
     mutationFn: updateLuckySymbolAPI,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['luckySymbol']);
     },
     onError: (error) => {
@@ -164,7 +160,7 @@ const useApiRequest = () => {
 
   const updateCardBalanceMutation = useMutation({
     mutationFn: updateCardBalanceAPI,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['cardBalance']);
     },
     onError: (error) => {
@@ -179,7 +175,7 @@ const useApiRequest = () => {
 
   const getLeaderBoardMutation = useMutation({
     mutationFn: getLeaderBoardAPI,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['leaderBoard']);
     },
     onError: (error) => {
@@ -193,9 +189,6 @@ const useApiRequest = () => {
   };
 
   return {
-    loading,
-    error,
-    response,
     updateLuckySymbol,
     getLeaderBoard,
     updateScore,

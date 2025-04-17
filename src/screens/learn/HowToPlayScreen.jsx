@@ -45,10 +45,11 @@ const HowToPlayScreen = () => {
         title="Master the Game"
         subtitle="Simple steps. Epic rewards."
         backgroundImage={AssetPack.backgrounds.TOP_NAV_LEARN}
+        backgroundVideo={AssetPack.videos.TOP_NAV_LEARN}
         hasBackButton={true}
         onBackPress={handleBackPress}
       />
-      <ShowCaseCarousel slideList={carouselItems} style={{ marginTop: -70 }} />
+      <ShowCaseCarousel slideList={carouselItems} />
     </View>
   );
 };

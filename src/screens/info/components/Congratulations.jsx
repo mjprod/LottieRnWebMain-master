@@ -2,7 +2,6 @@ import React from "react";
 import { Image, StyleSheet, Text } from "react-native";
 import AssetPack from "../../../util/AssetsPack";
 import { Dimentions, Fonts, Colors } from "../../../util/constants";
-import LinkButton from "../../../components/LinkButton";
 import LottieView from "react-native-web-lottie";
 import { useGame } from "../../../context/GameContext";
 import LoadingView from "../../../components/LoadingView";
@@ -15,22 +14,16 @@ const Congratulations = () => {
     } else {
         return (
             <>
-                <Image
-                    style={{ width: 175, height: 46, marginBottom: 20 }}
-                    source={AssetPack.logos.TURBO_SCRATCH} />
                 <Text style={styles.heading}>Congratulations to</Text>
                 <Text style={styles.title}>{user && user.name}</Text>
                 <Image
-                    style={styles.backgroundImage}
+                    style={styles.image}
                     source={AssetPack.images.AMAZON_GOLD_GIFT_CARD}
                     resizeMode={"contain"}
                 />
                 <Text style={styles.message}>
                     Your <Text style={styles.textHighlighted}>Amazon Gift Card </Text>will be sent to your email within three business days.
                 </Text>
-                <LinkButton
-                    style={{ marginVertical: Dimentions.sectionMargin }}
-                    text={"Contact us for any concerns"} />
                 <LottieView
                     style={{ flex: 1, position: "absolute", right: 0, top: 0, width: "100%", height: "100%" }}
                     source={AssetPack.lotties.CONFETTI}
@@ -51,12 +44,12 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         textAlign: "center",
         marginHorizontal: Dimentions.pageMargin,
+        marginTop: 22
     },
     title: {
-        fontFamily: Fonts.InterMedium,
+        fontFamily: Fonts.InterSemiBold,
         fontSize: 18,
-        color: "#FFFFFF",
-        marginBottom: Dimentions.pageMargin,
+        color: Colors.jokerBlack50,
         textAlign: "center",
     },
     mainContainer: {
@@ -68,29 +61,24 @@ const styles = StyleSheet.create({
         color: "#FFFFFF",
         marginBottom: 20,
     },
-    backgroundImage: {
+    image: {
         flex: 1,
-        margin: Dimentions.pageMargin,
-        width: "80%",
+        height: 242,
+        width: 298,
+        marginVertical: 20
     },
     message: {
         fontFamily: Fonts.InterRegular,
         color: Colors.jokerBlack50,
         fontSize: 16,
-        textAlign: "center"
+        textAlign: "center",
+        marginBottom: 48
     },
     textHighlighted: {
         fontFamily: Fonts.InterRegular,
-        color: "#FFEEC0",
+        color: Colors.jokerGold400,
         textAlign: "center",
         fontSize: 16,
-    },
-    backgroundGradient: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
     },
 });
 

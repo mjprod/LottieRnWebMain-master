@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import React, { useEffect} from "react";
+import { View, StyleSheet} from "react-native";
 import SectionTitle from "../components/SectionTitle";
 import GameButton from "../components/GameButton";
 import LeaderBoardList from "../components/LeaderBoardList";
 import { useLocation } from "react-router-dom";
-import TopBannerNav from "../components/TopBannerNav";
 import LinkButton from "../components/LinkButton";
-import GamesAvailableCard from "../components/GamesAvailableCard";
 import NextDrawCard from "../components/NextDrawCard";
 import useApiRequest from "../hook/useApiRequest";
 import { Colors, Dimentions } from "../util/constants";
@@ -53,19 +51,20 @@ const LeaderBoardScreen = () => {
       title="Champions Rise"
       subtitle="The top players of the realm."
       navBackgroudImage={AssetPack.backgrounds.TOP_NAV_LEADER_BOARD}
-      hasBackButton={true}>
+      navBackgroudVideo={AssetPack.videos.TOP_NAV_LEADER_BOARD}
+      hasBackButton={true}
+      showProfileHeader={false}>
       <View style={styles.container}>
-        <SectionTitle text="LeaderBard" style={{ marginBottom: 10 }} />
+        <SectionTitle text="LeaderBard" style={{ marginBottom: 24 }} />
         <LeaderBoardList
-          style={{ marginBottom: 30 }}
+          style={{ marginBottom: 32 }}
           username={user && user.name} />
-        <GameButton style={{ marginBottom: 30 }} text="Play Now" onPress={handlePlayNowButtonPress} />
+        <GameButton style={{ marginBottom: 32 }} text="Play Now" onPress={handlePlayNowButtonPress} />
         <LinkButton
-          style={{ marginBottom: 30 }}
+          style={{ marginBottom: 48 }}
           text={"How To Play Turbo Scratch >"}
           handlePress={appNavigation.goToHowToPlayPage} />
-        <GamesAvailableCard style={{ marginBottom: 30 }} cardsLeft={user ? user.card_balance : 0} />
-        <NextDrawCard style={{ marginBottom: 30 }} />
+        <NextDrawCard />
       </View>
     </TopNavTemplate>
   );
@@ -73,10 +72,10 @@ const LeaderBoardScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: Dimentions.marginS,
+    paddingHorizontal: 20,
     backgroundColor: Colors.jokerBlack800,
     borderColor: Colors.jokerBlack200,
-    paddingVertical: Dimentions.marginL,
+    paddingTop: Dimentions.marginL,
     borderTopRightRadius: 16,
     borderTopLeftRadius: 16,
     borderTopWidth: 1

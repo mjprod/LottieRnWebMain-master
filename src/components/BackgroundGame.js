@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet } from "react-native";
 import AlphaView from "./AlphaView";
 import TopBannerNav from "./TopBannerNav";
-
+import LinearGradient from "react-native-web-linear-gradient";
+import { Colors } from "../util/constants";
 export const BackgroundGame = ({ source, showAlphaView }) => {
   const videoRef = useRef(null);
 
@@ -34,10 +35,13 @@ export const BackgroundGame = ({ source, showAlphaView }) => {
           playsInline={true}
           webkit-playsinline={true}
         />
+        <LinearGradient
+          colors={[Colors.background, Colors.background, Colors.transparent, Colors.transparent]}
+          locations={[0, 0.40, 0.9, 1]}
+          style={{ flex: 1, width: "100%", height: "100%" }} />
       </View>
-
       <AlphaView showAlphaView={showAlphaView} />
-    </View>
+    </View >
   );
 };
 
@@ -52,9 +56,18 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
     flex: 1,
-    maxHeight: 200,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1,
+    height: "100%",
+    width: "100%"
   },
   video: {
+    position: "absolute",
+    top: 0,
+    width: "100%",
+    height: "100%",
+    opacity: 0.3,
     flex: 1,
     objectFit: "cover",
   },

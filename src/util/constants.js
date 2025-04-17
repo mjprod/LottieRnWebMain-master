@@ -5,19 +5,19 @@ export const API_KEY = process.env.REACT_APP_API_KEY;
 export const BONUS_PACK_NUMBER_OF_CARDS = 12;
 
 export const Endpoint = {
-  fetch_user_details: SERVER + "/users",
-  get_daily_question: SERVER + "/daily/question",
-  post_daily_answer: SERVER + "/daily/answer",
-  leader_board: SERVER + "/leaderboard",
-  games: SERVER + "/game",
-  update_card_played: SERVER + "/game/update_card_played",
-  update_lucky_symbol: SERVER + "/game/update_lucky_symbol",
-  update_card_balance: SERVER + "/game/update_card_balance",
-  update_score: SERVER + "/game/update_score",
-  login: SERVER + "/login",
-  token: SERVER + "/login/token",
-  logout: SERVER + "/login/logout",
-  winners: SERVER + "/winners"
+  fetch_user_details: "/users",
+  get_daily_question: "/daily/question",
+  post_daily_answer: "/daily/answer",
+  leader_board: "/leaderboard",
+  games: "/game",
+  update_card_played: "/game/update_card_played",
+  update_lucky_symbol: "/game/update_lucky_symbol",
+  update_card_balance: "/game/update_card_balance",
+  update_score: "/game/update_score",
+  login: "/login",
+  token: "/login/token",
+  logout: "/login/logout",
+  winners: "/winners"
 }
 
 
@@ -37,11 +37,13 @@ export const LeaderBoardStatus = {
   up: "up",
   down: "down",
   same: "same",
+  new: "new",
 };
 
 
 export const Dimentions = {
-  pageMargin: 16,
+  innerCardPadding: 20,
+  pageMargin: 20,
   contentPadding: 24,
   sectionMargin: 32,
   marginXS: 8,
@@ -53,17 +55,30 @@ export const Dimentions = {
 
 export const Colors = {
   background: "#0A0A0A",
+  black: "#000000",
   transparent: "#00000000",
 
   jokerGold400: "#FFDEA8",
+  jokerGold40040: "#FFDEA866",
   jokerGold600: "#A88C5D",
+  jokerGold900: "#382E23",
+  jokerGold1000: "#1D1A11",
+
   jokerBlack50: "#A6A6A6",
+  jokerBlack100: "#5F5F5F",
   jokerBlack200: "#3D3D3D",
+  jokerBlack300: "#262626",
+  jokerBlack600: "#1B1B1B",
+  jokerBlack700: "#171717",
   jokerBlack800: "#131313",
+  jokerBlack1100: "#0A0A0A",
 
   jokerWhite50: "#FFFFFF",
 
-  jokerGreen400: "#3EDB58"
+  jokerGreen400: "#3EDA41",
+
+  jokerHoney400: "#DBA73E",
+  jokerRed400: "#DB3E3E",
 };
 
 export const Fonts = {

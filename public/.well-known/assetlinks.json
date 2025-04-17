@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "app.mjproductions.turboscratch",
+            "package_name": "app.mjproductions.turboscratch",
+            "sha256_cert_fingerprints": [
+                "FB:1C:3D:61:33:38:51:01:65:08:C8:50:FA:10:86:5F:49:D2:93:97:8F:35:5B:81:F3:37:46:79:ED:54:A0:FF"
+            ]
+        }
+    }
+]

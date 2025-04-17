@@ -3,12 +3,14 @@ import { View, StyleSheet, Platform, Pressable, } from "react-native";
 import Video from "../../../components/Video";
 import BrowserDetection from "react-browser-detection";
 import AssetPack from "../../../util/AssetsPack";
+import { isAndroidWebView } from "../../../util/Helpers";
 
 const WinLuckySymbolView = ({ videoRef, style, onSkipClicked, onVideoEnd }) => {
     return (
         <View
             key="overlay"
             style={{
+                ...style,
                 ...styles.blackOverlayWin,
                 flex: 1,
                 zIndex: 9999,
@@ -27,10 +29,10 @@ const WinLuckySymbolView = ({ videoRef, style, onSkipClicked, onVideoEnd }) => {
                             onEnded={onVideoEnd}
                         />
                     ),
-                    default: (browser) => (
+                    default: () => (
                         <Video
                             ref={videoRef}
-                            source={AssetPack.videos.WIN_LUCKY_SYMBOL}
+                            source={isAndroidWebView() ? AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME : AssetPack.videos.WIN_LUCKY_SYMBOL}
                             style={styles.transparentVideo}
                             onEnd={onVideoEnd}
                             onEnded={onVideoEnd}

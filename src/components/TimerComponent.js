@@ -1,15 +1,15 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import useTimeLeftForNextDraw from "../hook/useTimeLeftForNextDraw";
+import { Colors, Fonts } from "../util/constants";
+import PurplePill from "./BetaCompetitionPill";
 
-const TimerComponent = ({ style }) => {
+const TimerComponent = ({ showPill = true, onlyTimer = false, style }) => {
   const [timeLeft] = useTimeLeftForNextDraw();
 
   return (
     <View style={{ ...styles.timerSection, ...style }}>
-      <View style={styles.backgroundRounded}>
-        <Text style={styles.timerTitle}>Time till Next Draw</Text>
-      </View>
+      {!onlyTimer && (showPill ? <PurplePill text="Time to next draw" style={{ marginBottom: 16 }} /> : <Text style={styles.text}> Time to next draw </Text>)}
       <Text style={styles.timerContainer}>
         <Text style={styles.timerNumberValue}>{timeLeft.days}</Text>
         <Text style={styles.timerStringValue}> Days </Text>
@@ -27,30 +27,43 @@ const TimerComponent = ({ style }) => {
 const styles = StyleSheet.create({
   backgroundRounded: {
     borderRadius: 30,
-    paddingVertical: 13,
-    paddingHorizontal: 43.5,
-    border: "1px solid #FFFFFF4D",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderWidth: 1,
     marginBottom: 20,
   },
+  timerContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   timerSection: {
-    marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
   },
   timerTitle: {
-    fontFamily: "Inter-Bold",
+    fontFamily: Fonts.InterSemiBold,
     fontSize: 14,
-    color: "#FFDEA8",
+    color: Colors.jokerWhite50,
   },
   timerNumberValue: {
-    fontFamily: "Inter-SemiBold",
-    fontSize: 18,
-    color: "#fff",
+    fontFamily: Fonts.InterSemiBold,
+    fontSize: 16,
+    width: 24,
+    color: Colors.jokerWhite50,
+    marginRight: 2,
   },
   timerStringValue: {
-    fontFamily: "Inter-SemiBold",
+    fontFamily: Fonts.InterSemiBold,
     fontSize: 14,
-    color: "#A6A6A6",
+    color: Colors.jokerBlack50,
+    marginRight: 8
+  },
+  text: {
+    fontFamily: Fonts.InterSemiBold,
+    fontSize: 16,
+    color: Colors.jokerGold400,
+    marginBottom: 16
   },
 });
 
