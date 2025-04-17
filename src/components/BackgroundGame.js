@@ -31,9 +31,8 @@ export const BackgroundGame = ({ source, showAlphaView }) => {
           autoPlay={true}
           controls={false}
           muted={false}
-          allowsInlineMediaPlayback={true}
           playsInline={true}
-          webkit-playsinline={true}
+          webkit-playsinline="true"
         />
         <LinearGradient
           colors={[Colors.background, Colors.background, Colors.transparent, Colors.transparent]}

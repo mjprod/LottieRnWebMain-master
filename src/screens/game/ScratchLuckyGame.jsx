@@ -215,7 +215,7 @@ const ScratchLuckyGame = () => {
     setTimeout(() => {
       setReset(true);
     }, 100);
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (scratchStarted) {
