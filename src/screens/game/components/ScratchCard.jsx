@@ -45,7 +45,7 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
         canvas.height = 0;
       }
     };
-  }, [canvasRef]);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
