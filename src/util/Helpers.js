@@ -25,17 +25,38 @@ export function getCurrentWeekDates() {
   for (let i = 0; i < 7; i++) {
     let date = new Date(monday);
     date.setDate(monday.getDate() + i);
-    weekDates.push(date.toISOString().split("T")[0]);
+    weekDates.push(formatDate(date));
   }
 
   return weekDates;
 }
 
-export function convertUTCToLocal(utcDateTime) {
-  const date = new Date(utcDateTime + "Z");
+function formatDate(date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
 
+
+export function convertUTCToLocal(utcDateTime) {
+  const date = new Date(utcDateTime + 'Z');
+  const formatter = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Australia/Sydney',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  });
+  const parts = formatter.formatToParts(date);
+  const year = parts.find(p => p.type === 'year').value;
+  const month = parts.find(p => p.type === 'month').value;
+  const day = parts.find(p => p.type === 'day').value;
+  const hour = parts.find(p => p.type === 'hour').value;
+  const minute = parts.find(p => p.type === 'minute').value;
+  const second = parts.find(p => p.type === 'second').value;
   return `${year}-${month}-${day}`;
 }

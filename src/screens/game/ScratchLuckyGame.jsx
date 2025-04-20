@@ -127,6 +127,8 @@ const ScratchLuckyGame = () => {
       setScore(user.total_score);
       setTicketCount(user.ticket_balance);
       setLuckySymbolCount(user.lucky_symbol_balance);
+    } else {
+      appNavigation.goToNotFoundPage()
     }
   }, [user]);
 
@@ -190,7 +192,7 @@ const ScratchLuckyGame = () => {
       updateLuckySymbol(user.user_id, luckySymbolCount + 1);
       nextCard();
     }
-  }, [luckySymbolCount, user.user_id, saveLuckySymbol, nextCard, updateLuckySymbol]);
+  }, [luckySymbolCount, user, saveLuckySymbol, nextCard, updateLuckySymbol]);
 
   const decrementLuckySymbol = useCallback((count, onComplete) => {
     if (count >= 0) {
@@ -277,7 +279,7 @@ const ScratchLuckyGame = () => {
       user.current_beta_block,
       BONUS_PACK_NUMBER_OF_CARDS
     );
-  }, [user.user_id, user.current_beta_block, updateCardBalance]);
+  }, [user, updateCardBalance]);
 
   const handleWinLuckySymbolVideoScreenClick = useCallback(() => {
     if (!skipToFinishLuckyVideo) {
