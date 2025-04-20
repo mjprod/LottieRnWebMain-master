@@ -41,16 +41,16 @@ const LauchScreenEncrypted = () => {
   } = useApiRequest();
 
   const fetchAndProcessUserDetails = (userDetails) => {
-    fetchUserDetails(userDetails.user_id, userDetails.name, userDetails.email).then((response) => {
-      setUser(response.user);
-      setLuckySymbolCount(response.user.lucky_symbol_balance);
-      const gameStatus = response.time_result;
+    fetchUserDetails(userDetails.user_id, userDetails.name, userDetails.email).then((userResponse) => {
+      setUser(userResponse.user);
+      setLuckySymbolCount(userResponse.user.lucky_symbol_balance);
+      const gameStatus = userResponse.time_result;
       if (gameStatus === GameStatus.drawing) {
         appNavigation.goToInProgressPage();
       } else if (gameStatus === GameStatus.check_winner) {
         getWinner().then((response) => {
           const winner = response.winner
-          if (winner.user_id === user.user_id) {
+          if (winner.user_id === userResponse.user.user_id) {
             appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
           } else {
             appNavigation.goToThankYouPage(InfoScreenContents.thank_you);
@@ -60,12 +60,12 @@ const LauchScreenEncrypted = () => {
         });
       }
 
-      const userData = response.user;
-      const currentWeek = response.current_week;
-      if (response.daily === null || response.daily.length === 0) {
+      const userData = userResponse.user;
+      const currentWeek = userResponse.current_week;
+      if (userResponse.daily === null || userResponse.daily.length === 0) {
         appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
       } else {
-        const currentWeekDaily = response.daily.find(
+        const currentWeekDaily = userResponse.daily.find(
           (item) => item.current_week === currentWeek
         );
         if (currentWeekDaily != null) {

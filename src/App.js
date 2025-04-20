@@ -46,7 +46,6 @@ export default function App() {
     <View style={dynamicStyles.container}>
       <View style={dynamicStyles.app}>
         <QueryClientProvider client={queryClient}>
-
           <GameProvider>
             <ThemeProvider>
               <BrowserRouter>
