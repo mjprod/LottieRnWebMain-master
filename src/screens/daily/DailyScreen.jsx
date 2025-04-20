@@ -81,7 +81,6 @@ const DailyScreen = () => {
         if (response.user) {
           setCurrentWeek(response.current_week);
           setTotalWeeks(response.total_weeks);
-          console.log("user", response);
           const currentWeekDaily = response.daily.find(
             (item) => item.current_week === response.current_week
           );
