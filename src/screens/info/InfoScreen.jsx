@@ -107,7 +107,7 @@ const InfoScreen = ({ contentName }) => {
         subtitle={subtitle} 
         navBackgroudImage={navBackgroudImage} 
         navBackgroudVideo={navBackgroudVideo}
-        hasBackButton={true} 
+        hasBackButton={false} 
         pillText={pillText} 
         showProfileHeader={false} 
         showCopyright={false}>
