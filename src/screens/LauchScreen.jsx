@@ -44,8 +44,7 @@ const LauchScreenEncrypted = () => {
     fetchUserDetails(userDetails.user_id, userDetails.name, userDetails.email).then((response) => {
       setUser(response.user);
       setLuckySymbolCount(response.user.lucky_symbol_balance);
-      const gameStatus = response.user.time_result;
-
+      const gameStatus = response.time_result;
       if (gameStatus === GameStatus.drawing) {
         appNavigation.goToInProgressPage();
       } else if (gameStatus === GameStatus.check_winner) {
