@@ -322,6 +322,7 @@ const ScratchLuckyGame = () => {
           </Animated.View>
           <View style={styles.imageBackground}>
             <ScratchLayout
+              key={user.user_id}
               reset={reset}
               setReset={setReset}
               scratched={scratched}

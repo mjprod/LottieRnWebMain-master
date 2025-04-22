@@ -5,7 +5,8 @@ const urlsToCache = [
   "/static/js/bundle.js",
   "/static/css/main.css",
   "/logo192.png",
-  "/game"
+  "/game",
+  "/not_found"
 ];
 
 // Install Service Worker & Cache Files
@@ -24,19 +25,19 @@ self.addEventListener("fetch", (event) => {
       if (cachedResponse) {
         return cachedResponse;
       }
-
       return fetch(event.request).then((networkResponse) => {
-        if (
-          networkResponse &&
-          networkResponse.status === 200 &&
-          networkResponse.type === "basic"
-        ) {
-          const responseClone = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseClone);
-          });
+        // Only cache successful responses
+        if (!networkResponse || !networkResponse.ok) {
+          return networkResponse;
         }
-        return networkResponse;
+        return caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        });
+      }).catch(() => {
+        if (event.request.mode === 'navigate') {
+          return caches.match('/not_found');
+        }
       });
     })
   );

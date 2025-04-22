@@ -68,10 +68,6 @@ const StartScreen = () => {
             showCopyright={false}
             showProfileHeader={false}>
             <View style={styles.statsSection}>
-                <View style={styles.timerSection}>
-                    <TimerComponent style={{ paddingVertical: Dimentions.marginL }} />
-                </View>
-
                 <SectionTitle text={"Game Summary"} />
                 <View style={styles.resultRow}>
                     <StatCard title="Total Points" stat={initialScore} />
@@ -95,6 +91,10 @@ const StartScreen = () => {
                         </View>
                     </View>
                 </View>
+                <View style={{ flexGrow: 1 }} />
+                <View style={styles.timerSection}>
+                    <TimerComponent style={{ paddingVertical: Dimentions.marginL }} />
+                </View>
             </View>
         </TopNavTemplate>
     );
@@ -102,13 +102,14 @@ const StartScreen = () => {
 
 const styles = StyleSheet.create({
     statsSection: {
-        marginHorizontal: Dimentions.marginS
-    },
-    timerSection: {
+        flex: 1,
         borderTopColor: Colors.jokerBlack200,
         borderTopWidth: 1,
-        borderBottomColor: Colors.jokerBlack200,
-        borderBottomWidth: 1,
+        marginHorizontal: Dimentions.marginS,
+        paddingTop: 32,
+    },
+    timerSection: {
+        flex: 1,
         marginBottom: 32
     },
     title: {
