@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 0,
         bottom: 0,
-        height: 100,
+        height: 50,
         left: 0,
         alignItems: 'center',
         justifyContent: 'flex-end',
@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
     lottieAnimation: {
         height: 20,
         width: 20,
+        marginBottom: 32,
         pointerEvents: "box-none"
     }
 });
