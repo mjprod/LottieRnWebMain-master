@@ -55,7 +55,7 @@ const LeaderBoardList = ({ username, style, numberOfItems = 10, beta_block_id, s
       />
       {showPagination && (totalPages > 1 &&
         <Pagination
-          containerStyle={{ marginBottom: Dimentions.marginM }}
+          containerStyle={{ marginBottom: Dimentions.marginL }}
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={onPageChange}
