@@ -5,7 +5,7 @@ import { Dimentions } from "../util/constants";
 import LeaderBoardItem from "./items/LeaderBoardItem";
 import Pagination from "./Pagination";
 
-const LeaderBoardList = ({ username, style, numberOfItems = 10 }) => {
+const LeaderBoardList = ({ username, style, numberOfItems = 10, beta_block_id, showPagination = true }) => {
   const { getLeaderBoard } = useApiRequest();
 
   const [leaderboardData, setLeaderBoardData] = useState([]);
@@ -13,7 +13,7 @@ const LeaderBoardList = ({ username, style, numberOfItems = 10 }) => {
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    getLeaderBoard(numberOfItems, currentPage).then((response) => {
+    getLeaderBoard(beta_block_id, numberOfItems, currentPage).then((response) => {
       if (response) {
         setTotalPages(response.totalPages);
         const newData = Object.values(response.data,).map((item) => ({
@@ -31,7 +31,6 @@ const LeaderBoardList = ({ username, style, numberOfItems = 10 }) => {
     }
     );
   }, [currentPage]);
-
 
   const onPageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -54,14 +53,14 @@ const LeaderBoardList = ({ username, style, numberOfItems = 10 }) => {
           />
         )}
       />
-      {totalPages > 1 &&
+      {showPagination && (totalPages > 1 &&
         <Pagination
-          containerStyle={{ marginTop: Dimentions.marginM }}
+          containerStyle={{ marginBottom: Dimentions.marginM }}
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={onPageChange}
         />
-      }
+      )}
     </View>
   );
 };

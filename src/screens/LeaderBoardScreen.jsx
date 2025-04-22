@@ -58,7 +58,8 @@ const LeaderBoardScreen = () => {
         <SectionTitle text="LeaderBard" style={{ marginBottom: 24 }} />
         <LeaderBoardList
           style={{ marginBottom: 32 }}
-          username={user && user.name} />
+          username={user && user.name} 
+          beta_block_id={user && user.current_beta_block}/>
         <GameButton style={{ marginBottom: 32 }} text="Play Now" onPress={handlePlayNowButtonPress} />
         <LinkButton
           style={{ marginBottom: 48 }}

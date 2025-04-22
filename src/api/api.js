@@ -74,7 +74,7 @@ export const updateCardBalanceAPI = async ({ user_id, beta_block_id, card_balanc
   return response.data;
 };
 
-export const getLeaderBoardAPI = async ({ limit, page }) => {
-  const response = await axiosInstance.post(Endpoint.leader_board, { limit, page });
+export const getLeaderBoardAPI = async ({ beta_block_id, limit, page }) => {
+  const response = await axiosInstance.post(Endpoint.leader_board, { beta_block_id, limit, page });
   return response.data;
 };

@@ -180,7 +180,7 @@ const LauchScreenEncrypted = () => {
             viewAllText="View All"
             viewAllAction={handleViewAllPress}
             style={{ marginBottom: 20 }} />
-          <LeaderBoardList numberOfItems={5} style={{ marginBottom: 32 }} />
+          <LeaderBoardList numberOfItems={5} style={{ marginBottom: 32 }} beta_block_id={user.current_beta_block} showPagination={false} />
           <NextDrawCard />
         </View>
       </TopNavTemplate>
