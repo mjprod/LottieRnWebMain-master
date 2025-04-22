@@ -184,8 +184,8 @@ const useApiRequest = () => {
     },
   });
 
-  const getLeaderBoard = async (limit, page = 1) => {
-    return getLeaderBoardMutation.mutateAsync({ limit, page });
+  const getLeaderBoard = async (beta_block_id, limit, page = 1) => {
+    return getLeaderBoardMutation.mutateAsync({ beta_block_id, limit, page });
   };
 
   return {
