@@ -4,21 +4,13 @@ import {
 } from '@tanstack/react-query';
 import React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { AppRoutes } from './components/AppRoutes';
 import { SnackbarProvider } from "./components/SnackbarContext";
 import { GameProvider } from "./context/GameContext";
 import { SoundProvider } from "./hook/useSoundPlayer";
 import { ThemeProvider } from "./hook/useTheme";
 import "./index.css";
-import DailyScreen from "./screens/daily/DailyScreen";
-import GameOverScreen from "./screens/GameOverScreen";
-import HowToPlayScreen from "./screens/learn/HowToPlayScreen";
-import LauchScreen from "./screens/LauchScreen";
-import LeaderBoardScreen from "./screens/LeaderBoardScreen";
-import NotFoundScreen from "./screens/NotFoundScreen";
-import StartScreen from "./screens/StartScreen";
-import ScratchLuckyGame from "./screens/game/ScratchLuckyGame";
-import InfoScreen, { InfoScreenContents } from "./screens/info/InfoScreen";
 import { Colors } from './util/constants';
 
 const { height } = Dimensions.get("window");
@@ -51,21 +43,7 @@ export default function App() {
               <BrowserRouter>
                 <SoundProvider>
                   <SnackbarProvider>
-                    <Routes>
-                      <Route path="/*" element={<NotFoundScreen />} />
-                      <Route path="/daily" element={<DailyScreen />} />
-                      <Route path="/start" element={<StartScreen />} />
-                      <Route path="/game" element={<ScratchLuckyGame />} />
-                      <Route path="/game_over" element={<GameOverScreen />} />
-                      <Route path="/how_to_play" element={<HowToPlayScreen />} />
-                      <Route path="/leader_board" element={<LeaderBoardScreen />} />
-                      <Route path="/:id/:name/:email" element={<LauchScreen />} />
-                      <Route path="/" element={<LauchScreen />} />
-                      <Route path={InfoScreenContents.extending} element={<InfoScreen contentName={InfoScreenContents.extending} />} />
-                      <Route path={InfoScreenContents.thank_you} element={<InfoScreen contentName={InfoScreenContents.thank_you} />} />
-                      <Route path={InfoScreenContents.in_progress} element={<InfoScreen contentName={InfoScreenContents.in_progress} />} />
-                      <Route path={InfoScreenContents.congratulations} element={<InfoScreen contentName={InfoScreenContents.congratulations} />} />
-                    </Routes>
+                    <AppRoutes />
                   </SnackbarProvider>
                 </SoundProvider>
               </BrowserRouter>

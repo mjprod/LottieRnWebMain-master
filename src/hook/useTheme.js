@@ -19,12 +19,6 @@ const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [themeSequence, setThemeSequence] = useState();
-
-  useEffect(() => {
-    console.log("Current themeSequence:", themeSequence);
-    
-  }, [themeSequence]);
-
   const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
   const [gameCenterIcon, setGameCenterIcon] = useState();
   const [backgroundLoop, setBackgroundLoop] = useState();
@@ -40,7 +34,7 @@ export const ThemeProvider = ({ children }) => {
 
   const updateThemeUsingGames = (games) => {
     const themeSequence = games.map(game => {
-      switch(game.theme_id) {
+      switch (game.theme_id) {
         case 1: return ThemeEnum.EGYPT
         case 2: return ThemeEnum.MYTHOLOGY
         case 3: return ThemeEnum.INTERNATIONAL
@@ -133,7 +127,7 @@ export const ThemeProvider = ({ children }) => {
 
   const contextValue = useMemo(
     () => {
-      if(themeSequence) {
+      if (themeSequence) {
         return ({
           themeSequence,
           currentTheme: themeSequence[currentThemeIndex],
@@ -164,7 +158,7 @@ export const ThemeProvider = ({ children }) => {
           updateThemeUsingGames,
           currentThemeIndex,
         });
-      }else {
+      } else {
         return ({
           themeSequence,
           currentTheme: null,

@@ -1,43 +1,45 @@
 import { Howl } from "howler";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useSound } from "./useSoundPlayer";
+
+const soundFiles = {
+    x4: require("../assets/sounds/combo.mp3"),
+    x3: require("../assets/sounds/nice_combo.mp3"),
+    x2: require("../assets/sounds/ultra_combo.mp3"),
+};
 
 const useComboSounds = () => {
     const { isSoundEnabled } = useSound();
-
     const soundRefs = useRef({});
 
-    const initializeComboSounds = useCallback(() => {
-        soundRefs.current = {
-            x4: new Howl({
-                src: [require(`./../assets/sounds/combo.mp3`)],
-                preload: true,
-            }),
-            x3: new Howl({
-                src: [require(`./../assets/sounds/nice_combo.mp3`)],
-                preload: true,
-            }),
-            x2: new Howl({
-                src: [require(`./../assets/sounds/ultra_combo.mp3`)],
-                preload: true,
-            }),
-        };
+    useEffect(() => {
+        // Inicializa sons automaticamente ao montar
+        soundRefs.current = Object.entries(soundFiles).reduce((sounds, [key, src]) => {
+            sounds[key] = new Howl({ src: [src], preload: true });
+            return sounds;
+        }, {});
 
+        // Cleanup automático ao desmontar
         return () => {
-            Object.values(soundRefs.current).forEach(sound => {
+            Object.values(soundRefs.current).forEach((sound) => {
                 sound.stop();
                 sound.unload();
             });
+            soundRefs.current = {};
         };
-    }, [soundRefs]);
+    }, []);
 
-    const playComboSound = useCallback((soundKey) => {
-        if (soundRefs.current[soundKey] && isSoundEnabled) {
-            soundRefs.current[soundKey].play();
-        }
-    }, [soundRefs, isSoundEnabled]);
+    const playComboSound = useCallback(
+        (soundKey) => {
+            const sound = soundRefs.current[soundKey];
+            if (isSoundEnabled && sound) {
+                sound.play();
+            }
+        },
+        [isSoundEnabled]
+    );
 
-    return { initializeComboSounds, playComboSound };
-}
+    return { playComboSound };
+};
 
 export default useComboSounds;

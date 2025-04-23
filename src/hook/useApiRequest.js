@@ -99,7 +99,6 @@ const useApiRequest = () => {
   const getGamesMutation = useMutation({
     mutationFn: getGamesAPI,
     onSuccess: () => {
-      console.log('Games fetched successfully!');
       queryClient.invalidateQueries(['games']);
     },
     onError: (error) => {

@@ -1,13 +1,21 @@
-import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import { Animated, Dimensions, Platform, StyleSheet, View } from "react-native";
-import { Easing } from "react-native";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import {
+  Animated,
+  Dimensions,
+  Easing,
+  Platform,
+  StyleSheet,
+  View,
+} from "react-native";
 import { useLocation } from "react-router";
-import { BackgroundGame } from "../../components/BackgroundGame.js";
-import IntroThemeVideo from "./components/IntroThemeVideo";
+import { BackgroundGame } from "../../components/BackgroundGame";
 import LoadingView from "../../components/LoadingView.js";
-import LuckySymbolCollect from "./components/LuckySymbolCollect";
-import ScratchLayout from "./components/ScratchLayout";
-import TopLayout from "./components/TopLayout";
 import { useGame } from "../../context/GameContext.js";
 import useApiRequest from "../../hook/useApiRequest.js";
 import useAppNavigation from "../../hook/useAppNavigation.js";
@@ -16,6 +24,10 @@ import { useTheme } from "../../hook/useTheme.js";
 import { BONUS_PACK_NUMBER_OF_CARDS, Colors } from "../../util/constants";
 import BottomDrawer from "./components/BottomDrawer";
 import InitialCountDownView from "./components/InitialCountDownView";
+import IntroThemeVideo from "./components/IntroThemeVideo";
+import LuckySymbolCollect from "./components/LuckySymbolCollect";
+import ScratchLayout from "./components/ScratchLayout";
+import TopLayout from "./components/TopLayout";
 import WinLuckySymbolView from "./components/WinLuckySymbolView";
 
 const { width } = Dimensions.get("window");
@@ -128,7 +140,7 @@ const ScratchLuckyGame = () => {
       setTicketCount(user.ticket_balance);
       setLuckySymbolCount(user.lucky_symbol_balance);
     } else {
-      appNavigation.goToNotFoundPage()
+      appNavigation.goToNotFoundPage();
     }
   }, [user]);
 
@@ -151,9 +163,12 @@ const ScratchLuckyGame = () => {
     }
   }, [countDownStarted, countDownLottieRef]);
 
-  const saveLuckySymbol = useCallback(async (luckySymbol) => {
-    setLuckySymbolCount(luckySymbol);
-  }, [setLuckySymbolCount]);
+  const saveLuckySymbol = useCallback(
+    async (luckySymbol) => {
+      setLuckySymbolCount(luckySymbol);
+    },
+    [setLuckySymbolCount]
+  );
 
   const handleGameOver = useCallback(() => {
     setGameOver(true);
@@ -174,7 +189,13 @@ const ScratchLuckyGame = () => {
         handleGameOver();
       }
     }
-  }, [luckySymbolCount, scratchCardLeft, currentTheme, nextTheme, handleGameOver]);
+  }, [
+    luckySymbolCount,
+    scratchCardLeft,
+    currentTheme,
+    nextTheme,
+    handleGameOver,
+  ]);
 
   const addLuckySymbol = useCallback(() => {
     if (luckySymbolCount > 2) {
@@ -194,18 +215,21 @@ const ScratchLuckyGame = () => {
     }
   }, [luckySymbolCount, user, saveLuckySymbol, nextCard, updateLuckySymbol]);
 
-  const decrementLuckySymbol = useCallback((count, onComplete) => {
-    if (count >= 0) {
-      saveLuckySymbol(count);
-      setTimeout(() => {
-        if (count === 0) {
-          setCollectLuckySymbolVideo(true);
-        } else {
-          decrementLuckySymbol(count - 1, onComplete);
-        }
-      }, 200);
-    }
-  }, [saveLuckySymbol]);
+  const decrementLuckySymbol = useCallback(
+    (count, onComplete) => {
+      if (count >= 0) {
+        saveLuckySymbol(count);
+        setTimeout(() => {
+          if (count === 0) {
+            setCollectLuckySymbolVideo(true);
+          } else {
+            decrementLuckySymbol(count - 1, onComplete);
+          }
+        }, 200);
+      }
+    },
+    [saveLuckySymbol]
+  );
 
   const handleLuckySymbolWonVideoEnd = useCallback(() => {
     setWinLuckySymbolVideo(false);
@@ -297,7 +321,6 @@ const ScratchLuckyGame = () => {
     ],
     [nextCardAnimationFinished]
   );
-
   const gameBackground = useMemo(
     () => (
       <BackgroundGame
@@ -307,7 +330,6 @@ const ScratchLuckyGame = () => {
     ),
     [backGroundVideo, scratchStarted, gameOver]
   );
-
   if (getGamesLoading || fetchUserDetailsLoading) return <LoadingView />;
   if (getGamesError || fetchUserDetailsError)
     return <p>Error: {getGamesError || fetchUserDetailsError}</p>;
@@ -316,7 +338,9 @@ const ScratchLuckyGame = () => {
     <View style={containerStyle}>
       {gameBackground}
       <View style={styles.containerOverlay}>
-        <Animated.View style={[styles.background, { transform: [{ translateX }] }]}>
+        <Animated.View
+          style={[styles.background, { transform: [{ translateX }] }]}
+        >
           <Animated.View style={{ marginTop: marginTopAnim }}>
             <TopLayout setTimerGame={setTimerGame} clickCount={clickCount} />
           </Animated.View>
@@ -367,7 +391,9 @@ const ScratchLuckyGame = () => {
           onCountDownComplete={handleCountdownFinish}
         />
       )}
-      {introThemeVideo && <IntroThemeVideo handleVideoEnd={handleVideoIntroEnd} />}
+      {introThemeVideo && (
+        <IntroThemeVideo handleVideoEnd={handleVideoIntroEnd} />
+      )}
     </View>
   );
 };

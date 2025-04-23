@@ -1,22 +1,23 @@
-import React, { useMemo, useEffect, useRef, useState } from "react";
-import {
-  Animated,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import LottieView from "react-native-web-lottie";
-import { useGame } from "../../../context/GameContext";
-import { useTheme } from "../../../hook/useTheme";
-import NumberTicker from "./NumberTicker";
-import AssetPack from "../../../util/AssetsPack";
-import useComboSounds from "../../../hook/useComboSounds";
-import { Colors, Fonts } from "../../../util/constants";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Animated, Image, StyleSheet, Text, View } from "react-native";
 import Svg, { Path } from "react-native-svg-web";
+import LottieView from "react-native-web-lottie";
 import LuckySymbolsSlot from "../../../components/LuckySymbolsSlot";
+import { useGame } from "../../../context/GameContext";
+import useComboSounds from "../../../hook/useComboSounds";
+import { useTheme } from "../../../hook/useTheme";
+import AssetPack from "../../../util/AssetsPack";
+import { Colors, Fonts } from "../../../util/constants";
+import NumberTicker from "./NumberTicker";
 
-const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) => (
+const CentralImageWithLottie = ({
+  gameCenterIcon,
+  playAnimation,
+  animationIndex,
+  lottieRef,
+  animations,
+  onAnimationFinish,
+}) => (
   <View style={styles.container}>
     <Image source={gameCenterIcon} style={styles.centralImage} />
     {playAnimation && (
@@ -42,15 +43,15 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
 
   const [animationIndex, setAnimationIndex] = useState(0);
   const [playAnimation, setPlayAnimation] = useState(false);
-  const animations = [AssetPack.lotties.COMBO_2X, AssetPack.lotties.COMBO_3X, AssetPack.lotties.COMBO_4X];
+  const animations = [
+    AssetPack.lotties.COMBO_2X,
+    AssetPack.lotties.COMBO_3X,
+    AssetPack.lotties.COMBO_4X,
+  ];
 
   const lottieRef = useRef(null);
 
-  const { initializeComboSounds, playComboSound } = useComboSounds();
-
-  useEffect(() => {
-    initializeComboSounds();
-  }, []);
+  const { playComboSound } = useComboSounds();
 
   useEffect(() => {
     switch (clickCount) {
@@ -111,20 +112,31 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
     }
   };
 
-  const backgroundSource = useMemo(() => getBackground(countdownTimer), [countdownTimer]);
+  const backgroundSource = useMemo(
+    () => getBackground(countdownTimer),
+    [countdownTimer]
+  );
 
   return (
-    <View style={{ marginBottom: -30 }} >
+    <View style={{ marginBottom: -30 }}>
       <View style={styles.mainWrapper}>
         <View style={styles.textContainer}>
           <View style={styles.leftContiner}>
             <View style={styles.topTag}>
-              <Svg width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute", top: 0 }}>
-                <Path d="M141.818 0L7.27631 0C3.25771 0 0 3.25772 0 7.27632V40H155L141.818 0Z" fill="#262626" />
+              <Svg
+                width="155"
+                height="40"
+                viewBox="0 0 155 40"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ position: "absolute", top: 0 }}
+              >
+                <Path
+                  d="M141.818 0L7.27631 0C3.25771 0 0 3.25772 0 7.27632V40H155L141.818 0Z"
+                  fill="#262626"
+                />
               </Svg>
-              <Text style={styles.textTopLeft}>
-                POP POINTS COUNTDOWN
-              </Text>
+              <Text style={styles.textTopLeft}>POP POINTS COUNTDOWN</Text>
             </View>
             <View style={[styles.rowCountDown, backgroundSource]}>
               {scratchStarted && (
@@ -137,13 +149,12 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
                     loop={false}
                   />
                   <Animated.View
-                    style={[{ transform: [{ scale: scaleAnim }] }]}>
+                    style={[{ transform: [{ scale: scaleAnim }] }]}
+                  >
                     <Text style={[styles.countDownText]}>
                       {countdownTimer * 100}
                     </Text>
-                    <Text style={[styles.pointValue]}>
-                      Point value
-                    </Text>
+                    <Text style={[styles.pointValue]}>Point value</Text>
                   </Animated.View>
                 </>
               )}
@@ -154,26 +165,44 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
           </View>
           <View style={styles.rightContainer}>
             <View style={styles.topTag}>
-              <Svg width="155" height="40" viewBox="0 0 155 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute", top: 0, right: 0, transform: [{ scaleX: -1 }] }}>
-                <Path d="M141.818 0L7.27631 0C3.25771 0 0 3.25772 0 7.27632V40H155L141.818 0Z" fill="#262626" />
+              <Svg
+                width="155"
+                height="40"
+                viewBox="0 0 155 40"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  transform: [{ scaleX: -1 }],
+                }}
+              >
+                <Path
+                  d="M141.818 0L7.27631 0C3.25771 0 0 3.25772 0 7.27632V40H155L141.818 0Z"
+                  fill="#262626"
+                />
               </Svg>
               <View style={styles.topRightTextContainer}>
                 <Image
                   style={{ width: 14, height: 14, marginTop: 2 }}
-                  source={AssetPack.icons.LUCKY_SYMBOL} />
+                  source={AssetPack.icons.LUCKY_SYMBOL}
+                />
                 <Text style={styles.textTopRight}>LUCKY SYMBOL</Text>
               </View>
             </View>
             <View style={styles.rowLuckySymbol}>
               <LuckySymbolsSlot />
             </View>
-            <View style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              paddingRight: 16,
-              paddingTop: 8
-            }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingRight: 16,
+                paddingTop: 8,
+              }}
+            >
               <Text style={styles.textBottomRight}>3x Symbols = 12x</Text>
               <Image
                 style={{ marginLeft: 3, width: 18, height: 14 }}
@@ -275,7 +304,7 @@ const styles = StyleSheet.create({
     userSelect: "none",
     justifyContent: "center",
     alignItems: "center",
-    width: "100%"
+    width: "100%",
   },
   lottieAnimation: {
     width: 35,
