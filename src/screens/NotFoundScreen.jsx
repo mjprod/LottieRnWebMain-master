@@ -5,6 +5,11 @@ import GameButton from "../components/GameButton";
 import { Colors, Dimentions, Fonts } from "../util/constants";
 
 const NotFoundScreen = () => {
+  const handleButtonPress = ()=>{
+    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.iosApp) {
+      window.webkit.messageHandlers.iosApp.postMessage("Hello from PWA");
+    }
+  }
   return (
     <ImageBackground
       source={AssetPack.backgrounds.SCRACHIE_404}
@@ -35,7 +40,7 @@ const NotFoundScreen = () => {
       <GameButton
         style={{ width: "100%", marginBottom: Dimentions.marginXL }}
         text="TAKE ME BACK"
-        onPress={() => { }} />
+        onPress={handleButtonPress} />
     </ImageBackground>
   );
 };

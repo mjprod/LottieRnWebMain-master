@@ -99,7 +99,7 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
                     paddingHorizontal: marginHorizontal,
                     borderTopWidth: topNavOpacity, borderTopColor: Colors.jokerBlack200,
                     borderBottomWidth: 1, borderBottomColor: Colors.jokerBlack200
-                }, showDropShadow && { boxShadow: `0px 6px 10px 2px rgba(0, 0, 0, 0.7` }]}>
+                }, showDropShadow && { boxShadow: '0px 4px 4px -2px rgba(0, 0, 0, 0.5)'}]}>
                     <ProfileHeader id={user.user_id} name={user.name} />
                 </Animated.View>
             }

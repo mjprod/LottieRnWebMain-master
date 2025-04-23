@@ -77,23 +77,18 @@ const StartScreen = () => {
                 <View style={styles.ticketsSection}>
                     <ResourceTile style={{ width: "100%" }} number={initialScratchCardLeft} />
                 </View>
-                <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column", marginTop: 24 }}>
-                    <View style={styles.buttonContainer}>
-                        <View style={{ flex: 0.4, justifyContent: "flex-start" }}>
-                            <RoundedButton title="Back" onPress={handleBackPress} />
-                        </View>
-                        <View style={{ flex: 0.6, justifyContent: "flex-end" }} >
-                            <GameButton
-                                buttonSize={ButtonSize.TWO_THIRD}
-                                text="Play Now"
-                                onPress={handlePlayNow}
-                            />
-                        </View>
+                <View style={{ flexGrow: 1}} />
+                <View style={styles.buttonContainer}>
+                    <View style={{ flex: 0.4, justifyContent: "flex-start" }}>
+                        <RoundedButton title="Back" onPress={handleBackPress} />
                     </View>
-                </View>
-                <View style={{ flexGrow: 1 }} />
-                <View style={styles.timerSection}>
-                    <TimerComponent style={{ paddingVertical: Dimentions.marginL }} />
+                    <View style={{ flex: 0.6, justifyContent: "flex-end" }} >
+                        <GameButton
+                            buttonSize={ButtonSize.TWO_THIRD}
+                            text="Play Now"
+                            onPress={handlePlayNow}
+                        />
+                    </View>
                 </View>
             </View>
         </TopNavTemplate>
@@ -103,15 +98,13 @@ const StartScreen = () => {
 const styles = StyleSheet.create({
     statsSection: {
         flex: 1,
+        flexDirection: 'column',       // default, but explicit helps
+        justifyContent: 'space-between',
         borderTopColor: Colors.jokerBlack200,
         borderTopWidth: 1,
         marginHorizontal: Dimentions.marginS,
         paddingTop: 32,
-    },
-    timerSection: {
-        flex: 1,
-        marginBottom: 32
-    },
+      },
     title: {
         color: Colors.jokerGold400,
         fontFamily: Fonts.TekoMedium,
@@ -133,7 +126,7 @@ const styles = StyleSheet.create({
         marginVertical: 8,
     },
     buttonContainer: {
-        flex: 1,
+        flexShrink: 1,
         gap: 20,
         flexDirection: "row",
         justifyContent: "space-between",
