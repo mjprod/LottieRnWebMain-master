@@ -8,8 +8,15 @@ import {
 } from "react-native";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
+import { Fonts } from "../util/constants";
 
-const GameButton = ({ onPress, text, loading = false, style = {} }) => {
+export const ButtonSize = {
+  FULL: AssetPack.lotties.CTA_BUTTON_FULL_WIDTH,
+  HALF: AssetPack.lotties.CTA_BUTTON_HALF_WIDTH,
+  TWO_THIRD: AssetPack.lotties.CTA_BUTTON_TWO_THIRD,
+};
+
+const GameButton = ({ text, onPress, buttonSize = ButtonSize.FULL, loading = false, style = {} }) => {
   return (
     <TouchableOpacity style={[styles.btn, style]} onPress={onPress}>
       <LottieView
@@ -19,10 +26,12 @@ const GameButton = ({ onPress, text, loading = false, style = {} }) => {
           left: 0,
           width: "100%",
           height: "100%",
+          resizeMode:"cover"
         }}
-        source={AssetPack.lotties.CTA_BUTTON_FULL_WIDTH}
+        source={buttonSize}
         autoPlay
         speed={1}
+        resizeMode="cover"
         loop={true}
       />
       {loading ? (
@@ -46,7 +55,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     elevation: 0,
     zIndex: 999,
-    width: "100%",
   },
   content: {
     flexDirection: "row",
@@ -55,10 +63,13 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.0)",
   },
   text: {
+    justifyContent: "center",
+    alignItems: "center",
     color: "#3E362A",
-    fontSize: 22,
+    paddingTop: 2,
+    fontSize: 28,
     textTransform: "uppercase",
-    fontFamily: "Teko-Medium",
+    fontFamily: Fonts.TekoMedium,
   },
 });
 

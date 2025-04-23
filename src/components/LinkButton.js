@@ -1,5 +1,6 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Colors, Fonts } from "../util/constants";
 
 const TimerComponent = ({ text, handlePress, style }) => {
   return (
@@ -13,10 +14,9 @@ const styles = StyleSheet.create({
   buttonText: {
     flex: 1,
     textAlign: "center",
-    fontFamily: "Inter-Medium",
-    fontWeight: 500,
-    fontSize: 14,
-    color: "#A6A6A6",
+    fontFamily: Fonts.InterRegular,
+    fontSize: 16,
+    color: Colors.jokerBlack50,
     textDecorationLine: "underline",
   },
 });

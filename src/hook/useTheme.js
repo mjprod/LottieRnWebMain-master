@@ -1,14 +1,13 @@
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from "react";
-import { numberOfCards } from "../global/Settings";
 import themes from "../global/themeConfig";
 
-// Enum for different themes
 export const ThemeEnum = Object.freeze({
   EGYPT: "egypt",
   MYTHOLOGY: "mythology",
@@ -16,89 +15,42 @@ export const ThemeEnum = Object.freeze({
   COWBOY: "cowboy",
 });
 
-// Function to shuffle an array
-const shuffleArray = (array) => {
-  return array
-    .map((value) => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
-};
-
-// Function to generate the sequence with each theme repeated 3 times consecutively
-const getRandomThemesArray = () => {
-  const themeValues = shuffleArray(Object.values(ThemeEnum)); // Shuffle themes
-
-  // Create the sequence with each theme appearing 3 times consecutively
-  const themesArray = themeValues.flatMap((theme) => Array(3).fill(theme));
-
-  return themesArray;
-};
-
-// Creating the theme context
 const ThemeContext = createContext();
 
-// The ThemeProvider component will manage and provide the theme data to its children
 export const ThemeProvider = ({ children }) => {
-  // State to keep track of the current theme sequence (array of themes)
-  const [themeSequence, setThemeSequence] = useState(
-    getRandomThemesArray(numberOfCards)
-  );
-  //const [currentThemeSequence, setCurrentThemeSequence] = useState();
+  const [themeSequence, setThemeSequence] = useState();
 
-  // Log the themeSequence every time it changes
   useEffect(() => {
     console.log("Current themeSequence:", themeSequence);
-  }, [themeSequence]); // This will log the themeSequence whenever it changes
+    
+  }, [themeSequence]);
 
-  // State to track the current theme (by index)
   const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
+  const [gameCenterIcon, setGameCenterIcon] = useState();
+  const [backgroundLoop, setBackgroundLoop] = useState();
+  const [backgroundScratchCard, setBackgroundScratchCard] = useState();
+  const [introChromeTheme, setIntroChromeTheme] = useState();
+  const [introTheme, setIntroTheme] = useState();
+  const [lottiePopBlue, setLottiePopBlue] = useState();
+  const [lottiePopGreen, setLottiePopGreen] = useState();
+  const [lottiePopOrange, setLottiePopOrange] = useState();
+  const [lottiePopPink, setLottiePopPink] = useState();
+  const [soundMuteOnBackground, setSoundMuteOnBackground] = useState();
+  const [soundMuteOffBackground, setSoundMuteOffBackground] = useState();
 
-  // Initialize gameCenterIcon and backgroundLoop based on the current theme
-  const [gameCenterIcon, setGameCenterIcon] = useState(
-    themes[themeSequence[currentThemeIndex]].gameCenterIcon
-  );
-  const [backgroundLoop, setBackgroundLoop] = useState(
-    themes[themeSequence[currentThemeIndex]].backgroundLoop
-  );
-  const [backgroundScratchCard, setBackgroundScratchCard] = useState(
-    themes[themeSequence[currentThemeIndex]].backgroundScratchCard
-  );
-  const [introChromeTheme, setIntroChromeTheme] = useState(
-    themes[themeSequence[currentThemeIndex]].intro_chrome
-  );
-  const [introTheme, setIntroTheme] = useState(
-    themes[themeSequence[currentThemeIndex]].intro
-  );
-  const [lottiePopBlue, setLottiePopBlue] = useState(
-    themes[themeSequence[currentThemeIndex]].lottieScratchieBubblePopBlue
-  );
-  const [lottiePopGreen, setLottiePopGreen] = useState(
-    themes[themeSequence[currentThemeIndex]].lottieScratchieBubblePopGreen
-  );
-  const [lottiePopOrange, setLottiePopOrange] = useState(
-    themes[themeSequence[currentThemeIndex]].lottieScratchieBubblePopOrange
-  );
-  const [lottiePopPink, setLottiePopPink] = useState(
-    themes[themeSequence[currentThemeIndex]].lottieScratchieBubblePopPink
-  );
+  const updateThemeUsingGames = (games) => {
+    const themeSequence = games.map(game => {
+      switch(game.theme_id) {
+        case 1: return ThemeEnum.EGYPT
+        case 2: return ThemeEnum.MYTHOLOGY
+        case 3: return ThemeEnum.INTERNATIONAL
+        case 4: return ThemeEnum.COWBOY
+      }
+    });
+    setThemeSequence(themeSequence)
+    setCurrentThemeIndex(0);
+  }
 
-  const [soundMuteOnBackground, setSoundMuteOnBackground] = useState(
-    themes[themeSequence[currentThemeIndex]].soundMuteOnBackground
-  );
-
-  const [soundMuteOffBackground, setSoundMuteOffBackground] = useState(
-    themes[themeSequence[currentThemeIndex]].soundMuteOffBackground
-  );
-
-  // Function to update the sequence of themes dynamically
-  const updateThemeSequence = (numberOfCards) => {
-    console.log(`Updating theme sequence with ${numberOfCards} cards`);
-    const newThemeSequence = getRandomThemesArray(numberOfCards);
-    setThemeSequence(newThemeSequence);
-    setCurrentThemeIndex(0); // Reset to the first theme when the sequence is updated
-  };
-
-  // Function to set the current theme by index
   const setCurrentThemeByIndex = (index) => {
     if (index >= 0 && index < themeSequence.length) {
       setCurrentThemeIndex(index);
@@ -107,8 +59,7 @@ export const ThemeProvider = ({ children }) => {
     }
   };
 
-  // Function to go to the next theme
-  const goToNextTheme = () => {
+  const goToNextTheme = useCallback(() => {
     console.log("Going to the next theme");
     if (currentThemeIndex < themeSequence.length - 1) {
       setCurrentThemeIndex(currentThemeIndex + 1);
@@ -116,12 +67,10 @@ export const ThemeProvider = ({ children }) => {
     } else {
       console.log("You are already on the last theme");
     }
-  };
+  }, [currentThemeIndex, themeSequence]);
 
-  // This effect runs every time the themeSequence or currentThemeIndex changes.
-  // It updates the gameCenterIcon and backgroundLoop based on the current theme.
   useEffect(() => {
-    if (themeSequence.length > 0) {
+    if (themeSequence && themeSequence.length > 0) {
       setGameCenterIcon(
         themes[themeSequence[currentThemeIndex]].gameCenterIcon
       );
@@ -154,40 +103,92 @@ export const ThemeProvider = ({ children }) => {
         themes[themeSequence[currentThemeIndex]].soundMuteOffBackground
       );
     }
-  }, [currentThemeIndex, themeSequence]); // The effect depends on currentThemeIndex and themeSequence
+  }, [currentThemeIndex, themeSequence]);
 
-  // Memoize the context value to prevent unnecessary re-renders
+  // Preload assets for the next theme
+  useEffect(() => {
+    if (themeSequence && currentThemeIndex + 1 < themeSequence.length) {
+      const nextKey = themeSequence[currentThemeIndex + 1];
+      const nextAssets = themes[nextKey];
+      const assetUrls = [
+        nextAssets.gameCenterIcon,
+        nextAssets.backgroundLoop,
+        nextAssets.backgroundScratchCard,
+        nextAssets.intro_chrome,
+        nextAssets.intro,
+        nextAssets.lottieScratchieBubblePopBlue,
+        nextAssets.lottieScratchieBubblePopGreen,
+        nextAssets.lottieScratchieBubblePopOrange,
+        nextAssets.lottieScratchieBubblePopPink,
+        nextAssets.soundMuteOnBackground,
+        nextAssets.soundMuteOffBackground
+      ].filter(Boolean);
+      assetUrls.forEach((url) => {
+        // Preload images and media by creating Image objects
+        const img = new Image();
+        img.src = url;
+      });
+    }
+  }, [themeSequence, currentThemeIndex]);
+
   const contextValue = useMemo(
-    () => ({
-      themeSequence,
-      currentTheme: themeSequence[currentThemeIndex], // Current theme from the sequence
-      nextTheme: currentThemeIndex + 1 < themeSequence.length
-        ? themeSequence[currentThemeIndex + 1]
-        : null,
-      gameCenterIcon, // Current game center icon
-      backgroundLoop, // Current background loop
-      backgroundScratchCard,
-      introChromeTheme,
-      introTheme,
-      introThemeNext:
-        currentThemeIndex + 1 < themeSequence.length
-          ? themes[themeSequence[currentThemeIndex + 1]].intro_default
-          : null,
-      introChromeThemeNext:
-        currentThemeIndex + 1 < themeSequence.length
-          ? themes[themeSequence[currentThemeIndex + 1]].intro_chrome
-          : null,
-      lottiePopBlue,
-      lottiePopGreen,
-      lottiePopOrange,
-      lottiePopPink,
-      soundMuteOnBackground,
-      soundMuteOffBackground,
-      updateThemeSequence,
-      setCurrentThemeByIndex, // Function to change the current theme by index
-      goToNextTheme, // Function to go to the next theme
-      currentThemeIndex, // Expose the current theme index
-    }),
+    () => {
+      if(themeSequence) {
+        return ({
+          themeSequence,
+          currentTheme: themeSequence[currentThemeIndex],
+          nextTheme: currentThemeIndex + 1 < themeSequence.length
+            ? themeSequence[currentThemeIndex + 1]
+            : null,
+          gameCenterIcon,
+          backgroundLoop,
+          backgroundScratchCard,
+          introChromeTheme,
+          introTheme,
+          introThemeNext:
+            currentThemeIndex + 1 < themeSequence.length
+              ? themes[themeSequence[currentThemeIndex + 1]].intro_default
+              : null,
+          introChromeThemeNext:
+            currentThemeIndex + 1 < themeSequence.length
+              ? themes[themeSequence[currentThemeIndex + 1]].intro_chrome
+              : null,
+          lottiePopBlue,
+          lottiePopGreen,
+          lottiePopOrange,
+          lottiePopPink,
+          soundMuteOnBackground,
+          soundMuteOffBackground,
+          setCurrentThemeByIndex,
+          goToNextTheme,
+          updateThemeUsingGames,
+          currentThemeIndex,
+        });
+      }else {
+        return ({
+          themeSequence,
+          currentTheme: null,
+          nextTheme: null,
+          gameCenterIcon,
+          backgroundLoop,
+          backgroundScratchCard,
+          introChromeTheme,
+          introTheme,
+          introThemeNext: null,
+          introChromeThemeNext: null,
+          lottiePopBlue,
+          lottiePopGreen,
+          lottiePopOrange,
+          lottiePopPink,
+          soundMuteOnBackground,
+          soundMuteOffBackground,
+          setCurrentThemeByIndex,
+          goToNextTheme,
+          updateThemeUsingGames,
+          currentThemeIndex,
+        });
+      }
+    },
     [
       themeSequence,
       currentThemeIndex,
@@ -204,8 +205,6 @@ export const ThemeProvider = ({ children }) => {
       soundMuteOffBackground,
     ]
   );
-
-  // The ThemeContext.Provider provides the current theme, sequence, assets, and update functions to all children
   return (
     <ThemeContext.Provider value={contextValue}>
       {children}
@@ -213,11 +212,8 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-// Custom hook to consume the ThemeContext
 export const useTheme = () => {
   const context = useContext(ThemeContext);
-
-  // If useTheme is used outside of ThemeProvider, throw an error
   if (!context) {
     throw new Error("useTheme must be used within a ThemeProvider");
   }

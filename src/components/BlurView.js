@@ -1,27 +1,29 @@
 import React from 'react';
-import { View, Text, StyleSheet, Platform, ImageBackground } from 'react-native';
+import { View, Platform } from 'react-native';
 
 const BlurView = ({ children, blurAmount, style }) => {
-    if (Platform.OS === 'web') {
-      return (
-        <div
-          style={{
-            ...style,
-            backdropFilter: `blur(${blurAmount}px)`,
-            WebkitBackdropFilter: `blur(${blurAmount}px)`, // For Safari
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-          }}
-        >
-          {children}
-        </div>
-      );
-    }
-  
+  if (Platform.OS === 'web') {
     return (
-      <View style={style}>
+      <div
+        style={{
+          ...style,
+          backdropFilter: `blur(${blurAmount}px)`,
+          WebkitBackdropFilter: `blur(${blurAmount}px)`,
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+        }}
+      >
         {children}
-      </View>
+      </div>
     );
-  };
+  }
+
+  return (
+    <View style={style}>
+      {children}
+    </View>
+  );
+};
+
+export default BlurView

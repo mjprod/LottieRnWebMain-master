@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import { Animated, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Colors, Fonts } from '../util/constants';
 
 const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -9,14 +11,14 @@ const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 300,
-        useNativeDriver: false,
+        useNativeDriver: Platform.OS !== 'web',
       }).start(() => {
         if (duration !== Infinity) {
           setTimeout(() => {
             Animated.timing(fadeAnim, {
               toValue: 0,
               duration: 300,
-              useNativeDriver: true,
+              useNativeDriver: Platform.OS !== 'web',
             }).start(() => {
               onDismiss && onDismiss();
             });
@@ -36,7 +38,7 @@ const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
           Animated.timing(fadeAnim, {
             toValue: 0,
             duration: 300,
-            useNativeDriver: true,
+            useNativeDriver: Platform.OS !== 'web',
           }).start(() => {
             onDismiss && onDismiss();
           });
@@ -54,25 +56,33 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 20,
     right: 20,
-    backgroundColor: '#d32f2f',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-    borderRadius: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    borderRadius: 8,
     elevation: 3,
-    boxShadowColor: '#000',
+    borderColor: Colors.jokerBlack200,
+    borderWidth: 1,
+    boxShadowColor: Colors.jokerGold400,
+    backgroundColor: "#000000C7",
+    backdropFilter: `blur(10px)`,
+    WebkitBackdropFilter: `blur(10px)`,
     boxShadowOpacity: 0.3,
     boxShadowRadius: 4,
     boxShadowOffset: { width: 0, height: 2 },
   },
   snackbarText: {
-    color: '#fff',
+    fontFamily: Fonts.InterRegular,
+    color: Colors.jokerWhite50,
+    lineHeight: "150%",
+    fontSize: 12,
     flex: 1,
   },
   dismissText: {
-    color: '#fff',
-    marginLeft: 16,
-    fontWeight: 'bold',
+    color: Colors.jokerWhite50,
+    fontFamily: Fonts.InterSemiBold,
+    marginLeft: 12,
   },
 });
 

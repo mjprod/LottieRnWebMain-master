@@ -1,29 +1,20 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family:  sans-serif;
+::-webkit-scrollbar {
+  display: none;
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  max-height: 100vh; 
+/* Hide scrollbar for Firefox */
+* {
+  scrollbar-width: none;
 }
 
-@font-face {
-  font-family: 'Teko-Medium';
-  src: url('./assets/fonts/Teko-Medium.ttf') format('truetype');
+/* Hide scrollbar for IE/Edge */
+*::-ms-scrollbar {
+  display: none;
 }
 
-@font-face {
-  font-family: 'Inter-Medium';
-  src: url('./assets/fonts/Inter-Medium.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Inter-Medium';
-  src: url('./assets/fonts/Inter-Medium.ttf') format('truetype');
+html, body {
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 @font-face {
@@ -32,33 +23,56 @@ body {
 }
 
 @font-face {
+  font-family: 'Inter-ExtraBold';
+  src: url('./assets/fonts/Inter-ExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter-Medium';
+  src: url('./assets/fonts/Inter-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter-Regular-Italic';
+  src: url('./assets/fonts/Inter-Regular-Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter-Regular';
+  src: url('./assets/fonts/Inter-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter-SemiBold-Italic';
+  src: url('./assets/fonts/Inter-SemiBold-Italic.ttf') format('truetype');
+}
+
+@font-face {
   font-family: 'Inter-SemiBold';
   src: url('./assets/fonts/Inter-SemiBold.ttf') format('truetype');
 }
 
-
-/* Estilos globais */
-html, body, #root {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+@font-face {
+  font-family: 'Teko-Medium';
+  src: url('./assets/fonts/Teko-Medium.ttf') format('truetype');
 }
 
-/* Ajustes para dispositivos móveis */
-@media only screen and (max-width: 768px) {
-  .app {
-      width: 90vw;
-      height: 95vh;
-      border-radius: 0;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-      max-width: none;
-      max-height: none;
-      transform: scale(0.9);
-      transform-origin: top left;
-     
-  }
+@font-face {
+  font-family: 'Teko-Regular';
+  src: url('./assets/fonts/Teko-Regular.ttf') format('truetype');
 }
 
+video::-webkit-media-controls-overlay-play-button {
+  display: none;
+}
 
+input::selection {
+  background: #ffb7b7; /* Your highlight color */
+  color: #000;         /* Color for the selected text */
+}
+
+/* If needed, target Firefox separately */
+input::-moz-selection {
+  background: #ffb7b7;
+  color: #000;
+}

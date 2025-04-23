@@ -1,12 +1,27 @@
-import AssetPack from './../util/AssetsPack';
-import { DailyCardStatus } from './../util/constants';
-
-export default [
-    { id: "1", cardSet: 1, cardBackground: AssetPack.backgrounds.DAILY_CARD_BACKGROUND, status: DailyCardStatus.active, extras: null },
-    { id: "2", cardSet: 1, cardBackground: AssetPack.backgrounds.DAILY_CARD_BACKGROUND, status: DailyCardStatus.inactive, extras: null },
-    { id: "3", cardSet: 1, cardBackground: AssetPack.backgrounds.DAILY_CARD_BACKGROUND, status: DailyCardStatus.completed, extras: null },
-    { id: "4", cardSet: 2, cardBackground: AssetPack.backgrounds.DAILY_CARD_BACKGROUND, status: DailyCardStatus.inactive, extras: null },
-    { id: "5", cardSet: 1, cardBackground: AssetPack.backgrounds.DAILY_CARD_BACKGROUND, status: DailyCardStatus.inactive, extras: null },
-    { id: "6", cardSet: 2, cardBackground: AssetPack.backgrounds.DAILY_CARD_BACKGROUND, status: DailyCardStatus.inactive, extras: null },
-    { id: "7", cardSet: 1, cardBackground: AssetPack.backgrounds.DAILY_CARD_BACKGROUND, status: DailyCardStatus.inactive, extras: { name: "Gift Card", number: 1, background: AssetPack.backgrounds.DAILY_CARD_EXTRA_BACKGROUND} },
-]
+export const DailySetData = {
+    noOfCardsInSet: 12,
+    weeklyRewards: [
+        {
+            week: 1,
+            set: 1
+        }, {
+            week: 2,
+            set: 1
+        }, {
+            week: 3,
+            set: 1
+        }, {
+            week: 4,
+            set: 2
+        }, {
+            week: 5,
+            set: 1
+        }, {
+            week: 6,
+            set: 2
+        }, {
+            week: 7,
+            set: 1
+        }
+    ]
+}
