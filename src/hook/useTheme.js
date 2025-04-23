@@ -22,6 +22,7 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     console.log("Current themeSequence:", themeSequence);
+    
   }, [themeSequence]);
 
   const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
@@ -103,6 +104,32 @@ export const ThemeProvider = ({ children }) => {
       );
     }
   }, [currentThemeIndex, themeSequence]);
+
+  // Preload assets for the next theme
+  useEffect(() => {
+    if (themeSequence && currentThemeIndex + 1 < themeSequence.length) {
+      const nextKey = themeSequence[currentThemeIndex + 1];
+      const nextAssets = themes[nextKey];
+      const assetUrls = [
+        nextAssets.gameCenterIcon,
+        nextAssets.backgroundLoop,
+        nextAssets.backgroundScratchCard,
+        nextAssets.intro_chrome,
+        nextAssets.intro,
+        nextAssets.lottieScratchieBubblePopBlue,
+        nextAssets.lottieScratchieBubblePopGreen,
+        nextAssets.lottieScratchieBubblePopOrange,
+        nextAssets.lottieScratchieBubblePopPink,
+        nextAssets.soundMuteOnBackground,
+        nextAssets.soundMuteOffBackground
+      ].filter(Boolean);
+      assetUrls.forEach((url) => {
+        // Preload images and media by creating Image objects
+        const img = new Image();
+        img.src = url;
+      });
+    }
+  }, [themeSequence, currentThemeIndex]);
 
   const contextValue = useMemo(
     () => {
