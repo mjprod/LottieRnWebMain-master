@@ -1,4 +1,4 @@
-const CACHE_NAME = "app-cache-v1";
+const CACHE_NAME = "app-cache-v1.0.1";
 const urlsToCache = [
   "/",
   "/index.html",
@@ -19,6 +19,9 @@ self.addEventListener("install", (event) => {
 
 // Intercept Network Requests & Serve Cached Files
 self.addEventListener("fetch", (event) => {
+  if (event.request.method !== 'GET') {
+    return event.respondWith(fetch(event.request));
+  }
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {

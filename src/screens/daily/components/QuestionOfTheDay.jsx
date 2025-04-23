@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   question: {
     fontFamily: Fonts.InterRegular,
     color: Colors.jokerBlack50,
+    textAlign: "left",
     fontSize: 16,
     height: "100%",
   },
