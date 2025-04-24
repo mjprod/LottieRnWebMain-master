@@ -1,15 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import AssetPack from "../util/AssetsPack";
 import GameButton from "../components/GameButton";
 import { Colors, Dimentions, Fonts } from "../util/constants";
 
 const NotFoundScreen = () => {
-  const handleButtonPress = ()=>{
+  const [port, setPort] = useState(null);
+
+  useEffect(() => {
+    function onMessageChannelReady(e) {
+      console.log("🌐 Received initial message event", e);
+      const port = e.ports[0];
+      console.log("🌐 Extracted port:", port);
+      if (!port) return;
+      port.onmessage = msg => console.log("🌐 Port got message:", msg.data);
+      port.postMessage("HELLO_FROM_WEB");
+      setPort(port);
+    }
+  
+    window.addEventListener("message", onMessageChannelReady);
+    return () => window.removeEventListener("message", onMessageChannelReady);
+  }, []);
+
+  const handleButtonPress = () => {
+    if (port) {
+      alert("Close TWA")
+      port.postMessage({ action: "CLOSE_TWA" });
+    } else {
+      alert("postMessage port not ready")
+      console.warn("postMessage port not ready");
+    }
     if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.iosApp) {
       window.webkit.messageHandlers.iosApp.postMessage("Hello from PWA");
     }
-  }
+  };
   return (
     <ImageBackground
       source={AssetPack.backgrounds.SCRACHIE_404}
