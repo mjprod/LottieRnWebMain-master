@@ -9,7 +9,6 @@ const NotFoundScreen = () => {
 
   useEffect(() => {
     function onMessageChannelReady(e) {
-      console.log("🌐 Received initial message event", e);
       const port = e.ports[0];
       console.log("🌐 Extracted port:", port);
       if (!port) return;
@@ -24,10 +23,8 @@ const NotFoundScreen = () => {
 
   const handleButtonPress = () => {
     if (port) {
-      alert("Close TWA")
       port.postMessage({ action: "CLOSE_TWA" });
     } else {
-      alert("postMessage port not ready")
       console.warn("postMessage port not ready");
     }
     if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.iosApp) {

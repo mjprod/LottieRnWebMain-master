@@ -52,13 +52,14 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
         }
     };
 
-    return (<>
+    return (
+      <View style={styles.wrapper}>
         <Animated.ScrollView
             ref={scrollViewRef}
             style={styles.container}
-            contentContainerStyle={{ flexGrow: 1 }}
+            contentContainerStyle={{ flexGrow: 1, flexDirection: "column" }}
             stickyHeaderIndices={[1]}
-            onLayout={()=>{
+            onLayout={() => {
                 if (scrollViewRef.current) {
                     scrollViewRef.current.measure((x, y, width, height, pageX, pageY) => {
                         scrollViewRef.current.getScrollResponder().scrollResponderScrollTo({ y: 1, animated: false });
@@ -99,7 +100,7 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
                     paddingHorizontal: marginHorizontal,
                     borderTopWidth: topNavOpacity, borderTopColor: Colors.jokerBlack200,
                     borderBottomWidth: 1, borderBottomColor: Colors.jokerBlack200
-                }, showDropShadow && { boxShadow: '0px 4px 4px -2px rgba(0, 0, 0, 0.5)'}]}>
+                }, showDropShadow && { boxShadow: '0px 4px 4px -2px rgba(0, 0, 0, 0.5)' }]}>
                     <ProfileHeader id={user.user_id} name={user.name} />
                 </Animated.View>
             }
@@ -117,13 +118,13 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
                 loop={true}
             />
         </LinearGradient>
-    </>
+      </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1,
         backgroundColor: Colors.jokerBlack1100,
     },
     bottomChevronContainer: {
@@ -143,7 +144,10 @@ const styles = StyleSheet.create({
         width: 20,
         marginBottom: 32,
         pointerEvents: "box-none"
-    }
+    },
+    wrapper: {
+        flex: 1,
+    },
 });
 
 export default TopNavTemplate;
