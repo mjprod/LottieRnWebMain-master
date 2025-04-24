@@ -5,41 +5,66 @@ import { Colors, Fonts } from '../util/constants';
 
 const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
   const [fadeAnim] = useState(new Animated.Value(0));
+  const [slideAnim] = useState(new Animated.Value(50));
 
   useEffect(() => {
     if (visible) {
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: Platform.OS !== 'web',
-      }).start(() => {
+      Animated.parallel([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: Platform.OS !== 'web',
+        }),
+        Animated.timing(slideAnim, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: Platform.OS !== 'web',
+        }),
+      ]).start(() => {
         if (duration !== Infinity) {
           setTimeout(() => {
-            Animated.timing(fadeAnim, {
-              toValue: 0,
-              duration: 300,
-              useNativeDriver: Platform.OS !== 'web',
-            }).start(() => {
+            Animated.parallel([
+              Animated.timing(fadeAnim, {
+                toValue: 0,
+                duration: 300,
+                useNativeDriver: Platform.OS !== 'web',
+              }),
+              Animated.timing(slideAnim, {
+                toValue: 50,
+                duration: 300,
+                useNativeDriver: Platform.OS !== 'web',
+              }),
+            ]).start(() => {
               onDismiss && onDismiss();
             });
           }, duration);
         }
       });
     }
-  }, [visible, duration, fadeAnim, onDismiss]);
+  }, [visible, duration, fadeAnim, slideAnim, onDismiss]);
 
   if (!visible) return null;
 
   return (
-    <Animated.View style={[styles.snackbar, { opacity: fadeAnim, zIndex: 9999 }]}>
+    <Animated.View style={[
+      styles.snackbar,
+      { opacity: fadeAnim, transform: [{ translateY: slideAnim }], zIndex: 9999 }
+    ]}>
       <Text style={styles.snackbarText}>{message}</Text>
       <TouchableOpacity
         onPress={() => {
-          Animated.timing(fadeAnim, {
-            toValue: 0,
-            duration: 300,
-            useNativeDriver: Platform.OS !== 'web',
-          }).start(() => {
+          Animated.parallel([
+            Animated.timing(fadeAnim, {
+              toValue: 0,
+              duration: 300,
+              useNativeDriver: Platform.OS !== 'web',
+            }),
+            Animated.timing(slideAnim, {
+              toValue: 50,
+              duration: 300,
+              useNativeDriver: Platform.OS !== 'web',
+            }),
+          ]).start(() => {
             onDismiss && onDismiss();
           });
         }}
@@ -62,7 +87,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 8,
     elevation: 3,
-    borderColor: Colors.jokerBlack200,
+    borderColor: "#FFDEA833",
     borderWidth: 1,
     boxShadowColor: Colors.jokerGold400,
     backgroundColor: "#000000C7",
@@ -80,7 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   dismissText: {
-    color: Colors.jokerWhite50,
+    color: Colors.jokerGold400,
     fontFamily: Fonts.InterSemiBold,
     marginLeft: 12,
   },

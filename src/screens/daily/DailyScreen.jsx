@@ -15,6 +15,8 @@ import { DailyCardStatus, Dimentions, Colors } from "../../util/constants";
 import { convertUTCToLocal, getCurrentDate, } from "../../util/Helpers";
 import { isValidAnswer } from "../../util/Validator";
 import TopNavScreenTemplate from "../../templates/TopNavTemplate";
+import LoadingView from "../../components/LoadingView";
+import { useGame } from "../../context/GameContext";
 
 const DailyScreen = () => {
   const appNavigation = useAppNavigation()
@@ -43,7 +45,8 @@ const DailyScreen = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const location = useLocation();
-  const [userData, setUserData] = useState("");
+  const { user, setUser } = useGame()
+
   const [currentWeek, setCurrentWeek] = useState("");
   const [totalWeeks, setTotalWeeks] = useState("");
   const [days, setDays] = useState([]);
@@ -87,21 +90,21 @@ const DailyScreen = () => {
           if (currentWeekDaily) {
             setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
           }
-          setUserData(response.user);
+          setUser(response.user);
         };
       });
     }
   }, [location]);
 
   useEffect(() => {
-    if (userData.user_id && !isSubmitted) {
-      getDailyQuestion(userData.user_id, userData.current_beta_block).then((response) => {
+    if (user && user.user_id && !isSubmitted) {
+      getDailyQuestion(user.user_id, user.current_beta_block).then((response) => {
         if (response.question) {
           setQuestion(response);
         }
       });
     }
-  }, [userData, isSubmitted]);
+  }, [user, isSubmitted]);
 
   useEffect(() => {
     setNumberOfCardsInSet(dailySetData.noOfCardsInSet)
@@ -127,7 +130,7 @@ const DailyScreen = () => {
   const onSubmit = (answer) => {
     const { isValid, message } = isValidAnswer(answer);
     if (isValid) {
-      postDailyAnswer(userData.user_id, question.question_id, answer, noOfCardsInSet * numberOfSetsInCurrentWeek, userData.current_beta_block).then((response) => {
+      postDailyAnswer(user.user_id, question.question_id, answer, noOfCardsInSet * numberOfSetsInCurrentWeek, user.current_beta_block).then((response) => {
         if (response.answer_id) {
           setIsSubmitted(true);
           setDays((prevDays) => [...prevDays, getCurrentDate()]);
@@ -146,10 +149,12 @@ const DailyScreen = () => {
 
   const handleCardPressed = (card) => {
     if (card.status === DailyCardStatus.active) {
-      appNavigation.goToStartPage(userData.user_id, userData.name, userData.email)
+      appNavigation.goToStartPage(user.user_id, user.name, user.email)
     }
   }
-
+  if (!user) {
+    return <LoadingView />
+  }
   return (
     <TopNavScreenTemplate
       title={"Answer to unlock"}

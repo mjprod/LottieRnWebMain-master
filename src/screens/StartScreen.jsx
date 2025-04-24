@@ -6,7 +6,6 @@ import ResourceTile from "../components/ResourceTile";
 import RoundedButton from "../components/RoundedButton";
 import { useSnackbar } from "../components/SnackbarContext";
 import StatCard from "../components/StatCard";
-import TimerComponent from "../components/TimerComponent";
 import { useGame } from "../context/GameContext";
 import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
@@ -16,6 +15,7 @@ import { Colors, Dimentions, Fonts } from "../util/constants";
 import SectionTitle from "../components/SectionTitle";
 import TopNavTemplate from "../templates/TopNavTemplate";
 import { TopBannerNavType } from "../components/TopBannerNav";
+import LoadingView from "../components/LoadingView";
 
 const StartScreen = () => {
     const appNavigation = useAppNavigation();
@@ -57,27 +57,29 @@ const StartScreen = () => {
     const handlePlayNow = () => {
         appNavigation.goToGamePage(initialUserData.user_id, initialUserData.name, initialUserData.email)
     }
-
-    return (
-        <TopNavTemplate
-            title={user.name}
-            subtitle={"Welcome back"}
-            type={TopBannerNavType.startFinish}
-            navBackgroudImage={AssetPack.backgrounds.TOP_NAV_START}
-            navBackgroudVideo={AssetPack.videos.TOP_NAV_START}
-            showCopyright={false}
-            showProfileHeader={false}>
-            <View style={styles.statsSection}>
-                <SectionTitle text={"Game Summary"} />
-                <View style={styles.resultRow}>
-                    <StatCard title="Total Points" stat={initialScore} />
-                    <View style={{ width: 8 }} />
-                    <LuckySymbolCard />
-                </View>
-                <View style={styles.ticketsSection}>
-                    <ResourceTile style={{ width: "100%" }} number={initialScratchCardLeft} />
-                </View>
-                <View style={{ flex: 1, justifyContent: "flex-end", flexDirection: "column", marginTop: 24 }}>
+    if (!user) {
+        return <LoadingView />
+    } else {
+        return (
+            <TopNavTemplate
+                title={user.name}
+                subtitle={"Welcome back"}
+                type={TopBannerNavType.startFinish}
+                navBackgroudImage={AssetPack.backgrounds.TOP_NAV_START}
+                navBackgroudVideo={AssetPack.videos.TOP_NAV_START}
+                showCopyright={false}
+                showProfileHeader={false}>
+                <View style={styles.statsSection}>
+                    <SectionTitle text={"Game Summary"} />
+                    <View style={styles.resultRow}>
+                        <StatCard title="Total Points" stat={initialScore} />
+                        <View style={{ width: 8 }} />
+                        <LuckySymbolCard />
+                    </View>
+                    <View style={styles.ticketsSection}>
+                        <ResourceTile style={{ width: "100%" }} number={initialScratchCardLeft} />
+                    </View>
+                    <View style={{ flexGrow: 1 }} />
                     <View style={styles.buttonContainer}>
                         <View style={{ flex: 0.4, justifyContent: "flex-start" }}>
                             <RoundedButton title="Back" onPress={handleBackPress} />
@@ -91,26 +93,17 @@ const StartScreen = () => {
                         </View>
                     </View>
                 </View>
-                <View style={{ flexGrow: 1 }} />
-                <View style={styles.timerSection}>
-                    <TimerComponent style={{ paddingVertical: Dimentions.marginL }} />
-                </View>
-            </View>
-        </TopNavTemplate>
-    );
+            </TopNavTemplate>
+        );
+    }
 };
 
 const styles = StyleSheet.create({
     statsSection: {
-        flex: 1,
         borderTopColor: Colors.jokerBlack200,
         borderTopWidth: 1,
         marginHorizontal: Dimentions.marginS,
         paddingTop: 32,
-    },
-    timerSection: {
-        flex: 1,
-        marginBottom: 32
     },
     title: {
         color: Colors.jokerGold400,
@@ -134,6 +127,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flex: 1,
+        marginTop: 48,
         gap: 20,
         flexDirection: "row",
         justifyContent: "space-between",
