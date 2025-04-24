@@ -13,14 +13,14 @@ const QuestionOfTheDay = ({ question, onSubmit, style, numberOfSets, numberOfCar
         <Text style={styles.topTagText}>{"Question of the day"}</Text>
       </View>
       <View style={styles.questionContainer}>
-        <View style={{ flexDirection: "column", flexWrap: "wrap", marginRight: Dimentions.pageMargin }}>
+        <View style={{ flexDirection: "column", flexWrap: "wrap", marginRight: Dimentions.pageMargin, flex: 1  }}>
           <Text style={styles.qText}>Q:</Text>
           <Text style={styles.question}>{question ? `${question}` : ""}</Text>
         </View>
 
         <TextInput
           style={styles.textInput}
-          placeholder="Scratch set unlocks after 20 words.."
+          placeholder="Scratch set unlocks after 20 characters.."
           multiline={true}
           numberOfLines={4}
           textAlignVertical="top"

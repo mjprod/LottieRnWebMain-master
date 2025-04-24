@@ -7,10 +7,10 @@ export const SnackbarProvider = ({ children }) => {
   const [snackbar, setSnackbar] = useState({
     visible: false,
     message: '',
-    duration: 3000,
+    duration: 4000,
   });
 
-  const showSnackbar = useCallback((message, duration = 3000) => {
+  const showSnackbar = useCallback((message, duration = 4000) => {
     setSnackbar({ visible: true, message, duration });
   }, []);
 
