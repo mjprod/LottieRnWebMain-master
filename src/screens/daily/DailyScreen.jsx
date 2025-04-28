@@ -17,6 +17,7 @@ import { isValidAnswer } from "../../util/Validator";
 import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 import LoadingView from "../../components/LoadingView";
 import { useGame } from "../../context/GameContext";
+import { showConsoleError } from "../../util/ConsoleMessage";
 
 const DailyScreen = () => {
   const appNavigation = useAppNavigation()
@@ -101,6 +102,9 @@ const DailyScreen = () => {
       getDailyQuestion(user.user_id, user.current_beta_block).then((response) => {
         if (response.question) {
           setQuestion(response);
+        } else {
+          showConsoleError(response.error)
+          appNavigation.goToNotFoundPage()
         }
       });
     }
