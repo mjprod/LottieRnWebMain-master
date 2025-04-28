@@ -1,19 +1,30 @@
 const CACHE_NAME = "app-cache-v1.0.1";
 const urlsToCache = [
   "/",
-  "/index.html",
-  "/static/js/bundle.js",
-  "/static/css/main.css",
-  "/logo192.png",
-  "/game"
 ];
 
 // Install Service Worker & Cache Files
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        return Promise.all(
+          urlsToCache.map((url) =>
+            fetch(url).then((response) => {
+              if (!response.ok) {
+                console.error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
+                return;
+              }
+              return cache.put(url, response);
+            }).catch((err) => {
+              console.error(`Error caching ${url}:`, err);
+            })
+          )
+        );
+      })
+      .catch((err) => {
+        console.error('Service worker installation failed:', err);
+      })
   );
 });
 

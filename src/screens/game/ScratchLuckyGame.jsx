@@ -127,8 +127,6 @@ const ScratchLuckyGame = () => {
       setScore(user.total_score);
       setTicketCount(user.ticket_balance);
       setLuckySymbolCount(user.lucky_symbol_balance);
-    } else {
-      appNavigation.goToNotFoundPage()
     }
   }, [user]);
 
@@ -274,11 +272,13 @@ const ScratchLuckyGame = () => {
   }, []);
 
   const handleLuckySymbolCollectComplete = useCallback(() => {
-    updateCardBalance(
-      user.user_id,
-      user.current_beta_block,
-      BONUS_PACK_NUMBER_OF_CARDS
-    );
+    if (user) {
+      updateCardBalance(
+        user.user_id,
+        user.current_beta_block,
+        BONUS_PACK_NUMBER_OF_CARDS
+      );
+    }
   }, [user, updateCardBalance]);
 
   const handleWinLuckySymbolVideoScreenClick = useCallback(() => {
@@ -311,7 +311,7 @@ const ScratchLuckyGame = () => {
   if (getGamesLoading || fetchUserDetailsLoading) return <LoadingView />;
   if (getGamesError || fetchUserDetailsError)
     return <p>Error: {getGamesError || fetchUserDetailsError}</p>;
-
+  if (!user) return <LoadingView />
   return (
     <View style={containerStyle}>
       {gameBackground}
