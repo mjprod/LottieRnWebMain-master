@@ -100,10 +100,9 @@ const DailyScreen = () => {
   useEffect(() => {
     if (user && user.user_id && !isSubmitted) {
       getDailyQuestion(user.user_id, user.current_beta_block).then((response) => {
-        if (response.question) {
+        if (response) {
           setQuestion(response);
         } else {
-          showConsoleError(response.error)
           appNavigation.goToNotFoundPage()
         }
       });
