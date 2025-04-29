@@ -13,7 +13,7 @@ const QuestionOfTheDay = ({ question, onSubmit, style, numberOfSets, numberOfCar
         <Text style={styles.topTagText}>{"Question of the day"}</Text>
       </View>
       <View style={styles.questionContainer}>
-        <View style={{ flexDirection: "column", flexWrap: "wrap", marginRight: Dimentions.pageMargin, flex: 1  }}>
+        <View style={{ flexDirection: "row", marginRight: Dimentions.pageMargin, alignItems: "flex-start", justifyContent: "flex-start", marginBottom: 16 }}>
           <Text style={styles.qText}>Q:</Text>
           <Text style={styles.question}>{question ? `${question}` : ""}</Text>
         </View>
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingRight: 8,
     color: Colors.jokerWhite50,
+    height: "100%",
   },
   question: {
     fontFamily: Fonts.InterRegular,
