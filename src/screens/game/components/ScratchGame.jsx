@@ -321,7 +321,7 @@ const ScratchGame = ({
       [icon]: (prev[icon] || 0) + 1,
     }));
 
-    const comboSteps = { 6: 1, 9: 2, 12: 3 };
+    const comboSteps = { 3: 1, 6: 2, 9: 3, 12: 4 };
     if (comboSteps[clickCount + 1]) setComboPlayed(comboSteps[clickCount + 1]);
 
     const soundKey = `sound${soundShouldPlay}`;
