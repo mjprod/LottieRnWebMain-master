@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
 import { View } from "react-native-web";
 import LottieView from "react-native-web-lottie";
@@ -29,7 +29,7 @@ const DailyScreen = () => {
   const slideAnim = useRef(new Animated.Value(270)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
-  const slideOutAndFade = () => {
+  const slideOutAndFade = useCallback(() => {
     Animated.parallel([
       Animated.timing(slideAnim, {
         toValue: 0,
@@ -42,7 +42,7 @@ const DailyScreen = () => {
         useNativeDriver: Platform.OS !== 'web',
       }),
     ]).start(() => setIsThumbsUpAnimationFinished(true));
-  };
+  }, []);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const location = useLocation();
@@ -100,7 +100,7 @@ const DailyScreen = () => {
   useEffect(() => {
     if (user && user.user_id && !isSubmitted) {
       getDailyQuestion(user.user_id, user.current_beta_block).then((response) => {
-        if (response) {
+        if (response.question) {
           setQuestion(response);
         } else {
           appNavigation.goToNotFoundPage()
