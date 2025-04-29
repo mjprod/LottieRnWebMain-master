@@ -28,7 +28,7 @@ const QuestionOfTheDay = ({ question, onSubmit, style, numberOfSets, numberOfCar
         />
         <GameButton text="Submit" onPress={() => onSubmit(text)} />
         <Text style={styles.bottomText}>
-          {`Reward ${numberOfSets} Set (${numberOfCardsInSet}) of scratch cards`}
+          {`Reward ${numberOfSets} Set (${numberOfCardsInSet * numberOfSets}) of scratch cards`}
         </Text>
       </View>
     </View>

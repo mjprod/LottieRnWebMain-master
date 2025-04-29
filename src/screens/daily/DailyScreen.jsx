@@ -12,7 +12,7 @@ import useApiRequest from "../../hook/useApiRequest";
 import useAppNavigation from "../../hook/useAppNavigation";
 import AssetPack from "../../util/AssetsPack";
 import { DailyCardStatus, Dimentions, Colors } from "../../util/constants";
-import { convertUTCToLocal, getCurrentDate, } from "../../util/Helpers";
+import { convertUTCToLocal, getCurrentDate, getDayOfWeek, } from "../../util/Helpers";
 import { isValidAnswer } from "../../util/Validator";
 import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 import LoadingView from "../../components/LoadingView";
@@ -54,7 +54,7 @@ const DailyScreen = () => {
 
   const [dailySetData] = useState(DailySetData);
   const [noOfCardsInSet, setNumberOfCardsInSet] = useState(12);
-  const [numberOfSetsInCurrentWeek, setNumberOfSetsInCurrentWeek] = useState(1);
+  const [numberOfSetsToday, setNumberOfSetsToday] = useState(1);
 
   const {
     fetchUserDetails,
@@ -112,10 +112,10 @@ const DailyScreen = () => {
 
   useEffect(() => {
     setNumberOfCardsInSet(dailySetData.noOfCardsInSet)
-    const cardsWon = dailySetData.weeklyRewards.find((cardSet) => cardSet.week === currentWeek);
+    const cardsWon = dailySetData.weeklyRewards.find((cardSet) => cardSet.day === getDayOfWeek());
     if (cardsWon) {
       const { set } = cardsWon;
-      setNumberOfSetsInCurrentWeek(set);
+      setNumberOfSetsToday(set);
     }
   }, [dailySetData])
 
@@ -134,7 +134,7 @@ const DailyScreen = () => {
   const onSubmit = (answer) => {
     const { isValid, message } = isValidAnswer(answer);
     if (isValid) {
-      postDailyAnswer(user.user_id, question.question_id, answer, noOfCardsInSet * numberOfSetsInCurrentWeek, user.current_beta_block).then((response) => {
+      postDailyAnswer(user.user_id, question.question_id, answer, noOfCardsInSet * numberOfSetsToday, user.current_beta_block).then((response) => {
         if (response.answer_id) {
           setIsSubmitted(true);
           setDays((prevDays) => [...prevDays, getCurrentDate()]);
@@ -169,7 +169,7 @@ const DailyScreen = () => {
         {!isSubmitted && (
           <QuestionOfTheDay
             numberOfCardsInSet={noOfCardsInSet}
-            numberOfSets={numberOfSetsInCurrentWeek}
+            numberOfSets={numberOfSetsToday}
             style={{ marginBottom: 48, marginLeft: Dimentions.pageMargin, marginRight: Dimentions.pageMargin, }}
             question={`${question.question}`}
             onSubmit={onSubmit} />
