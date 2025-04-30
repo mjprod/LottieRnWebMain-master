@@ -298,15 +298,12 @@ const ScratchLuckyGame = () => {
     [nextCardAnimationFinished]
   );
 
-  const gameBackground = useMemo(
-    () => (
-      <BackgroundGame
-        showAlphaView={scratchStarted || gameOver}
-        source={backGroundVideo}
-      />
-    ),
-    [backGroundVideo, scratchStarted, gameOver]
-  );
+  const gameBackground = useMemo(() => (
+    <BackgroundGame
+      showAlphaView={scratchStarted || gameOver}
+      source={backGroundVideo}
+    />
+  ), [backGroundVideo, scratchStarted, gameOver]);
 
   if (getGamesLoading || fetchUserDetailsLoading) return <LoadingView />;
   if (getGamesError || fetchUserDetailsError)

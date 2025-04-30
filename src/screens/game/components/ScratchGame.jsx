@@ -269,18 +269,14 @@ const ScratchGame = ({
       } else {
         nextCard();
       }
-    }, 600);
+    }, 1000);
   };
 
   useEffect(() => {
     if (
       winningIcons.length * 3 === clickedIcons.length &&
       winningIcons.length > 0
-    ) {
-      setTimeout(() => {
-        checkResults();
-      }, 100);
-    }
+    ) checkResults();
   }, [clickedIcons, iconsArray]);
 
   useEffect(() => {
@@ -288,8 +284,6 @@ const ScratchGame = ({
       checkResults();
     }
   }, [scratched]);
-
-  useEffect(() => { }, [clickedCount]);
 
   const handleIconClick = useCallback((index) => {
     if (clickedIcons.includes(index)) return;
