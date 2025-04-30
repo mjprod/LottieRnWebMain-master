@@ -269,18 +269,14 @@ const ScratchGame = ({
       } else {
         nextCard();
       }
-    }, 600);
+    }, 1000);
   };
 
   useEffect(() => {
     if (
       winningIcons.length * 3 === clickedIcons.length &&
       winningIcons.length > 0
-    ) {
-      setTimeout(() => {
-        checkResults();
-      }, 100);
-    }
+    ) checkResults();
   }, [clickedIcons, iconsArray]);
 
   useEffect(() => {
@@ -288,8 +284,6 @@ const ScratchGame = ({
       checkResults();
     }
   }, [scratched]);
-
-  useEffect(() => { }, [clickedCount]);
 
   const handleIconClick = useCallback((index) => {
     if (clickedIcons.includes(index)) return;
@@ -321,7 +315,7 @@ const ScratchGame = ({
       [icon]: (prev[icon] || 0) + 1,
     }));
 
-    const comboSteps = { 6: 1, 9: 2, 12: 3 };
+    const comboSteps = { 3: 1, 6: 2, 9: 3, 12: 4 };
     if (comboSteps[clickCount + 1]) setComboPlayed(comboSteps[clickCount + 1]);
 
     const soundKey = `sound${soundShouldPlay}`;

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
 import { View } from "react-native-web";
 import LottieView from "react-native-web-lottie";
@@ -12,7 +12,7 @@ import useApiRequest from "../../hook/useApiRequest";
 import useAppNavigation from "../../hook/useAppNavigation";
 import AssetPack from "../../util/AssetsPack";
 import { DailyCardStatus, Dimentions, Colors } from "../../util/constants";
-import { convertUTCToLocal, getCurrentDate, } from "../../util/Helpers";
+import { convertUTCToLocal, getCurrentDate, getDayOfWeek, } from "../../util/Helpers";
 import { isValidAnswer } from "../../util/Validator";
 import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 import LoadingView from "../../components/LoadingView";
@@ -29,7 +29,7 @@ const DailyScreen = () => {
   const slideAnim = useRef(new Animated.Value(270)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
-  const slideOutAndFade = () => {
+  const slideOutAndFade = useCallback(() => {
     Animated.parallel([
       Animated.timing(slideAnim, {
         toValue: 0,
@@ -42,7 +42,7 @@ const DailyScreen = () => {
         useNativeDriver: Platform.OS !== 'web',
       }),
     ]).start(() => setIsThumbsUpAnimationFinished(true));
-  };
+  }, []);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const location = useLocation();
@@ -54,7 +54,7 @@ const DailyScreen = () => {
 
   const [dailySetData] = useState(DailySetData);
   const [noOfCardsInSet, setNumberOfCardsInSet] = useState(12);
-  const [numberOfSetsInCurrentWeek, setNumberOfSetsInCurrentWeek] = useState(1);
+  const [numberOfSetsToday, setNumberOfSetsToday] = useState(1);
 
   const {
     fetchUserDetails,
@@ -103,7 +103,6 @@ const DailyScreen = () => {
         if (response.question) {
           setQuestion(response);
         } else {
-          showConsoleError(response.error)
           appNavigation.goToNotFoundPage()
         }
       });
@@ -112,10 +111,10 @@ const DailyScreen = () => {
 
   useEffect(() => {
     setNumberOfCardsInSet(dailySetData.noOfCardsInSet)
-    const cardsWon = dailySetData.weeklyRewards.find((cardSet) => cardSet.week === currentWeek);
+    const cardsWon = dailySetData.weeklyRewards.find((cardSet) => cardSet.day === getDayOfWeek());
     if (cardsWon) {
       const { set } = cardsWon;
-      setNumberOfSetsInCurrentWeek(set);
+      setNumberOfSetsToday(set);
     }
   }, [dailySetData])
 
@@ -134,7 +133,7 @@ const DailyScreen = () => {
   const onSubmit = (answer) => {
     const { isValid, message } = isValidAnswer(answer);
     if (isValid) {
-      postDailyAnswer(user.user_id, question.question_id, answer, noOfCardsInSet * numberOfSetsInCurrentWeek, user.current_beta_block).then((response) => {
+      postDailyAnswer(user.user_id, question.question_id, answer, noOfCardsInSet * numberOfSetsToday, user.current_beta_block).then((response) => {
         if (response.answer_id) {
           setIsSubmitted(true);
           setDays((prevDays) => [...prevDays, getCurrentDate()]);
@@ -169,7 +168,7 @@ const DailyScreen = () => {
         {!isSubmitted && (
           <QuestionOfTheDay
             numberOfCardsInSet={noOfCardsInSet}
-            numberOfSets={numberOfSetsInCurrentWeek}
+            numberOfSets={numberOfSetsToday}
             style={{ marginBottom: 48, marginLeft: Dimentions.pageMargin, marginRight: Dimentions.pageMargin, }}
             question={`${question.question}`}
             onSubmit={onSubmit} />

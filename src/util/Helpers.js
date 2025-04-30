@@ -60,3 +60,26 @@ export function convertUTCToLocal(utcDateTime) {
   const second = parts.find(p => p.type === 'second').value;
   return `${year}-${month}-${day}`;
 }
+
+export function getDayOfWeek() {
+  const date = new Date();
+
+  const formatter = new Intl.DateTimeFormat('en-AU', {
+    timeZone: 'Australia/Sydney',
+    weekday: 'short',
+  });
+
+  const weekday = formatter.format(date); 
+
+  const weekdayMap = {
+    'Sun': 7,
+    'Mon': 1,
+    'Tue': 2,
+    'Wed': 3,
+    'Thu': 4,
+    'Fri': 5,
+    'Sat': 6
+  };
+
+  return weekdayMap[weekday];
+}
