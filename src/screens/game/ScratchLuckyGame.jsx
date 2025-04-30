@@ -155,6 +155,10 @@ const ScratchLuckyGame = () => {
 
   const handleGameOver = useCallback(() => {
     setGameOver(true);
+    setNextCardAnimationFinished(true);
+    setTimerGame(0);
+    setScratchStarted(false);
+    setComboPlayed(0);
     appNavigation.goToGameOverPage(user.user_id, user.name, user.email);
   }, [setGameOver, appNavigation, user]);
 
@@ -300,10 +304,10 @@ const ScratchLuckyGame = () => {
 
   const gameBackground = useMemo(() => (
     <BackgroundGame
-      showAlphaView={scratchStarted || gameOver}
+      showAlphaView={scratchStarted}
       source={backGroundVideo}
     />
-  ), [backGroundVideo, scratchStarted, gameOver]);
+  ), [backGroundVideo, scratchStarted]);
 
   if (getGamesLoading || fetchUserDetailsLoading) return <LoadingView />;
   if (getGamesError || fetchUserDetailsError)
