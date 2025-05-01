@@ -50,6 +50,7 @@ const ScratchGame = ({
 
   const [arrayBobble, setArrayBobble] = useState();
   const [arrayIcon, setArrayIcon] = useState();
+  const [luckySymbolIndex, setLuckySymbolIndex] = useState();
 
   const [iconComponentsDefault, setIconComponentsDefault] = useState([]);
 
@@ -67,7 +68,8 @@ const ScratchGame = ({
     lottieScratchieBubbleGreen: lottiePopGreen,
     lottieScratchieBubblePink: lottiePopPink,
     lottieScratchieBubbleOrange: lottiePopOrange,
-    lottieScratchieBubblePopError: AssetPack.lotties.LOTTIE_SCRATCHIE_BUBBLE_POP_ERROR,
+    lottieScratchieBubblePopError: AssetPack.lotties.SCRATCHIE_BUBBLE_POP_ERROR,
+    lottieScratchieBubblePopLucky: AssetPack.lotties.SCRATCHIE_BUBBLE_POP_LUCKY,
   };
 
   useEffect(() => {
@@ -101,6 +103,14 @@ const ScratchGame = ({
     const booblePositions = findBoobleColor(generatedArray);
     setArrayBobble(booblePositions);
 
+    if (hasLuckySymbol) {
+      const nonNullAnimations = Object.entries(booblePositions)
+        .filter(([_, val]) => val !== null)
+        .map(([key]) => Number(key));
+      const randomKey = nonNullAnimations[Math.floor(Math.random() * nonNullAnimations.length)];
+      setLuckySymbolIndex(randomKey)
+    }
+
     setIconsArray(generatedArray);
     const winners = checkWinCondition(generatedArray);
     setWinningIcons(winners);
@@ -133,13 +143,13 @@ const ScratchGame = ({
     let columnIconMap = {};
     let combinationCount = 0;
 
-    let luckyPosition = -1;
+    // let luckyPosition = -1;
 
-    if (winLuckySymbol) {
-      luckyPosition = Math.floor(Math.random() * totalPositions);
-      resultArray[luckyPosition] = 12;
-      iconCounts[12] = 1;
-    }
+    // if (winLuckySymbol) {
+    //   luckyPosition = Math.floor(Math.random() * totalPositions);
+    //   resultArray[luckyPosition] = 12;
+    //   iconCounts[12] = 1;
+    // }
 
     for (let i = 0; i < totalPositions; i++) {
       if (resultArray[i] !== null) continue;
@@ -169,7 +179,6 @@ const ScratchGame = ({
       }
 
       let selectedIcon;
-
       if (combinationCount < maxCombinations) {
         selectedIcon =
           availableIcons[Math.floor(Math.random() * availableIcons.length)];
@@ -204,39 +213,39 @@ const ScratchGame = ({
   };
 
   const findBoobleColor = (arr) => {
-    const cores = [
-      { cor: "Blue", animacao: "lottieScratchieBubbleBlue" },
-      { cor: "Green", animacao: "lottieScratchieBubbleGreen" },
-      { cor: "Pink", animacao: "lottieScratchieBubblePink" },
-      { cor: "Orange", animacao: "lottieScratchieBubbleOrange" },
+    const colors = [
+      { color: "Blue", animation: "lottieScratchieBubbleBlue" },
+      { color: "Green", animation: "lottieScratchieBubbleGreen" },
+      { color: "Pink", animation: "lottieScratchieBubblePink" },
+      { color: "Orange", animation: "lottieScratchieBubbleOrange" },
     ];
 
-    let contador = {};
-    let corMap = {};
-    let animacaoMap = {};
-    let corIndex = 0;
+    let counter = {};
+    let colorMap = {};
+    let animationMap = {};
+    let colorIndex = 0;
 
     arr.forEach((num) => {
-      if (contador[num]) {
-        contador[num]++;
+      if (counter[num]) {
+        counter[num]++;
       } else {
-        contador[num] = 1;
+        counter[num] = 1;
       }
     });
 
-    Object.keys(contador).forEach((num) => {
-      if (contador[num] === 3) {
-        corMap[num] = cores[corIndex].cor;
-        animacaoMap[num] = cores[corIndex].animacao;
-        corIndex = (corIndex + 1) % cores.length;
+    Object.keys(counter).filter((num) => {
+      if (counter[num] === 3) {
+        colorMap[num] = colors[colorIndex].color;
+        animationMap[num] = colors[colorIndex].animation;
+        colorIndex = (colorIndex + 1) % colors.length;
       }
     });
 
-    const arrayAnimacoes = arr.map((num) => {
-      return animacaoMap[num] || null;
+    const animationArray = arr.map((num) => {
+      return animationMap[num] || null;
     });
 
-    return arrayAnimacoes;
+    return animationArray;
   };
 
   const checkWinCondition = (array) => {
@@ -287,7 +296,13 @@ const ScratchGame = ({
     const icon = iconsArray[index];
     const isMismatch = lastClickedIcon !== null && lastClickedIcon !== icon && (clickedCount[lastClickedIcon] || 0) < 3;
 
-    if (isMismatch) {
+    if (hasLuckySymbol && luckySymbolIndex && index === luckySymbolIndex) {
+      setArrayBobble(prev => {
+        const updatedBobble = [...prev];
+        updatedBobble[luckySymbolIndex] = "lottieScratchieBubblePopLucky";
+        return updatedBobble;
+      });
+    } else if (isMismatch) {
       playClickSound("error");
       setClickCount(0);
       setSoundShouldPlay(1);
@@ -327,7 +342,7 @@ const ScratchGame = ({
     }
 
     setLastClickedIcon(icon);
-  }, [clickedIcons]);
+  }, [clickedIcons, luckySymbolIndex]);
 
   useEffect(() => {
     if (onLoading) {

@@ -96,6 +96,7 @@ const AssetPack = {
     SPIN_WHEEL: require("../assets/lotties/specialEventsCasinoHomeCarousel.json"),
     CARD_COUNT_DOWN: require("../assets/lotties/lottieCardCountdown.json"),
     SCRATCHIE_BUBBLE_POP_ERROR: require("../assets/lotties/lottieScratchieBubblePopError.json"),
+    SCRATCHIE_BUBBLE_POP_LUCKY: require("../assets/lotties/lottieScratchieBubble.json"),
     SCROLL_DOWN_CHEVRON: require("../assets/lotties/scroll_down_chevron.json")
   }
 };
