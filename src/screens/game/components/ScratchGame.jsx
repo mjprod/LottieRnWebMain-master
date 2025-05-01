@@ -200,7 +200,7 @@ const ScratchGame = ({
     return resultArray;
   }, [totalIcons, totalPositions, columns, maxCountWin, maxCombinations]);
 
-  const findBoobleColor = (arr) => {
+  const findBoobleColor = useCallback((arr) => {
     const cores = [
       { cor: "Blue", animacao: "lottieScratchieBubbleBlue" },
       { cor: "Green", animacao: "lottieScratchieBubbleGreen" },
@@ -234,9 +234,9 @@ const ScratchGame = ({
     });
 
     return arrayAnimacoes;
-  };
+  }, []);
 
-  const checkWinCondition = (array) => {
+  const checkWinCondition = useCallback((array) => {
     const iconCounts = Array(totalIcons).fill(0);
     array.forEach((icon) => {
       if (icon !== null) {
@@ -251,9 +251,9 @@ const ScratchGame = ({
       }
     });
     return winners;
-  };
+  }, [totalIcons, maxCountWin]);
 
-  const checkResults = () => {
+  const checkResults = useCallback(() => {
     setTimeout(() => {
       if (arrayIcon) {
         if (luckySymbolCount !== 3) {
@@ -263,7 +263,7 @@ const ScratchGame = ({
         nextCard();
       }
     }, 1000);
-  };
+  }, [arrayIcon, luckySymbolCount]);
 
   useEffect(() => {
     if (
