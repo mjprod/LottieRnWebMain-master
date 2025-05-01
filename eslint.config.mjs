@@ -1,6 +1,10 @@
 import globals from "globals";
 import pluginReact from "eslint-plugin-react";
+import pluginReactNative from "eslint-plugin-react-native";
+import pluginImport from "eslint-plugin-import";
+import pluginReactHooks from "eslint-plugin-react-hooks";
 import { defineConfig } from "eslint/config";
+import babelParser from "@babel/eslint-parser";
 
 export default defineConfig([
   {
@@ -10,9 +14,17 @@ export default defineConfig([
     files: ["**/*.{js,mjs,cjs,jsx}"],
     languageOptions: {
       sourceType: "module",
-      globals: globals.browser,
+      ecmaVersion: 2021,
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+      parser: babelParser,
       parserOptions: {
-        ecmaVersion: "latest",
+        requireConfigFile: false,
+        babelOptions: {
+          presets: ["@babel/preset-react"],
+        },
         ecmaFeatures: {
           jsx: true,
         },
@@ -20,16 +32,21 @@ export default defineConfig([
     },
     plugins: {
       react: pluginReact,
-    },
-    rules: {
-      ...pluginReact.configs.flat.recommended.rules,
-      "react/prop-types": "off",
-      "no-unused-vars": "warn"
+      "react-native": pluginReactNative,
+      import: pluginImport,
+      "react-hooks": pluginReactHooks,
     },
     settings: {
       react: {
         version: "detect",
       },
+    },
+    rules: {
+      "no-unused-vars": "warn",
+      "react-native/no-inline-styles": "off",
+      "react/react-in-jsx-scope": "off",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
     },
   },
 ]);

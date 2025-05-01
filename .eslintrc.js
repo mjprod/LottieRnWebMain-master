@@ -18,10 +18,11 @@ module.exports = {
     },
   },
   rules: {
-    'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    'no-unused-vars': 'warn',
     'react-native/no-inline-styles': 'off',
-    'react/react-in-jsx-scope': 'off', // React 17+ doesn't need React import in scope
+    'react/react-in-jsx-scope': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
+    'react-native/sort-styles': 'off',
   },
 };

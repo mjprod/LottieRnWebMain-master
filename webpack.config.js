@@ -5,7 +5,7 @@ module.exports = {
     new ESLintPlugin({
       extensions: ['js', 'jsx', 'ts', 'tsx'],
       emitWarning: true,
-      lintDirtyModulesOnly: false,
+      lintDirtyModulesOnly: true,
       threads: false,
     }),
   ],

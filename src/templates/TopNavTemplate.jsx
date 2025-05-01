@@ -10,6 +10,7 @@ import { Platform } from "react-native";
 import LinearGradient from 'react-native-web-linear-gradient';
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
+
 TopNavTemplate.propTypes = {
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
@@ -23,7 +24,7 @@ TopNavTemplate.propTypes = {
     showProfileHeader: PropTypes.bool,
 };
 
-const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo, hasBackButton, children, pillText, showCopyright = true, type, showProfileHeader = true }) => {
+function TopNavTemplate({ title, subtitle, navBackgroudImage, navBackgroudVideo, hasBackButton, children, pillText, showCopyright = true, type, showProfileHeader = true }) {
     const { user } = useGame()
     const scrollY = useRef(new Animated.Value(0)).current;
     const [bottomChevronStyles, setBottomChevronStyles] = useState(styles.bottomChevronContainer);
@@ -132,7 +133,7 @@ const TopNavTemplate = ({ title, subtitle, navBackgroudImage, navBackgroudVideo,
             </LinearGradient>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     bottomChevronContainer: {
@@ -153,9 +154,9 @@ const styles = StyleSheet.create({
     },
     lottieAnimation: {
         height: 20,
-        width: 20,
+        pointerEvents: "box-none",
         marginBottom: 32,
-        pointerEvents: "box-none"
+        width: 20,
     },
     wrapper: {
         flex: 1,
