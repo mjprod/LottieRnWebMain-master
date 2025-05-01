@@ -198,9 +198,9 @@ const ScratchGame = ({
       }
     }
     return resultArray;
-  }, [totalIcons, totalPositions]);
+  }, [totalIcons, totalPositions, columns, maxCountWin, maxCombinations]);
 
-  const findBoobleColor = useCallback((arr) => {
+  const findBoobleColor = (arr) => {
     const cores = [
       { cor: "Blue", animacao: "lottieScratchieBubbleBlue" },
       { cor: "Green", animacao: "lottieScratchieBubbleGreen" },
@@ -234,7 +234,7 @@ const ScratchGame = ({
     });
 
     return arrayAnimacoes;
-  }, []);
+  };
 
   const checkWinCondition = (array) => {
     const iconCounts = Array(totalIcons).fill(0);
