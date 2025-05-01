@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { eraserRadius, heightScratch, widthScratch } from "../../../global/Settings";
 import AssetPack from "../../../util/AssetsPack";

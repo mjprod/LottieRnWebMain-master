@@ -33,7 +33,7 @@ const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex,
   </View>
 );
 
-const TopLayout = ({ clickCount, countdownTimer, timerIsRunning }) => {
+const TopLayout = ({ clickCount, countdownTimer }) => {
   const { score, scratchStarted } = useGame();
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const { gameCenterIcon } = useTheme();
@@ -121,7 +121,7 @@ const TopLayout = ({ clickCount, countdownTimer, timerIsRunning }) => {
                     loop={false}
                   />
                   <Animated.View
-                    style={[{ transform: [{ scale: scaleAnim }] }]}>
+                    style={{ transform: [{ scale: scaleAnim }] }}>
                     <Text style={[styles.countDownText]}>
                       {countdownTimer * 100}
                     </Text>

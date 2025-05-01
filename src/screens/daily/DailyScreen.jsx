@@ -17,7 +17,6 @@ import { isValidAnswer } from "../../util/Validator";
 import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 import LoadingView from "../../components/LoadingView";
 import { useGame } from "../../context/GameContext";
-import { showConsoleError } from "../../util/ConsoleMessage";
 
 const DailyScreen = () => {
   const appNavigation = useAppNavigation()

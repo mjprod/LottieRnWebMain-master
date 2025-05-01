@@ -55,7 +55,6 @@ const ScratchLuckyGame = () => {
     setUser,
     score,
     setScore,
-    gameOver,
     setGameOver,
     scratchStarted,
     setScratchStarted,
