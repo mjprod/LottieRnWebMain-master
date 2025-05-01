@@ -156,7 +156,7 @@ const LauchScreenEncrypted = () => {
 
   if (user) {
     return (
-      <TopNavTemplate title={"Scratch to win!"} subtitle={"Your next prize awaits."}>
+      <TopNavTemplate title={user.card_balance <= 0 ? "No Cards Available" : "Scratch to win!"} subtitle={user.card_balance <= 0 ? "New cards drop daily." : "Your next prize awaits."}>
         <View style={styles.statisticsContainer}>
           <SectionTitle text={"Game Summary"} style={{ marginBottom: 20 }} />
           <View style={styles.resultRow}>
@@ -171,6 +171,7 @@ const LauchScreenEncrypted = () => {
           <GameButton
             style={{ marginTop: Dimentions.marginL, width: "100%" }}
             text="Play Now"
+            disabled={user.card_balance <= 0}
             onPress={() => handleStartGame()}
           />
           <LinkButton
