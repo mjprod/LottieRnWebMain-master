@@ -87,6 +87,11 @@ const ScratchLuckyGame = () => {
 
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
+  const hasTriggeredCardPlayed = useRef(false);
+
+  useEffect(() => {
+    setScratchStarted(false)
+  }, []);
 
   useEffect(() => {
     if (location.state) {
@@ -165,6 +170,9 @@ const ScratchLuckyGame = () => {
   const nextCard = useCallback(() => {
     setSkipToFinishLuckyVideo(false);
     setWinLuckySymbolVideo(false);
+    setTimerGame(0);
+    setScratchStarted(false);
+    setComboPlayed(0);
     if (luckySymbolCount <= 2) {
       if (scratchCardLeft > 1) {
         if (currentTheme === nextTheme) {
@@ -222,22 +230,28 @@ const ScratchLuckyGame = () => {
   }, []);
 
   useEffect(() => {
-    if (scratchStarted) {
-      updateCardPlayed(user.current_beta_block, user.user_id, gameId);
-      Animated.timing(marginTopAnim, {
-        toValue: 6,
-        duration: 300,
-        easing: Easing.in(Easing.ease),
-        useNativeDriver: Platform.OS !== "web",
-      }).start();
-    } else {
+    if (!scratchStarted) {
+      hasTriggeredCardPlayed.current = false;
       Animated.timing(marginTopAnim, {
         toValue: 0,
         duration: 300,
         easing: Easing.out(Easing.ease),
         useNativeDriver: Platform.OS !== "web",
       }).start();
+      return;
     }
+
+    if (!hasTriggeredCardPlayed.current) {
+      hasTriggeredCardPlayed.current = true;
+      updateCardPlayed(user.current_beta_block, user.user_id, gameId);
+    }
+
+    Animated.timing(marginTopAnim, {
+      toValue: 6,
+      duration: 300,
+      easing: Easing.in(Easing.ease),
+      useNativeDriver: Platform.OS !== "web",
+    }).start();
   }, [scratchStarted]);
 
   useEffect(() => {
@@ -257,9 +271,6 @@ const ScratchLuckyGame = () => {
           }
         }, 200);
         setNextCardAnimationFinished(true);
-        setTimerGame(0);
-        setScratchStarted(false);
-        setComboPlayed(0);
         goToNextTheme();
         Animated.spring(translateX, {
           toValue: 0,
