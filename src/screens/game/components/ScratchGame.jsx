@@ -126,7 +126,7 @@ const ScratchGame = ({
     );
   };
 
-  const generateIconsArray = useCallback((winLuckySymbol) => {
+  const generateIconsArray = (winLuckySymbol) => {
     let iconCounts = Array(totalIcons).fill(0);
     let resultArray = new Array(totalPositions).fill(null);
     let iconWithMaxCount = null;
@@ -169,6 +169,7 @@ const ScratchGame = ({
       }
 
       let selectedIcon;
+
       if (combinationCount < maxCombinations) {
         selectedIcon =
           availableIcons[Math.floor(Math.random() * availableIcons.length)];
@@ -189,6 +190,7 @@ const ScratchGame = ({
             availableIcons[Math.floor(Math.random() * availableIcons.length)];
         }
       }
+
       resultArray[i] = selectedIcon;
       iconCounts[selectedIcon]++;
       columnIconMap[columnIndex].add(selectedIcon);
@@ -197,10 +199,11 @@ const ScratchGame = ({
         iconWithMaxCount = selectedIcon;
       }
     }
-    return resultArray;
-  }, [totalIcons, totalPositions, columns, maxCountWin, maxCombinations]);
 
-  const findBoobleColor = useCallback((arr) => {
+    return resultArray;
+  };
+
+  const findBoobleColor = (arr) => {
     const cores = [
       { cor: "Blue", animacao: "lottieScratchieBubbleBlue" },
       { cor: "Green", animacao: "lottieScratchieBubbleGreen" },
@@ -234,9 +237,9 @@ const ScratchGame = ({
     });
 
     return arrayAnimacoes;
-  }, []);
+  };
 
-  const checkWinCondition = useCallback((array) => {
+  const checkWinCondition = (array) => {
     const iconCounts = Array(totalIcons).fill(0);
     array.forEach((icon) => {
       if (icon !== null) {
@@ -251,9 +254,9 @@ const ScratchGame = ({
       }
     });
     return winners;
-  }, [totalIcons, maxCountWin]);
+  };
 
-  const checkResults = useCallback(() => {
+  const checkResults = () => {
     setTimeout(() => {
       if (arrayIcon) {
         if (luckySymbolCount !== 3) {
@@ -263,7 +266,7 @@ const ScratchGame = ({
         nextCard();
       }
     }, 1000);
-  }, [arrayIcon, luckySymbolCount]);
+  };
 
   useEffect(() => {
     if (
