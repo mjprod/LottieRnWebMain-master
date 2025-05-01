@@ -29,6 +29,7 @@ const ScratchGame = ({
   onLoading,
   setIsLuckySymbolTrue,
   timerGame,
+  pauseTimer,
   setWinLuckySymbolVideo,
   clickCount,
   setClickCount,
@@ -258,6 +259,7 @@ const ScratchGame = ({
   };
 
   const checkResults = () => {
+    pauseTimer()
     setTimeout(() => {
       if (arrayIcon) {
         if (luckySymbolCount !== 3) {

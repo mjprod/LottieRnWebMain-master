@@ -17,6 +17,7 @@ import { BONUS_PACK_NUMBER_OF_CARDS, Colors } from "../../util/constants";
 import BottomDrawer from "./components/BottomDrawer";
 import InitialCountDownView from "./components/InitialCountDownView";
 import WinLuckySymbolView from "./components/WinLuckySymbolView";
+import useTimer from "../../hook/useTimer.js";
 
 const { width } = Dimensions.get("window");
 
@@ -43,6 +44,9 @@ const ScratchLuckyGame = () => {
   const [maxCombinations, setMaxCombinations] = useState(0);
   const [hasLuckySymbol, setHasLuckySymbol] = useState(false);
   const [comboPlayed, setComboPlayed] = useState(0);
+
+  const { seconds: countdownTimer, timerIsRunning, startTimer, pauseTimer, resetTimer } = useTimer();
+
   const [nextCardAnimationFinished, setNextCardAnimationFinished] =
     useState(true);
 
@@ -241,6 +245,8 @@ const ScratchLuckyGame = () => {
       return;
     }
 
+    startTimer(10)
+
     if (!hasTriggeredCardPlayed.current) {
       hasTriggeredCardPlayed.current = true;
       updateCardPlayed(user.current_beta_block, user.user_id, gameId);
@@ -255,7 +261,12 @@ const ScratchLuckyGame = () => {
   }, [scratchStarted]);
 
   useEffect(() => {
+    setTimerGame(countdownTimer);
+  }, [countdownTimer, setTimerGame]);
+
+  useEffect(() => {
     if (reset) {
+      resetTimer()
       setNextCardAnimationFinished(false);
       updateScore(user.user_id, score, gameId, comboPlayed);
       Animated.timing(translateX, {
@@ -320,17 +331,27 @@ const ScratchLuckyGame = () => {
     />
   ), [backGroundVideo, scratchStarted]);
 
+  const handleBottomDrawerStateChange = (expanded) => {
+    if (expanded) {
+      pauseTimer()
+    } else {
+      startTimer()
+    }
+  }
+
   if (getGamesLoading || fetchUserDetailsLoading) return <LoadingView />;
   if (getGamesError || fetchUserDetailsError)
     return <p>Error: {getGamesError || fetchUserDetailsError}</p>;
+  
   if (!user) return <LoadingView />
+
   return (
     <View style={containerStyle}>
       {gameBackground}
       <View style={styles.containerOverlay}>
         <Animated.View style={[styles.background, { transform: [{ translateX }] }]}>
           <Animated.View style={{ marginTop: marginTopAnim }}>
-            <TopLayout setTimerGame={setTimerGame} clickCount={clickCount} />
+            <TopLayout clickCount={clickCount} countdownTimer={countdownTimer} timerIsRunning={timerIsRunning} />
           </Animated.View>
           <View style={styles.imageBackground}>
             <ScratchLayout
@@ -344,6 +365,7 @@ const ScratchLuckyGame = () => {
               setScratchStarted={setScratchStarted}
               scratchCardLeft={scratchCardLeft}
               timerGame={timerGame}
+              pauseTimer={pauseTimer}
               setWinLuckySymbolVideo={setWinLuckySymbolVideo}
               setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
               clickCount={clickCount}
@@ -356,7 +378,7 @@ const ScratchLuckyGame = () => {
           </View>
         </Animated.View>
       </View>
-      <BottomDrawer />
+      <BottomDrawer onStateChanged={handleBottomDrawerStateChange} />
       {winLuckySymbolVideo && (
         <WinLuckySymbolView
           videoRef={luckySymbolVideoRef}

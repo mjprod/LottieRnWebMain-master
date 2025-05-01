@@ -14,6 +14,7 @@ const ScratchLayout = ({
   setScratchStarted,
   scratchCardLeft,
   timerGame,
+  pauseTimer,
   setWinLuckySymbolVideo,
   setCollectLuckySymbolVideo,
   clickCount,
@@ -21,7 +22,7 @@ const ScratchLayout = ({
   nextCard,
   setComboPlayed,
   maxCombinations,
-  hasLuckySymbol
+  hasLuckySymbol,
 }) => {
   const { luckySymbolCount } = useGame();
 
@@ -73,6 +74,7 @@ const ScratchLayout = ({
           nextCard={nextCard}
           setIsLuckySymbolTrue={setIsLuckySymbolTrue}
           timerGame={timerGame}
+          pauseTimer={pauseTimer}
           setWinLuckySymbolVideo={setWinLuckySymbolVideo}
           luckySymbolCount={luckySymbolCount}
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
