@@ -93,9 +93,11 @@ const AssetPack = {
     COMBO_3X: require("../assets/lotties/ComboHolderMaxVersion-3x.json"),
     COMBO_4X: require("../assets/lotties/ComboHolderMaxVersion-4x.json"),
     WIN: require("../assets/lotties/lottieMagicLetterWINheader.json"),
+    COIN_SLOT: require("../assets/lotties/lottie3DCoinSlot.json"),
     SPIN_WHEEL: require("../assets/lotties/specialEventsCasinoHomeCarousel.json"),
     CARD_COUNT_DOWN: require("../assets/lotties/lottieCardCountdown.json"),
     SCRATCHIE_BUBBLE_POP_ERROR: require("../assets/lotties/lottieScratchieBubblePopError.json"),
+    SCRATCHIE_BUBBLE_POP_LUCKY: require("../assets/lotties/lottieScratchieBubble.json"),
     SCROLL_DOWN_CHEVRON: require("../assets/lotties/scroll_down_chevron.json")
   }
 };

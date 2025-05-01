@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
+  Pressable,
 } from "react-native";
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
@@ -16,18 +17,18 @@ export const ButtonSize = {
   TWO_THIRD: AssetPack.lotties.CTA_BUTTON_TWO_THIRD,
 };
 
-const GameButton = ({ text, onPress, buttonSize = ButtonSize.FULL, loading = false, style = {} }) => {
+const GameButton = ({ text, onPress, buttonSize = ButtonSize.FULL, loading = false, style = {}, disabled = false }) => {
   return (
-    <TouchableOpacity style={[styles.btn, style]} onPress={onPress}>
+    <Pressable style={[styles.btn, style]} onPress={onPress} disabled={disabled}>
       <LottieView
-        style={{
+        style={[disabled && { opacity: 0.5 }, {
           position: "absolute",
           top: 0,
           left: 0,
           width: "100%",
           height: "100%",
-          resizeMode:"cover"
-        }}
+          resizeMode: "cover"
+        }]}
         source={buttonSize}
         autoPlay
         speed={1}
@@ -41,7 +42,7 @@ const GameButton = ({ text, onPress, buttonSize = ButtonSize.FULL, loading = fal
           <Text style={styles.text}>{text}</Text>
         </View>
       )}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
