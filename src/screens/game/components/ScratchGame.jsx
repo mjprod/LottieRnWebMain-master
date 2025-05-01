@@ -69,7 +69,7 @@ const ScratchGame = ({
     lottieScratchieBubblePink: lottiePopPink,
     lottieScratchieBubbleOrange: lottiePopOrange,
     lottieScratchieBubblePopError: AssetPack.lotties.SCRATCHIE_BUBBLE_POP_ERROR,
-    lottieScratchieBubblePopLucky: AssetPack.lotties.SCRATCHIE_BUBBLE_POP_LUCKY,
+    lottieScratchieBubblePopLucky: AssetPack.lotties.COIN_SLOT,
   };
 
   useEffect(() => {
@@ -142,14 +142,6 @@ const ScratchGame = ({
     let iconWithMaxCount = null;
     let columnIconMap = {};
     let combinationCount = 0;
-
-    // let luckyPosition = -1;
-
-    // if (winLuckySymbol) {
-    //   luckyPosition = Math.floor(Math.random() * totalPositions);
-    //   resultArray[luckyPosition] = 12;
-    //   iconCounts[12] = 1;
-    // }
 
     for (let i = 0; i < totalPositions; i++) {
       if (resultArray[i] !== null) continue;
