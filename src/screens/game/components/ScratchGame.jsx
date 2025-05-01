@@ -88,27 +88,23 @@ const ScratchGame = ({
   }, [scratched, currentTheme]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setClickedIcons([]);
-      setClickedCount({});
-      setClickCount(0);
-      setLastClickedIcon(null);
-      setSoundShouldPlay(1);
-      const icons = hasLuckySymbol
+    setClickedIcons([]);
+    setClickedCount({});
+    setClickCount(0);
+    setLastClickedIcon(null);
+    setSoundShouldPlay(1);
 
-      setArrayIcon(icons);
-      setIsLuckySymbolTrue(icons);
+    setArrayIcon(hasLuckySymbol);
+    setIsLuckySymbolTrue(hasLuckySymbol);
 
-      const generatedArray = generateIconsArray(icons);
-      const booblePositions = findBoobleColor(generatedArray);
-      setArrayBobble(booblePositions);
+    const generatedArray = generateIconsArray(hasLuckySymbol);
+    const booblePositions = findBoobleColor(generatedArray);
+    setArrayBobble(booblePositions);
 
-      setIconsArray(generatedArray);
-      const winners = checkWinCondition(generatedArray);
-      setWinningIcons(winners);
-      setIsWinner(winners.length > 0);
-    }, 400);
-
+    setIconsArray(generatedArray);
+    const winners = checkWinCondition(generatedArray);
+    setWinningIcons(winners);
+    setIsWinner(winners.length > 0);
   }, [setIsWinner, reset, setIsLuckySymbolTrue, maxCombinations, hasLuckySymbol]);
 
   const isValidIcon = (
@@ -130,7 +126,7 @@ const ScratchGame = ({
     );
   };
 
-  const generateIconsArray = (winLuckySymbol) => {
+  const generateIconsArray = useCallback((winLuckySymbol) => {
     let iconCounts = Array(totalIcons).fill(0);
     let resultArray = new Array(totalPositions).fill(null);
     let iconWithMaxCount = null;
@@ -173,7 +169,6 @@ const ScratchGame = ({
       }
 
       let selectedIcon;
-
       if (combinationCount < maxCombinations) {
         selectedIcon =
           availableIcons[Math.floor(Math.random() * availableIcons.length)];
@@ -194,7 +189,6 @@ const ScratchGame = ({
             availableIcons[Math.floor(Math.random() * availableIcons.length)];
         }
       }
-
       resultArray[i] = selectedIcon;
       iconCounts[selectedIcon]++;
       columnIconMap[columnIndex].add(selectedIcon);
@@ -203,11 +197,10 @@ const ScratchGame = ({
         iconWithMaxCount = selectedIcon;
       }
     }
-
     return resultArray;
-  };
+  }, [totalIcons, totalPositions]);
 
-  const findBoobleColor = (arr) => {
+  const findBoobleColor = useCallback((arr) => {
     const cores = [
       { cor: "Blue", animacao: "lottieScratchieBubbleBlue" },
       { cor: "Green", animacao: "lottieScratchieBubbleGreen" },
@@ -241,7 +234,7 @@ const ScratchGame = ({
     });
 
     return arrayAnimacoes;
-  };
+  }, []);
 
   const checkWinCondition = (array) => {
     const iconCounts = Array(totalIcons).fill(0);
