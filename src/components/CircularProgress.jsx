@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { View, Text, Animated } from 'react-native';
 import Svg, { Circle } from 'react-native-svg-web';
 import { Colors, Fonts } from '../util/constants';
@@ -9,16 +9,61 @@ const CircularProgress = ({ countdownTimer }) => {
     const radius = (size - strokeWidth) / 2;
     const circum = radius * 2 * Math.PI;
     const percentage = ((countdownTimer - 1) / 9) * 100;
+    const [countDown, setCountDown] = useState(3)
 
     const svgProgress = 100 - percentage;
 
     const getBackground = (value) => {
         if (value >= 1 && value <= 2) {
-            return Colors.jokerRed400;
+            return Colors.jokerRed600;
         } else if (value >= 3 && value <= 6) {
-            return Colors.jokerHoney400;
+            return Colors.jokerAlert400;
         } else if (value >= 7 && value <= 10) {
-            return Colors.jokerGreen400;
+            return Colors.jokerGreen600;
+        } else {
+            return Colors.jokerBlack300;
+        }
+    };
+
+    useEffect(() => {
+        setCountDown(Math.ceil((countdownTimer / 10) * 5))
+    }, [countDown, countdownTimer])
+
+    const getText = (countDown) => {
+        return countDown === 1 ? "X" : countDown;
+    }
+
+    const getTextColor = (value) => {
+        if (value >= 0 && value <= 1) {
+            return Colors.jokerRed50;
+        } else if (value >= 2 && value <= 3) {
+            return Colors.jokerHoney50;
+        } else if (value >= 4 && value <= 5) {
+            return Colors.jokerGreen50;
+        } else {
+            return Colors.jokerBlack300;
+        }
+    };
+
+    const getPositiveColor = (value) => {
+        if (value >= 0 && value <= 1) {
+            return Colors.jokerRed700;
+        } else if (value >= 2 && value <= 3) {
+            return Colors.jokerHoney700;
+        } else if (value >= 4 && value <= 5) {
+            return Colors.jokerGreen700;
+        } else {
+            return Colors.jokerBlack300;
+        }
+    };
+
+    const getNegativeColor = (value) => {
+        if (value >= 0 && value <= 1) {
+            return Colors.jokerRed900;
+        } else if (value >= 2 && value <= 3) {
+            return Colors.jokerHoney900;
+        } else if (value >= 4 && value <= 5) {
+            return Colors.jokerGreen900;
         } else {
             return Colors.jokerBlack300;
         }
@@ -39,7 +84,8 @@ const CircularProgress = ({ countdownTimer }) => {
                 useNativeDriver: true,
             }),
         ]).start();
-    }, [percentage]);
+    }, [countDown]);
+
 
     return (
         <Animated.View style={{
@@ -52,7 +98,7 @@ const CircularProgress = ({ countdownTimer }) => {
             <Svg width={size} height={size}>
                 {/* Background Circle */}
                 <Circle
-                    stroke="#D9D9D9"
+                    stroke={getNegativeColor(countDown)}
                     fill="none"
                     cx={size / 2}
                     cy={size / 2}
@@ -61,7 +107,7 @@ const CircularProgress = ({ countdownTimer }) => {
                 />
                 {/* Progress Circle */}
                 <Circle
-                    stroke={getBackground(countdownTimer)}
+                    stroke={getPositiveColor(countDown)}
                     fill="none"
                     cx={size / 2}
                     cy={size / 2}
@@ -84,7 +130,14 @@ const CircularProgress = ({ countdownTimer }) => {
                 width: size,
                 height: size,
             }}>
-                <Text style={{ fontFamily: Fonts.InterBold, textAlign: "center", alignSelf: "center" }}>{countdownTimer === 1 ? 'X' : countdownTimer}</Text>
+                <Text style={{
+                    fontFamily: Fonts.TekoSemiBold,
+                    textAlign: "center",
+                    alignSelf: "center",
+                    fontSize: 16,
+                    paddingTop: 2,
+                    color: getTextColor(countDown)
+                }}>{`${getText(countDown)}`}</Text>
             </View>
         </Animated.View>
     );

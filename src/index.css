@@ -62,6 +62,21 @@ html, body {
   src: url('./assets/fonts/Teko-Regular.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Teko-Bold';
+  src: url('./assets/fonts/Teko-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Teko-Light';
+  src: url('./assets/fonts/Teko-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Teko-SemiBold';
+  src: url('./assets/fonts/Teko-SemiBold.ttf') format('truetype');
+}
+
 video::-webkit-media-controls-overlay-play-button {
   display: none;
 }
