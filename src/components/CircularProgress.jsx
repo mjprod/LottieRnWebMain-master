@@ -1,47 +1,36 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { View, Text, Animated } from 'react-native';
+import { View, Text, Animated, Easing } from 'react-native';
 import Svg, { Circle } from 'react-native-svg-web';
 import { Colors, Fonts } from '../util/constants';
 
 const CircularProgress = ({ countdownTimer }) => {
-    const size = 25;
-    const strokeWidth = 5;
+    const size = 35;
+    const strokeWidth = 8;
     const radius = (size - strokeWidth) / 2;
     const circum = radius * 2 * Math.PI;
     const percentage = ((countdownTimer - 1) / 9) * 100;
-    const [countDown, setCountDown] = useState(3)
+    const [countDown, setCountDown] = useState(5)
 
     const svgProgress = 100 - percentage;
 
-    const getBackground = (value) => {
-        if (value >= 1 && value <= 2) {
-            return Colors.jokerRed600;
-        } else if (value >= 3 && value <= 6) {
-            return Colors.jokerAlert400;
-        } else if (value >= 7 && value <= 10) {
-            return Colors.jokerGreen600;
-        } else {
-            return Colors.jokerBlack300;
-        }
-    };
-
     useEffect(() => {
-        setCountDown(Math.ceil((countdownTimer / 10) * 5))
-    }, [countDown, countdownTimer])
+        const count = (countdownTimer / 10) * 5
+        setCountDown(count === 0.5 ? 0 : Math.ceil(count))
+    }, [countdownTimer])
 
     const getText = (countDown) => {
-        return countDown === 1 ? "X" : countDown;
+        return countDown === 0 ? "X" : countDown;
     }
 
     const getTextColor = (value) => {
-        if (value >= 0 && value <= 1) {
-            return Colors.jokerRed50;
+        if (value >= 0 && value < 1) {
+            return Colors.jokerRed900;
         } else if (value >= 2 && value <= 3) {
-            return Colors.jokerHoney50;
+            return Colors.jokerHoney900;
         } else if (value >= 4 && value <= 5) {
-            return Colors.jokerGreen50;
+            return Colors.jokerGreen900;
         } else {
-            return Colors.jokerBlack300;
+            return Colors.jokerRed900;
         }
     };
 
@@ -86,6 +75,18 @@ const CircularProgress = ({ countdownTimer }) => {
         ]).start();
     }, [countDown]);
 
+    const animatedProgress = useRef(new Animated.Value(svgProgress)).current;
+
+    useEffect(() => {
+        Animated.timing(animatedProgress, {
+            toValue: svgProgress,
+            duration: 300,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: false,
+        }).start();
+    }, [svgProgress]);
+
+    const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
     return (
         <Animated.View style={{
@@ -93,7 +94,7 @@ const CircularProgress = ({ countdownTimer }) => {
             flexShrink: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            marginRight: 10
+            marginRight: 8
         }}>
             <Svg width={size} height={size}>
                 {/* Background Circle */}
@@ -106,14 +107,17 @@ const CircularProgress = ({ countdownTimer }) => {
                     strokeWidth={strokeWidth}
                 />
                 {/* Progress Circle */}
-                <Circle
+                <AnimatedCircle
                     stroke={getPositiveColor(countDown)}
                     fill="none"
                     cx={size / 2}
                     cy={size / 2}
                     r={radius}
                     strokeDasharray={`${circum} ${circum}`}
-                    strokeDashoffset={radius * Math.PI * 2 * (svgProgress / 100)}
+                    strokeDashoffset={animatedProgress.interpolate({
+                        inputRange: [0, 100],
+                        outputRange: [0, -radius * Math.PI * 2]
+                    })}
                     strokeLinecap="butt"
                     transform={`rotate(-90, ${size / 2}, ${size / 2})`}
                     strokeWidth={strokeWidth}
@@ -134,7 +138,7 @@ const CircularProgress = ({ countdownTimer }) => {
                     fontFamily: Fonts.TekoSemiBold,
                     textAlign: "center",
                     alignSelf: "center",
-                    fontSize: 16,
+                    fontSize: 18,
                     paddingTop: 2,
                     color: getTextColor(countDown)
                 }}>{`${getText(countDown)}`}</Text>
