@@ -15,6 +15,7 @@ import useComboSounds from "../../../hook/useComboSounds";
 import { Colors, Fonts } from "../../../util/constants";
 import Svg, { Path } from "react-native-svg-web";
 import LuckySymbolsSlot from "../../../components/LuckySymbolsSlot";
+import CircularProgress from "../../../components/CircularProgress";
 
 const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) => (
   <View style={styles.container}>
@@ -112,14 +113,7 @@ const TopLayout = ({ clickCount, countdownTimer, timerIsRunning }) => {
             <View style={[styles.rowCountDown, backgroundSource]}>
               {scratchStarted && (
                 <>
-                  <LottieView
-                    ref={timerLottieRef}
-                    style={styles.lottieAnimation}
-                    source={AssetPack.lotties.COUNT_DOWN_BONUS}
-                    autoPlay
-                    speed={1}
-                    loop={false}
-                  />
+                  <CircularProgress countdownTimer={countdownTimer} />
                   <Animated.View
                     style={[{ transform: [{ scale: scaleAnim }] }]}>
                     <Text style={[styles.countDownText]}>
@@ -130,6 +124,7 @@ const TopLayout = ({ clickCount, countdownTimer, timerIsRunning }) => {
                     </Text>
                   </Animated.View>
                 </>
+
               )}
             </View>
             <View style={styles.numberTickerContainer}>
