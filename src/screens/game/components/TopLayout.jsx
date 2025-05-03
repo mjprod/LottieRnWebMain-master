@@ -15,6 +15,7 @@ import useComboSounds from "../../../hook/useComboSounds";
 import { Colors, Fonts } from "../../../util/constants";
 import Svg, { Path } from "react-native-svg-web";
 import LuckySymbolsSlot from "../../../components/LuckySymbolsSlot";
+import CircularProgress from "../../../components/CircularProgress";
 
 const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) => (
   <View style={styles.container}>
@@ -33,18 +34,21 @@ const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex,
   </View>
 );
 
-const TopLayout = ({ setTimerGame, clickCount }) => {
+const TopLayout = ({ clickCount, countdownTimer, timerIsRunning }) => {
   const { score, scratchStarted } = useGame();
-
   const scaleAnim = useRef(new Animated.Value(1)).current;
-  const [countdownTimer, setCountdownTimer] = useState(0);
   const { gameCenterIcon } = useTheme();
 
   const [animationIndex, setAnimationIndex] = useState(0);
   const [playAnimation, setPlayAnimation] = useState(false);
-  const animations = [AssetPack.lotties.COMBO_2X, AssetPack.lotties.COMBO_3X, AssetPack.lotties.COMBO_4X];
+  const animations = [
+    AssetPack.lotties.COMBO_2X,
+    AssetPack.lotties.COMBO_3X,
+    AssetPack.lotties.COMBO_4X
+  ];
 
   const lottieRef = useRef(null);
+  const timerLottieRef = useRef(null);
 
   const { initializeComboSounds, playComboSound } = useComboSounds();
 
@@ -79,26 +83,6 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
     }
   }, [clickCount]);
 
-  useEffect(() => {
-    if (scratchStarted) {
-      setCountdownTimer(10);
-      const intervalRef = setInterval(() => {
-        setCountdownTimer((prev) => {
-          if (prev > 1) return prev - 1;
-          clearInterval(intervalRef);
-          return 1;
-        });
-      }, 1000);
-      return () => clearInterval(intervalRef);
-    } else {
-      setCountdownTimer(0);
-    }
-  }, [scratchStarted]);
-
-  useEffect(() => {
-    setTimerGame(countdownTimer);
-  }, [countdownTimer, setTimerGame]);
-
   const getBackground = (value) => {
     if (value >= 1 && value <= 2) {
       return { backgroundColor: Colors.jokerRed400 };
@@ -129,13 +113,7 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
             <View style={[styles.rowCountDown, backgroundSource]}>
               {scratchStarted && (
                 <>
-                  <LottieView
-                    style={styles.lottieAnimation}
-                    source={AssetPack.lotties.COUNT_DOWN_BONUS}
-                    autoPlay
-                    speed={1}
-                    loop={false}
-                  />
+                  <CircularProgress countdownTimer={countdownTimer} />
                   <Animated.View
                     style={[{ transform: [{ scale: scaleAnim }] }]}>
                     <Text style={[styles.countDownText]}>
@@ -146,6 +124,7 @@ const TopLayout = ({ setTimerGame, clickCount }) => {
                     </Text>
                   </Animated.View>
                 </>
+
               )}
             </View>
             <View style={styles.numberTickerContainer}>

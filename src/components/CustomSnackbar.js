@@ -78,7 +78,7 @@ const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
 const styles = StyleSheet.create({
   snackbar: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 64,
     left: 20,
     right: 20,
     flexDirection: 'row',

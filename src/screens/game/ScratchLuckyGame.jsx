@@ -17,6 +17,7 @@ import { BONUS_PACK_NUMBER_OF_CARDS, Colors } from "../../util/constants";
 import BottomDrawer from "./components/BottomDrawer";
 import InitialCountDownView from "./components/InitialCountDownView";
 import WinLuckySymbolView from "./components/WinLuckySymbolView";
+import useTimer from "../../hook/useTimer.js";
 
 const { width } = Dimensions.get("window");
 
@@ -43,6 +44,9 @@ const ScratchLuckyGame = () => {
   const [maxCombinations, setMaxCombinations] = useState(0);
   const [hasLuckySymbol, setHasLuckySymbol] = useState(false);
   const [comboPlayed, setComboPlayed] = useState(0);
+
+  const { seconds: countdownTimer, timerIsRunning, startTimer, pauseTimer, resetTimer } = useTimer();
+
   const [nextCardAnimationFinished, setNextCardAnimationFinished] =
     useState(true);
 
@@ -87,6 +91,11 @@ const ScratchLuckyGame = () => {
 
   const marginTopAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
+  const hasTriggeredCardPlayed = useRef(false);
+
+  useEffect(() => {
+    setScratchStarted(false)
+  }, []);
 
   useEffect(() => {
     if (location.state) {
@@ -155,12 +164,19 @@ const ScratchLuckyGame = () => {
 
   const handleGameOver = useCallback(() => {
     setGameOver(true);
+    setNextCardAnimationFinished(true);
+    setTimerGame(0);
+    setScratchStarted(false);
+    setComboPlayed(0);
     appNavigation.goToGameOverPage(user.user_id, user.name, user.email);
   }, [setGameOver, appNavigation, user]);
 
   const nextCard = useCallback(() => {
     setSkipToFinishLuckyVideo(false);
     setWinLuckySymbolVideo(false);
+    setTimerGame(0);
+    setScratchStarted(false);
+    setComboPlayed(0);
     if (luckySymbolCount <= 2) {
       if (scratchCardLeft > 1) {
         if (currentTheme === nextTheme) {
@@ -218,26 +234,39 @@ const ScratchLuckyGame = () => {
   }, []);
 
   useEffect(() => {
-    if (scratchStarted) {
-      updateCardPlayed(user.current_beta_block, user.user_id, gameId);
-      Animated.timing(marginTopAnim, {
-        toValue: 6,
-        duration: 300,
-        easing: Easing.in(Easing.ease),
-        useNativeDriver: Platform.OS !== "web",
-      }).start();
-    } else {
+    if (!scratchStarted) {
+      hasTriggeredCardPlayed.current = false;
       Animated.timing(marginTopAnim, {
         toValue: 0,
         duration: 300,
         easing: Easing.out(Easing.ease),
         useNativeDriver: Platform.OS !== "web",
       }).start();
+      return;
     }
+
+    startTimer(10)
+
+    if (!hasTriggeredCardPlayed.current) {
+      hasTriggeredCardPlayed.current = true;
+      updateCardPlayed(user.current_beta_block, user.user_id, gameId);
+    }
+
+    Animated.timing(marginTopAnim, {
+      toValue: 6,
+      duration: 300,
+      easing: Easing.in(Easing.ease),
+      useNativeDriver: Platform.OS !== "web",
+    }).start();
   }, [scratchStarted]);
 
   useEffect(() => {
+    setTimerGame(countdownTimer);
+  }, [countdownTimer, setTimerGame]);
+
+  useEffect(() => {
     if (reset) {
+      resetTimer()
       setNextCardAnimationFinished(false);
       updateScore(user.user_id, score, gameId, comboPlayed);
       Animated.timing(translateX, {
@@ -253,9 +282,6 @@ const ScratchLuckyGame = () => {
           }
         }, 200);
         setNextCardAnimationFinished(true);
-        setTimerGame(0);
-        setScratchStarted(false);
-        setComboPlayed(0);
         goToNextTheme();
         Animated.spring(translateX, {
           toValue: 0,
@@ -300,22 +326,32 @@ const ScratchLuckyGame = () => {
 
   const gameBackground = useMemo(() => (
     <BackgroundGame
-      showAlphaView={scratchStarted || gameOver}
+      showAlphaView={scratchStarted}
       source={backGroundVideo}
     />
-  ), [backGroundVideo, scratchStarted, gameOver]);
+  ), [backGroundVideo, scratchStarted]);
+
+  const handleBottomDrawerStateChange = (expanded) => {
+    if (expanded) {
+      pauseTimer()
+    } else {
+      startTimer()
+    }
+  }
 
   if (getGamesLoading || fetchUserDetailsLoading) return <LoadingView />;
   if (getGamesError || fetchUserDetailsError)
     return <p>Error: {getGamesError || fetchUserDetailsError}</p>;
+  
   if (!user) return <LoadingView />
+
   return (
     <View style={containerStyle}>
       {gameBackground}
       <View style={styles.containerOverlay}>
         <Animated.View style={[styles.background, { transform: [{ translateX }] }]}>
           <Animated.View style={{ marginTop: marginTopAnim }}>
-            <TopLayout setTimerGame={setTimerGame} clickCount={clickCount} />
+            <TopLayout clickCount={clickCount} countdownTimer={countdownTimer} timerIsRunning={timerIsRunning} />
           </Animated.View>
           <View style={styles.imageBackground}>
             <ScratchLayout
@@ -329,6 +365,7 @@ const ScratchLuckyGame = () => {
               setScratchStarted={setScratchStarted}
               scratchCardLeft={scratchCardLeft}
               timerGame={timerGame}
+              pauseTimer={pauseTimer}
               setWinLuckySymbolVideo={setWinLuckySymbolVideo}
               setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
               clickCount={clickCount}
@@ -341,7 +378,7 @@ const ScratchLuckyGame = () => {
           </View>
         </Animated.View>
       </View>
-      <BottomDrawer />
+      <BottomDrawer onStateChanged={handleBottomDrawerStateChange} />
       {winLuckySymbolVideo && (
         <WinLuckySymbolView
           videoRef={luckySymbolVideoRef}

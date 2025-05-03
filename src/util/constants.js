@@ -75,10 +75,26 @@ export const Colors = {
 
   jokerWhite50: "#FFFFFF",
 
+  jokerGreen50: "#D8F8DE",
   jokerGreen400: "#3EDA41",
+  jokerGreen600: "#28953A",
+  jokerGreen700: "#1E712C",
+  jokerGreen900: "#0D3D15",
 
+  jokerAlert400: "#DB783E",
+  jokerAlert700: "#572F17",
+
+  jokerHoney50: "#F4E5C5",
   jokerHoney400: "#DBA73E",
+  jokerHoney600: "#8B6922",
+  jokerHoney700: "#715419",
+  jokerHoney900: "#563F10",
+
+  jokerRed50: "#F6D2D2",
   jokerRed400: "#DB3E3E",
+  jokerRed600: "#982929",
+  jokerRed700: "#771F1F",
+  jokerRed900: "#450F0F",
 };
 
 export const Fonts = {
@@ -91,4 +107,7 @@ export const Fonts = {
   InterSemiBold: "Inter-SemiBold",
   TekoMedium: "Teko-Medium",
   TekoRegular: "Teko-Regular",
+  TekoBold: "Teko-Bold",
+  TekoLight: "Teko-Light",
+  TekoSemiBold: "Teko-SemiBold",
 };

@@ -6,7 +6,7 @@ import { Colors, Fonts } from '../../../util/constants';
 import TimerComponent from '../../../components/TimerComponent';
 import RaffleTicketCard from '../../../components/RaffleTicketCard';
 
-const BottomDrawer = () => {
+const BottomDrawer = ({ onStateChanged }) => {
   const expandedHeight = 380;
   const nonExpednedHeight = 90
   const expandedWidth = 100;
@@ -19,6 +19,7 @@ const BottomDrawer = () => {
   const { user } = useGame()
 
   const toggleDrawer = () => {
+    onStateChanged(!isExpanded);
     setIsExpanded(!isExpanded);
 
     Animated.parallel([
