@@ -166,7 +166,6 @@ const ScratchGame = ({
   reset,
   nextCard,
   onLoading,
-  setIsLuckySymbolTrue,
   timerGame,
   pauseTimer,
   setWinLuckySymbolVideo,
@@ -237,7 +236,6 @@ const ScratchGame = ({
     setSoundShouldPlay(1);
 
     setArrayIcon(hasLuckySymbol);
-    setIsLuckySymbolTrue(hasLuckySymbol);
 
     const generatedArray = generateIconsArray(totalIcons, totalPositions, maxCombinations, hasLuckySymbol);
     const booblePositions = findBoobleColor(generatedArray);
@@ -254,7 +252,7 @@ const ScratchGame = ({
     setIconsArray(generatedArray);
     const winners = checkWinCondition(generatedArray, totalIcons);
     setWinningIcons(winners);
-  }, [reset, setIsLuckySymbolTrue, maxCombinations, hasLuckySymbol]);
+  }, [reset, maxCombinations, hasLuckySymbol]);
 
   const checkResults = () => {
     pauseTimer()

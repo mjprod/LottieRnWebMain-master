@@ -22,28 +22,11 @@ const ScratchLayout = ({
   maxCombinations,
   hasLuckySymbol,
 }) => {
-  const [isLuckySymbolTrue, setIsLuckySymbolTrue] = useState(false);
-
-  const setScratchedCard = () => {
-    if (isLuckySymbolTrue) {
-      setIsLuckySymbolTrue(false);
-      setScratched(true);
-    } else {
-      setScratched(true);
-    }
-  };
-
   const handleScratch = (scratchPercentage) => {
     if (scratchPercentage >= eraserShouldBeScratched && !scratched) {
-      setScratchedCard();
+      setScratched(true);
     }
   };
-
-  useEffect(() => {
-    if (reset) {
-      setScratched(false);
-    }
-  }, [reset]);
 
   return (
     <View style={styles.container}>
@@ -54,7 +37,6 @@ const ScratchLayout = ({
           scratched={scratched}
           reset={reset}
           nextCard={nextCard}
-          setIsLuckySymbolTrue={setIsLuckySymbolTrue}
           timerGame={timerGame}
           pauseTimer={pauseTimer}
           setWinLuckySymbolVideo={setWinLuckySymbolVideo}

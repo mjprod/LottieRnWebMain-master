@@ -266,6 +266,7 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (reset) {
+      setScratched(false)
       resetTimer()
       setNextCardAnimationFinished(false);
       updateScore(user.user_id, score, gameId, comboPlayed);
@@ -369,7 +370,6 @@ const ScratchLuckyGame = () => {
             <ScratchLayout
               key={user.user_id}
               reset={reset}
-              setReset={setReset}
               scratched={scratched}
               setScratched={setScratched}
               luckySymbolCount={luckySymbolCount}
