@@ -6,8 +6,8 @@ const settings = {
 export default settings;
 
 //Eraser settings
-export const eraserRadius = 45;
-export const eraserShouldBeScratched = 90;
+export const eraserRadius = 25;
+export const eraserShouldBeScratched = 95;
 
 //Eraser
 export const eraserDurationAnimation = 250;
@@ -30,6 +30,3 @@ export const maxRepeatedIcons = 3;
 export const heightScratch = 350;
 export const widthScratch = 350;
 export const colorSymbolNotSelected = 'rgba(0, 0, 0, 0.5)';
-
-
-

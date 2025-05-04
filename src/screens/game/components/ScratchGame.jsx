@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import {
   Animated,
   Easing,
@@ -203,14 +203,14 @@ const ScratchGame = ({
     lottiePopPink,
   } = useTheme();
 
-  const lottieAnimations = {
+  const lottieAnimations = useMemo(() => ({
     lottieScratchieBubbleBlue: lottiePopBlue,
     lottieScratchieBubbleGreen: lottiePopGreen,
     lottieScratchieBubblePink: lottiePopPink,
     lottieScratchieBubbleOrange: lottiePopOrange,
     lottieScratchieBubblePopError: AssetPack.lotties.SCRATCHIE_BUBBLE_POP_ERROR,
     lottieScratchieBubblePopLucky: AssetPack.lotties.COIN_SLOT,
-  };
+  }), [lottiePopBlue, lottiePopGreen, lottiePopPink, lottiePopOrange]);
 
   useEffect(() => {
     if (currentTheme !== null) {
