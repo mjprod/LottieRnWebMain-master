@@ -26,39 +26,29 @@ const ScratchLayout = ({
 }) => {
   const { luckySymbolCount } = useGame();
 
-  const [isWinner, setIsWinner] = useState(false);
   const [isLuckySymbolTrue, setIsLuckySymbolTrue] = useState(false);
-  const [triggerAutoPop, setTriggerAutoPop] = useState(false);
-  const [isScratchCardVisible, setIsScratchCardVisible] = useState(true);
-  const [autoScratch, setAutoScratch] = useState(false);
 
   const setScratchedCard = () => {
     if (isLuckySymbolTrue) {
       setIsLuckySymbolTrue(false);
       setScratched(true);
-      setIsScratchCardVisible(false);
     } else {
       setScratched(true);
-      setIsScratchCardVisible(false);
     }
   };
 
   const handleScratch = (scratchPercentage) => {
-    if (scratchPercentage >= eraserShouldBeScratched && isScratchCardVisible) {
+    if (scratchPercentage >= eraserShouldBeScratched && !scratched) {
       setScratchedCard();
     } 
   };
 
   useEffect(() => {
     if (reset) {
-      setIsScratchCardVisible(true);
-      setTriggerAutoPop(false);
-      setIsWinner(false);
       setScratched(false);
-      setAutoScratch(false);
       setReset(false);
     }
-  }, [reset, setReset, setScratched]);
+  }, [reset]);
 
   return (
     <View style={styles.container}>
@@ -66,9 +56,6 @@ const ScratchLayout = ({
         <ScratchGame
           maxCombinations={maxCombinations}
           hasLuckySymbol={hasLuckySymbol}
-          isWinner={isWinner}
-          setIsWinner={setIsWinner}
-          onAutoPop={triggerAutoPop}
           scratched={scratched}
           reset={reset}
           nextCard={nextCard}
@@ -81,11 +68,9 @@ const ScratchLayout = ({
           clickCount={clickCount}
           setClickCount={setClickCount}
           setComboPlayed={setComboPlayed} />
-        {isScratchCardVisible && (
+        {!scratched && (
           <View style={styles.scratchCardContainer}>
             <ScratchCard
-              setReset={setReset}
-              autoScratch={autoScratch}
               onScratch={handleScratch}
               setScratchStarted={setScratchStarted}
             />

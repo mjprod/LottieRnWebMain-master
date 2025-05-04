@@ -22,7 +22,6 @@ import useClickSounds from "../../../hook/useClickSounds";
 import AssetPack from "../../../util/AssetsPack";
 
 const ScratchGame = ({
-  setIsWinner,
   scratched,
   reset,
   nextCard,
@@ -115,8 +114,7 @@ const ScratchGame = ({
     setIconsArray(generatedArray);
     const winners = checkWinCondition(generatedArray);
     setWinningIcons(winners);
-    setIsWinner(winners.length > 0);
-  }, [setIsWinner, reset, setIsLuckySymbolTrue, maxCombinations, hasLuckySymbol]);
+  }, [reset, setIsLuckySymbolTrue, maxCombinations, hasLuckySymbol]);
 
   const isValidIcon = (
     count,
