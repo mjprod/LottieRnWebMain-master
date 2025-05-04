@@ -40,7 +40,7 @@ const ScratchLayout = ({
   const handleScratch = (scratchPercentage) => {
     if (scratchPercentage >= eraserShouldBeScratched && !scratched) {
       setScratchedCard();
-    } 
+    }
   };
 
   useEffect(() => {
@@ -118,4 +118,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ScratchLayout;
+export default React.memo(ScratchLayout);
