@@ -4,11 +4,9 @@ import ScratchCardLeft from "./ScratchCardLeft";
 import ScratchGame from "./ScratchGame";
 import ScratchCard from "./ScratchCard";
 import { eraserShouldBeScratched, heightScratch, widthScratch } from "../../../global/Settings";
-import { useGame } from "../../../context/GameContext";
 
 const ScratchLayout = ({
   reset,
-  setReset,
   scratched,
   setScratched,
   setScratchStarted,
@@ -24,8 +22,6 @@ const ScratchLayout = ({
   maxCombinations,
   hasLuckySymbol,
 }) => {
-  const { luckySymbolCount } = useGame();
-
   const [isLuckySymbolTrue, setIsLuckySymbolTrue] = useState(false);
 
   const setScratchedCard = () => {
@@ -46,7 +42,6 @@ const ScratchLayout = ({
   useEffect(() => {
     if (reset) {
       setScratched(false);
-      setReset(false);
     }
   }, [reset]);
 
@@ -63,7 +58,6 @@ const ScratchLayout = ({
           timerGame={timerGame}
           pauseTimer={pauseTimer}
           setWinLuckySymbolVideo={setWinLuckySymbolVideo}
-          luckySymbolCount={luckySymbolCount}
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
           clickCount={clickCount}
           setClickCount={setClickCount}

@@ -297,7 +297,7 @@ const ScratchLuckyGame = () => {
           }).start();
         });
       });
-
+      setReset(false);
     }
   }, [reset, setReset]);
 
