@@ -6,7 +6,6 @@ import {
 } from "react-native";
 
 import {
-  finishPopUpToVideoTimer,
   maxCountWin,
   maxOtherCount,
   totalIcons,
@@ -14,12 +13,153 @@ import {
   columns,
   maxRepeatedIcons,
 } from "../../../global/Settings";
+
 import themes from "../../../global/themeConfig";
 import { useTheme } from "../../../hook/useTheme";
 import { useGame } from "../../../context/GameContext";
 import GameGrid from "./GameGrid";
 import useClickSounds from "../../../hook/useClickSounds";
 import AssetPack from "../../../util/AssetsPack";
+
+const isValidIcon = (
+  count,
+  index,
+  columnIndex,
+  iconWithMaxCount,
+  winLuckySymbol,
+  columnIconMap
+) => {
+  return (
+    count < maxCountWin &&
+    count < maxRepeatedIcons &&
+    (iconWithMaxCount === null ||
+      count < maxOtherCount ||
+      index === iconWithMaxCount) &&
+    !columnIconMap[columnIndex].has(index) &&
+    (winLuckySymbol === false || index !== 12)
+  );
+};
+
+const generateIconsArray = (totalIcons, totalPositions, maxCombinations, winLuckySymbol) => {
+  let iconCounts = Array(totalIcons).fill(0);
+  let resultArray = new Array(totalPositions).fill(null);
+  let iconWithMaxCount = null;
+  let columnIconMap = {};
+  let combinationCount = 0;
+
+  for (let i = 0; i < totalPositions; i++) {
+    if (resultArray[i] !== null) continue;
+
+    let columnIndex = i % columns;
+    if (!columnIconMap[columnIndex]) {
+      columnIconMap[columnIndex] = new Set();
+    }
+
+    let availableIcons = iconCounts
+      .map((count, index) =>
+        isValidIcon(
+          count,
+          index,
+          columnIndex,
+          iconWithMaxCount,
+          winLuckySymbol,
+          columnIconMap
+        )
+          ? index
+          : null
+      )
+      .filter((index) => index !== null);
+
+    if (availableIcons.length === 0) {
+      break;
+    }
+
+    let selectedIcon;
+    if (combinationCount < maxCombinations) {
+      selectedIcon =
+        availableIcons[Math.floor(Math.random() * availableIcons.length)];
+
+      if (iconCounts[selectedIcon] === 2) {
+        combinationCount++;
+      }
+    } else {
+      let filteredIcons = availableIcons.filter(
+        (icon) => iconCounts[icon] < 2
+      );
+
+      if (filteredIcons.length > 0) {
+        selectedIcon =
+          filteredIcons[Math.floor(Math.random() * filteredIcons.length)];
+      } else {
+        selectedIcon =
+          availableIcons[Math.floor(Math.random() * availableIcons.length)];
+      }
+    }
+
+    resultArray[i] = selectedIcon;
+    iconCounts[selectedIcon]++;
+    columnIconMap[columnIndex].add(selectedIcon);
+
+    if (iconCounts[selectedIcon] === maxCountWin) {
+      iconWithMaxCount = selectedIcon;
+    }
+  }
+
+  return resultArray;
+};
+
+const findBoobleColor = (arr) => {
+  const colors = [
+    { color: "Blue", animation: "lottieScratchieBubbleBlue" },
+    { color: "Green", animation: "lottieScratchieBubbleGreen" },
+    { color: "Pink", animation: "lottieScratchieBubblePink" },
+    { color: "Orange", animation: "lottieScratchieBubbleOrange" },
+  ];
+
+  let counter = {};
+  let colorMap = {};
+  let animationMap = {};
+  let colorIndex = 0;
+
+  arr.forEach((num) => {
+    if (counter[num]) {
+      counter[num]++;
+    } else {
+      counter[num] = 1;
+    }
+  });
+
+  Object.keys(counter).filter((num) => {
+    if (counter[num] === 3) {
+      colorMap[num] = colors[colorIndex].color;
+      animationMap[num] = colors[colorIndex].animation;
+      colorIndex = (colorIndex + 1) % colors.length;
+    }
+  });
+
+  const animationArray = arr.map((num) => {
+    return animationMap[num] || null;
+  });
+
+  return animationArray;
+};
+
+const checkWinCondition = (array, totalIcons) => {
+  const iconCounts = Array(totalIcons).fill(0);
+  array.forEach((icon) => {
+    if (icon !== null) {
+      iconCounts[icon]++;
+    }
+  });
+
+  const winners = [];
+  iconCounts.forEach((count, index) => {
+    if (count === maxCountWin) {
+      winners.push(index);
+    }
+  });
+  return winners;
+};
 
 const ScratchGame = ({
   scratched,
@@ -99,7 +239,7 @@ const ScratchGame = ({
     setArrayIcon(hasLuckySymbol);
     setIsLuckySymbolTrue(hasLuckySymbol);
 
-    const generatedArray = generateIconsArray(hasLuckySymbol);
+    const generatedArray = generateIconsArray(totalIcons, totalPositions, maxCombinations, hasLuckySymbol);
     const booblePositions = findBoobleColor(generatedArray);
     setArrayBobble(booblePositions);
 
@@ -112,149 +252,9 @@ const ScratchGame = ({
     }
 
     setIconsArray(generatedArray);
-    const winners = checkWinCondition(generatedArray);
+    const winners = checkWinCondition(generatedArray, totalIcons);
     setWinningIcons(winners);
   }, [reset, setIsLuckySymbolTrue, maxCombinations, hasLuckySymbol]);
-
-  const isValidIcon = (
-    count,
-    index,
-    columnIndex,
-    iconWithMaxCount,
-    winLuckySymbol,
-    columnIconMap
-  ) => {
-    return (
-      count < maxCountWin &&
-      count < maxRepeatedIcons &&
-      (iconWithMaxCount === null ||
-        count < maxOtherCount ||
-        index === iconWithMaxCount) &&
-      !columnIconMap[columnIndex].has(index) &&
-      (winLuckySymbol === false || index !== 12)
-    );
-  };
-
-  const generateIconsArray = (winLuckySymbol) => {
-    let iconCounts = Array(totalIcons).fill(0);
-    let resultArray = new Array(totalPositions).fill(null);
-    let iconWithMaxCount = null;
-    let columnIconMap = {};
-    let combinationCount = 0;
-
-    for (let i = 0; i < totalPositions; i++) {
-      if (resultArray[i] !== null) continue;
-
-      let columnIndex = i % columns;
-      if (!columnIconMap[columnIndex]) {
-        columnIconMap[columnIndex] = new Set();
-      }
-
-      let availableIcons = iconCounts
-        .map((count, index) =>
-          isValidIcon(
-            count,
-            index,
-            columnIndex,
-            iconWithMaxCount,
-            winLuckySymbol,
-            columnIconMap
-          )
-            ? index
-            : null
-        )
-        .filter((index) => index !== null);
-
-      if (availableIcons.length === 0) {
-        break;
-      }
-
-      let selectedIcon;
-      if (combinationCount < maxCombinations) {
-        selectedIcon =
-          availableIcons[Math.floor(Math.random() * availableIcons.length)];
-
-        if (iconCounts[selectedIcon] === 2) {
-          combinationCount++;
-        }
-      } else {
-        let filteredIcons = availableIcons.filter(
-          (icon) => iconCounts[icon] < 2
-        );
-
-        if (filteredIcons.length > 0) {
-          selectedIcon =
-            filteredIcons[Math.floor(Math.random() * filteredIcons.length)];
-        } else {
-          selectedIcon =
-            availableIcons[Math.floor(Math.random() * availableIcons.length)];
-        }
-      }
-
-      resultArray[i] = selectedIcon;
-      iconCounts[selectedIcon]++;
-      columnIconMap[columnIndex].add(selectedIcon);
-
-      if (iconCounts[selectedIcon] === maxCountWin) {
-        iconWithMaxCount = selectedIcon;
-      }
-    }
-
-    return resultArray;
-  };
-
-  const findBoobleColor = (arr) => {
-    const colors = [
-      { color: "Blue", animation: "lottieScratchieBubbleBlue" },
-      { color: "Green", animation: "lottieScratchieBubbleGreen" },
-      { color: "Pink", animation: "lottieScratchieBubblePink" },
-      { color: "Orange", animation: "lottieScratchieBubbleOrange" },
-    ];
-
-    let counter = {};
-    let colorMap = {};
-    let animationMap = {};
-    let colorIndex = 0;
-
-    arr.forEach((num) => {
-      if (counter[num]) {
-        counter[num]++;
-      } else {
-        counter[num] = 1;
-      }
-    });
-
-    Object.keys(counter).filter((num) => {
-      if (counter[num] === 3) {
-        colorMap[num] = colors[colorIndex].color;
-        animationMap[num] = colors[colorIndex].animation;
-        colorIndex = (colorIndex + 1) % colors.length;
-      }
-    });
-
-    const animationArray = arr.map((num) => {
-      return animationMap[num] || null;
-    });
-
-    return animationArray;
-  };
-
-  const checkWinCondition = (array) => {
-    const iconCounts = Array(totalIcons).fill(0);
-    array.forEach((icon) => {
-      if (icon !== null) {
-        iconCounts[icon]++;
-      }
-    });
-
-    const winners = [];
-    iconCounts.forEach((count, index) => {
-      if (count === maxCountWin) {
-        winners.push(index);
-      }
-    });
-    return winners;
-  };
 
   const checkResults = () => {
     pauseTimer()
@@ -329,10 +329,6 @@ const ScratchGame = ({
       setTimeout(() => setClickCount(0), 1000);
     }
 
-    if ((clickedCount[icon] || 0) + 1 === 3) {
-      setTimeout(() => { }, finishPopUpToVideoTimer);
-    }
-
     setLastClickedIcon(icon);
   }, [clickedIcons, luckySymbolIndex]);
 
@@ -365,4 +361,4 @@ const ScratchGame = ({
   );
 };
 
-export default ScratchGame;
+export default React.memo(ScratchGame);
