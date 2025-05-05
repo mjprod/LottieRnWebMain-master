@@ -89,13 +89,9 @@ const ScratchLuckyGame = () => {
 
   const { setStartPlay } = useSound();
 
-  const marginTopAnim = useRef(new Animated.Value(0)).current;
-  const translateX = useRef(new Animated.Value(0)).current;
+  const scaleAnim = useRef(new Animated.Value(0.95)).current;
+  const transalteAnim = useRef(new Animated.Value(0)).current;
   const hasTriggeredCardPlayed = useRef(false);
-
-  useEffect(() => {
-    setScratchStarted(false)
-  }, []);
 
   useEffect(() => {
     if (location.state) {
@@ -227,18 +223,16 @@ const ScratchLuckyGame = () => {
   }, [addLuckySymbol]);
 
   const handleVideoIntroEnd = useCallback(() => {
+    setReset(true);
     setIntroThemeVideo(false);
-    setTimeout(() => {
-      setReset(true);
-    }, 100);
   }, []);
 
   useEffect(() => {
     if (!scratchStarted) {
       hasTriggeredCardPlayed.current = false;
-      Animated.timing(marginTopAnim, {
-        toValue: 0,
-        duration: 300,
+      Animated.timing(scaleAnim, {
+        toValue: 0.95,
+        duration: 200,
         easing: Easing.out(Easing.ease),
         useNativeDriver: Platform.OS !== "web",
       }).start();
@@ -252,9 +246,9 @@ const ScratchLuckyGame = () => {
       updateCardPlayed(user.current_beta_block, user.user_id, gameId);
     }
 
-    Animated.timing(marginTopAnim, {
-      toValue: 6,
-      duration: 300,
+    Animated.timing(scaleAnim, {
+      toValue: 1,
+      duration: 200,
       easing: Easing.in(Easing.ease),
       useNativeDriver: Platform.OS !== "web",
     }).start();
@@ -266,30 +260,40 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (reset) {
-      resetTimer()
+      setScratched(false)
       setNextCardAnimationFinished(false);
       updateScore(user.user_id, score, gameId, comboPlayed);
-      Animated.timing(translateX, {
-        toValue: -width * 1.1,
-        duration: 400,
+      Animated.timing(scaleAnim, {
+        toValue: 0.95,
+        duration: 300,
+        easing: Easing.in(Easing.ease),
         useNativeDriver: Platform.OS !== "web",
       }).start(() => {
-        setTimeout(() => {
-          if (scratchCardLeft - 1 > 0) {
-            setScratchCardLeft(scratchCardLeft - 1);
-          } else {
-            handleGameOver();
-          }
-        }, 200);
-        setNextCardAnimationFinished(true);
-        goToNextTheme();
-        Animated.spring(translateX, {
-          toValue: 0,
-          friction: 7,
-          tension: 50,
+        Animated.timing(transalteAnim, {
+          toValue: -width * 1.1,
+          duration: 500,
           useNativeDriver: Platform.OS !== "web",
-        }).start();
+        }).start(() => {
+          resetTimer()
+          setTimeout(() => {
+            if (scratchCardLeft - 1 > 0) {
+              setScratchCardLeft(scratchCardLeft - 1);
+            } else {
+              handleGameOver();
+            }
+          }, 200);
+          setNextCardAnimationFinished(true);
+          goToNextTheme();
+          Animated.spring(transalteAnim, {
+            duration: 500,
+            toValue: 0,
+            friction: 7,
+            tension: 50,
+            useNativeDriver: Platform.OS !== "web",
+          }).start();
+        });
       });
+      setReset(false);
     }
   }, [reset, setReset]);
 
@@ -342,22 +346,25 @@ const ScratchLuckyGame = () => {
   if (getGamesLoading || fetchUserDetailsLoading) return <LoadingView />;
   if (getGamesError || fetchUserDetailsError)
     return <p>Error: {getGamesError || fetchUserDetailsError}</p>;
-  
+
   if (!user) return <LoadingView />
 
   return (
     <View style={containerStyle}>
+
       {gameBackground}
       <View style={styles.containerOverlay}>
-        <Animated.View style={[styles.background, { transform: [{ translateX }] }]}>
-          <Animated.View style={{ marginTop: marginTopAnim }}>
-            <TopLayout clickCount={clickCount} countdownTimer={countdownTimer} timerIsRunning={timerIsRunning} />
-          </Animated.View>
+        <Animated.View style={[styles.background, {
+          transform: [
+            { scale: scaleAnim },
+            { translateX: transalteAnim },
+          ],
+        }]}>
+          <TopLayout clickCount={clickCount} countdownTimer={countdownTimer} />
           <View style={styles.imageBackground}>
             <ScratchLayout
               key={user.user_id}
               reset={reset}
-              setReset={setReset}
               scratched={scratched}
               setScratched={setScratched}
               luckySymbolCount={luckySymbolCount}
@@ -441,4 +448,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ScratchLuckyGame;
+export default React.memo(ScratchLuckyGame);

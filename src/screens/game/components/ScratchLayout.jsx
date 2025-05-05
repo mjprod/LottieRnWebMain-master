@@ -4,11 +4,9 @@ import ScratchCardLeft from "./ScratchCardLeft";
 import ScratchGame from "./ScratchGame";
 import ScratchCard from "./ScratchCard";
 import { eraserShouldBeScratched, heightScratch, widthScratch } from "../../../global/Settings";
-import { useGame } from "../../../context/GameContext";
 
 const ScratchLayout = ({
   reset,
-  setReset,
   scratched,
   setScratched,
   setScratchStarted,
@@ -24,41 +22,11 @@ const ScratchLayout = ({
   maxCombinations,
   hasLuckySymbol,
 }) => {
-  const { luckySymbolCount } = useGame();
-
-  const [isWinner, setIsWinner] = useState(false);
-  const [isLuckySymbolTrue, setIsLuckySymbolTrue] = useState(false);
-  const [triggerAutoPop, setTriggerAutoPop] = useState(false);
-  const [isScratchCardVisible, setIsScratchCardVisible] = useState(true);
-  const [autoScratch, setAutoScratch] = useState(false);
-
-  const setScratchedCard = () => {
-    if (isLuckySymbolTrue) {
-      setIsLuckySymbolTrue(false);
-      setScratched(true);
-      setIsScratchCardVisible(false);
-    } else {
-      setScratched(true);
-      setIsScratchCardVisible(false);
-    }
-  };
-
   const handleScratch = (scratchPercentage) => {
-    if (scratchPercentage >= eraserShouldBeScratched && isScratchCardVisible) {
-      setScratchedCard();
-    } 
-  };
-
-  useEffect(() => {
-    if (reset) {
-      setIsScratchCardVisible(true);
-      setTriggerAutoPop(false);
-      setIsWinner(false);
-      setScratched(false);
-      setAutoScratch(false);
-      setReset(false);
+    if (scratchPercentage >= eraserShouldBeScratched && !scratched) {
+      setScratched(true);
     }
-  }, [reset, setReset, setScratched]);
+  };
 
   return (
     <View style={styles.container}>
@@ -66,31 +34,23 @@ const ScratchLayout = ({
         <ScratchGame
           maxCombinations={maxCombinations}
           hasLuckySymbol={hasLuckySymbol}
-          isWinner={isWinner}
-          setIsWinner={setIsWinner}
-          onAutoPop={triggerAutoPop}
           scratched={scratched}
           reset={reset}
           nextCard={nextCard}
-          setIsLuckySymbolTrue={setIsLuckySymbolTrue}
           timerGame={timerGame}
           pauseTimer={pauseTimer}
           setWinLuckySymbolVideo={setWinLuckySymbolVideo}
-          luckySymbolCount={luckySymbolCount}
           setCollectLuckySymbolVideo={setCollectLuckySymbolVideo}
           clickCount={clickCount}
           setClickCount={setClickCount}
           setComboPlayed={setComboPlayed} />
-        {isScratchCardVisible && (
+        {!scratched && (
           <View style={styles.scratchCardContainer}>
             <ScratchCard
-              setReset={setReset}
-              autoScratch={autoScratch}
               onScratch={handleScratch}
               setScratchStarted={setScratchStarted}
             />
           </View>)}
-        <Image style={styles.arrowImage} source={null} />
       </View>
       <View style={{ marginTop: 5, marginBottom: 10, overflow: "hidden", alignSelf: "stretch" }}>
         <ScratchCardLeft scratchCardLeft={scratchCardLeft} />
@@ -125,12 +85,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
-  arrowImage: {
-    position: "absolute",
-    marginTop: 10,
-    top: -10,
-    zIndex: 1,
-  }
 });
 
-export default ScratchLayout;
+export default React.memo(ScratchLayout);

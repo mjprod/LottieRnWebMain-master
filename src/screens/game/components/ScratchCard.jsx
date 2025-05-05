@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { eraserRadius, heightScratch, widthScratch } from "../../../global/Settings";
 import AssetPack from "../../../util/AssetsPack";
@@ -14,9 +14,12 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
   const lastReportedPercentRef = useRef(0);
   const radius = eraserRadius;
 
+  const pathRef = useRef(null);
+  const previousPointRef = useRef(null);
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {return;}
 
     const img = new Image();
     img.src = AssetPack.images.SCRATCH_CARD_FOREGROUND;
@@ -29,6 +32,12 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
       const context = canvas.getContext("2d", { willReadFrequently: true });
       // Cache context for future drawing
       ctxRef.current = context;
+
+      // Configure erase stroke as a continuous path
+      context.lineCap = 'round';
+      context.lineJoin = 'round';
+      context.lineWidth = radius * 2;
+      pathRef.current = new Path2D();
 
       // Draw the image on the canvas
       context.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -51,10 +60,13 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
     const canvas = canvasRef.current;
 
     if (canvas) {
+      const handlePointerDown = () => {
+        previousPointRef.current = null;
+      };
+
       const handleMouseMove = (event) => {
         const rect = canvas.getBoundingClientRect();
         let x, y;
-
         if (event.type === "touchmove") {
           const touch = event.touches[0];
           x = touch.clientX - rect.left;
@@ -63,29 +75,36 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
           x = event.clientX - rect.left;
           y = event.clientY - rect.top;
         }
-
         const ctx = ctxRef.current;
         if (ctx) {
-          ctx.beginPath();
-          ctx.arc(x, y, radius, 0, 2 * Math.PI);
-          ctx.fill();
-          // Throttle erase-area calculation to animation frames
+          if (!previousPointRef.current) {
+            pathRef.current = new Path2D();
+            pathRef.current.moveTo(x, y);
+          } else {
+            pathRef.current.lineTo(x, y);
+          }
+          ctx.stroke(pathRef.current);
           if (!animationFrameRef.current) {
             animationFrameRef.current = requestAnimationFrame(() => {
               updateErasedArea();
               animationFrameRef.current = null;
             });
           }
+          previousPointRef.current = { x, y };
         }
       };
 
       canvas.addEventListener("mousemove", handleMouseMove);
       canvas.addEventListener("touchmove", handleMouseMove);
+      canvas.addEventListener('mousedown', handlePointerDown);
+      canvas.addEventListener('touchstart', handlePointerDown);
 
       return () => {
         if (canvas) {
           canvas.removeEventListener("mousemove", handleMouseMove);
           canvas.removeEventListener("touchmove", handleMouseMove);
+          canvas.removeEventListener('mousedown', handlePointerDown);
+          canvas.removeEventListener('touchstart', handlePointerDown);
         }
       };
     }
@@ -93,7 +112,7 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
 
   const updateErasedArea = () => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {return;}
 
     const ctx = ctxRef.current;
 

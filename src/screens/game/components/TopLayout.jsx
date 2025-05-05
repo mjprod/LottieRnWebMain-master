@@ -34,7 +34,7 @@ const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex,
   </View>
 );
 
-const TopLayout = ({ clickCount, countdownTimer, timerIsRunning }) => {
+const TopLayout = ({ clickCount, countdownTimer }) => {
   const { score, scratchStarted } = useGame();
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const { gameCenterIcon } = useTheme();
@@ -83,19 +83,23 @@ const TopLayout = ({ clickCount, countdownTimer, timerIsRunning }) => {
     }
   }, [clickCount]);
 
-  const getBackground = (value) => {
-    if (value >= 1 && value <= 2) {
-      return { backgroundColor: Colors.jokerRed400 };
-    } else if (value >= 3 && value <= 6) {
-      return { backgroundColor: Colors.jokerHoney400 };
-    } else if (value >= 7 && value <= 10) {
-      return { backgroundColor: Colors.jokerGreen400 };
+  const getBackground = (value, scratchStarted) => {
+    if (scratchStarted) {
+      if (value >= 1 && value <= 2) {
+        return { backgroundColor: Colors.jokerRed400 };
+      } else if (value >= 3 && value <= 6) {
+        return { backgroundColor: Colors.jokerHoney400 };
+      } else if (value >= 7 && value <= 10) {
+        return { backgroundColor: Colors.jokerGreen400 };
+      } else {
+        return { backgroundColor: Colors.jokerBlack300 };
+      }
     } else {
       return { backgroundColor: Colors.jokerBlack300 };
     }
   };
 
-  const backgroundSource = useMemo(() => getBackground(countdownTimer), [countdownTimer]);
+  const backgroundSource = useMemo(() => getBackground(countdownTimer, scratchStarted), [countdownTimer, scratchStarted]);
 
   return (
     <View style={{ marginBottom: -30 }} >
@@ -124,7 +128,6 @@ const TopLayout = ({ clickCount, countdownTimer, timerIsRunning }) => {
                     </Text>
                   </Animated.View>
                 </>
-
               )}
             </View>
             <View style={styles.numberTickerContainer}>

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
-import { View, Text, Animated, Easing } from 'react-native';
+import { View, Text, Animated, Easing, Platform} from 'react-native';
 import Svg, { Circle } from 'react-native-svg-web';
 import { Colors, Fonts } from '../util/constants';
 
@@ -41,12 +41,12 @@ const CircularProgress = ({ countdownTimer }) => {
             Animated.timing(scaleAnim, {
                 toValue: 1.2,
                 duration: 150,
-                useNativeDriver: true,
+                useNativeDriver: Platform.OS !== 'web',
             }),
             Animated.timing(scaleAnim, {
                 toValue: 1,
                 duration: 150,
-                useNativeDriver: true,
+                useNativeDriver: Platform.OS !== 'web',
             }),
         ]).start();
     }, [countDown]);
@@ -58,7 +58,7 @@ const CircularProgress = ({ countdownTimer }) => {
             toValue: svgProgress,
             duration: 300,
             easing: Easing.inOut(Easing.ease),
-            useNativeDriver: false,
+            useNativeDriver: Platform.OS !== 'web',
         }).start();
     }, [svgProgress]);
 
