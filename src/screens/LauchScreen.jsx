@@ -45,7 +45,22 @@ const LauchScreenEncrypted = () => {
       if (userResponse.user) {
         setUser(userResponse.user);
         setLuckySymbolCount(userResponse.user.lucky_symbol_balance);
-        const userData = userResponse.user;
+        const gameStatus = userResponse.time_result;
+        if (gameStatus === GameStatus.drawing) {
+          appNavigation.goToInProgressPage();
+        } else if (gameStatus === GameStatus.check_winner) {
+          getWinner().then((response) => {
+            const winner = response.winner
+            if (winner.user_id === userResponse.user.user_id) {
+              appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
+            } else {
+              appNavigation.goToThankYouPage(InfoScreenContents.thank_you);
+            }
+          }).catch((error) => {
+            console.error('Login failed:', error);
+          });
+        } else {
+          const userData = userResponse.user;
           const currentWeek = userResponse.current_week;
           if (userResponse.daily === null || userResponse.daily.length === 0) {
             appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
@@ -59,48 +74,13 @@ const LauchScreenEncrypted = () => {
                 item.includes(getCurrentDate())
               );
               if (!hasCurrentDate) {
-                // appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+                appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
               }
             } else {
-              // appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+              appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
             }
           }
-        // const gameStatus = userResponse.time_result;
-        // if (gameStatus === GameStatus.drawing) {
-        //   appNavigation.goToInProgressPage();
-        // } else if (gameStatus === GameStatus.check_winner) {
-        //   getWinner().then((response) => {
-        //     const winner = response.winner
-        //     if (winner.user_id === userResponse.user.user_id) {
-        //       appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
-        //     } else {
-        //       appNavigation.goToThankYouPage(InfoScreenContents.thank_you);
-        //     }
-        //   }).catch((error) => {
-        //     console.error('Login failed:', error);
-        //   });
-        // } else {
-        //   const userData = userResponse.user;
-        //   const currentWeek = userResponse.current_week;
-        //   if (userResponse.daily === null || userResponse.daily.length === 0) {
-        //     appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-        //   } else {
-        //     const currentWeekDaily = userResponse.daily.find(
-        //       (item) => item.current_week === currentWeek
-        //     );
-        //     if (currentWeekDaily != null) {
-        //       const localCurrentWeekDaily = currentWeekDaily.days.map((date) => convertUTCToLocal(date))
-        //       const hasCurrentDate = localCurrentWeekDaily.some((item) =>
-        //         item.includes(getCurrentDate())
-        //       );
-        //       if (!hasCurrentDate) {
-        //         appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-        //       }
-        //     } else {
-        //       appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
-        //     }
-        //   }
-        // }
+        }
       } else {
         appNavigation.goToNotFoundPage()
       }

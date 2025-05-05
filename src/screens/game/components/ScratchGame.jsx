@@ -229,29 +229,31 @@ const ScratchGame = ({
   }, [scratched, currentTheme]);
 
   useEffect(() => {
-    setClickedIcons([]);
-    setClickedCount({});
-    setClickCount(0);
-    setLastClickedIcon(null);
-    setSoundShouldPlay(1);
+    setTimeout(() => {
+      setClickedIcons([]);
+      setClickedCount({});
+      setClickCount(0);
+      setLastClickedIcon(null);
+      setSoundShouldPlay(1);
 
-    setArrayIcon(hasLuckySymbol);
+      setArrayIcon(hasLuckySymbol);
 
-    const generatedArray = generateIconsArray(totalIcons, totalPositions, maxCombinations, hasLuckySymbol);
-    const booblePositions = findBoobleColor(generatedArray);
-    setArrayBobble(booblePositions);
+      const generatedArray = generateIconsArray(totalIcons, totalPositions, maxCombinations, hasLuckySymbol);
+      const booblePositions = findBoobleColor(generatedArray);
+      setArrayBobble(booblePositions);
 
-    if (hasLuckySymbol) {
-      const nonNullAnimations = Object.entries(booblePositions)
-        .filter(([_, val]) => val !== null)
-        .map(([key]) => Number(key));
-      const randomKey = nonNullAnimations[Math.floor(Math.random() * nonNullAnimations.length)];
-      setLuckySymbolIndex(randomKey)
-    }
+      if (hasLuckySymbol) {
+        const nonNullAnimations = Object.entries(booblePositions)
+          .filter(([_, val]) => val !== null)
+          .map(([key]) => Number(key));
+        const randomKey = nonNullAnimations[Math.floor(Math.random() * nonNullAnimations.length)];
+        setLuckySymbolIndex(randomKey)
+      }
 
-    setIconsArray(generatedArray);
-    const winners = checkWinCondition(generatedArray, totalIcons);
-    setWinningIcons(winners);
+      setIconsArray(generatedArray);
+      const winners = checkWinCondition(generatedArray, totalIcons);
+      setWinningIcons(winners);
+    }, 200)
   }, [reset, maxCombinations, hasLuckySymbol]);
 
   const checkResults = () => {

@@ -51,7 +51,6 @@ const ScratchLayout = ({
               setScratchStarted={setScratchStarted}
             />
           </View>)}
-        <Image style={styles.arrowImage} source={null} />
       </View>
       <View style={{ marginTop: 5, marginBottom: 10, overflow: "hidden", alignSelf: "stretch" }}>
         <ScratchCardLeft scratchCardLeft={scratchCardLeft} />
@@ -86,12 +85,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
-  arrowImage: {
-    position: "absolute",
-    marginTop: 10,
-    top: -10,
-    zIndex: 1,
-  }
 });
 
 export default React.memo(ScratchLayout);
