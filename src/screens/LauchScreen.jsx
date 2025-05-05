@@ -43,7 +43,6 @@ const LauchScreenEncrypted = () => {
   const fetchAndProcessUserDetails = (userDetails) => {
     fetchUserDetails(userDetails.user_id, userDetails.name, userDetails.email).then((userResponse) => {
       if (userResponse.user) {
-        console.log(userResponse)
         setUser(userResponse.user);
         setLuckySymbolCount(userResponse.user.lucky_symbol_balance);
         const gameStatus = userResponse.time_result;
