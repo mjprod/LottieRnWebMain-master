@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { Howl } from "howler";
+import { Howl, Howler } from "howler";
 import themes from "../global/themeConfig.js";
 import { useTheme } from "./useTheme.js";
 import { useLocation } from "react-router-dom";
@@ -16,6 +16,8 @@ const SoundContext = createContext();
 export const useSound = () => useContext(SoundContext);
 
 export const SoundProvider = ({ children }) => {
+  // Enable Howler auto-unlock on first user gesture
+  Howler.autoUnlock = true;
   const [startPlay, setStartPlay] = useState(false);
   const [introPlayed, setIntroPlayed] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
@@ -29,6 +31,17 @@ export const SoundProvider = ({ children }) => {
       muteAllSounds();
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    // Retry playback if Web Audio context is suspended
+    Object.values(soundRefs.current).forEach((sound) => {
+      sound.on("playerror", (id) => {
+        if (Howler.ctx && Howler.ctx.state === "suspended") {
+          Howler.ctx.resume().then(() => sound.play(id));
+        }
+      });
+    });
+  }, []);
 
   const trackKeys = [
     "intro",
