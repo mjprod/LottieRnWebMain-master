@@ -94,10 +94,6 @@ const ScratchLuckyGame = () => {
   const hasTriggeredCardPlayed = useRef(false);
 
   useEffect(() => {
-    setScratchStarted(false)
-  }, []);
-
-  useEffect(() => {
     if (location.state) {
       const { username, email, id } = location.state;
       fetchUserDetails(id, username, email)
@@ -227,10 +223,8 @@ const ScratchLuckyGame = () => {
   }, [addLuckySymbol]);
 
   const handleVideoIntroEnd = useCallback(() => {
+    setReset(true);
     setIntroThemeVideo(false);
-    setTimeout(() => {
-      setReset(true);
-    }, 100);
   }, []);
 
   useEffect(() => {
@@ -238,7 +232,7 @@ const ScratchLuckyGame = () => {
       hasTriggeredCardPlayed.current = false;
       Animated.timing(scaleAnim, {
         toValue: 0.95,
-        duration: 300,
+        duration: 200,
         easing: Easing.out(Easing.ease),
         useNativeDriver: Platform.OS !== "web",
       }).start();
@@ -254,7 +248,7 @@ const ScratchLuckyGame = () => {
 
     Animated.timing(scaleAnim, {
       toValue: 1,
-      duration: 300,
+      duration: 200,
       easing: Easing.in(Easing.ease),
       useNativeDriver: Platform.OS !== "web",
     }).start();
@@ -267,7 +261,6 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (reset) {
       setScratched(false)
-      resetTimer()
       setNextCardAnimationFinished(false);
       updateScore(user.user_id, score, gameId, comboPlayed);
       Animated.timing(scaleAnim, {
@@ -278,9 +271,10 @@ const ScratchLuckyGame = () => {
       }).start(() => {
         Animated.timing(transalteAnim, {
           toValue: -width * 1.1,
-          duration: 400,
+          duration: 500,
           useNativeDriver: Platform.OS !== "web",
         }).start(() => {
+          resetTimer()
           setTimeout(() => {
             if (scratchCardLeft - 1 > 0) {
               setScratchCardLeft(scratchCardLeft - 1);
@@ -291,6 +285,7 @@ const ScratchLuckyGame = () => {
           setNextCardAnimationFinished(true);
           goToNextTheme();
           Animated.spring(transalteAnim, {
+            duration: 500,
             toValue: 0,
             friction: 7,
             tension: 50,
@@ -365,7 +360,7 @@ const ScratchLuckyGame = () => {
             { translateX: transalteAnim },
           ],
         }]}>
-          <TopLayout clickCount={clickCount} countdownTimer={countdownTimer} timerIsRunning={timerIsRunning} />
+          <TopLayout clickCount={clickCount} countdownTimer={countdownTimer} />
           <View style={styles.imageBackground}>
             <ScratchLayout
               key={user.user_id}
