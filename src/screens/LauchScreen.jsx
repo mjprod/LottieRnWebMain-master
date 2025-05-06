@@ -59,26 +59,26 @@ const LauchScreenEncrypted = () => {
           }).catch((error) => {
             console.error('Login failed:', error);
           });
-        }
-
-        const userData = userResponse.user;
-        const currentWeek = userResponse.current_week;
-        if (userResponse.daily === null || userResponse.daily.length === 0) {
-          appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
         } else {
-          const currentWeekDaily = userResponse.daily.find(
-            (item) => item.current_week === currentWeek
-          );
-          if (currentWeekDaily != null) {
-            const localCurrentWeekDaily = currentWeekDaily.days.map((date) => convertUTCToLocal(date))
-            const hasCurrentDate = localCurrentWeekDaily.some((item) =>
-              item.includes(getCurrentDate())
+          const userData = userResponse.user;
+          const currentWeek = userResponse.current_week;
+          if (userResponse.daily === null || userResponse.daily.length === 0) {
+            appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+          } else {
+            const currentWeekDaily = userResponse.daily.find(
+              (item) => item.current_week === currentWeek
             );
-            if (!hasCurrentDate) {
+            if (currentWeekDaily != null) {
+              const localCurrentWeekDaily = currentWeekDaily.days.map((date) => convertUTCToLocal(date))
+              const hasCurrentDate = localCurrentWeekDaily.some((item) =>
+                item.includes(getCurrentDate())
+              );
+              if (!hasCurrentDate) {
+                appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+              }
+            } else {
               appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
             }
-          } else {
-            appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
           }
         }
       } else {

@@ -15,6 +15,7 @@ import useComboSounds from "../../../hook/useComboSounds";
 import { Colors, Fonts } from "../../../util/constants";
 import Svg, { Path } from "react-native-svg-web";
 import LuckySymbolsSlot from "../../../components/LuckySymbolsSlot";
+import CircularProgress from "../../../components/CircularProgress";
 
 const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) => (
   <View style={styles.container}>
@@ -82,19 +83,23 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
     }
   }, [clickCount]);
 
-  const getBackground = (value) => {
-    if (value >= 1 && value <= 2) {
-      return { backgroundColor: Colors.jokerRed400 };
-    } else if (value >= 3 && value <= 6) {
-      return { backgroundColor: Colors.jokerHoney400 };
-    } else if (value >= 7 && value <= 10) {
-      return { backgroundColor: Colors.jokerGreen400 };
+  const getBackground = (value, scratchStarted) => {
+    if (scratchStarted) {
+      if (value >= 1 && value <= 2) {
+        return { backgroundColor: Colors.jokerRed400 };
+      } else if (value >= 3 && value <= 6) {
+        return { backgroundColor: Colors.jokerHoney400 };
+      } else if (value >= 7 && value <= 10) {
+        return { backgroundColor: Colors.jokerGreen400 };
+      } else {
+        return { backgroundColor: Colors.jokerBlack300 };
+      }
     } else {
       return { backgroundColor: Colors.jokerBlack300 };
     }
   };
 
-  const backgroundSource = useMemo(() => getBackground(countdownTimer), [countdownTimer]);
+  const backgroundSource = useMemo(() => getBackground(countdownTimer, scratchStarted), [countdownTimer, scratchStarted]);
 
   return (
     <View style={{ marginBottom: -30 }} >
@@ -112,14 +117,7 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
             <View style={[styles.rowCountDown, backgroundSource]}>
               {scratchStarted && (
                 <>
-                  <LottieView
-                    ref={timerLottieRef}
-                    style={styles.lottieAnimation}
-                    source={AssetPack.lotties.COUNT_DOWN_BONUS}
-                    autoPlay
-                    speed={1}
-                    loop={false}
-                  />
+                  <CircularProgress countdownTimer={countdownTimer} />
                   <Animated.View
                     style={{ transform: [{ scale: scaleAnim }] }}>
                     <Text style={[styles.countDownText]}>
