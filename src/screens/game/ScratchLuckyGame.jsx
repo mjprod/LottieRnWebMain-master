@@ -27,6 +27,7 @@ const ScratchLuckyGame = () => {
 
   const countDownLottieRef = useRef(null);
   const luckySymbolVideoRef = useRef(null);
+  const timerRefs = useRef({});
 
   const [gameStarted, setGameStarted] = useState(false);
   const [countDownStarted, setCountDownStarted] = useState(false);
@@ -92,6 +93,12 @@ const ScratchLuckyGame = () => {
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
   const transalteAnim = useRef(new Animated.Value(0)).current;
   const hasTriggeredCardPlayed = useRef(false);
+
+  useEffect(() => {
+    return () => {
+      Object.values(timerRefs.current).forEach(clearTimeout);
+    };
+  }, []);
 
   useEffect(() => {
     if (location.state) {
@@ -193,7 +200,8 @@ const ScratchLuckyGame = () => {
       nextCard();
     } else if (luckySymbolCount === 2) {
       saveLuckySymbol(luckySymbolCount + 1);
-      setTimeout(() => {
+      clearTimeout(timerRefs.current.addLucky);
+      timerRefs.current.addLucky = setTimeout(() => {
         decrementLuckySymbol(3);
       }, 300);
       updateLuckySymbol(user.user_id, 0);
@@ -207,7 +215,8 @@ const ScratchLuckyGame = () => {
   const decrementLuckySymbol = useCallback((count, onComplete) => {
     if (count >= 0) {
       saveLuckySymbol(count);
-      setTimeout(() => {
+      clearTimeout(timerRefs.current.decrement);
+      timerRefs.current.decrement = setTimeout(() => {
         if (count === 0) {
           setCollectLuckySymbolVideo(true);
         } else {
@@ -275,7 +284,8 @@ const ScratchLuckyGame = () => {
           useNativeDriver: Platform.OS !== "web",
         }).start(() => {
           resetTimer()
-          setTimeout(() => {
+          clearTimeout(timerRefs.current.reset);
+          timerRefs.current.reset = setTimeout(() => {
             if (scratchCardLeft - 1 > 0) {
               setScratchCardLeft(scratchCardLeft - 1);
             } else {
