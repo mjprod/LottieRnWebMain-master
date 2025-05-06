@@ -179,6 +179,8 @@ const ScratchGame = ({
   const { initializeClickSounds, playClickSound } = useClickSounds();
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const checkResultsTimeout = useRef(null);
+  const clickResetTimeout = useRef(null);
   const [iconsArray, setIconsArray] = useState([]);
   const [winningIcons, setWinningIcons] = useState([]);
   const [clickedIcons, setClickedIcons] = useState([]);
@@ -229,7 +231,7 @@ const ScratchGame = ({
   }, [scratched, currentTheme]);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setClickedIcons([]);
       setClickedCount({});
       setClickCount(0);
@@ -247,18 +249,21 @@ const ScratchGame = ({
           .filter(([_, val]) => val !== null)
           .map(([key]) => Number(key));
         const randomKey = nonNullAnimations[Math.floor(Math.random() * nonNullAnimations.length)];
-        setLuckySymbolIndex(randomKey)
+        setLuckySymbolIndex(randomKey);
       }
 
       setIconsArray(generatedArray);
       const winners = checkWinCondition(generatedArray, totalIcons);
       setWinningIcons(winners);
-    }, 200)
+    }, 200);
+
+    return () => clearTimeout(timeoutId);
   }, [reset, maxCombinations, hasLuckySymbol]);
 
   const checkResults = () => {
-    pauseTimer()
-    setTimeout(() => {
+    pauseTimer();
+    clearTimeout(checkResultsTimeout.current);
+    checkResultsTimeout.current = setTimeout(() => {
       if (arrayIcon) {
         if (luckySymbolCount !== 3) {
           setWinLuckySymbolVideo(true);
@@ -326,24 +331,40 @@ const ScratchGame = ({
     setSoundShouldPlay(prev => (prev < 12 ? prev + 1 : 1));
 
     if (soundShouldPlay === 12) {
-      setTimeout(() => setClickCount(0), 1000);
+      clearTimeout(clickResetTimeout.current);
+      clickResetTimeout.current = setTimeout(() => setClickCount(0), 1000);
     }
 
     setLastClickedIcon(icon);
   }, [clickedIcons, luckySymbolIndex]);
 
   useEffect(() => {
+    let fadeAnimation;
     if (onLoading) {
       fadeAnim.setValue(0);
     } else {
-      Animated.timing(fadeAnim, {
+      fadeAnimation = Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 2400,
         easing: Easing.inOut(Easing.ease),
         useNativeDriver: Platform.OS !== "web",
-      }).start();
+      });
+      fadeAnimation.start();
     }
+
+    return () => {
+      if (fadeAnimation) {
+        fadeAnimation.stop();
+      }
+    };
   }, [fadeAnim, onLoading]);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(checkResultsTimeout.current);
+      clearTimeout(clickResetTimeout.current);
+    };
+  }, []);
 
   return (
     <GameGrid backgroundScratchCard={backgroundScratchCard}
