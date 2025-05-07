@@ -16,10 +16,10 @@ import { TopBannerNavType } from "../components/TopBannerNav";
 import SectionTitle from "../components/SectionTitle";
 
 const GameOverScreen = () => {
-  const appNavigation = useAppNavigation()
+  const appNavigation = useAppNavigation();
   const { fetchUserDetails } = useApiRequest();
 
-  const location = useLocation()
+  const location = useLocation();
   const { user, setUser } = useGame();
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const GameOverScreen = () => {
             appNavigation.goToLaunchScreen(
               user.user_id,
               user.name,
-              user.email
+              user.email,
             );
           }}
         />

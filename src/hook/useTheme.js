@@ -31,11 +31,11 @@ export function ThemeProvider({ children }) {
   const updateThemeUsingGames = useCallback((games) => {
     const themeSequence = games.map(game => {
       switch (game.theme_id) {
-        case 1: return ThemeEnum.EGYPT;
-        case 2: return ThemeEnum.MYTHOLOGY;
-        case 3: return ThemeEnum.INTERNATIONAL;
-        case 4: return ThemeEnum.COWBOY;
-        default: return ThemeEnum.COWBOY;
+      case 1: return ThemeEnum.EGYPT;
+      case 2: return ThemeEnum.MYTHOLOGY;
+      case 3: return ThemeEnum.INTERNATIONAL;
+      case 4: return ThemeEnum.COWBOY;
+      default: return ThemeEnum.COWBOY;
       }
     });
     setThemeSequence(themeSequence);

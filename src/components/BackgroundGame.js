@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     zIndex: 1,
     height: "100%",
-    width: "100%"
+    width: "100%",
   },
   video: {
     position: "absolute",

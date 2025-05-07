@@ -18,13 +18,13 @@ self.addEventListener("install", (event) => {
               return cache.put(url, response);
             }).catch((err) => {
               console.error(`Error caching ${url}:`, err);
-            })
-          )
+            }),
+          ),
         );
       })
       .catch((err) => {
         console.error('Service worker installation failed:', err);
-      })
+      }),
   );
 });
 
@@ -57,7 +57,7 @@ self.addEventListener("fetch", (event) => {
         }
         return networkResponse;
       });
-    })
+    }),
   );
 });
 
@@ -72,8 +72,8 @@ self.addEventListener("activate", (event) => {
           if (!cacheWhitelist.includes(cache)) {
             return caches.delete(cache);
           }
-        })
+        }),
       );
-    })
+    }),
   );
 });

@@ -45,7 +45,23 @@ module.exports = {
     "object-curly-spacing": ["error", "always"],
     "array-bracket-spacing": ["error", "never"],
     "comma-dangle": ["error", "always-multiline"],
-    "quotes": ["error", "double", { avoidEscape: true }],
     "semi": ["error", "always"],
+
+    // indentation: 2 spaces
+    indent: ["error", 2],
+    // require spaces around infix operators (e.g. 1 + 2)
+    "space-infix-ops": "error",
+    // enforce spacing before/after keywords (e.g. `if ( … )`)
+    "keyword-spacing": ["error", { before: true, after: true }],
+    // space before function parentheses: `function foo()`, not `foo ()`
+    "space-before-function-paren": ["error", "never"],
+    // space before blocks: `if (x) {`, not `if (x){`
+    "space-before-blocks": "error",
+    // enforce spacing around commas: `a, b`, not `a ,b`
+    "comma-spacing": ["error", { before: false, after: true }],
+    // require spaces inside `{ }`: `{ a: 1 }`, not `{a:1}`
+    "object-curly-spacing": ["error", "always"],
+    // spacing around the colon in object literals: `key: value`
+    "key-spacing": ["error", { beforeColon: false, afterColon: true }],
   },
 };

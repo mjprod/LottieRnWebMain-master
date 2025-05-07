@@ -16,7 +16,7 @@ import Video from "./Video";
 export const TopBannerNavType = {
   home: "home",
   startFinish: "startFinish",
-}
+};
 
 const TopBannerNav = ({
   title,
@@ -89,7 +89,7 @@ const TopBannerNav = ({
             flex: 1,
             alignItems: "center",
             justifyContent: "flex-end",
-            paddingBottom: 32
+            paddingBottom: 32,
           }]}>
           <Text style={{ fontFamily: Fonts.InterSemiBold, color: Colors.jokerWhite50, fontSize: 16, marginBottom: 8 }}>{subtitle}</Text>
           <Text style={{ fontFamily: Fonts.TekoMedium, color: Colors.jokerGold400, fontSize: 38, textTransform: "uppercase" }}>{title}</Text>
@@ -122,14 +122,14 @@ const styles = StyleSheet.create({
     fontSize: 36,
     letterSpacing: 2,
     textTransform: "uppercase",
-    marginVertical: -10
+    marginVertical: -10,
   },
   subtitle: {
     fontFamily: Fonts.InterRegular,
     color: Colors.jokerBlack50,
     fontSize: 18,
     letterSpacing: "1%",
-    marginTop: 2
+    marginTop: 2,
   },
   linearGradient: {
     width: "100%",

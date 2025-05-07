@@ -27,7 +27,7 @@ const isValidIcon = (
   columnIndex,
   iconWithMaxCount,
   winLuckySymbol,
-  columnIconMap
+  columnIconMap,
 ) => {
   return (
     count < maxCountWin &&
@@ -48,7 +48,7 @@ const generateIconsArray = (totalIcons, totalPositions, maxCombinations, winLuck
   let combinationCount = 0;
 
   for (let i = 0; i < totalPositions; i++) {
-    if (resultArray[i] !== null) continue;
+    if (resultArray[i] !== null) {continue;}
 
     let columnIndex = i % columns;
     if (!columnIconMap[columnIndex]) {
@@ -63,10 +63,10 @@ const generateIconsArray = (totalIcons, totalPositions, maxCombinations, winLuck
           columnIndex,
           iconWithMaxCount,
           winLuckySymbol,
-          columnIconMap
+          columnIconMap,
         )
           ? index
-          : null
+          : null,
       )
       .filter((index) => index !== null);
 
@@ -84,7 +84,7 @@ const generateIconsArray = (totalIcons, totalPositions, maxCombinations, winLuck
       }
     } else {
       let filteredIcons = availableIcons.filter(
-        (icon) => iconCounts[icon] < 2
+        (icon) => iconCounts[icon] < 2,
       );
 
       if (filteredIcons.length > 0) {
@@ -173,7 +173,7 @@ const ScratchGame = ({
   setClickCount,
   setComboPlayed,
   maxCombinations = 4,
-  hasLuckySymbol = false
+  hasLuckySymbol = false,
 }) => {
   const { setScore, luckySymbolCount } = useGame();
   const { initializeClickSounds, playClickSound } = useClickSounds();
@@ -224,7 +224,7 @@ const ScratchGame = ({
       const iconComponentsDefaultNew = themes[currentTheme].iconsDefault;
 
       const updatedIcons = iconComponentsDefaultNew.map((icon, index) =>
-        React.cloneElement(icon, { lower_opacity: scratched, key: index })
+        React.cloneElement(icon, { lower_opacity: scratched, key: index }),
       );
       setIconComponentsDefault(updatedIcons);
     }
@@ -278,7 +278,7 @@ const ScratchGame = ({
     if (
       winningIcons.length * 3 === clickedIcons.length &&
       winningIcons.length > 0
-    ) checkResults();
+    ) {checkResults();}
   }, [clickedIcons, iconsArray]);
 
   useEffect(() => {
@@ -288,7 +288,7 @@ const ScratchGame = ({
   }, [scratched]);
 
   const handleIconClick = useCallback((index) => {
-    if (clickedIcons.includes(index)) return;
+    if (clickedIcons.includes(index)) {return;}
 
     const icon = iconsArray[index];
     const isMismatch = lastClickedIcon !== null && lastClickedIcon !== icon && (clickedCount[lastClickedIcon] || 0) < 3;
@@ -324,7 +324,7 @@ const ScratchGame = ({
     }));
 
     const comboSteps = { 3: 1, 6: 2, 9: 3, 12: 4 };
-    if (comboSteps[clickCount + 1]) setComboPlayed(comboSteps[clickCount + 1]);
+    if (comboSteps[clickCount + 1]) {setComboPlayed(comboSteps[clickCount + 1]);}
 
     const soundKey = `sound${soundShouldPlay}`;
     playClickSound(soundKey);

@@ -43,12 +43,12 @@ const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
     }
   }, [visible, duration, fadeAnim, slideAnim, onDismiss]);
 
-  if (!visible) return null;
+  if (!visible) {return null;}
 
   return (
     <Animated.View style={[
       styles.snackbar,
-      { opacity: fadeAnim, transform: [{ translateY: slideAnim }], zIndex: 9999 }
+      { opacity: fadeAnim, transform: [{ translateY: slideAnim }], zIndex: 9999 },
     ]}>
       <Text style={styles.snackbarText}>{message}</Text>
       <TouchableOpacity

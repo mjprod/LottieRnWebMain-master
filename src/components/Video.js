@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { unstable_createElement } from "react-native-web";
 import AssetPack from "../util/AssetsPack";
 
-const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyles, seekTime, loop = false, poster = AssetPack.images.BLANK, autoPlay=true}, ref) => {
+const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyles, seekTime, loop = false, poster = AssetPack.images.BLANK, autoPlay = true }, ref) => {
   const videoRef = useRef(null);
 
   useImperativeHandle(ref, () => ({
@@ -13,7 +13,7 @@ const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyl
       }
     },
     play: () => {
-      console.log("Play Play Play")
+      console.log("Play Play Play");
       if (videoRef.current) {
         return videoRef.current.play();
       }
@@ -45,7 +45,7 @@ const Video = forwardRef(({ source, muted = false, onEnded, style, containerStyl
     onLoadedMetadata: handleLoadedMetadata,
     style: style,
     'webkit-playsinline': 'true',
-    ref: videoRef
+    ref: videoRef,
   };
 
   return (

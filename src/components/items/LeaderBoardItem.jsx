@@ -10,30 +10,30 @@ import Avatar, { AvatarSize } from "../Avatar";
 const LeaderBoardItem = ({ rank, username, points, status, selected }) => {
   const getStatusIcon = () => {
     switch (status) {
-      case LeaderBoardStatus.up:
-        return (
-          <IconTypeLeaderBoardArrow
-            style={selected ? styles.statusIconSelected : styles.statusIcon}
-          />
-        );
-      case LeaderBoardStatus.down:
-        return (
-          <IconTypeLeaderBoardArrow
-            fill="red"
-            style={[selected ? styles.statusIconSelected : styles.statusIcon, { transform: [{ rotate: "180deg" }] }]}
-          />
-        );
-      case LeaderBoardStatus.same:
-        return <Image style={selected ? styles.statusIconSelected : styles.statusIcon} source={AssetPack.icons.DOUBLE_DASH} />
-        case LeaderBoardStatus.new:
-          return <Image style={selected ? styles.statusIconSelected : styles.statusIcon} source={AssetPack.icons.STARS} />
-      default:
-        return (
-          <IconTypeLeaderBoardArrow
-            fill="red"
-            style={[selected ? styles.statusIconSelected : styles.statusIcon, { transform: [{ rotate: "180deg" }] }]}
-          />
-        );
+    case LeaderBoardStatus.up:
+      return (
+        <IconTypeLeaderBoardArrow
+          style={selected ? styles.statusIconSelected : styles.statusIcon}
+        />
+      );
+    case LeaderBoardStatus.down:
+      return (
+        <IconTypeLeaderBoardArrow
+          fill="red"
+          style={[selected ? styles.statusIconSelected : styles.statusIcon, { transform: [{ rotate: "180deg" }] }]}
+        />
+      );
+    case LeaderBoardStatus.same:
+      return <Image style={selected ? styles.statusIconSelected : styles.statusIcon} source={AssetPack.icons.DOUBLE_DASH} />;
+    case LeaderBoardStatus.new:
+      return <Image style={selected ? styles.statusIconSelected : styles.statusIcon} source={AssetPack.icons.STARS} />;
+    default:
+      return (
+        <IconTypeLeaderBoardArrow
+          fill="red"
+          style={[selected ? styles.statusIconSelected : styles.statusIcon, { transform: [{ rotate: "180deg" }] }]}
+        />
+      );
     }
   };
   return (
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     width: 15,
     height: 10,
     marginLeft: 10,
-  }
+  },
 });
 
 export default LeaderBoardItem;

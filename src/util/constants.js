@@ -17,8 +17,8 @@ export const Endpoint = {
   login: "/login",
   token: "/login/token",
   logout: "/login/logout",
-  winners: "/winners"
-}
+  winners: "/winners",
+};
 
 
 export const DailyCardStatus = {

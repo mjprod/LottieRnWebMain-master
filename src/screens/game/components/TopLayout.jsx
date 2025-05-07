@@ -44,7 +44,7 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
   const animations = [
     AssetPack.lotties.COMBO_2X,
     AssetPack.lotties.COMBO_3X,
-    AssetPack.lotties.COMBO_4X
+    AssetPack.lotties.COMBO_4X,
   ];
 
   const lottieRef = useRef(null);
@@ -58,23 +58,23 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
 
   useEffect(() => {
     switch (clickCount) {
-      case 6:
-        setAnimationIndex(0);
-        setPlayAnimation(true);
-        playComboSound("x2");
-        break;
-      case 9:
-        setAnimationIndex(1);
-        setPlayAnimation(true);
-        playComboSound("x3");
-        break;
-      case 12:
-        setAnimationIndex(2);
-        setPlayAnimation(true);
-        playComboSound("x4");
-        break;
-      default:
-        return;
+    case 6:
+      setAnimationIndex(0);
+      setPlayAnimation(true);
+      playComboSound("x2");
+      break;
+    case 9:
+      setAnimationIndex(1);
+      setPlayAnimation(true);
+      playComboSound("x3");
+      break;
+    case 12:
+      setAnimationIndex(2);
+      setPlayAnimation(true);
+      playComboSound("x4");
+      break;
+    default:
+      return;
     }
 
     if (lottieRef.current) {
@@ -154,7 +154,7 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
               justifyContent: "center",
               alignItems: "center",
               paddingRight: 16,
-              paddingTop: 8
+              paddingTop: 8,
             }}>
               <Text style={styles.textBottomRight}>3x Symbols = 12x</Text>
               <Image
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     userSelect: "none",
     justifyContent: "center",
     alignItems: "center",
-    width: "100%"
+    width: "100%",
   },
   lottieAnimation: {
     width: 35,

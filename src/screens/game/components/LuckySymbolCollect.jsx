@@ -31,7 +31,7 @@ const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo, onComplete }
   const [clicks, setClicks] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [initialAnimationComplete, setInitialAnimationComplete] = useState(
-    false
+    false,
   );
   const [showBonusCard, setShowBonusCard] = useState(false);
 
@@ -55,7 +55,7 @@ const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo, onComplete }
   }, [showBonusCard]);
 
   const handlePress = () => {
-    if (isAnimating) return;
+    if (isAnimating) {return;}
 
     setIsAnimating(true);
     const nextClickCount = clicks + 1;

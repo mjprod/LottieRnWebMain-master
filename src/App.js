@@ -1,6 +1,6 @@
 import {
   QueryClient,
-  QueryClientProvider
+  QueryClientProvider,
 } from '@tanstack/react-query';
 import React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
@@ -23,7 +23,7 @@ import { Colors } from './util/constants';
 
 const { height } = Dimensions.get("window");
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 export default function App() {
   React.useEffect(() => {

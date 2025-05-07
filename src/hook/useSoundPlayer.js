@@ -103,13 +103,13 @@ export const SoundProvider = ({ children }) => {
   });
 
   const setSoundVolume = (sound, volume, fadeDuration = 1000) => {
-    if (sound) sound.fade(sound.volume(), volume, fadeDuration);
+    if (sound) {sound.fade(sound.volume(), volume, fadeDuration);}
   };
 
   const toggleMuteSound = (sound, mute) => {
     if (sound) {
       sound.mute(mute);
-      if (mute) sound.volume(0);
+      if (mute) {sound.volume(0);}
     }
   };
 
@@ -121,7 +121,7 @@ export const SoundProvider = ({ children }) => {
 
   const playAllSounds = () => {
     Object.keys(soundRefs.current).forEach((trackKey, index) => {
-      if (trackKey === "intro") return;
+      if (trackKey === "intro") {return;}
       const sound = soundRefs.current[trackKey];
 
       if (index === currentTrackIndex) {
@@ -148,7 +148,7 @@ export const SoundProvider = ({ children }) => {
       Howler.ctx.resume();
     }
     Object.keys(soundRefs.current).forEach((trackKey) => {
-      if (trackKey === "intro") return;
+      if (trackKey === "intro") {return;}
       const sound = soundRefs.current[trackKey];
       if (trackKey === trackKeys[currentTrackIndex]) {
         setSoundVolume(sound, isSoundEnabled ? 1 : 0);
@@ -166,16 +166,16 @@ export const SoundProvider = ({ children }) => {
     }
     const theme = currentTheme;
     switch (theme) {
-      case "egypt":
-        return 2;
-      case "international":
-        return 3;
-      case "mythology":
-        return 4;
-      case "cowboy":
-        return 5;
-      default:
-        return 1;
+    case "egypt":
+      return 2;
+    case "international":
+      return 3;
+    case "mythology":
+      return 4;
+    case "cowboy":
+      return 5;
+    default:
+      return 1;
     }
   }, [currentTheme]);
 
@@ -199,7 +199,7 @@ export const SoundProvider = ({ children }) => {
   };
 
   const switchTrack = (newIndex) => {
-    if (newIndex === currentTrackIndex) return;
+    if (newIndex === currentTrackIndex) {return;}
 
     const currentSound = soundRefs.current[trackKeys[currentTrackIndex]];
     const newSound = soundRefs.current[trackKeys[newIndex]];
@@ -241,7 +241,7 @@ export const SoundProvider = ({ children }) => {
   }, [startPlay]);
 
   useEffect(() => {
-    if (introPlayed) playNextTrack();
+    if (introPlayed) {playNextTrack();}
   }, [currentTheme, introPlayed]);
 
   return (
@@ -255,7 +255,7 @@ export const SoundProvider = ({ children }) => {
         setIsSoundEnabled,
         soundRefs,
         switchTrack,
-        setIntroPlayed
+        setIntroPlayed,
       }}>
       {children}
     </SoundContext.Provider>

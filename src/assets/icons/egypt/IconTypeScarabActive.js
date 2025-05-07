@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg, {ClipPath, Defs, G, Path} from 'react-native-svg-web';
+import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg-web';
 
 export const IconTypeScarabActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">

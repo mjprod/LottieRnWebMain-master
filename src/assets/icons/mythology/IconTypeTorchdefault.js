@@ -1,5 +1,5 @@
 import React from "react";
-import Svg, { Defs, Path, Rect , G } from "react-native-svg-web";
+import Svg, { Defs, Path, Rect, G } from "react-native-svg-web";
 import { colorSymbolNotSelected } from "../../../global/Settings";
 
 const lowerOpacityColour = colorSymbolNotSelected;

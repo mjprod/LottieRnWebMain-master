@@ -57,13 +57,13 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.InterSemiBold,
     fontSize: 14,
     color: Colors.jokerBlack50,
-    marginRight: 8
+    marginRight: 8,
   },
   text: {
     fontFamily: Fonts.InterSemiBold,
     fontSize: 16,
     color: Colors.jokerGold400,
-    marginBottom: 16
+    marginBottom: 16,
   },
 });
 

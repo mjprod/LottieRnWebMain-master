@@ -41,7 +41,7 @@ const useClickSounds = () => {
     }
   }, [soundRefs, isSoundEnabled]);
 
-  return { initializeClickSounds,  playClickSound};
-}
+  return { initializeClickSounds,  playClickSound };
+};
 
 export default useClickSounds;

@@ -1,5 +1,5 @@
-import React, { useEffect} from "react";
-import { View, StyleSheet} from "react-native";
+import React, { useEffect } from "react";
+import { View, StyleSheet } from "react-native";
 import SectionTitle from "../components/SectionTitle";
 import GameButton from "../components/GameButton";
 import LeaderBoardList from "../components/LeaderBoardList";
@@ -16,9 +16,9 @@ import AssetPack from "../util/AssetsPack";
 
 const LeaderBoardScreen = () => {
   const location = useLocation();
-  const appNavigation = useAppNavigation()
-  const { showSnackbar } = useSnackbar()
-  const { user, setUser } = useGame()
+  const appNavigation = useAppNavigation();
+  const { showSnackbar } = useSnackbar();
+  const { user, setUser } = useGame();
 
   const { fetchUserDetails, response } = useApiRequest();
 
@@ -34,18 +34,18 @@ const LeaderBoardScreen = () => {
 
   useEffect(() => {
     if (response && response.user) {
-      console.log(response.user)
+      console.log(response.user);
       setUser(response.user);
     }
   }, [response]);
 
   const handlePlayNowButtonPress = () => {
     if (user.card_balance <= 0) {
-      showSnackbar("You don't have any cards left. Please wait till next day to play the game!")
+      showSnackbar("You don't have any cards left. Please wait till next day to play the game!");
     } else {
       appNavigation.goToStartPage(user.user_id, user.name, user.email);
     }
-  }
+  };
   return (
     <TopNavTemplate
       title="Champions Rise"
@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
     paddingTop: Dimentions.marginL,
     borderTopRightRadius: 16,
     borderTopLeftRadius: 16,
-    borderTopWidth: 1
-  }
+    borderTopWidth: 1,
+  },
 });
 
 export default LeaderBoardScreen;

@@ -1,4 +1,4 @@
-import {Vibration} from 'react-native';
+import { Vibration } from 'react-native';
 import settings from './Settings';
 
 const lightVibrationPattern = [0, 50];
@@ -10,18 +10,18 @@ export const triggerVibration = intensity => {
     return;
   }
   switch (intensity) {
-    case 'light':
-      Vibration.vibrate(lightVibrationPattern);
-      break;
-    case 'medium':
-      Vibration.vibrate(mediumVibrationPattern);
-      break;
-    case 'strong':
-      Vibration.vibrate(strongVibrationPattern);
-      break;
-    default:
-      Vibration.vibrate();
-      break;
+  case 'light':
+    Vibration.vibrate(lightVibrationPattern);
+    break;
+  case 'medium':
+    Vibration.vibrate(mediumVibrationPattern);
+    break;
+  case 'strong':
+    Vibration.vibrate(strongVibrationPattern);
+    break;
+  default:
+    Vibration.vibrate();
+    break;
   }
 };
 //triggerVibration('light');

@@ -9,7 +9,7 @@ const ScratchCardLeft = ({ scratchCardLeft }) => {
   const { soundMuteOnBackground, soundMuteOffBackground } = useTheme();
 
   const [displayedScratchCardsLeft, setDisplayedScratchCardsLeft] = useState(
-    scratchCardLeft
+    scratchCardLeft,
   );
 
   const [showLottie, setShowLottie] = useState(true);
@@ -26,7 +26,7 @@ const ScratchCardLeft = ({ scratchCardLeft }) => {
     return () => clearTimeout(timeoutId);
   }, [scratchCardLeft]);
 
-  const toggleSound = async (value) => {
+  const toggleSound = async(value) => {
     try {
       //await AsyncStorage.setItem("soundPreference", JSON.stringify(value));
       setIsSoundEnabled(!isSoundEnabled);

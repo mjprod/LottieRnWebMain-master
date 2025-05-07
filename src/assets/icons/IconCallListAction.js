@@ -1,5 +1,5 @@
-import React from 'react'
-import Svg, { Path } from 'react-native-svg-web'
+import React from 'react';
+import Svg, { Path } from 'react-native-svg-web';
 
 export const IconCallListAction = () => (
   <Svg
@@ -15,4 +15,4 @@ export const IconCallListAction = () => (
       d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
     />
   </Svg>
-)
+);

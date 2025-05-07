@@ -9,7 +9,7 @@ export function isAndroidWebView() {
 export function getCurrentDate() {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getFullYear()}-${String(
-    currentDate.getMonth() + 1
+    currentDate.getMonth() + 1,
   ).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
   return formattedDate;
 }
@@ -49,7 +49,7 @@ export function convertUTCToLocal(utcDateTime) {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
-    hour12: false
+    hour12: false,
   });
   const parts = formatter.formatToParts(date);
   const year = parts.find(p => p.type === 'year').value;
@@ -75,7 +75,7 @@ export function getDayOfWeek() {
     'Wed': 3,
     'Thu': 4,
     'Fri': 5,
-    'Sat': 6
+    'Sat': 6,
   };
 
   return weekdayMap[weekday];

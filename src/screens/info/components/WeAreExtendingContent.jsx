@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     padding: Dimentions.marginL,
     alignItems: "center",
     alignContent: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   text: {
     color: "#A6A6A6",
@@ -76,13 +76,13 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     boxShadow: "0px 2px 10px #FFDEA84D",
     elevation: 5,
-    marginBottom: 22
+    marginBottom: 22,
   },
   roundedText: {
     color: "#FFDEA8",
     fontSize: 16,
     fontFamily: Fonts.InterRegular,
-  }
+  },
 });
 
 export default WeAreExtendingContent;

@@ -12,14 +12,14 @@ import useApiRequest from "../../hook/useApiRequest";
 import useAppNavigation from "../../hook/useAppNavigation";
 import AssetPack from "../../util/AssetsPack";
 import { DailyCardStatus, Dimentions, Colors } from "../../util/constants";
-import { convertUTCToLocal, getCurrentDate, getDayOfWeek, } from "../../util/Helpers";
+import { convertUTCToLocal, getCurrentDate, getDayOfWeek } from "../../util/Helpers";
 import { isValidAnswer } from "../../util/Validator";
 import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 import LoadingView from "../../components/LoadingView";
 import { useGame } from "../../context/GameContext";
 
 const DailyScreen = () => {
-  const appNavigation = useAppNavigation()
+  const appNavigation = useAppNavigation();
 
   const [question, setQuestion] = useState("");
   const [isThumbsUpAnimationFinished, setIsThumbsUpAnimationFinished] =
@@ -45,7 +45,7 @@ const DailyScreen = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const location = useLocation();
-  const { user, setUser } = useGame()
+  const { user, setUser } = useGame();
 
   const [currentWeek, setCurrentWeek] = useState("");
   const [totalWeeks, setTotalWeeks] = useState("");
@@ -68,9 +68,9 @@ const DailyScreen = () => {
 
   useEffect(() => {
     if (days.includes(getCurrentDate())) {
-      setIsSubmitted(true)
+      setIsSubmitted(true);
     } else {
-      setIsSubmitted(false)
+      setIsSubmitted(false);
     }
   }, [days]);
 
@@ -85,7 +85,7 @@ const DailyScreen = () => {
           setCurrentWeek(response.current_week);
           setTotalWeeks(response.total_weeks);
           const currentWeekDaily = response.daily.find(
-            (item) => item.current_week === response.current_week
+            (item) => item.current_week === response.current_week,
           );
           if (currentWeekDaily) {
             setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
@@ -102,20 +102,20 @@ const DailyScreen = () => {
         if (response.question) {
           setQuestion(response);
         } else {
-          appNavigation.goToNotFoundPage()
+          appNavigation.goToNotFoundPage();
         }
       });
     }
   }, [user, isSubmitted]);
 
   useEffect(() => {
-    setNumberOfCardsInSet(dailySetData.noOfCardsInSet)
+    setNumberOfCardsInSet(dailySetData.noOfCardsInSet);
     const cardsWon = dailySetData.weeklyRewards.find((cardSet) => cardSet.day === getDayOfWeek());
     if (cardsWon) {
       const { set } = cardsWon;
       setNumberOfSetsToday(set);
     }
-  }, [dailySetData])
+  }, [dailySetData]);
 
   useEffect(() => {
     if (getDailyQuestionError && getDailyQuestionError.length > 0) {
@@ -151,11 +151,11 @@ const DailyScreen = () => {
 
   const handleCardPressed = (card) => {
     if (card.status === DailyCardStatus.active) {
-      appNavigation.goToStartPage(user.user_id, user.name, user.email)
+      appNavigation.goToStartPage(user.user_id, user.name, user.email);
     }
-  }
+  };
   if (!user) {
-    return <LoadingView />
+    return <LoadingView />;
   }
   return (
     <TopNavScreenTemplate
@@ -168,7 +168,7 @@ const DailyScreen = () => {
           <QuestionOfTheDay
             numberOfCardsInSet={noOfCardsInSet}
             numberOfSets={numberOfSetsToday}
-            style={{ marginBottom: 48, marginLeft: Dimentions.pageMargin, marginRight: Dimentions.pageMargin, }}
+            style={{ marginBottom: 48, marginLeft: Dimentions.pageMargin, marginRight: Dimentions.pageMargin }}
             question={`${question.question}`}
             onSubmit={onSubmit} />
         )}
@@ -213,8 +213,8 @@ const styles = StyleSheet.create({
     paddingTop: Dimentions.marginL,
     borderTopRightRadius: 16,
     borderTopLeftRadius: 16,
-    borderTopWidth: 1
-  }
+    borderTopWidth: 1,
+  },
 });
 
 export default DailyScreen;

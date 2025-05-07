@@ -26,7 +26,7 @@ const GameButton = ({ text, onPress, buttonSize = ButtonSize.FULL, loading = fal
           left: 0,
           width: "100%",
           height: "100%",
-          resizeMode: "cover"
+          resizeMode: "cover",
         }]}
         source={buttonSize}
         autoPlay

@@ -26,4 +26,4 @@ const BlurView = ({ children, blurAmount, style }) => {
   );
 };
 
-export default BlurView
+export default BlurView;

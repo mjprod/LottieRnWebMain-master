@@ -8,7 +8,7 @@ import RaffleTicketCard from '../../../components/RaffleTicketCard';
 
 const BottomDrawer = ({ onStateChanged }) => {
   const expandedHeight = 380;
-  const nonExpednedHeight = 90
+  const nonExpednedHeight = 90;
   const expandedWidth = 100;
   const nonExpandedWidth = 95;
 
@@ -16,7 +16,7 @@ const BottomDrawer = ({ onStateChanged }) => {
   const heightAnimation = useState(new Animated.Value(nonExpednedHeight))[0];
   const widthAnimation = useState(new Animated.Value(expandedHeight))[0];
   const bottomAnimation = useState(new Animated.Value(0))[0];
-  const { user } = useGame()
+  const { user } = useGame();
 
   const toggleDrawer = () => {
     onStateChanged(!isExpanded);
@@ -54,7 +54,7 @@ const BottomDrawer = ({ onStateChanged }) => {
         right: 0,
         bottom: 0,
         backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)'
+        WebkitBackdropFilter: 'blur(10px)',
       }} />}
       <Animated.View
         style={[
@@ -65,14 +65,14 @@ const BottomDrawer = ({ onStateChanged }) => {
               inputRange: [nonExpandedWidth, expandedWidth],
               outputRange: [`${nonExpandedWidth}%`, `${expandedWidth}%`],
             }),
-            bottom: bottomAnimation
+            bottom: bottomAnimation,
           },
           isExpanded && {
             borderBottomLeftRadius: 24,
             borderBottomRightRadius: 24,
             borderColor: Colors.jokerBlack200,
             borderWidth: 1,
-          }
+          },
         ]}
       >
         <TouchableOpacity onPress={toggleDrawer} style={[styles.toggleButton, isExpanded && {
@@ -82,7 +82,7 @@ const BottomDrawer = ({ onStateChanged }) => {
           <View style={styles.arrow}>
             <Image
               source={AssetPack.icons.ARROW_LEFT}
-              style={{ width: 10, height: 20, transform: [isExpanded ? { rotate: "270deg" } : { rotate: "90deg" }], }}
+              style={{ width: 10, height: 20, transform: [isExpanded ? { rotate: "270deg" } : { rotate: "90deg" }] }}
               resizeMode="contain" />
           </View>
           <Text style={styles.title}>MY DRAW TICKETS</Text>
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16
+    marginBottom: 16,
   },
   expandedContent: {
     flex: 1,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     paddingBottom: 10,
-  }
+  },
 });
 
 export default BottomDrawer;
