@@ -22,7 +22,7 @@ const tapSound = new Howl({ src: [tapSoundFile] });
 const bonusSoundFile = require("./../../../assets/audio/showtour_Reward.mp3");
 const bonusSound = new Howl({ src: [bonusSoundFile] });
 
-const initialLottieSoundFile = require("./../../../assets/audio/collection.mp3");
+const initialLottieSoundFile = require("./../../../assets/audio/collect-gold.mp3");
 const initialLottieSound = new Howl({ src: [initialLottieSoundFile] });
 
 const LuckySymbolCollect = ({ nextCard, setCollectLuckySymbolVideo, onComplete }) => {

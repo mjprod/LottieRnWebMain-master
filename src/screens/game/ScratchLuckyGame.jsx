@@ -93,7 +93,7 @@ const ScratchLuckyGame = () => {
     getGames,
   } = useApiRequest();
 
-  const { setStartPlay } = useSound();
+  const { setStartPlay, setIntroPlayed } = useSound();
 
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
   const transalteAnim = useRef(new Animated.Value(0)).current;
@@ -101,6 +101,8 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     return () => {
+      setStartPlay(false);
+      setIntroPlayed(false);
       Object.values(timerRefs.current).forEach(clearTimeout);
     };
   }, []);
@@ -160,6 +162,7 @@ const ScratchLuckyGame = () => {
         if (countDownLottieRef.current != null) {
           countDownLottieRef.current.play();
         }
+        setIntroPlayed(false);
         setStartPlay(true);
       }, 1000);
       return () => clearTimeout(timer);
