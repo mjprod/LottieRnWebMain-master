@@ -95,6 +95,8 @@ export const Colors = {
   jokerRed600: "#982929",
   jokerRed700: "#771F1F",
   jokerRed900: "#450F0F",
+
+  jokerRose100: "#D6BC9E",
 };
 
 export const Fonts = {

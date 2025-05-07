@@ -1,6 +1,18 @@
 import React, { useState, useRef, useCallback } from "react";
+import PropTypes from 'prop-types';
 import { FlatList, View, Text, Pressable } from "react-native";
 import Slide from "./Slide";
+import { Colors } from "../../../util/constants";
+
+ShowCaseCarousel.propTypes = {
+  slideList: PropTypes.arrayOf(
+    PropTypes.shape({
+      image: PropTypes.string,
+      description: PropTypes.string,
+    })
+  ),
+  style: PropTypes.object,
+};
 
 function ShowCaseCarousel({ slideList = [], style }) {
   const [index, setIndex] = useState(0);
@@ -10,27 +22,22 @@ function ShowCaseCarousel({ slideList = [], style }) {
 
   indexRef.current = index;
   const prevSlide = () => {
-    console.log("NextSlide: pressed");
     if (index > 0) {
       const newIndex = index - 1;
-      console.log("NextSlideIndex:", newIndex);
       listRef.current.scrollToOffset({
         offset: dimensions.width * 0.8 * newIndex,
       });
     }
   };
   const nextSlide = () => {
-    console.log("NextSlide: pressed");
     if (index < slideList.length) {
       const newIndex = index + 1;
-      console.log("NextSlideIndex:", newIndex);
       listRef.current.scrollToOffset({
         offset: dimensions.width * 0.8 * newIndex,
       });
     }
   };
   const onScroll = useCallback((event) => {
-    console.log("OnScroll");
     const slideSize = event.nativeEvent.layoutMeasurement.width;
     const index = event.nativeEvent.contentOffset.x / slideSize;
     const roundIndex = Math.round(index);
@@ -58,7 +65,7 @@ function ShowCaseCarousel({ slideList = [], style }) {
             <Slide
               data={item}
               width={dimensions.width}
-              height={dimensions.height}/>
+              height={dimensions.height} />
           );
         }}
         pagingEnabled
@@ -69,7 +76,7 @@ function ShowCaseCarousel({ slideList = [], style }) {
       />
       <Text
         style={{
-          color: "#A6A6A6",
+          color: Colors.jokerBlack50,
           paddingTop: 20,
           paddingHorizontal: 50,
           fontSize: 14,
@@ -89,7 +96,7 @@ function ShowCaseCarousel({ slideList = [], style }) {
           paddingHorizontal: 20,
         }}>
         <Pressable onPress={prevSlide} disabled={index === 0}>
-          <Text style={{ fontSize: 50, color: index === 0 ? "black" : "white" }}>
+          <Text style={{ fontSize: 50, color: index === 0 ? Colors.black : Colors.jokerWhite50 }}>
             {"‹"}
           </Text>
         </Pressable>
@@ -100,7 +107,7 @@ function ShowCaseCarousel({ slideList = [], style }) {
           <Text
             style={{
               fontSize: 50,
-              color: index === slideList.length - 1 ? "black" : "white",
+              color: index === slideList.length - 1 ? Colors.black : Colors.jokerWhite50,
             }}>
             {"›"}
           </Text>

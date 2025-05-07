@@ -21,7 +21,7 @@ const ThankYouContent = () => {
 
 const styles = StyleSheet.create({
   text: {
-    color: "#A6A6A6",
+    color: Colors.jokerBlack50,
     fontFamily: Fonts.InterRegular,
     textAlign: "center",
     fontSize: 16,

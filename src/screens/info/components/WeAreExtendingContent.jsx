@@ -30,7 +30,7 @@ const WeAreExtendingContent = () => {
 
 const styles = StyleSheet.create({
   text: {
-    color: "#A6A6A6",
+    color: Colors.jokerBlack50,
     fontFamily: Fonts.InterRegular,
     textAlign: "center",
     lineHeight: "160%",
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     width: 200,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#171717",
-    borderColor: "#D6BC9E",
+    backgroundColor: Colors.jokerBlack700,
+    borderColor: Colors.jokerRose100,
     borderWidth: 1.5,
     paddingHorizontal: 35.5,
     paddingVertical: 15,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     marginBottom: 22,
   },
   roundedText: {
-    color: "#FFDEA8",
+    color: Colors.jokerGold400,
     fontSize: 16,
     fontFamily: Fonts.InterRegular,
   },

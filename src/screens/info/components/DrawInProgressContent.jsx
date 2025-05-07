@@ -1,9 +1,14 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { View, StyleSheet, Text } from "react-native";
 import { Image } from "react-native-web";
 import AssetPack from "../../../util/AssetsPack";
 import { Colors, Dimentions, Fonts } from "../../../util/constants";
 import ResourceTile from "../../../components/ResourceTile";
+
+DrawInProgressContent.propTypes = {
+  ticketsEarned: PropTypes.number,
+};
 
 const DrawInProgressContent = ({ ticketsEarned = 0 }) => {
   return (
