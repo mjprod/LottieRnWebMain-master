@@ -22,7 +22,7 @@ const Congratulations = () => {
           resizeMode={"contain"}
         />
         <Text style={styles.message}>
-                    Your <Text style={styles.textHighlighted}>Amazon Gift Card </Text>will be sent to your email within three business days.
+          Your <Text style={styles.textHighlighted}>Amazon Gift Card </Text>will be sent to your email within three business days.
         </Text>
         <LottieView
           style={{ flex: 1, position: "absolute", right: 0, top: 0, width: "100%", height: "100%" }}
@@ -51,15 +51,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.jokerBlack50,
     textAlign: "center",
-  },
-  mainContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  text: {
-    fontFamily: Fonts.InterSemiBold,
-    color: "#FFFFFF",
-    marginBottom: 20,
   },
   image: {
     flex: 1,

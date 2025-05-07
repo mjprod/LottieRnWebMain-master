@@ -5,6 +5,7 @@ import pluginImport from "eslint-plugin-import";
 import pluginReactHooks from "eslint-plugin-react-hooks";
 import { defineConfig } from "eslint/config";
 import babelParser from "@babel/eslint-parser";
+import comments from "eslint-plugin-eslint-comments";
 
 export default defineConfig([
   {
@@ -35,6 +36,7 @@ export default defineConfig([
       "react-native": pluginReactNative,
       import: pluginImport,
       "react-hooks": pluginReactHooks,
+      comments: comments,
     },
     settings: {
       react: {
@@ -66,10 +68,12 @@ export default defineConfig([
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
 
-      "object-curly-spacing": ["error", "always"],
       "array-bracket-spacing": ["error", "never"],
       "comma-dangle": ["error", "always-multiline"],
       "semi": ["error", "always"],
+
+      "eslint-comments/no-unused-disable": "off",
+
       // indentation: 2 spaces
       indent: ["error", 2],
       // require spaces around infix operators (e.g. 1 + 2)

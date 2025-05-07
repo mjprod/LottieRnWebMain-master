@@ -48,7 +48,6 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
   ];
 
   const lottieRef = useRef(null);
-  const timerLottieRef = useRef(null);
 
   const { initializeComboSounds, playComboSound } = useComboSounds();
 
@@ -58,23 +57,23 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
 
   useEffect(() => {
     switch (clickCount) {
-    case 6:
-      setAnimationIndex(0);
-      setPlayAnimation(true);
-      playComboSound("x2");
-      break;
-    case 9:
-      setAnimationIndex(1);
-      setPlayAnimation(true);
-      playComboSound("x3");
-      break;
-    case 12:
-      setAnimationIndex(2);
-      setPlayAnimation(true);
-      playComboSound("x4");
-      break;
-    default:
-      return;
+      case 6:
+        setAnimationIndex(0);
+        setPlayAnimation(true);
+        playComboSound("x2");
+        break;
+      case 9:
+        setAnimationIndex(1);
+        setPlayAnimation(true);
+        playComboSound("x3");
+        break;
+      case 12:
+        setAnimationIndex(2);
+        setPlayAnimation(true);
+        playComboSound("x4");
+        break;
+      default:
+        return;
     }
 
     if (lottieRef.current) {
@@ -120,10 +119,10 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
                   <CircularProgress countdownTimer={countdownTimer} />
                   <Animated.View
                     style={{ transform: [{ scale: scaleAnim }] }}>
-                    <Text style={[styles.countDownText]}>
+                    <Text style={styles.countDownText}>
                       {countdownTimer * 100}
                     </Text>
-                    <Text style={[styles.pointValue]}>
+                    <Text style={styles.pointValue}>
                       Point value
                     </Text>
                   </Animated.View>
@@ -227,12 +226,6 @@ const styles = StyleSheet.create({
     userSelect: "none",
     width: "50%",
   },
-  viewRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
   topRightTextContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
@@ -258,10 +251,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-  },
-  lottieAnimation: {
-    width: 35,
-    marginRight: 6,
   },
   rowCountDown: {
     paddingHorizontal: 20,

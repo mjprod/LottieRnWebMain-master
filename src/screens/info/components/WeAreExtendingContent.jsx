@@ -29,13 +29,6 @@ const WeAreExtendingContent = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    padding: Dimentions.marginL,
-    alignItems: "center",
-    alignContent: "center",
-    justifyContent: "center",
-  },
   text: {
     color: "#A6A6A6",
     fontFamily: Fonts.InterRegular,
@@ -54,14 +47,6 @@ const styles = StyleSheet.create({
     color: Colors.jokerWhite50,
     textTransform: "uppercase",
     textAlign: "center",
-    marginHorizontal: Dimentions.pageMargin,
-  },
-  bottomText: {
-    fontFamily: Fonts.InterRegular,
-    fontSize: 16,
-    color: Colors.jokerBlack50,
-    textAlign: "center",
-    marginBottom: 32,
     marginHorizontal: Dimentions.pageMargin,
   },
   roundedTextContainer: {

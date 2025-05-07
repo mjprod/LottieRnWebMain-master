@@ -105,17 +105,6 @@ const styles = StyleSheet.create({
     marginHorizontal: Dimentions.marginS,
     paddingTop: 32,
   },
-  title: {
-    color: Colors.jokerGold400,
-    fontFamily: Fonts.TekoMedium,
-    fontSize: 38,
-    textTransform: "uppercase",
-  },
-  welcomeBack: {
-    fontFamily: Fonts.InterSemiBold,
-    fontSize: 16,
-    color: Colors.jokerWhite50,
-  },
   resultRow: {
     flexDirection: "row",
     justifyContent: "space-around",

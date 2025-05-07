@@ -78,6 +78,7 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  // eslint-disable-next-line react-native/no-unused-styles
   container: {
     overflow: "hidden",
     height: "100vh",
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(33,33,33,.9)",
   },
+  // eslint-disable-next-line react-native/no-unused-styles
   app: {
     margin: "auto",
     flex: 1,
@@ -98,6 +100,7 @@ const styles = StyleSheet.create({
 });
 
 const smallStyles = StyleSheet.create({
+  // eslint-disable-next-line react-native/no-unused-styles
   container: {
     flex: 1,
     overflow: "hidden",
@@ -106,6 +109,7 @@ const smallStyles = StyleSheet.create({
     userSelect: "none",
     backgroundColor: Colors.jokerBlack1100,
   },
+  // eslint-disable-next-line react-native/no-unused-styles
   app: {
     overflow: "hidden",
     width: "100%",

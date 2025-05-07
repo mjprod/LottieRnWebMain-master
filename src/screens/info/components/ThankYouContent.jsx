@@ -8,7 +8,7 @@ const ThankYouContent = () => {
   return (<>
     <Text style={styles.topText}>Thank You For Playing!</Text>
     <Text style={styles.text}>
-            Thanks for playing! The next round starts Monday. Stay tuned.
+      Thanks for playing! The next round starts Monday. Stay tuned.
     </Text>
     <TimerComponent style={{ marginTop: 32 }} showPill={false} />
     <View style={{ flexGrow: 1, justifyContent: "center", marginVertical: 32 }} >
@@ -34,33 +34,6 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     textAlign: "center",
     marginHorizontal: Dimentions.pageMargin,
-  },
-  container: {
-    flex: 1,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    alignContent: "center",
-    justifyContent: "center",
-  },
-
-  roundedTextContainer: {
-    width: 200,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#171717",
-    borderColor: "#D6BC9E",
-    borderWidth: 1.5,
-    paddingHorizontal: 35.5,
-    paddingVertical: 15,
-    borderRadius: 30,
-    boxShadow: "1px 2px 3.84px 0 rgba(255, 222, 168, 0.25)",
-    elevation: 5,
-  },
-  roundedText: {
-    color: "#FFDEA8",
-    fontSize: 16,
-    fontFamily: Fonts.InterRegular,
   },
 });
 

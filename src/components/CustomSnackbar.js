@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
+import React, { useEffect, useState, Platform } from 'react';
 import { Animated, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Colors, Fonts } from '../util/constants';
 
@@ -43,7 +42,7 @@ const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
     }
   }, [visible, duration, fadeAnim, slideAnim, onDismiss]);
 
-  if (!visible) {return null;}
+  if (!visible) { return null; }
 
   return (
     <Animated.View style={[

@@ -3,7 +3,7 @@ import { useCallback, useRef } from "react";
 import { useSound } from "./useSoundPlayer";
 
 const useClickSounds = () => {
-  const soundRefs = useRef({});;
+  const soundRefs = useRef({});
   const { isSoundEnabled } = useSound();
   const initializeClickSounds = useCallback((theme) => {
     const soundNotes = ["C", "D", "E", "E", "F_", "G_", "G_", "A_", "C_plus", "C_plus", "D_plus", "E_plus"];
@@ -41,7 +41,7 @@ const useClickSounds = () => {
     }
   }, [soundRefs, isSoundEnabled]);
 
-  return { initializeClickSounds,  playClickSound };
+  return { initializeClickSounds, playClickSound };
 };
 
 export default useClickSounds;

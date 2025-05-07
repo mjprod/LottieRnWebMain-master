@@ -1,12 +1,11 @@
 import React, { useRef, useState } from "react";
 import PropTypes from 'prop-types';
-import { Animated, View, StyleSheet } from "react-native";
+import { Animated, View, StyleSheet, Platform } from "react-native";
 import TopBannerNav from "../components/TopBannerNav";
 import { Colors } from "../util/constants";
 import CopyrightText from "../components/CopyrightText";
 import { useGame } from "../context/GameContext";
 import ProfileHeader from "../components/ProfileHeader";
-import { Platform } from "react-native";
 import LinearGradient from 'react-native-web-linear-gradient';
 import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
@@ -106,16 +105,16 @@ function TopNavTemplate({ title, subtitle, navBackgroudImage, navBackgroudVideo,
         </Animated.View>
         {
           showProfileHeader &&
-                    <Animated.View style={[{
-                      backdropFilter: 'blur(10px)',
-                      WebkitBackdropFilter: 'blur(10px)',
-                      marginHorizontal: paddingHorizontal,
-                      paddingHorizontal: marginHorizontal,
-                      borderTopWidth: topNavOpacity, borderTopColor: Colors.jokerBlack200,
-                      borderBottomWidth: 1, borderBottomColor: Colors.jokerBlack200,
-                    }, showDropShadow && { boxShadow: '0px 4px 4px -2px rgba(0, 0, 0, 0.5)' }]}>
-                      <ProfileHeader id={user.user_id} name={user.name} />
-                    </Animated.View>
+          <Animated.View style={[{
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+            marginHorizontal: paddingHorizontal,
+            paddingHorizontal: marginHorizontal,
+            borderTopWidth: topNavOpacity, borderTopColor: Colors.jokerBlack200,
+            borderBottomWidth: 1, borderBottomColor: Colors.jokerBlack200,
+          }, showDropShadow && { boxShadow: '0px 4px 4px -2px rgba(0, 0, 0, 0.5)' }]}>
+            <ProfileHeader id={user.user_id} name={user.name} />
+          </Animated.View>
         }
         <View style={showProfileHeader && { paddingTop: 32 }}>{children}</View>
         {showCopyright && <CopyrightText style={{ padding: 20 }} />}

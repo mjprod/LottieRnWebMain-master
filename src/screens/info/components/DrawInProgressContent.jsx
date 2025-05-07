@@ -44,36 +44,6 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     marginHorizontal: Dimentions.pageMargin,
   },
-  gradientCard: {
-    borderRadius: 12,
-    backgroundColor: Colors.jokerBlack800,
-    borderColor: "#ADADAD33",
-    borderWidth: 1,
-    padding: 23,
-    gap: 15,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: Dimentions.pageMargin,
-    flexDirection: "row",
-  },
-  gradientCardTicketNumber: {
-    color: Colors.jokerGreen400,
-    fontFamily: Fonts.TekoMedium,
-    fontSize: 30,
-    marginVertical: -10,
-    textTransform: "uppercase",
-  },
-  gardientCardText: {
-    color: "#FFFFFF",
-    fontFamily: Fonts.TekoMedium,
-    fontSize: 18,
-    textTransform: "uppercase",
-  },
-  lottieAnimation: {
-    width: 143,
-    height: 65,
-    marginBottom: 8,
-  },
 });
 
 export default DrawInProgressContent;

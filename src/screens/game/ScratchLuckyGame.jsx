@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import { Animated, Dimensions, Platform, StyleSheet, View } from "react-native";
-import { Easing } from "react-native";
+import { Animated, Dimensions, Platform, StyleSheet, View, Easing } from "react-native";
 import { useLocation } from "react-router";
 import { BackgroundGame } from "../../components/BackgroundGame.js";
 import IntroThemeVideo from "./components/IntroThemeVideo";
@@ -18,6 +17,7 @@ import BottomDrawer from "./components/BottomDrawer";
 import InitialCountDownView from "./components/InitialCountDownView";
 import WinLuckySymbolView from "./components/WinLuckySymbolView";
 import useTimer from "../../hook/useTimer.js";
+import { Howl } from "howler";
 
 const { width } = Dimensions.get("window");
 
@@ -126,7 +126,7 @@ const ScratchLuckyGame = () => {
     if (games && games.length > 0) {
       const currentGame = games[currentThemeIndex];
       setMaxCombinations(currentGame.number_combination_total);
-      setHasLuckySymbol(currentGame.lucky_symbol_won == 1);
+      setHasLuckySymbol(currentGame.lucky_symbol_won === "1");
       setGameId(currentGame.game_id);
     }
   }, [games, currentThemeIndex]);
@@ -159,7 +159,7 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (countDownStarted) {
       const timer = setTimeout(() => {
-        if (countDownLottieRef.current != null) {
+        if (countDownLottieRef.current !== null) {
           countDownLottieRef.current.play();
         }
         setIntroPlayed(false);
@@ -169,7 +169,7 @@ const ScratchLuckyGame = () => {
     }
   }, [countDownStarted, countDownLottieRef]);
 
-  const saveLuckySymbol = useCallback(async(luckySymbol) => {
+  const saveLuckySymbol = useCallback((luckySymbol) => {
     setLuckySymbolCount(luckySymbol);
   }, [setLuckySymbolCount]);
 
@@ -363,11 +363,10 @@ const ScratchLuckyGame = () => {
     }
   };
 
-  if (getGamesLoading || fetchUserDetailsLoading) {return <LoadingView />;}
-  if (getGamesError || fetchUserDetailsError)
-  {return <p>Error: {getGamesError || fetchUserDetailsError}</p>;}
+  if (getGamesLoading || fetchUserDetailsLoading) { return <LoadingView />; }
+  if (getGamesError || fetchUserDetailsError) { return <p>Error: {getGamesError || fetchUserDetailsError}</p>; }
 
-  if (!user) {return <LoadingView />;}
+  if (!user) { return <LoadingView />; }
 
   return (
     <View style={containerStyle}>

@@ -38,8 +38,8 @@ const TopBannerNav = ({
       navigate(-1);
     }
   };
-  const hasText = (title != null && typeof title === 'string' && title.trim() !== '') ||
-    (subtitle != null && typeof subtitle === 'string' && subtitle.trim() !== '');
+  const hasText = (title !== null && typeof title === 'string' && title.trim() !== '') ||
+    (subtitle !== null && typeof subtitle === 'string' && subtitle.trim() !== '');
 
   if (type === TopBannerNavType.home) {
     return (
@@ -48,7 +48,7 @@ const TopBannerNav = ({
           source={backgroundVideo}
           poster={backgroundImage}
           loop={true}
-          style={[{ width: "100%", height: 226, position: "absolute", objectFit: "cover" }]} />
+          style={{ width: "100%", height: 226, position: "absolute", objectFit: "cover" }} />
         <LinearGradient
           colors={[Colors.transparent, Colors.background]}
           locations={[0, 1]}
@@ -78,11 +78,11 @@ const TopBannerNav = ({
           source={backgroundVideo}
           poster={backgroundImage}
           loop={true}
-          style={[{ width: "100%", height: 226, position: "absolute" }]} />
+          style={{ width: "100%", height: 226, position: "absolute" }} />
         <LinearGradient
           colors={[Colors.transparent, Colors.background]}
           locations={[0, 1]}
-          style={[{
+          style={{
             width: "100%",
             height: "auto",
             paddingHorizontal: Dimentions.pageMargin,
@@ -90,7 +90,7 @@ const TopBannerNav = ({
             alignItems: "center",
             justifyContent: "flex-end",
             paddingBottom: 32,
-          }]}>
+          }}>
           <Text style={{ fontFamily: Fonts.InterSemiBold, color: Colors.jokerWhite50, fontSize: 16, marginBottom: 8 }}>{subtitle}</Text>
           <Text style={{ fontFamily: Fonts.TekoMedium, color: Colors.jokerGold400, fontSize: 38, textTransform: "uppercase" }}>{title}</Text>
         </LinearGradient>

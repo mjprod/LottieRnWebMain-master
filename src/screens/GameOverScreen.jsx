@@ -81,35 +81,6 @@ const GameOverScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  linearGradient: {
-    width: "100%",
-    height: "auto",
-    paddingHorizontal: Dimentions.pageMargin,
-    flex: 1,
-    alignItems: "start",
-    justifyContent: "start",
-    paddingBottom: Dimentions.sectionMargin,
-    paddingTop: Dimentions.marginXL,
-    alignItems: "center",
-    resizeMode: "cover",
-  },
-  header: {
-    height: 367,
-  },
-  headerIcon: {
-    width: 50,
-    height: 50,
-  },
-  title: {
-    color: Colors.jokerWhite50,
-    fontFamily: Fonts.TekoMedium,
-    marginVertical: Dimentions.marginS,
-    fontSize: 32,
-  },
   body: {
     flex: 1,
     borderTopColor: Colors.jokerBlack200,
@@ -121,11 +92,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
-  },
-  timerContainer: {
-    flexGrow: 1,
-    marginTop: Dimentions.marginL,
-    marginBottom: Dimentions.marginL,
   },
 });
 

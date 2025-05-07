@@ -68,7 +68,7 @@ const LauchScreenEncrypted = () => {
             const currentWeekDaily = userResponse.daily.find(
               (item) => item.current_week === currentWeek,
             );
-            if (currentWeekDaily != null) {
+            if (currentWeekDaily !== null) {
               const localCurrentWeekDaily = currentWeekDaily.days.map((date) => convertUTCToLocal(date));
               const hasCurrentDate = localCurrentWeekDaily.some((item) =>
                 item.includes(getCurrentDate()),
@@ -190,14 +190,11 @@ const LauchScreenEncrypted = () => {
         </View>
       </TopNavTemplate>
     );
-  } else {return (<LoadingView />);}
+  } else { return (<LoadingView />); }
 
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginVertical: Dimentions.marginL,
-  },
   statisticsContainer: {
     marginLeft: Dimentions.pageMargin,
     marginRight: Dimentions.pageMargin,
@@ -215,14 +212,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
-  },
-  copyright: {
-    lineHeight: "150%",
-    alignContent: "center",
-    textAlign: "center",
-    fontSize: 16,
-    marginTop: 20,
-    color: Colors.jokerBlack200,
   },
 });
 

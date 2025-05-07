@@ -25,13 +25,6 @@ const TimerComponent = ({ showPill = true, onlyTimer = false, style }) => {
 };
 
 const styles = StyleSheet.create({
-  backgroundRounded: {
-    borderRadius: 30,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderWidth: 1,
-    marginBottom: 20,
-  },
   timerContainer: {
     flexDirection: "row",
     justifyContent: "center",
@@ -40,11 +33,6 @@ const styles = StyleSheet.create({
   timerSection: {
     justifyContent: "center",
     alignItems: "center",
-  },
-  timerTitle: {
-    fontFamily: Fonts.InterSemiBold,
-    fontSize: 14,
-    color: Colors.jokerWhite50,
   },
   timerNumberValue: {
     fontFamily: Fonts.InterSemiBold,

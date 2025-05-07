@@ -91,7 +91,7 @@ const DailyScreen = () => {
             setDays(currentWeekDaily.days.map((date) => convertUTCToLocal(date)));
           }
           setUser(response.user);
-        };
+        }
       });
     }
   }, [location]);
@@ -139,7 +139,7 @@ const DailyScreen = () => {
         }
       }).catch((error) => {
         showSnackbar(error.message || "An error occurred while submitting the answer.");
-      });;
+      });
     } else {
       showSnackbar(message);
     }
@@ -163,7 +163,7 @@ const DailyScreen = () => {
       subtitle={"Your words hold the reward."}
       navBackgroudImage={AssetPack.backgrounds.TOP_NAV_DAILY}
       navBackgroudVideo={AssetPack.videos.TOP_NAV_DAILY}>
-      <View style={[styles.container]}>
+      <View style={styles.container}>
         {!isSubmitted && (
           <QuestionOfTheDay
             numberOfCardsInSet={noOfCardsInSet}

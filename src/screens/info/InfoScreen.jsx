@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, ImageBackground } from "react-native";
 import useApiRequest from "../../hook/useApiRequest";
-import { Colors } from "../../util/constants";
 import useAppNavigation from "../../hook/useAppNavigation";
 import { useGame } from "../../context/GameContext";
 import ThankYouContent from "./components/ThankYouContent";
@@ -11,7 +10,7 @@ import LoadingView from "../../components/LoadingView";
 import Congratulations from "./components/Congratulations";
 import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 import AssetPack from "../../util/AssetsPack";
-import { Dimentions, Fonts } from "../../util/constants";
+import { Dimentions, Colors } from "../../util/constants";
 import GameButton from "../../components/GameButton";
 
 export const InfoScreenContents = {
@@ -46,7 +45,7 @@ const InfoScreen = ({ contentName }) => {
       fetchUserDetails(id, username, email).then((response) => {
         if (response.user) {
           setUser(response.user);
-        };
+        }
       });
     }
   }, [location]);
@@ -59,40 +58,40 @@ const InfoScreen = ({ contentName }) => {
 
   useEffect(() => {
     switch (contentName) {
-    case InfoScreenContents.extending:
-      setContent(<WeAreExtendingContent />);
-      setTitle("Time Is on Your Side");
-      setSubtitle("One more week. Let’s go.");
-      setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_EXTENDING_PLAY);
-      setNavBackgroundVideo(AssetPack.videos.TOP_NAV_EXTENDING_PLAY);
-      setBackgroundImage(AssetPack.backgrounds.INFO_PAGE);
-      break;
-    case InfoScreenContents.thank_you:
-      setContent(<ThankYouContent />);
-      setTitle("Round complete");
-      setSubtitle("Get ready to scratch again soon.");
-      setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_THANK_YOU);
-      setNavBackgroundVideo(AssetPack.videos.TOP_NAV_THANK_YOU);
-      setBackgroundImage(AssetPack.backgrounds.INFO_PAGE);
-      break;
-    case InfoScreenContents.in_progress:
-      setContent(<DrawInProgressContent ticketsEarned={user.ticket_balance} />);
-      setTitle("Fortune Is Deciding");
-      setSubtitle("One player. One prize. One moment.");
-      setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_DRAW_IN_PROGRESS);
-      setNavBackgroundVideo(AssetPack.videos.TOP_NAV_DRAW_IN_PROGRESS);
-      setBackgroundImage(AssetPack.backgrounds.INFO_PAGE);
-      break;
-    case InfoScreenContents.congratulations:
-      setContent(<Congratulations />);
-      setTitle("The gods are impressed");
-      setSubtitle("Claim your prize. You've earned it.");
-      setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_GODS_ARE_IMPRESSED);
-      setNavBackgroundVideo(AssetPack.videos.TOP_NAV_GODS_ARE_IMPRESSED);
-      setBackgroundImage(AssetPack.backgrounds.CONGRATS_BACKGROUND);
-      setPillText("Beta Winner");
-      break;
-    default: appNavigation.goToNotFoundPage();
+      case InfoScreenContents.extending:
+        setContent(<WeAreExtendingContent />);
+        setTitle("Time Is on Your Side");
+        setSubtitle("One more week. Let’s go.");
+        setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_EXTENDING_PLAY);
+        setNavBackgroundVideo(AssetPack.videos.TOP_NAV_EXTENDING_PLAY);
+        setBackgroundImage(AssetPack.backgrounds.INFO_PAGE);
+        break;
+      case InfoScreenContents.thank_you:
+        setContent(<ThankYouContent />);
+        setTitle("Round complete");
+        setSubtitle("Get ready to scratch again soon.");
+        setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_THANK_YOU);
+        setNavBackgroundVideo(AssetPack.videos.TOP_NAV_THANK_YOU);
+        setBackgroundImage(AssetPack.backgrounds.INFO_PAGE);
+        break;
+      case InfoScreenContents.in_progress:
+        setContent(<DrawInProgressContent ticketsEarned={user.ticket_balance} />);
+        setTitle("Fortune Is Deciding");
+        setSubtitle("One player. One prize. One moment.");
+        setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_DRAW_IN_PROGRESS);
+        setNavBackgroundVideo(AssetPack.videos.TOP_NAV_DRAW_IN_PROGRESS);
+        setBackgroundImage(AssetPack.backgrounds.INFO_PAGE);
+        break;
+      case InfoScreenContents.congratulations:
+        setContent(<Congratulations />);
+        setTitle("The gods are impressed");
+        setSubtitle("Claim your prize. You've earned it.");
+        setNavBackgroundImage(AssetPack.backgrounds.TOP_NAV_GODS_ARE_IMPRESSED);
+        setNavBackgroundVideo(AssetPack.videos.TOP_NAV_GODS_ARE_IMPRESSED);
+        setBackgroundImage(AssetPack.backgrounds.CONGRATS_BACKGROUND);
+        setPillText("Beta Winner");
+        break;
+      default: appNavigation.goToNotFoundPage();
     }
   }, [contentName]);
 
@@ -102,14 +101,14 @@ const InfoScreen = ({ contentName }) => {
     );
   }
   return (
-    <TopNavScreenTemplate 
-      title={title} 
-      subtitle={subtitle} 
-      navBackgroudImage={navBackgroudImage} 
+    <TopNavScreenTemplate
+      title={title}
+      subtitle={subtitle}
+      navBackgroudImage={navBackgroudImage}
       navBackgroudVideo={navBackgroudVideo}
-      hasBackButton={false} 
-      pillText={pillText} 
-      showProfileHeader={false} 
+      hasBackButton={false}
+      pillText={pillText}
+      showProfileHeader={false}
       showCopyright={false}>
       <View style={styles.container}>
         <ImageBackground style={styles.backgroundImageContainer} resizeMode='cover' source={backgroundImage}>
@@ -141,30 +140,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-  },
-  text: {
-    color: "#A6A6A6",
-    fontFamily: Fonts.InterRegular,
-    textAlign: "center",
-    fontSize: 16,
-  },
-  roundedTextContainer: {
-    width: 200,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#171717",
-    borderColor: "#D6BC9E",
-    borderWidth: 1.5,
-    paddingHorizontal: 35.5,
-    paddingVertical: 15,
-    borderRadius: 30,
-    boxShadow: "1px 2px 3.84px 0 rgba(255, 222, 168, 0.25)",
-    elevation: 5,
-  },
-  roundedText: {
-    color: "#FFDEA8",
-    fontSize: 16,
-    fontFamily: Fonts.InterRegular,
   },
 });
 export default InfoScreen;
