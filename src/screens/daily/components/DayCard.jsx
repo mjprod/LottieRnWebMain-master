@@ -8,55 +8,55 @@ const DayCard = ({ cardSet, status, day, cardBackground, extras, onPress }) => {
   const cardsInASet = 12;
   const getDayTagStyle = () => {
     switch (status) {
-    case DailyCardStatus.active:
-      return styles.dayTextStyleActive;
-    case DailyCardStatus.completed:
-      return styles.dayTextStyleCompleted;
-    default:
-      return styles.dayTextNormal;
+      case DailyCardStatus.active:
+        return styles.dayTextStyleActive;
+      case DailyCardStatus.completed:
+        return styles.dayTextStyleCompleted;
+      default:
+        return styles.dayTextNormal;
     }
   };
   const getMainContainerStyle = () => {
     switch (status) {
-    case DailyCardStatus.active:
-      return styles.mainContainerActive;
-    case DailyCardStatus.completed:
-      return styles.mainContainerCompleted;
-    default:
-      return styles.mainContainer;
+      case DailyCardStatus.active:
+        return styles.mainContainerActive;
+      case DailyCardStatus.completed:
+        return styles.mainContainerCompleted;
+      default:
+        return styles.mainContainer;
     }
   };
   const getCardIcon = (isForExtra) => {
     switch (status) {
-    case DailyCardStatus.completed:
-      return isForExtra ? AssetPack.icons.GREEN_TICKET : AssetPack.icons.CARDS_GREEN;
-    default:
-      return isForExtra ? AssetPack.icons.GOLDEN_TICKET : AssetPack.icons.CARDS;
+      case DailyCardStatus.completed:
+        return isForExtra ? AssetPack.icons.GREEN_TICKET : AssetPack.icons.CARDS_GREEN;
+      default:
+        return isForExtra ? AssetPack.icons.GOLDEN_TICKET : AssetPack.icons.CARDS;
     }
   };
 
   const getBadgeBackground = () => {
     switch (status) {
-    case DailyCardStatus.active:
-      return AssetPack.backgrounds.CARD_NUMBER_SET;
-    case DailyCardStatus.completed:
-      return AssetPack.backgrounds.CARD_NUMBER_SET_COMPLETED;
-    default:
-      return AssetPack.backgrounds.CARD_NUMBER_SET;
+      case DailyCardStatus.active:
+        return AssetPack.backgrounds.CARD_NUMBER_SET;
+      case DailyCardStatus.completed:
+        return AssetPack.backgrounds.CARD_NUMBER_SET_COMPLETED;
+      default:
+        return AssetPack.backgrounds.CARD_NUMBER_SET;
     }
   };
 
   const getBottomSection = (number, text, isForExtra = false) => {
     switch (status) {
-    case DailyCardStatus.completed:
-      return <View>
-        <Text style={{ color: Colors.jokerWhite50 }}>{isForExtra ? "Draw entered" : "Completed"}</Text>
-      </View>;
-    default:
-      return <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-        <Text style={styles.scratchCardValue}>{`${number}`}</Text>
-        <Text style={styles.scratchCard}>{`${text}`}</Text>
-      </View>;
+      case DailyCardStatus.completed:
+        return <View>
+          <Text style={{ color: Colors.jokerWhite50 }}>{isForExtra ? "Draw entered" : "Completed"}</Text>
+        </View>;
+      default:
+        return <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+          <Text style={styles.scratchCardValue}>{`${number}`}</Text>
+          <Text style={styles.scratchCard}>{`${text}`}</Text>
+        </View>;
     }
   };
 

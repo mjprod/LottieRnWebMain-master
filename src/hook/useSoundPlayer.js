@@ -166,16 +166,16 @@ export const SoundProvider = ({ children }) => {
     }
     const theme = currentTheme;
     switch (theme) {
-    case "egypt":
-      return 2;
-    case "international":
-      return 3;
-    case "mythology":
-      return 4;
-    case "cowboy":
-      return 5;
-    default:
-      return 1;
+      case "egypt":
+        return 2;
+      case "international":
+        return 3;
+      case "mythology":
+        return 4;
+      case "cowboy":
+        return 5;
+      default:
+        return 1;
     }
   }, [currentTheme]);
 

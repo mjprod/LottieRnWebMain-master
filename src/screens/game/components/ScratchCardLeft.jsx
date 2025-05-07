@@ -26,7 +26,7 @@ const ScratchCardLeft = ({ scratchCardLeft }) => {
     return () => clearTimeout(timeoutId);
   }, [scratchCardLeft]);
 
-  const toggleSound = async(value) => {
+  const toggleSound = (value) => {
     try {
       //await AsyncStorage.setItem("soundPreference", JSON.stringify(value));
       setIsSoundEnabled(!isSoundEnabled);
@@ -115,18 +115,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginLeft: "auto",
-  },
-  counter: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    marginHorizontal: 2,
-  },
-  activeCounter: {
-    backgroundColor: "#646464",
-  },
-  inactiveCounter: {
-    backgroundColor: "#434343",
   },
 });
 

@@ -64,7 +64,5 @@ module.exports = {
     "object-curly-spacing": ["error", "always"],
     // spacing around the colon in object literals: `key: value`
     "key-spacing": ["error", { beforeColon: false, afterColon: true }],
-
-
   },
 };

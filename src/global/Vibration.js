@@ -10,18 +10,18 @@ export const triggerVibration = intensity => {
     return;
   }
   switch (intensity) {
-  case 'light':
-    Vibration.vibrate(lightVibrationPattern);
-    break;
-  case 'medium':
-    Vibration.vibrate(mediumVibrationPattern);
-    break;
-  case 'strong':
-    Vibration.vibrate(strongVibrationPattern);
-    break;
-  default:
-    Vibration.vibrate();
-    break;
+    case 'light':
+      Vibration.vibrate(lightVibrationPattern);
+      break;
+    case 'medium':
+      Vibration.vibrate(mediumVibrationPattern);
+      break;
+    case 'strong':
+      Vibration.vibrate(strongVibrationPattern);
+      break;
+    default:
+      Vibration.vibrate();
+      break;
   }
 };
 //triggerVibration('light');
