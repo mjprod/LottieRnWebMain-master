@@ -12,6 +12,16 @@ import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 import AssetPack from "../../util/AssetsPack";
 import { Dimentions, Colors } from "../../util/constants";
 import GameButton from "../../components/GameButton";
+import PropTypes, { func } from 'prop-types';
+
+InfoScreen.propTypes = {
+  contentName: PropTypes.oneOf([
+    InfoScreenContents.extending,
+    InfoScreenContents.thank_you,
+    InfoScreenContents.in_progress,
+    InfoScreenContents.congratulations,
+  ]).isRequired,
+};
 
 export const InfoScreenContents = {
   extending: "we_are_extending",
@@ -20,7 +30,7 @@ export const InfoScreenContents = {
   congratulations: "congratulations",
 };
 
-const InfoScreen = ({ contentName }) => {
+export function InfoScreen({ contentName }) {
   const appNavigation = useAppNavigation();
 
   const { user, setUser } = useGame();
@@ -121,7 +131,7 @@ const InfoScreen = ({ contentName }) => {
       </View>
     </TopNavScreenTemplate>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

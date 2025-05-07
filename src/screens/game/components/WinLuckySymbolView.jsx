@@ -1,11 +1,19 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { View, StyleSheet, Platform, Pressable } from "react-native";
 import Video from "../../../components/Video";
 import BrowserDetection from "react-browser-detection";
 import AssetPack from "../../../util/AssetsPack";
 import { isAndroidWebView } from "../../../util/Helpers";
 
-const WinLuckySymbolView = ({ videoRef, style, onSkipClicked, onVideoEnd }) => {
+WinLuckySymbolView.propTypes = {
+  videoRef: PropTypes.any,
+  style: PropTypes.object,
+  onSkipClicked: PropTypes.func.isRequired,
+  onVideoEnd: PropTypes.func.isRequired,
+};
+
+export default function WinLuckySymbolView({ videoRef, style, onSkipClicked, onVideoEnd }) {
   return (
     <View
       key="overlay"
@@ -45,7 +53,7 @@ const WinLuckySymbolView = ({ videoRef, style, onSkipClicked, onVideoEnd }) => {
       </Pressable>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   transparentVideo: {
@@ -86,5 +94,3 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0)",
   },
 });
-
-export default WinLuckySymbolView;
