@@ -30,6 +30,11 @@ self.addEventListener("install", (event) => {
 
 // Intercept Network Requests & Serve Cached Files
 self.addEventListener("fetch", (event) => {
+  const requestUrl = new URL(event.request.url);
+  // Bypass service worker cache for API calls
+  if (requestUrl.pathname.startsWith('/api/')) {
+    return event.respondWith(fetch(event.request));
+  }
   if (event.request.method !== 'GET') {
     return event.respondWith(fetch(event.request));
   }
