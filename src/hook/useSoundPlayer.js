@@ -9,7 +9,6 @@ import React, {
 import { Howl, Howler } from "howler";
 import themes from "../global/themeConfig.js";
 import { useTheme } from "./useTheme.js";
-import { useLocation } from "react-router-dom";
 
 const SoundContext = createContext();
 
@@ -19,18 +18,28 @@ export const SoundProvider = ({ children }) => {
   // Enable Howler auto-unlock on first user gesture
   Howler.autoUnlock = true;
   const [startPlay, setStartPlay] = useState(false);
+
+  useEffect(() => {
+    const enableAudio = () => {
+      // Resume Web Audio context and start playback on first user gesture
+      if (Howler.ctx && Howler.ctx.state === "suspended") {
+        Howler.ctx.resume();
+      }
+      window.removeEventListener("click", enableAudio);
+      window.removeEventListener("touchstart", enableAudio);
+    };
+    window.addEventListener('click', enableAudio);
+    window.addEventListener('touchstart', enableAudio);
+    return () => {
+      window.removeEventListener('click', enableAudio);
+      window.removeEventListener('touchstart', enableAudio);
+    };
+  }, []);
   const [introPlayed, setIntroPlayed] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
 
   const { currentTheme } = useTheme();
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.pathname !== "/game") {
-      muteAllSounds();
-    }
-  }, [location.pathname]);
 
   useEffect(() => {
     // Retry playback if Web Audio context is suspended
@@ -135,10 +144,13 @@ export const SoundProvider = ({ children }) => {
   };
 
   const rePlayAllSounds = () => {
+    if (Howler.ctx && Howler.ctx.state === 'suspended') {
+      Howler.ctx.resume();
+    }
     Object.keys(soundRefs.current).forEach((trackKey) => {
+      if (trackKey === "intro") return;
       const sound = soundRefs.current[trackKey];
       if (trackKey === trackKeys[currentTrackIndex]) {
-        toggleMuteSound(sound, !isSoundEnabled);
         setSoundVolume(sound, isSoundEnabled ? 1 : 0);
         playSoundIfNotPlaying(sound);
       } else {
@@ -149,6 +161,9 @@ export const SoundProvider = ({ children }) => {
   };
 
   const getTrackKey = useCallback(() => {
+    if (Howler.ctx && Howler.ctx.state === 'suspended') {
+      Howler.ctx.resume();
+    }
     const theme = currentTheme;
     switch (theme) {
       case "egypt":
@@ -165,8 +180,9 @@ export const SoundProvider = ({ children }) => {
   }, [currentTheme]);
 
   const initialTrack = () => {
-    playAllSounds();
-
+    if (Howler.ctx && Howler.ctx.state === 'suspended') {
+      Howler.ctx.resume();
+    }
     const newIndex = getTrackKey();
     const newTrackKey = trackKeys[newIndex];
     const newSound = soundRefs.current[newTrackKey];
@@ -218,7 +234,10 @@ export const SoundProvider = ({ children }) => {
   }, [isSoundEnabled, currentTrackIndex]);
 
   useEffect(() => {
-    startPlay ? playSound("intro") : muteAllSounds();
+    muteAllSounds();
+    if (startPlay) {
+      playSound(trackKeys[0]);
+    }
   }, [startPlay]);
 
   useEffect(() => {
@@ -236,6 +255,7 @@ export const SoundProvider = ({ children }) => {
         setIsSoundEnabled,
         soundRefs,
         switchTrack,
+        setIntroPlayed
       }}>
       {children}
     </SoundContext.Provider>
