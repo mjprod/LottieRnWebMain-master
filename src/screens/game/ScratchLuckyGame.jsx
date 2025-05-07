@@ -21,6 +21,12 @@ import useTimer from "../../hook/useTimer.js";
 
 const { width } = Dimensions.get("window");
 
+const luckyCoinCollectSoundFile = require("./../../assets/audio/reward_pop.mp3");
+const luckyCoinCollectSound = new Howl({ src: [luckyCoinCollectSoundFile] });
+
+const luckyCoinWinSoundFile = require("./../../assets/audio/reward_quest.mp3");
+const luckyCoinWinSound = new Howl({ src: [luckyCoinWinSoundFile] });
+
 const ScratchLuckyGame = () => {
   const appNavigation = useAppNavigation();
   const location = useLocation();
@@ -46,7 +52,7 @@ const ScratchLuckyGame = () => {
   const [hasLuckySymbol, setHasLuckySymbol] = useState(false);
   const [comboPlayed, setComboPlayed] = useState(0);
 
-  const { seconds: countdownTimer, timerIsRunning, startTimer, pauseTimer, resetTimer } = useTimer();
+  const { seconds: countdownTimer, startTimer, pauseTimer, resetTimer } = useTimer();
 
   const [nextCardAnimationFinished, setNextCardAnimationFinished] =
     useState(true);
@@ -56,7 +62,6 @@ const ScratchLuckyGame = () => {
     setUser,
     score,
     setScore,
-    gameOver,
     setGameOver,
     scratchStarted,
     setScratchStarted,
@@ -88,7 +93,7 @@ const ScratchLuckyGame = () => {
     getGames,
   } = useApiRequest();
 
-  const { setStartPlay } = useSound();
+  const { setStartPlay, setIntroPlayed } = useSound();
 
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
   const transalteAnim = useRef(new Animated.Value(0)).current;
@@ -96,6 +101,8 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     return () => {
+      setStartPlay(false);
+      setIntroPlayed(false);
       Object.values(timerRefs.current).forEach(clearTimeout);
     };
   }, []);
@@ -155,6 +162,7 @@ const ScratchLuckyGame = () => {
         if (countDownLottieRef.current != null) {
           countDownLottieRef.current.play();
         }
+        setIntroPlayed(false);
         setStartPlay(true);
       }, 1000);
       return () => clearTimeout(timer);
@@ -213,6 +221,7 @@ const ScratchLuckyGame = () => {
   }, [luckySymbolCount, user, saveLuckySymbol, nextCard, updateLuckySymbol]);
 
   const decrementLuckySymbol = useCallback((count, onComplete) => {
+    luckyCoinCollectSound.play()
     if (count >= 0) {
       saveLuckySymbol(count);
       clearTimeout(timerRefs.current.decrement);
@@ -229,6 +238,7 @@ const ScratchLuckyGame = () => {
   const handleLuckySymbolWonVideoEnd = useCallback(() => {
     setWinLuckySymbolVideo(false);
     addLuckySymbol();
+    luckyCoinWinSound.play()
   }, [addLuckySymbol]);
 
   const handleVideoIntroEnd = useCallback(() => {
