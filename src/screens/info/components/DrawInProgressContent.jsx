@@ -10,7 +10,7 @@ DrawInProgressContent.propTypes = {
   ticketsEarned: PropTypes.number,
 };
 
-const DrawInProgressContent = ({ ticketsEarned = 0 }) => {
+function DrawInProgressContent({ ticketsEarned = 0 }) {
   return (
     <>
       <View style={styles.topContainer}>
@@ -25,7 +25,7 @@ const DrawInProgressContent = ({ ticketsEarned = 0 }) => {
       </View>
     </>
   );
-};
+}
 
 const styles = StyleSheet.create({
   topContainer: {
