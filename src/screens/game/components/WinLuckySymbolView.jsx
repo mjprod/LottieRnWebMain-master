@@ -6,6 +6,36 @@ import BrowserDetection from "react-browser-detection";
 import AssetPack from "../../../util/AssetsPack";
 import { isAndroidWebView } from "../../../util/Helpers";
 
+function ChromeVideoView({ videoRef, onVideoEnd }) {
+  return (
+    <Video
+      ref={videoRef}
+      source={AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME}
+      style={styles.transparentVideo}
+      onEnd={onVideoEnd}
+      onEnded={onVideoEnd}
+    />
+  );
+}
+
+function DefaultVideoView({ videoRef, onVideoEnd }) {
+  return (
+    <Video
+      ref={videoRef}
+      source={isAndroidWebView() ? AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME : AssetPack.videos.WIN_LUCKY_SYMBOL}
+      style={styles.transparentVideo}
+      onEnd={onVideoEnd}
+      onEnded={onVideoEnd}
+    />
+  );
+}
+
+// Predefined mapping to avoid inline component definitions
+const browserComponents = {
+  chrome: ChromeVideoView,
+  default: DefaultVideoView,
+};
+
 WinLuckySymbolView.propTypes = {
   videoRef: PropTypes.any,
   style: PropTypes.object,
@@ -14,6 +44,27 @@ WinLuckySymbolView.propTypes = {
 };
 
 export default function WinLuckySymbolView({ videoRef, style, onSkipClicked, onVideoEnd }) {
+  const browserDetectorBody = {
+    chrome: () => {
+      return <Video
+        ref={videoRef}
+        source={AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME}
+        style={styles.transparentVideo}
+        onEnd={onVideoEnd}
+        onEnded={onVideoEnd}
+      />;
+    },
+    default: () => {
+      return <Video
+        ref={videoRef}
+        source={isAndroidWebView() ? AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME : AssetPack.videos.WIN_LUCKY_SYMBOL}
+        style={styles.transparentVideo}
+        onEnd={onVideoEnd}
+        onEnded={onVideoEnd}
+      />;
+    },
+  };
+
   return (
     <View
       key="overlay"
@@ -27,26 +78,7 @@ export default function WinLuckySymbolView({ videoRef, style, onSkipClicked, onV
       }}
     >
       <BrowserDetection>
-        {{
-          chrome: () => (
-            <Video
-              ref={videoRef}
-              source={AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME}
-              style={styles.transparentVideo}
-              onEnd={onVideoEnd}
-              onEnded={onVideoEnd}
-            />
-          ),
-          default: () => (
-            <Video
-              ref={videoRef}
-              source={isAndroidWebView() ? AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME : AssetPack.videos.WIN_LUCKY_SYMBOL}
-              style={styles.transparentVideo}
-              onEnd={onVideoEnd}
-              onEnded={onVideoEnd}
-            />
-          ),
-        }}
+        {browserDetectorBody}
       </BrowserDetection>
       <Pressable style={styles.clickableArea} onPress={onSkipClicked}>
         <View style={styles.transparentOverlay} />

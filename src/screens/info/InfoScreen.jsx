@@ -12,7 +12,15 @@ import TopNavScreenTemplate from "../../templates/TopNavTemplate";
 import AssetPack from "../../util/AssetsPack";
 import { Dimentions, Colors } from "../../util/constants";
 import GameButton from "../../components/GameButton";
-import PropTypes, { func } from 'prop-types';
+import PropTypes from 'prop-types';
+import { useLocation } from "react-router";
+
+export const InfoScreenContents = {
+  extending: "we_are_extending",
+  thank_you: "thank_you",
+  in_progress: "draw_in_progress",
+  congratulations: "congratulations",
+};
 
 InfoScreen.propTypes = {
   contentName: PropTypes.oneOf([
@@ -23,14 +31,7 @@ InfoScreen.propTypes = {
   ]).isRequired,
 };
 
-export const InfoScreenContents = {
-  extending: "we_are_extending",
-  thank_you: "thank_you",
-  in_progress: "draw_in_progress",
-  congratulations: "congratulations",
-};
-
-export function InfoScreen({ contentName }) {
+export default function InfoScreen({ contentName }) {
   const appNavigation = useAppNavigation();
 
   const { user, setUser } = useGame();
@@ -46,6 +47,8 @@ export function InfoScreen({ contentName }) {
 
   const [pillText, setPillText] = useState("Beta Competition");
 
+  const location = useLocation();
+
   useEffect(() => {
     if (location.state && location.state !== null) {
       const id = location.state.user_id;
@@ -55,16 +58,12 @@ export function InfoScreen({ contentName }) {
       fetchUserDetails(id, username, email).then((response) => {
         if (response.user) {
           setUser(response.user);
+        } else {
+          appNavigation.goToNotFoundPage();
         }
       });
     }
-  }, [location]);
-
-  useEffect(() => {
-    if (!user) {
-      appNavigation.goToNotFoundPage();
-    }
-  }, [user]);
+  }, [appNavigation, fetchUserDetails, location, setUser]);
 
   useEffect(() => {
     switch (contentName) {
@@ -103,13 +102,12 @@ export function InfoScreen({ contentName }) {
         break;
       default: appNavigation.goToNotFoundPage();
     }
-  }, [contentName]);
+  }, [contentName, appNavigation, user]);
 
   if (!user) {
-    return (
-      <LoadingView />
-    );
+    return (<LoadingView />);
   }
+
   return (
     <TopNavScreenTemplate
       title={title}
@@ -152,4 +150,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-export default InfoScreen;
