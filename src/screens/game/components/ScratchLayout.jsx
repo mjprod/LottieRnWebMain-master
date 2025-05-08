@@ -10,6 +10,7 @@ ScratchLayout.propTypes = {
   reset: PropTypes.bool.isRequired,
   scratched: PropTypes.bool.isRequired,
   setScratched: PropTypes.func.isRequired,
+  scratchStarted: PropTypes.bool.isRequired,
   setScratchStarted: PropTypes.func.isRequired,
   scratchCardLeft: PropTypes.number.isRequired,
   timerGame: PropTypes.number.isRequired,

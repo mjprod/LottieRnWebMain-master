@@ -1,20 +1,35 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
+import PropTypes from 'prop-types';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import LottieView from "react-native-web-lottie";
 import { useSound } from "../../../hook/useSoundPlayer";
 import { useTheme } from "../../../hook/useTheme";
 import AssetPack from "../../../util/AssetsPack";
 import useStorage, { storageKeys } from "../../../hook/useStorage";
+ScratchCardLeft.propTypes = {
+  scratchCardLeft: PropTypes.number.isRequired,
+  scratchStarted: PropTypes.bool,
+};
 
-const ScratchCardLeft = ({ scratchCardLeft, scratchStarted }) => {
+ScratchCardLeft.defaultProps = {
+  scratchStarted: false,
+};
+
+export default memo(ScratchCardLeft);
+function ScratchCardLeft({ scratchCardLeft, scratchStarted = false }) {
   const { soundMuteOnBackground, soundMuteOffBackground } = useTheme();
 
-  const [displayedScratchCardsLeft, setDisplayedScratchCardsLeft] = useState(
-    scratchCardLeft,
-  );
+  const [displayedScratchCardsLeft, setDisplayedScratchCardsLeft] = useState(0);
+
+  console.log("ScratchCardLeft:", scratchCardLeft);
+
   const lottieRef = useRef();
   const { saveData } = useStorage();
   const { isSoundEnabled, setIsSoundEnabled } = useSound();
+
+  useEffect(() => {
+    setDisplayedScratchCardsLeft(scratchCardLeft);
+  }, [scratchCardLeft]);
 
   useEffect(() => {
     lottieRef.current && lottieRef.current.reset();
@@ -64,7 +79,7 @@ const ScratchCardLeft = ({ scratchCardLeft, scratchStarted }) => {
       <View style={styles.rightContainer}>{renderCounter()}</View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -105,5 +120,3 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
   },
 });
-
-export default ScratchCardLeft;
