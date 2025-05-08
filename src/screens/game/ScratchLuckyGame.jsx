@@ -388,6 +388,7 @@ const ScratchLuckyGame = () => {
               setScratched={setScratched}
               luckySymbolCount={luckySymbolCount}
               setLuckySymbolCount={setLuckySymbolCount}
+              scratchStarted={scratchStarted}
               setScratchStarted={setScratchStarted}
               scratchCardLeft={scratchCardLeft}
               timerGame={timerGame}

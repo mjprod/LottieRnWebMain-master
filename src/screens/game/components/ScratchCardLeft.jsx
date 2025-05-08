@@ -1,47 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import LottieView from "react-native-web-lottie";
 import { useSound } from "../../../hook/useSoundPlayer";
 import { useTheme } from "../../../hook/useTheme";
 import AssetPack from "../../../util/AssetsPack";
+import useStorage, { storageKeys } from "../../../hook/useStorage";
 
-const ScratchCardLeft = ({ scratchCardLeft }) => {
+const ScratchCardLeft = ({ scratchCardLeft, scratchStarted }) => {
   const { soundMuteOnBackground, soundMuteOffBackground } = useTheme();
 
   const [displayedScratchCardsLeft, setDisplayedScratchCardsLeft] = useState(
     scratchCardLeft,
   );
-
-  const [showLottie, setShowLottie] = useState(true);
+  const lottieRef = useRef();
+  const { saveData } = useStorage();
   const { isSoundEnabled, setIsSoundEnabled } = useSound();
 
   useEffect(() => {
-    setShowLottie(false);
-
-    const timeoutId = setTimeout(() => {
+    lottieRef.current && lottieRef.current.reset();
+    if (scratchStarted) {
       setDisplayedScratchCardsLeft(scratchCardLeft - 1);
-      setShowLottie(true);
-    }, 600);
-
-    return () => clearTimeout(timeoutId);
-  }, [scratchCardLeft]);
-
-  const toggleSound = (value) => {
-    try {
-      //await AsyncStorage.setItem("soundPreference", JSON.stringify(value));
-      setIsSoundEnabled(!isSoundEnabled);
-      //console.error(isSoundOn);
-      // Optional: Play or stop sound based on toggle state
-      if (value) {
-        //playSound();
-      } else {
-        //stopSound();
-      }
-    } catch (e) {
-      console.error("Failed to save sound preference", e);
+      lottieRef.current && lottieRef.current.play();
     }
-  };
+  }, [scratchStarted, scratchCardLeft, lottieRef]);
 
+  const toggleSound = () => {
+    setIsSoundEnabled((oldVal) => {
+      saveData(storageKeys.soundEnabled, !oldVal);
+      return !oldVal;
+    });
+  };
+  console.log(isSoundEnabled);
   const renderCounter = () => {
     return (
       <TouchableOpacity onPress={toggleSound}>
@@ -59,15 +48,14 @@ const ScratchCardLeft = ({ scratchCardLeft }) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
-        {showLottie && (
-          <LottieView
-            style={styles.lottieAnimation}
-            source={AssetPack.lotties.CARD_COUNT_DOWN}
-            autoPlay={true}
-            loop={false}
-            speed={1}
-          />
-        )}
+        <LottieView
+          ref={lottieRef}
+          style={styles.lottieAnimation}
+          source={AssetPack.lotties.CARD_COUNT_DOWN}
+          autoPlay={false}
+          loop={false}
+          speed={1}
+        />
         <View style={styles.textRow}>
           <Text style={styles.number}>{displayedScratchCardsLeft}</Text>
           <Text style={styles.text}>Scratch Cards Left</Text>

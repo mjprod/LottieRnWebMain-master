@@ -9,19 +9,19 @@ import React, {
 import { Howl, Howler } from "howler";
 import themes from "../global/themeConfig.js";
 import { useTheme } from "./useTheme.js";
+import useStorage, { storageKeys } from "./useStorage.js";
 
 const SoundContext = createContext();
 
 export const useSound = () => useContext(SoundContext);
 
 export const SoundProvider = ({ children }) => {
-  // Enable Howler auto-unlock on first user gesture
   Howler.autoUnlock = true;
   const [startPlay, setStartPlay] = useState(false);
+  const { loadData } = useStorage();
 
   useEffect(() => {
     const enableAudio = () => {
-      // Resume Web Audio context and start playback on first user gesture
       if (Howler.ctx && Howler.ctx.state === "suspended") {
         Howler.ctx.resume();
       }
@@ -37,12 +37,11 @@ export const SoundProvider = ({ children }) => {
   }, []);
   const [introPlayed, setIntroPlayed] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const [isSoundEnabled, setIsSoundEnabled] = useState(loadData(storageKeys.soundEnabled) === "true");
 
   const { currentTheme } = useTheme();
 
   useEffect(() => {
-    // Retry playback if Web Audio context is suspended
     Object.values(soundRefs.current).forEach((sound) => {
       sound.on("playerror", (id) => {
         if (Howler.ctx && Howler.ctx.state === "suspended") {
@@ -67,7 +66,7 @@ export const SoundProvider = ({ children }) => {
       preload: true,
       autoplay: false,
       loop: false,
-      volume: 1,
+      volume: isSoundEnabled ? 1 : 0,
       onend: () => initialTrack(),
     }),
     base_beat: new Howl({
@@ -102,15 +101,8 @@ export const SoundProvider = ({ children }) => {
     }),
   });
 
-  const setSoundVolume = (sound, volume, fadeDuration = 1000) => {
-    if (sound) {sound.fade(sound.volume(), volume, fadeDuration);}
-  };
-
-  const toggleMuteSound = (sound, mute) => {
-    if (sound) {
-      sound.mute(mute);
-      if (mute) {sound.volume(0);}
-    }
+  const setSoundVolume = (sound, volume, fadeDuration = 500) => {
+    if (sound) { sound.fade(sound.volume(), volume, fadeDuration); }
   };
 
   const playSoundIfNotPlaying = (sound) => {
@@ -121,14 +113,13 @@ export const SoundProvider = ({ children }) => {
 
   const playAllSounds = () => {
     Object.keys(soundRefs.current).forEach((trackKey, index) => {
-      if (trackKey === "intro") {return;}
+      if (trackKey === "intro") { return; }
       const sound = soundRefs.current[trackKey];
-
       if (index === currentTrackIndex) {
-        setSoundVolume(sound, 1);
+        setSoundVolume(sound, isSoundEnabled ? 1 : 0);
         playSoundIfNotPlaying(sound);
       } else {
-        sound.stop(); // Ensure other tracks are stopped
+        sound.pause();
         setSoundVolume(sound, 0);
       }
     });
@@ -137,25 +128,7 @@ export const SoundProvider = ({ children }) => {
   const muteAllSounds = () => {
     Object.values(soundRefs.current).forEach((sound) => {
       if (sound.playing()) {
-        setSoundVolume(sound, 0);
-        toggleMuteSound(sound, true);
-      }
-    });
-  };
-
-  const rePlayAllSounds = () => {
-    if (Howler.ctx && Howler.ctx.state === 'suspended') {
-      Howler.ctx.resume();
-    }
-    Object.keys(soundRefs.current).forEach((trackKey) => {
-      if (trackKey === "intro") {return;}
-      const sound = soundRefs.current[trackKey];
-      if (trackKey === trackKeys[currentTrackIndex]) {
-        setSoundVolume(sound, isSoundEnabled ? 1 : 0);
-        playSoundIfNotPlaying(sound);
-      } else {
-        sound.stop(); // Stop other tracks to prevent overlapping
-        toggleMuteSound(sound, true);
+        sound.pause();
       }
     });
   };
@@ -187,7 +160,8 @@ export const SoundProvider = ({ children }) => {
     const newTrackKey = trackKeys[newIndex];
     const newSound = soundRefs.current[newTrackKey];
     if (newSound) {
-      newSound.fade(0, 1, 500);
+      newSound.play();
+      newSound.fade(0, isSoundEnabled ? 1 : 0, 500);
     }
     setIntroPlayed(true);
     setCurrentTrackIndex(newIndex);
@@ -199,22 +173,21 @@ export const SoundProvider = ({ children }) => {
   };
 
   const switchTrack = (newIndex) => {
-    if (newIndex === currentTrackIndex) {return;}
-
     const currentSound = soundRefs.current[trackKeys[currentTrackIndex]];
+    setSoundVolume(currentSound, isSoundEnabled ? 1 : 0);
+    if (newIndex === currentTrackIndex) { return; }
+
     const newSound = soundRefs.current[trackKeys[newIndex]];
 
     if (currentSound) {
-      currentSound.fade(currentSound.volume(), 0, 500); // Fade out before stopping
+      currentSound.fade(currentSound.volume(), 0, 500);
       setTimeout(() => currentSound.stop(), 500);
     }
 
     setTimeout(() => {
       if (newSound) {
-        toggleMuteSound(newSound, !isSoundEnabled);
-        setSoundVolume(newSound, isSoundEnabled ? 1 : 0);
-        playSoundIfNotPlaying(newSound);
-        newSound.fade(0, 1, 500); // Fade in new track
+        newSound.play();
+        newSound.fade(0, isSoundEnabled ? 1 : 0, 500);
       }
     }, 500);
 
@@ -229,7 +202,7 @@ export const SoundProvider = ({ children }) => {
 
   useEffect(() => {
     if (currentTrackIndex > 0) {
-      isSoundEnabled ? rePlayAllSounds() : muteAllSounds();
+      isSoundEnabled ? playAllSounds() : muteAllSounds();
     }
   }, [isSoundEnabled, currentTrackIndex]);
 
@@ -241,7 +214,7 @@ export const SoundProvider = ({ children }) => {
   }, [startPlay]);
 
   useEffect(() => {
-    if (introPlayed) {playNextTrack();}
+    if (introPlayed) { playNextTrack(); }
   }, [currentTheme, introPlayed]);
 
   return (

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Platform } from 'react';
-import { Animated, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Animated, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native';
 import { Colors, Fonts } from '../util/constants';
 
 const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
