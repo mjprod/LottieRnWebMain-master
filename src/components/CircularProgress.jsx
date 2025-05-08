@@ -80,7 +80,7 @@ const CircularProgress = ({ countdownTimer }) => {
           strokeWidth={strokeWidth}
         />
         <AnimatedCircle
-          collapsable="false"
+          collapsable={"false"}
           stroke={getColor(countDown, "positive")}
           fill="none"
           cx={size / 2}

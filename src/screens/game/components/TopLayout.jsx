@@ -19,7 +19,7 @@ import CircularProgress from "../../../components/CircularProgress";
 import PropTypes from 'prop-types';
 
 CentralImageWithLottie.propTypes = {
-  gameCenterIcon: PropTypes.node.isRequired,
+  gameCenterIcon: PropTypes.any,
   playAnimation: PropTypes.bool.isRequired,
   animationIndex: PropTypes.number.isRequired,
   lottieRef: PropTypes.shape({ current: PropTypes.any }).isRequired,
@@ -178,6 +178,7 @@ export default function TopLayout({ clickCount, countdownTimer }) {
             </View>
           </View>
         </View>
+
         <CentralImageWithLottie
           gameCenterIcon={gameCenterIcon}
           playAnimation={playAnimation}

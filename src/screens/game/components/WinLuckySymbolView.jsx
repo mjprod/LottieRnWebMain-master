@@ -2,10 +2,9 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { View, StyleSheet, Platform, Pressable } from "react-native";
 import Video from "../../../components/Video";
-import BrowserDetection from "react-browser-detection";
 import AssetPack from "../../../util/AssetsPack";
 import { isAndroidWebView } from "../../../util/Helpers";
-import { Colors } from "../../../util/constants";
+import { Colors, isChromeBrowser } from "../../../util/constants";
 
 WinLuckySymbolView.propTypes = {
   videoRef: PropTypes.any,
@@ -14,30 +13,27 @@ WinLuckySymbolView.propTypes = {
   onVideoEnd: PropTypes.func.isRequired,
 };
 
-const browserDetectorComponent = (videoRef, onVideoEnd, styles) => {
-  return {
-    chrome: () => {
-      return <Video
+export default function WinLuckySymbolView({ videoRef, style, onSkipClicked, onVideoEnd }) {
+  const browserHandler = {
+    chrome: () => (
+      <Video
         ref={videoRef}
         source={AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME}
-        style={styles}
+        style={styles.transparentVideo}
         onEnd={onVideoEnd}
         onEnded={onVideoEnd}
-      />;
-    },
-    default: () => {
-      return <Video
+      />
+    ),
+    default: () => (
+      <Video
         ref={videoRef}
         source={isAndroidWebView() ? AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME : AssetPack.videos.WIN_LUCKY_SYMBOL}
-        style={styles}
+        style={styles.transparentVideo}
         onEnd={onVideoEnd}
         onEnded={onVideoEnd}
-      />;
-    },
+      />
+    ),
   };
-};
-
-export default function WinLuckySymbolView({ videoRef, style, onSkipClicked, onVideoEnd }) {
   return (
     <View
       key="overlay"
@@ -50,9 +46,10 @@ export default function WinLuckySymbolView({ videoRef, style, onSkipClicked, onV
         alignContent: "flex-end",
       }}
     >
-      <BrowserDetection>
-        {browserDetectorComponent(videoRef, onVideoEnd, styles.transparentVideo)}
-      </BrowserDetection>
+      {(() => {
+        const handler = isChromeBrowser ? browserHandler.chrome : browserHandler.default;
+        return handler();
+      })()}
       <Pressable style={styles.clickableArea} onPress={onSkipClicked}>
         <View style={styles.transparentOverlay} />
       </Pressable>
@@ -75,27 +72,29 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: Colors.jokerBlack900,
+        backgroundColor: Colors.jokerBlack90070,
         justifyContent: "center",
         alignItems: "center",
         zIndex: 1000,
       },
       default: {
         ...StyleSheet.absoluteFillObject,
-        backgroundColor: Colors.jokerBlack900,
+        backgroundColor: Colors.jokerBlack90070,
         justifyContent: "center",
         alignItems: "center",
         zIndex: 1000,
       },
     }),
-  }, clickableArea: {
+  },
+  clickableArea: {
     position: "absolute",
     top: 0,
     left: 0,
     height: "100%",
     width: "100%",
-  }, transparentOverlay: {
+  },
+  transparentOverlay: {
     flex: 1,
-    backgroundColor: Colors.jokerBlack900,
+    backgroundColor: Colors.transparent,
   },
 });

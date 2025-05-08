@@ -3,7 +3,7 @@ export const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
 export const API_KEY = process.env.REACT_APP_API_KEY;
 
 export const BONUS_PACK_NUMBER_OF_CARDS = 12;
-
+export const isChromeBrowser = typeof navigator !== "undefined" && /Chrome/.test(navigator.userAgent) && !/Edge/.test(navigator.userAgent) && !/OPR/.test(navigator.userAgent);
 export const Endpoint = {
   fetch_user_details: "/users",
   get_daily_question: "/daily/question",
@@ -71,6 +71,7 @@ export const Colors = {
   jokerBlack700: "#171717",
   jokerBlack800: "#131313",
   jokerBlack900: "#000000",
+  jokerBlack90070: "#000000B3",
   jokerBlack1100: "#0A0A0A",
 
   jokerWhite50: "#FFFFFF",

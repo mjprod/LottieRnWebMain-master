@@ -1,11 +1,11 @@
 import React, { } from "react";
 import { View, StyleSheet, Platform, Pressable } from "react-native";
 import Video from "../../../components/Video";
-import BrowserDetection from "react-browser-detection";
 import { useTheme } from "../../../hook/useTheme";
 import { useSound } from "../../../hook/useSoundPlayer";
 import { isAndroidWebView } from "../../../util/Helpers";
 import AssetPack from "../../../util/AssetsPack";
+import { Colors, isChromeBrowser } from "../../../util/constants";
 
 const IntroThemeVideo = ({ handleVideoEnd, style }) => {
 
@@ -51,7 +51,10 @@ const IntroThemeVideo = ({ handleVideoEnd, style }) => {
         elevation: 10,
       }}
     >
-      <BrowserDetection>{browserHandler}</BrowserDetection>
+      {(() => {
+        const handler = isChromeBrowser ? browserHandler.chrome : browserHandler.default;
+        return handler();
+      })()}
       <View style={styles.transparentOverlay} />
     </Pressable>
   );
@@ -66,14 +69,14 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.7)", // Semi-transparent background for win screen
+        backgroundColor: Colors.jokerBlack90070,
         justifyContent: "center",
         alignItems: "center",
         zIndex: 1000,
       },
       default: {
         ...StyleSheet.absoluteFillObject,
-        backgroundColor: "rgba(0, 0, 0, 0.7)", // Same semi-transparent background for mobile
+        backgroundColor: Colors.jokerBlack90070,
         justifyContent: "center",
         alignItems: "center",
         zIndex: 1000,
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
   },
   transparentOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0)",
+    backgroundColor: Colors.transparent,
   },
   transparentVideo: {
     ...Platform.select({
