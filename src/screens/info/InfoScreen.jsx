@@ -63,7 +63,7 @@ export default function InfoScreen({ contentName }) {
         }
       });
     }
-  }, [appNavigation, fetchUserDetails, location, setUser]);
+  }, [location]);
 
   useEffect(() => {
     switch (contentName) {
