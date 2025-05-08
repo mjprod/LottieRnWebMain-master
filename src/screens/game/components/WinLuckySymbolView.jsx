@@ -5,36 +5,7 @@ import Video from "../../../components/Video";
 import BrowserDetection from "react-browser-detection";
 import AssetPack from "../../../util/AssetsPack";
 import { isAndroidWebView } from "../../../util/Helpers";
-
-function ChromeVideoView({ videoRef, onVideoEnd }) {
-  return (
-    <Video
-      ref={videoRef}
-      source={AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME}
-      style={styles.transparentVideo}
-      onEnd={onVideoEnd}
-      onEnded={onVideoEnd}
-    />
-  );
-}
-
-function DefaultVideoView({ videoRef, onVideoEnd }) {
-  return (
-    <Video
-      ref={videoRef}
-      source={isAndroidWebView() ? AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME : AssetPack.videos.WIN_LUCKY_SYMBOL}
-      style={styles.transparentVideo}
-      onEnd={onVideoEnd}
-      onEnded={onVideoEnd}
-    />
-  );
-}
-
-// Predefined mapping to avoid inline component definitions
-const browserComponents = {
-  chrome: ChromeVideoView,
-  default: DefaultVideoView,
-};
+import { Colors } from "../../../util/constants";
 
 WinLuckySymbolView.propTypes = {
   videoRef: PropTypes.any,
@@ -104,14 +75,14 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        backgroundColor: Colors.jokerBlack900,
         justifyContent: "center",
         alignItems: "center",
         zIndex: 1000,
       },
       default: {
         ...StyleSheet.absoluteFillObject,
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        backgroundColor: Colors.jokerBlack900,
         justifyContent: "center",
         alignItems: "center",
         zIndex: 1000,
@@ -125,6 +96,6 @@ const styles = StyleSheet.create({
     width: "100%",
   }, transparentOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0)",
+    backgroundColor: Colors.jokerBlack900,
   },
 });

@@ -55,7 +55,6 @@ export const Dimentions = {
 
 export const Colors = {
   background: "#0A0A0A",
-  black: "#000000",
   transparent: "#00000000",
 
   jokerGold400: "#FFDEA8",
@@ -71,6 +70,7 @@ export const Colors = {
   jokerBlack600: "#1B1B1B",
   jokerBlack700: "#171717",
   jokerBlack800: "#131313",
+  jokerBlack900: "#000000",
   jokerBlack1100: "#0A0A0A",
 
   jokerWhite50: "#FFFFFF",

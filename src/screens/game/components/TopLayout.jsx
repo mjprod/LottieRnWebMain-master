@@ -16,9 +16,19 @@ import { Colors, Fonts } from "../../../util/constants";
 import Svg, { Path } from "react-native-svg-web";
 import LuckySymbolsSlot from "../../../components/LuckySymbolsSlot";
 import CircularProgress from "../../../components/CircularProgress";
+import PropTypes from 'prop-types';
 
-const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) => (
-  <View style={styles.container}>
+CentralImageWithLottie.propTypes = {
+  gameCenterIcon: PropTypes.node.isRequired,
+  playAnimation: PropTypes.bool.isRequired,
+  animationIndex: PropTypes.number.isRequired,
+  lottieRef: PropTypes.shape({ current: PropTypes.any }).isRequired,
+  animations: PropTypes.arrayOf(PropTypes.any).isRequired,
+  onAnimationFinish: PropTypes.func.isRequired,
+};
+
+function CentralImageWithLottie({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) {
+  return <View style={styles.container}>
     <Image source={gameCenterIcon} style={styles.centralImage} />
     {playAnimation && (
       <LottieView
@@ -31,10 +41,15 @@ const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex,
         onAnimationFinish={onAnimationFinish}
       />
     )}
-  </View>
-);
+  </View>;
+}
 
-const TopLayout = ({ clickCount, countdownTimer }) => {
+TopLayout.propTypes = {
+  clickCount: PropTypes.number.isRequired,
+  countdownTimer: PropTypes.number.isRequired,
+};
+
+export default function TopLayout({ clickCount, countdownTimer }) {
   const { score, scratchStarted } = useGame();
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const { gameCenterIcon } = useTheme();
@@ -53,7 +68,7 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
 
   useEffect(() => {
     initializeComboSounds();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     switch (clickCount) {
@@ -80,7 +95,7 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
       lottieRef.current.reset();
       lottieRef.current.play();
     }
-  }, [clickCount]);
+  }, [clickCount, lottieRef, playComboSound]);
 
   const getBackground = (value, scratchStarted) => {
     if (scratchStarted) {
@@ -174,7 +189,7 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   mainWrapper: {
@@ -304,5 +319,3 @@ const styles = StyleSheet.create({
     marginTop: -210,
   },
 });
-
-export default TopLayout;

@@ -63,7 +63,7 @@ export default function InfoScreen({ contentName }) {
         }
       });
     }
-  }, [location]);
+  }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     switch (contentName) {
@@ -102,7 +102,7 @@ export default function InfoScreen({ contentName }) {
         break;
       default: appNavigation.goToNotFoundPage();
     }
-  }, [contentName, appNavigation, user]);
+  }, [contentName]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) {
     return (<LoadingView />);

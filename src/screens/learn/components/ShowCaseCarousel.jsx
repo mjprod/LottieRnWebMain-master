@@ -96,7 +96,7 @@ function ShowCaseCarousel({ slideList = [], style }) {
           paddingHorizontal: 20,
         }}>
         <Pressable onPress={prevSlide} disabled={index === 0}>
-          <Text style={{ fontSize: 50, color: index === 0 ? Colors.black : Colors.jokerWhite50 }}>
+          <Text style={{ fontSize: 50, color: index === 0 ? Colors.jokerBlack900 : Colors.jokerWhite50 }}>
             {"‹"}
           </Text>
         </Pressable>
@@ -107,7 +107,7 @@ function ShowCaseCarousel({ slideList = [], style }) {
           <Text
             style={{
               fontSize: 50,
-              color: index === slideList.length - 1 ? Colors.black : Colors.jokerWhite50,
+              color: index === slideList.length - 1 ? Colors.jokerBlack900 : Colors.jokerWhite50,
             }}>
             {"›"}
           </Text>
