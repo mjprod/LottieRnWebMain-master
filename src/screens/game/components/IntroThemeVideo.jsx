@@ -3,41 +3,13 @@ import { View, StyleSheet, Platform, Pressable } from "react-native";
 import Video from "../../../components/Video";
 import { useTheme } from "../../../hook/useTheme";
 import { useSound } from "../../../hook/useSoundPlayer";
-import { isAndroidWebView } from "../../../util/Helpers";
 import AssetPack from "../../../util/AssetsPack";
-import { Colors, isChromeBrowser } from "../../../util/constants";
+import { Colors, isAndroidWebView, isChromeBrowser } from "../../../util/constants";
 
 const IntroThemeVideo = ({ handleVideoEnd, style }) => {
 
   const { introThemeNext, introChromeThemeNext } = useTheme();
   const { isSoundEnabled } = useSound();
-
-  const browserHandler = {
-    chrome: () => (
-      <Video
-        source={
-          introChromeThemeNext
-        } // Play the win video
-        muted={!isSoundEnabled}
-        style={styles.transparentVideo} // Video styling
-        onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
-        onEnded={handleVideoEnd} // Web: Trigger callback when video ends
-        poster={AssetPack.images.BLANK}
-      />
-    ),
-    default: () => (
-      <Video
-        source={
-          isAndroidWebView() ? introChromeThemeNext : introThemeNext
-        } // Play the win video
-        muted={!isSoundEnabled}
-        style={styles.transparentVideo} // Video styling
-        onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
-        onEnded={handleVideoEnd} // Web: Trigger callback when video ends
-        poster={AssetPack.images.BLANK}
-      />
-    ),
-  };
 
   return (
     <Pressable
@@ -51,10 +23,25 @@ const IntroThemeVideo = ({ handleVideoEnd, style }) => {
         elevation: 10,
       }}
     >
-      {(() => {
-        const handler = isChromeBrowser ? browserHandler.chrome : browserHandler.default;
-        return handler();
-      })()}
+      {isChromeBrowser ? <Video
+        source={
+          introChromeThemeNext
+        } // Play the win video
+        muted={!isSoundEnabled}
+        style={styles.transparentVideo} // Video styling
+        onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
+        onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+        poster={AssetPack.images.BLANK}
+      /> : <Video
+        source={
+          isAndroidWebView ? introChromeThemeNext : introThemeNext
+        } // Play the win video
+        muted={!isSoundEnabled}
+        style={styles.transparentVideo} // Video styling
+        onEnd={handleVideoEnd} // Mobile: Trigger callback when video ends
+        onEnded={handleVideoEnd} // Web: Trigger callback when video ends
+        poster={AssetPack.images.BLANK}
+      />}
       <View style={styles.transparentOverlay} />
     </Pressable>
   );

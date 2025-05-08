@@ -3,7 +3,10 @@ export const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
 export const API_KEY = process.env.REACT_APP_API_KEY;
 
 export const BONUS_PACK_NUMBER_OF_CARDS = 12;
+
 export const isChromeBrowser = typeof navigator !== "undefined" && /Chrome/.test(navigator.userAgent) && !/Edge/.test(navigator.userAgent) && !/OPR/.test(navigator.userAgent);
+export const isAndroidWebView = typeof navigator !== "undefined" && (/wv/.test(navigator.userAgent) || (/Android/.test(navigator.userAgent) && /Version\//.test(navigator.userAgent)));
+
 export const Endpoint = {
   fetch_user_details: "/users",
   get_daily_question: "/daily/question",

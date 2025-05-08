@@ -1,11 +1,7 @@
 export function maskString(str, showLetters = 3) {
   return str.length > showLetters ? str.substring(0, showLetters) + "***" : str + "***";
 }
-export function isAndroidWebView() {
-  const ua = navigator.userAgent || "";
-  const isAndroidWebView = ua.includes("wv") || (ua.includes("Android") && ua.includes("Version/"));
-  return isAndroidWebView;
-}
+
 export function getCurrentDate() {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getFullYear()}-${String(
@@ -66,7 +62,7 @@ export function getDayOfWeek() {
     weekday: 'short',
   });
 
-  const weekday = formatter.format(date); 
+  const weekday = formatter.format(date);
 
   const weekdayMap = {
     'Sun': 7,

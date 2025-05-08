@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { View, StyleSheet, Platform, Pressable } from "react-native";
 import Video from "../../../components/Video";
 import AssetPack from "../../../util/AssetsPack";
-import { isAndroidWebView } from "../../../util/Helpers";
-import { Colors, isChromeBrowser } from "../../../util/constants";
+import { Colors, isAndroidWebView, isChromeBrowser } from "../../../util/constants";
 
 WinLuckySymbolView.propTypes = {
   videoRef: PropTypes.any,
@@ -14,26 +13,6 @@ WinLuckySymbolView.propTypes = {
 };
 
 export default function WinLuckySymbolView({ videoRef, style, onSkipClicked, onVideoEnd }) {
-  const browserHandler = {
-    chrome: () => (
-      <Video
-        ref={videoRef}
-        source={AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME}
-        style={styles.transparentVideo}
-        onEnd={onVideoEnd}
-        onEnded={onVideoEnd}
-      />
-    ),
-    default: () => (
-      <Video
-        ref={videoRef}
-        source={isAndroidWebView() ? AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME : AssetPack.videos.WIN_LUCKY_SYMBOL}
-        style={styles.transparentVideo}
-        onEnd={onVideoEnd}
-        onEnded={onVideoEnd}
-      />
-    ),
-  };
   return (
     <View
       key="overlay"
@@ -46,10 +25,20 @@ export default function WinLuckySymbolView({ videoRef, style, onSkipClicked, onV
         alignContent: "flex-end",
       }}
     >
-      {(() => {
-        const handler = isChromeBrowser ? browserHandler.chrome : browserHandler.default;
-        return handler();
-      })()}
+      {isChromeBrowser ? <Video
+        ref={videoRef}
+        source={AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME}
+        style={styles.transparentVideo}
+        onEnd={onVideoEnd}
+        onEnded={onVideoEnd}
+      /> : <Video
+        ref={videoRef}
+        source={isAndroidWebView ? AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME : AssetPack.videos.WIN_LUCKY_SYMBOL}
+        style={styles.transparentVideo}
+        onEnd={onVideoEnd}
+        onEnded={onVideoEnd}
+      />
+      }
       <Pressable style={styles.clickableArea} onPress={onSkipClicked}>
         <View style={styles.transparentOverlay} />
       </Pressable>
