@@ -19,6 +19,11 @@ export const SoundProvider = ({ children }) => {
   Howler.autoUnlock = true;
   const [startPlay, setStartPlay] = useState(false);
   const { loadData } = useStorage();
+  const [introPlayed, setIntroPlayed] = useState(false);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [isSoundEnabled, setIsSoundEnabled] = useState(loadData(storageKeys.soundEnabled) === "true");
+  const [currentThemeTrackIndex, setCurrentThemeTrackIndex] = useState(1);
+  const { currentTheme } = useTheme();
 
   useEffect(() => {
     const enableAudio = () => {
@@ -33,32 +38,10 @@ export const SoundProvider = ({ children }) => {
     return () => {
       window.removeEventListener('click', enableAudio);
       window.removeEventListener('touchstart', enableAudio);
+      startPlay(false);
+      setIntroPlayed(false);
     };
   }, []);
-  const [introPlayed, setIntroPlayed] = useState(false);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [isSoundEnabled, setIsSoundEnabled] = useState(loadData(storageKeys.soundEnabled) === "true");
-
-  const { currentTheme } = useTheme();
-
-  useEffect(() => {
-    Object.values(soundRefs.current).forEach((sound) => {
-      sound.on("playerror", (id) => {
-        if (Howler.ctx && Howler.ctx.state === "suspended") {
-          Howler.ctx.resume().then(() => sound.play(id));
-        }
-      });
-    });
-  }, []);
-
-  const trackKeys = [
-    "intro",
-    "base_beat",
-    "egypt_theme",
-    "international_theme",
-    "mythology_theme",
-    "cowboy_theme",
-  ];
 
   const soundRefs = useRef({
     intro: new Howl({
@@ -67,7 +50,6 @@ export const SoundProvider = ({ children }) => {
       autoplay: false,
       loop: false,
       volume: isSoundEnabled ? 1 : 0,
-      onend: () => initialTrack(),
     }),
     base_beat: new Howl({
       src: [themes["base"].src],
@@ -101,6 +83,46 @@ export const SoundProvider = ({ children }) => {
     }),
   });
 
+  useEffect(() => {
+    Object.values(soundRefs.current).forEach((sound) => {
+      sound.on("playerror", (id) => {
+        if (Howler.ctx && Howler.ctx.state === "suspended") {
+          Howler.ctx.resume().then(() => sound.play(id));
+        }
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log("current theme", currentTheme);
+    switch (currentTheme) {
+      case "egypt":
+        setCurrentThemeTrackIndex(2);
+        break;
+      case "international":
+        setCurrentThemeTrackIndex(3);
+        break;
+      case "mythology":
+        setCurrentThemeTrackIndex(4);
+        break;
+      case "cowboy":
+        setCurrentThemeTrackIndex(5);
+        break;
+      default:
+        setCurrentThemeTrackIndex(1);
+        break;
+    }
+  }, [currentTheme]);
+
+  const trackKeys = [
+    "intro",
+    "base_beat",
+    "egypt_theme",
+    "international_theme",
+    "mythology_theme",
+    "cowboy_theme",
+  ];
+
   const setSoundVolume = (sound, volume, fadeDuration = 500) => {
     if (sound) { sound.fade(sound.volume(), volume, fadeDuration); }
   };
@@ -111,8 +133,9 @@ export const SoundProvider = ({ children }) => {
     }
   };
 
-  const playAllSounds = () => {
-    Object.keys(soundRefs.current).forEach((trackKey, index) => {
+  const playAllSounds = useCallback(() => {
+    muteAllSounds();
+    trackKeys.forEach((trackKey, index) => {
       if (trackKey === "intro") { return; }
       const sound = soundRefs.current[trackKey];
       if (index === currentTrackIndex) {
@@ -123,56 +146,9 @@ export const SoundProvider = ({ children }) => {
         setSoundVolume(sound, 0);
       }
     });
-  };
+  }, [currentTrackIndex, isSoundEnabled]);
 
-  const muteAllSounds = () => {
-    Object.values(soundRefs.current).forEach((sound) => {
-      if (sound.playing()) {
-        sound.pause();
-      }
-    });
-  };
-
-  const getTrackKey = useCallback(() => {
-    if (Howler.ctx && Howler.ctx.state === 'suspended') {
-      Howler.ctx.resume();
-    }
-    const theme = currentTheme;
-    switch (theme) {
-      case "egypt":
-        return 2;
-      case "international":
-        return 3;
-      case "mythology":
-        return 4;
-      case "cowboy":
-        return 5;
-      default:
-        return 1;
-    }
-  }, [currentTheme]);
-
-  const initialTrack = () => {
-    if (Howler.ctx && Howler.ctx.state === 'suspended') {
-      Howler.ctx.resume();
-    }
-    const newIndex = getTrackKey();
-    const newTrackKey = trackKeys[newIndex];
-    const newSound = soundRefs.current[newTrackKey];
-    if (newSound) {
-      newSound.play();
-      newSound.fade(0, isSoundEnabled ? 1 : 0, 500);
-    }
-    setIntroPlayed(true);
-    setCurrentTrackIndex(newIndex);
-  };
-
-  const playNextTrack = () => {
-    const newIndex = getTrackKey();
-    switchTrack(newIndex);
-  };
-
-  const switchTrack = (newIndex) => {
+  const switchTrack = useCallback((newIndex) => {
     const currentSound = soundRefs.current[trackKeys[currentTrackIndex]];
     setSoundVolume(currentSound, isSoundEnabled ? 1 : 0);
     if (newIndex === currentTrackIndex) { return; }
@@ -186,18 +162,40 @@ export const SoundProvider = ({ children }) => {
 
     setTimeout(() => {
       if (newSound) {
-        newSound.play();
+        playSoundIfNotPlaying(newSound);
         newSound.fade(0, isSoundEnabled ? 1 : 0, 500);
       }
     }, 500);
 
     setCurrentTrackIndex(newIndex);
-  };
+  }, [currentTrackIndex, isSoundEnabled]);
 
-  const playSound = (soundKey) => {
-    if (soundRefs.current[soundKey]) {
-      soundRefs.current[soundKey].play();
+  const handleIntroEnd = useCallback(() => {
+    setIntroPlayed(true);
+    playAllSounds();
+    switchTrack(currentThemeTrackIndex);
+  }, [playAllSounds, switchTrack, currentThemeTrackIndex]);
+
+  useEffect(() => {
+    const introSound = soundRefs.current.intro;
+    introSound.on("end", handleIntroEnd);
+    return () => {
+      introSound.off("end", handleIntroEnd);
+    };
+  }, [handleIntroEnd]);
+
+  useEffect(() => {
+    if (introPlayed) {
+      switchTrack(currentThemeTrackIndex);
     }
+  }, [introPlayed, currentThemeTrackIndex, switchTrack]);
+
+  const muteAllSounds = () => {
+    Object.values(soundRefs.current).forEach((sound) => {
+      if (sound.playing()) {
+        sound.pause();
+      }
+    });
   };
 
   useEffect(() => {
@@ -209,20 +207,16 @@ export const SoundProvider = ({ children }) => {
   useEffect(() => {
     muteAllSounds();
     if (startPlay) {
-      playSound(trackKeys[0]);
+      setSoundVolume(soundRefs.current.intro, isSoundEnabled ? 1 : 0);
+      playSoundIfNotPlaying(soundRefs.current.intro);
     }
   }, [startPlay]);
-
-  useEffect(() => {
-    if (introPlayed) { playNextTrack(); }
-  }, [currentTheme, introPlayed]);
 
   return (
     <SoundContext.Provider
       value={{
         currentTrackIndex,
         setCurrentTrackIndex,
-        playNextTrack,
         setStartPlay,
         isSoundEnabled,
         setIsSoundEnabled,

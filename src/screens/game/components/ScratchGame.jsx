@@ -115,7 +115,7 @@ function ScratchGame({
 
       if (hasLuckySymbol) {
         const nonNullAnimations = Object.entries(booblePositions)
-          .filter(([val]) => val !== null)
+          .filter(([key, val]) => val !== null)
           .map(([key]) => Number(key));
         const randomKey = nonNullAnimations[Math.floor(Math.random() * nonNullAnimations.length)];
         setLuckySymbolIndex(randomKey);
