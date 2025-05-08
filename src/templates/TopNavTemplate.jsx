@@ -11,7 +11,7 @@ import AssetPack from "../util/AssetsPack";
 import LottieView from "react-native-web-lottie";
 
 TopNavTemplate.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   subtitle: PropTypes.string,
   navBackgroudImage: PropTypes.any,
   navBackgroudVideo: PropTypes.any,

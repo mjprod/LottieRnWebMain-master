@@ -92,12 +92,12 @@ const LauchScreenEncrypted = () => {
   useEffect(() => {
     if (params.id && params.name && params.email) {
       console.log(params);
-      appNavigation.goToCongratulationsPage(params.id, params.name, params.email);
-      // login(params.id, params.name, params.email).then(() => {
-      //   fetchAndProcessUserDetails({ user_id: params.id, name: params.name, email: params.email });
-      // }).catch((error) => {
-      //   console.error('Login failed:', error);
-      // });
+      // appNavigation.goToCongratulationsPage(params.id, params.name, params.email);
+      login(params.id, params.name, params.email).then(() => {
+        fetchAndProcessUserDetails({ user_id: params.id, name: params.name, email: params.email });
+      }).catch((error) => {
+        console.error('Login failed:', error);
+      });
     } else if (searchParams.get('authToken')) {
       if (!user || user === null) {
         const authToken = searchParams.get('authToken');

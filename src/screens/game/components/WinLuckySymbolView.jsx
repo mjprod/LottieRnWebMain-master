@@ -43,13 +43,13 @@ WinLuckySymbolView.propTypes = {
   onVideoEnd: PropTypes.func.isRequired,
 };
 
-export default function WinLuckySymbolView({ videoRef, style, onSkipClicked, onVideoEnd }) {
-  const browserDetectorBody = {
+const browserDetectorComponent = (videoRef, onVideoEnd, styles) => {
+  return {
     chrome: () => {
       return <Video
         ref={videoRef}
         source={AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME}
-        style={styles.transparentVideo}
+        style={styles}
         onEnd={onVideoEnd}
         onEnded={onVideoEnd}
       />;
@@ -58,13 +58,15 @@ export default function WinLuckySymbolView({ videoRef, style, onSkipClicked, onV
       return <Video
         ref={videoRef}
         source={isAndroidWebView() ? AssetPack.videos.WIN_LUCKY_SYMBOL_CHROME : AssetPack.videos.WIN_LUCKY_SYMBOL}
-        style={styles.transparentVideo}
+        style={styles}
         onEnd={onVideoEnd}
         onEnded={onVideoEnd}
       />;
     },
   };
+};
 
+export default function WinLuckySymbolView({ videoRef, style, onSkipClicked, onVideoEnd }) {
   return (
     <View
       key="overlay"
@@ -78,7 +80,7 @@ export default function WinLuckySymbolView({ videoRef, style, onSkipClicked, onV
       }}
     >
       <BrowserDetection>
-        {browserDetectorBody}
+        {browserDetectorComponent(videoRef, onVideoEnd, styles.transparentVideo)}
       </BrowserDetection>
       <Pressable style={styles.clickableArea} onPress={onSkipClicked}>
         <View style={styles.transparentOverlay} />
