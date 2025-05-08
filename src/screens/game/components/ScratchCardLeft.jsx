@@ -6,6 +6,8 @@ import { useSound } from "../../../hook/useSoundPlayer";
 import { useTheme } from "../../../hook/useTheme";
 import AssetPack from "../../../util/AssetsPack";
 import useStorage, { storageKeys } from "../../../hook/useStorage";
+import { Colors, Fonts } from "../../../util/constants";
+
 ScratchCardLeft.propTypes = {
   scratchCardLeft: PropTypes.number.isRequired,
   scratchStarted: PropTypes.bool,
@@ -16,12 +18,11 @@ ScratchCardLeft.defaultProps = {
 };
 
 export default memo(ScratchCardLeft);
+
 function ScratchCardLeft({ scratchCardLeft, scratchStarted = false }) {
   const { soundMuteOnBackground, soundMuteOffBackground } = useTheme();
 
   const [displayedScratchCardsLeft, setDisplayedScratchCardsLeft] = useState(0);
-
-  console.log("ScratchCardLeft:", scratchCardLeft);
 
   const lottieRef = useRef();
   const { saveData } = useStorage();
@@ -45,7 +46,7 @@ function ScratchCardLeft({ scratchCardLeft, scratchStarted = false }) {
       return !oldVal;
     });
   };
-  console.log(isSoundEnabled);
+
   const renderCounter = () => {
     return (
       <TouchableOpacity onPress={toggleSound}>
@@ -103,15 +104,15 @@ const styles = StyleSheet.create({
   },
   text: {
     userSelect: "none",
-    fontFamily: "Inter-Medium",
-    color: "#A9A9A9",
-    fontSize: 12,
+    fontFamily: Fonts.InterMedium,
+    color: Colors.jokerBlack50,
+    fontSize: 14,
     marginHorizontal: 6,
   },
   number: {
     userSelect: "none",
-    fontFamily: "Inter-Bold",
-    color: "#FFDFAB",
+    fontFamily: Fonts.InterBold,
+    color: Colors.jokerGold400,
     fontSize: 16,
   },
   rightContainer: {
