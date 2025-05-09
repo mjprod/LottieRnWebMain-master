@@ -1,17 +1,11 @@
 import React from "react";
 import { View } from "react-native";
-import { useNavigate } from "react-router-dom";
 import TopBannerNav from "../../components/TopBannerNav";
 import AssetPack from "../../util/AssetsPack";
 import ShowCaseCarousel from "./components/ShowCaseCarousel";
 import { Colors } from "../../util/constants";
 
 const HowToPlayScreen = () => {
-  const navigate = useNavigate();
-
-  const handleBackPress = () => {
-    navigate(-1);
-  };
   const carouselItems = [
     {
       title: "Reveal card",
@@ -47,7 +41,6 @@ const HowToPlayScreen = () => {
         backgroundImage={AssetPack.backgrounds.TOP_NAV_LEARN}
         backgroundVideo={AssetPack.videos.TOP_NAV_LEARN}
         hasBackButton={true}
-        onBackPress={handleBackPress}
       />
       <ShowCaseCarousel slideList={carouselItems} />
     </View>

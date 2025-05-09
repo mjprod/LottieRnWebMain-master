@@ -27,7 +27,6 @@ const useAppNavigation = () => {
     },
     goToStartPage: (user_id, name, email) => {
       navigate("/start", {
-        replace: true,
         state: {
           username: name,
           email: email,
@@ -37,7 +36,6 @@ const useAppNavigation = () => {
     },
     goToGamePage: (user_id, name, email) => {
       navigate("/game", {
-        replace: true,
         state: {
           username: name,
           email: email,
@@ -57,7 +55,6 @@ const useAppNavigation = () => {
     },
     goToLeaderBoardPage: (user_id, name, email) => {
       navigate("/leader_board", {
-        replace: true,
         state: {
           name: name,
           email: email,
@@ -67,7 +64,6 @@ const useAppNavigation = () => {
     },
     goToHowToPlayPage: () => {
       navigate("/how_to_play", {
-        replace: true,
       });
     },
     goToNotFoundPage: () => {

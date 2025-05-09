@@ -12,6 +12,7 @@ import LinearGradient from "react-native-web-linear-gradient";
 import { Colors, Dimentions, Fonts } from "../util/constants";
 import { useNavigate } from "react-router";
 import Video from "./Video";
+import useAppNavigation from "../hook/useAppNavigation";
 
 export const TopBannerNavType = {
   home: "home",
@@ -29,13 +30,13 @@ const TopBannerNav = ({
   type = TopBannerNavType.home,
   style = {},
 }) => {
-  const navigate = useNavigate();
+  const appNavigation = useAppNavigation();
 
   const onBackPressLocal = () => {
     if (onBackPress) {
       onBackPress();
     } else {
-      navigate(-1);
+      appNavigation.goBack();
     }
   };
   const hasText = (title !== null && typeof title === 'string' && title.trim() !== '') ||
