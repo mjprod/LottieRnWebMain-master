@@ -6,13 +6,18 @@ const useAppNavigation = () => {
 
   const appNavigation = {
     goBack: () => {
-      navigate(-1);
+      navigate(-1, {
+        replace: true,
+      });
     },
     goToLaunchScreen: (user_id, name, email) => {
-      navigate(`/${user_id}/${name}/${email}`);
+      navigate(`/${user_id}/${name}/${email}`, {
+        replace: true,
+      });
     },
     goToDailyPage: (user_id, name, email) => {
       navigate("/daily", {
+        replace: true,
         state: {
           name: name,
           email: email,
@@ -40,6 +45,7 @@ const useAppNavigation = () => {
     },
     goToGameOverPage: (user_id, name, email) => {
       navigate("/game_over", {
+        replace: true,
         state: {
           username: name,
           email: email,
@@ -57,16 +63,22 @@ const useAppNavigation = () => {
       });
     },
     goToHowToPlayPage: () => {
-      navigate("/how_to_play");
+      navigate("/how_to_play", {
+      });
     },
     goToNotFoundPage: () => {
-      navigate("/not_found");
+      navigate("/not_found", {
+        replace: true,
+      });
     },
     goToInfoPage: (info) => {
-      navigate(`/${info}`);
+      navigate(`/${info}`, {
+        replace: true,
+      });
     },
     goToCongratulationsPage: (user_id, name, email) => {
       navigate(`/${InfoScreenContents.congratulations}`, {
+        replace: true,
         state: {
           user_id: user_id,
           name: name,
@@ -75,13 +87,20 @@ const useAppNavigation = () => {
       });
     },
     goToThankYouPage: () => {
-      navigate(`/${InfoScreenContents.thank_you}`);
+      navigate(`/${InfoScreenContents.thank_you}`, {
+        replace: true,
+      });
     },
     goToInProgressPage: () => {
-      navigate(`/${InfoScreenContents.in_progress}`);
+      navigate(`/${InfoScreenContents.in_progress}`, {
+        replace: true,
+      }
+      );
     },
     goToWeAreExtendingPage: () => {
-      navigate(`/${InfoScreenContents.extending}`);
+      navigate(`/${InfoScreenContents.extending}`, {
+        replace: true,
+      });
     },
   };
 

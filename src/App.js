@@ -26,6 +26,7 @@ const { height } = Dimensions.get("window");
 const queryClient = new QueryClient();
 
 export default function App() {
+  console.log("Initial relative path loaded:", window.location.pathname);
   React.useEffect(() => {
     const noSelectElements = document.querySelectorAll(".no-select");
     noSelectElements.forEach((element) => {
