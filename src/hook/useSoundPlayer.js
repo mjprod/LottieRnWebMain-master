@@ -21,7 +21,7 @@ export const SoundProvider = ({ children }) => {
   const { loadData } = useStorage();
   const [introPlayed, setIntroPlayed] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [isSoundEnabled, setIsSoundEnabled] = useState(loadData(storageKeys.soundEnabled) === "true");
+  const [isSoundEnabled, setIsSoundEnabled] = useState(loadData(storageKeys.soundEnabled) === "true", true);
   const [currentThemeTrackIndex, setCurrentThemeTrackIndex] = useState(1);
   const { currentTheme } = useTheme();
 

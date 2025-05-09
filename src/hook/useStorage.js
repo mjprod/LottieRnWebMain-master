@@ -13,11 +13,12 @@ const useStorage = () => {
     }
   };
 
-  const loadData = (key) => {
+  const loadData = (key, defaultValue = null) => {
     if (isWeb) {
       const value = window.localStorage.getItem(key);
-      return value;
+      return value === null ? defaultValue : value;
     }
+    return defaultValue;
   };
 
   const removeData = (key) => {
