@@ -22,10 +22,10 @@ import { Howl } from "howler";
 const { width } = Dimensions.get("window");
 
 const luckyCoinCollectSoundFile = require("./../../assets/audio/reward_pop.mp3");
-const luckyCoinCollectSound = new Howl({ src: [luckyCoinCollectSoundFile] });
+
 
 const luckyCoinWinSoundFile = require("./../../assets/audio/reward_quest.mp3");
-const luckyCoinWinSound = new Howl({ src: [luckyCoinWinSoundFile] });
+
 
 const ScratchLuckyGame = () => {
   const appNavigation = useAppNavigation();
@@ -56,6 +56,10 @@ const ScratchLuckyGame = () => {
 
   const [nextCardAnimationFinished, setNextCardAnimationFinished] =
     useState(true);
+  const { isSoundEnabled } = useSound();
+
+  const luckyCoinWinSound = new Howl({ src: [luckyCoinWinSoundFile], volume: isSoundEnabled ? 1 : 0 });
+  const luckyCoinCollectSound = new Howl({ src: [luckyCoinCollectSoundFile], volume: isSoundEnabled ? 1 : 0 });
 
   const {
     user,

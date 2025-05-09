@@ -45,7 +45,7 @@ function ScratchGame({
   hasLuckySymbol = false,
 }) {
   const { setScore, luckySymbolCount } = useGame();
-  const { initializeClickSounds, playClickSound } = useClickSounds();
+  const { playClickSound } = useClickSounds();
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const checkResultsTimeout = useRef(null);
@@ -81,12 +81,6 @@ function ScratchGame({
     lottieScratchieBubblePopError: AssetPack.lotties.SCRATCHIE_BUBBLE_POP_ERROR,
     lottieScratchieBubblePopLucky: AssetPack.lotties.COIN_SLOT,
   }), [lottiePopBlue, lottiePopGreen, lottiePopPink, lottiePopOrange]);
-
-  useEffect(() => {
-    if (currentTheme !== null) {
-      initializeClickSounds(currentTheme);
-    }
-  }, [currentTheme]);
 
   useEffect(() => {
     if (themes[currentTheme] && themes[currentTheme].iconsDefault) {
