@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: Colors.jokerBlack200,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   topSection: {
     marginTop: 12,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.TekoMedium,
     textTransform: 'uppercase',
     lineHeight: 48,
-    paddingTop: 4
+    paddingTop: 4,
   },
   headingTextHighlighted: {
     fontSize: 38,
@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     fontFamily: Fonts.InterMedium,
-    marginBottom: Dimentions.marginM
-  }
+    marginBottom: Dimentions.marginM,
+  },
 });
 
 export default NextDrawCard;

@@ -18,7 +18,7 @@ const AnimatedIcon = ({ iconIndex, onClick, timerGame, bobble }) => {
   const { currentTheme } = useTheme();
 
   const handleIconClick = () => {
-    if (onClick) onClick(iconIndex);
+    if (onClick) {onClick(iconIndex);}
   };
 
   useEffect(() => {

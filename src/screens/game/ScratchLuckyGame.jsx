@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import { Animated, Dimensions, Platform, StyleSheet, View } from "react-native";
-import { Easing } from "react-native";
+import { Animated, Dimensions, Platform, StyleSheet, View, Easing } from "react-native";
 import { useLocation } from "react-router";
 import { BackgroundGame } from "../../components/BackgroundGame.js";
 import IntroThemeVideo from "./components/IntroThemeVideo";
@@ -18,14 +17,15 @@ import BottomDrawer from "./components/BottomDrawer";
 import InitialCountDownView from "./components/InitialCountDownView";
 import WinLuckySymbolView from "./components/WinLuckySymbolView";
 import useTimer from "../../hook/useTimer.js";
+import { Howl } from "howler";
 
 const { width } = Dimensions.get("window");
 
 const luckyCoinCollectSoundFile = require("./../../assets/audio/reward_pop.mp3");
-const luckyCoinCollectSound = new Howl({ src: [luckyCoinCollectSoundFile] });
+
 
 const luckyCoinWinSoundFile = require("./../../assets/audio/reward_quest.mp3");
-const luckyCoinWinSound = new Howl({ src: [luckyCoinWinSoundFile] });
+
 
 const ScratchLuckyGame = () => {
   const appNavigation = useAppNavigation();
@@ -56,6 +56,10 @@ const ScratchLuckyGame = () => {
 
   const [nextCardAnimationFinished, setNextCardAnimationFinished] =
     useState(true);
+  const { isSoundEnabled } = useSound();
+
+  const luckyCoinWinSound = new Howl({ src: [luckyCoinWinSoundFile], volume: isSoundEnabled ? 1 : 0 });
+  const luckyCoinCollectSound = new Howl({ src: [luckyCoinCollectSoundFile], volume: isSoundEnabled ? 1 : 0 });
 
   const {
     user,
@@ -126,7 +130,7 @@ const ScratchLuckyGame = () => {
     if (games && games.length > 0) {
       const currentGame = games[currentThemeIndex];
       setMaxCombinations(currentGame.number_combination_total);
-      setHasLuckySymbol(currentGame.lucky_symbol_won == 1);
+      setHasLuckySymbol(currentGame.lucky_symbol_won === "1");
       setGameId(currentGame.game_id);
     }
   }, [games, currentThemeIndex]);
@@ -159,7 +163,7 @@ const ScratchLuckyGame = () => {
   useEffect(() => {
     if (countDownStarted) {
       const timer = setTimeout(() => {
-        if (countDownLottieRef.current != null) {
+        if (countDownLottieRef.current !== null) {
           countDownLottieRef.current.play();
         }
         setIntroPlayed(false);
@@ -169,7 +173,7 @@ const ScratchLuckyGame = () => {
     }
   }, [countDownStarted, countDownLottieRef]);
 
-  const saveLuckySymbol = useCallback(async (luckySymbol) => {
+  const saveLuckySymbol = useCallback((luckySymbol) => {
     setLuckySymbolCount(luckySymbol);
   }, [setLuckySymbolCount]);
 
@@ -221,7 +225,7 @@ const ScratchLuckyGame = () => {
   }, [luckySymbolCount, user, saveLuckySymbol, nextCard, updateLuckySymbol]);
 
   const decrementLuckySymbol = useCallback((count, onComplete) => {
-    luckyCoinCollectSound.play()
+    luckyCoinCollectSound.play();
     if (count >= 0) {
       saveLuckySymbol(count);
       clearTimeout(timerRefs.current.decrement);
@@ -238,7 +242,7 @@ const ScratchLuckyGame = () => {
   const handleLuckySymbolWonVideoEnd = useCallback(() => {
     setWinLuckySymbolVideo(false);
     addLuckySymbol();
-    luckyCoinWinSound.play()
+    luckyCoinWinSound.play();
   }, [addLuckySymbol]);
 
   const handleVideoIntroEnd = useCallback(() => {
@@ -258,7 +262,7 @@ const ScratchLuckyGame = () => {
       return;
     }
 
-    startTimer(10)
+    startTimer(10);
 
     if (!hasTriggeredCardPlayed.current) {
       hasTriggeredCardPlayed.current = true;
@@ -279,7 +283,7 @@ const ScratchLuckyGame = () => {
 
   useEffect(() => {
     if (reset) {
-      setScratched(false)
+      setScratched(false);
       setNextCardAnimationFinished(false);
       updateScore(user.user_id, score, gameId, comboPlayed);
       Animated.timing(scaleAnim, {
@@ -293,7 +297,7 @@ const ScratchLuckyGame = () => {
           duration: 500,
           useNativeDriver: Platform.OS !== "web",
         }).start(() => {
-          resetTimer()
+          resetTimer();
           clearTimeout(timerRefs.current.reset);
           timerRefs.current.reset = setTimeout(() => {
             if (scratchCardLeft - 1 > 0) {
@@ -326,7 +330,7 @@ const ScratchLuckyGame = () => {
       updateCardBalance(
         user.user_id,
         user.current_beta_block,
-        BONUS_PACK_NUMBER_OF_CARDS
+        BONUS_PACK_NUMBER_OF_CARDS,
       );
     }
   }, [user, updateCardBalance]);
@@ -345,7 +349,7 @@ const ScratchLuckyGame = () => {
       styles.fullScreen,
       { pointerEvents: nextCardAnimationFinished ? "auto" : "none" },
     ],
-    [nextCardAnimationFinished]
+    [nextCardAnimationFinished],
   );
 
   const gameBackground = useMemo(() => (
@@ -357,17 +361,16 @@ const ScratchLuckyGame = () => {
 
   const handleBottomDrawerStateChange = (expanded) => {
     if (expanded) {
-      pauseTimer()
+      pauseTimer();
     } else {
-      startTimer()
+      startTimer();
     }
-  }
+  };
 
-  if (getGamesLoading || fetchUserDetailsLoading) return <LoadingView />;
-  if (getGamesError || fetchUserDetailsError)
-    return <p>Error: {getGamesError || fetchUserDetailsError}</p>;
+  if (getGamesLoading || fetchUserDetailsLoading) { return <LoadingView />; }
+  if (getGamesError || fetchUserDetailsError) { return <p>Error: {getGamesError || fetchUserDetailsError}</p>; }
 
-  if (!user) return <LoadingView />
+  if (!user) { return <LoadingView />; }
 
   return (
     <View style={containerStyle}>
@@ -389,6 +392,7 @@ const ScratchLuckyGame = () => {
               setScratched={setScratched}
               luckySymbolCount={luckySymbolCount}
               setLuckySymbolCount={setLuckySymbolCount}
+              scratchStarted={scratchStarted}
               setScratchStarted={setScratchStarted}
               scratchCardLeft={scratchCardLeft}
               timerGame={timerGame}

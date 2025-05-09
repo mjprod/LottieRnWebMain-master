@@ -28,7 +28,7 @@ const useApiRequest = () => {
     },
   });
 
-  const login = async (user_id, name, email) => {
+  const login = async(user_id, name, email) => {
     return loginMutation.mutateAsync({ user_id, name, email });
   };
 
@@ -46,7 +46,7 @@ const useApiRequest = () => {
     },
   });
 
-  const fetchUserDetails = async (user_id, name, email) => {
+  const fetchUserDetails = async(user_id, name, email) => {
     return fetchUserDetailsMutation.mutateAsync({ user_id, name, email });
   };
 
@@ -61,7 +61,7 @@ const useApiRequest = () => {
     },
   });
 
-  const getWinner = async () => {
+  const getWinner = async() => {
     return getWinnerMutation.mutateAsync();
   };
 
@@ -76,7 +76,7 @@ const useApiRequest = () => {
     },
   });
 
-  const getDailyQuestion = async (user_id, beta_block_id) => {
+  const getDailyQuestion = async(user_id, beta_block_id) => {
     return dailyQuestionMutation.mutateAsync({ user_id, beta_block_id });
   };
 
@@ -92,7 +92,7 @@ const useApiRequest = () => {
     },
   });
 
-  const postDailyAnswer = async (user_id, question_id, answer, cards_won, beta_block_id) => {
+  const postDailyAnswer = async(user_id, question_id, answer, cards_won, beta_block_id) => {
     return postDailyAnswerMutation.mutateAsync({ user_id, question_id, answer, cards_won, beta_block_id });
   };
 
@@ -109,7 +109,7 @@ const useApiRequest = () => {
     },
   });
 
-  const getGames = async (user_id, beta_block_id) => {
+  const getGames = async(user_id, beta_block_id) => {
     return getGamesMutation.mutateAsync({ user_id, beta_block_id });
   };
 
@@ -124,7 +124,7 @@ const useApiRequest = () => {
     },
   });
 
-  const updateCardPlayed = async (beta_block_id, user_id, game_id) => {
+  const updateCardPlayed = async(beta_block_id, user_id, game_id) => {
     return updateCardPlayedMutation.mutateAsync({ beta_block_id, user_id, game_id });
   };
 
@@ -139,7 +139,7 @@ const useApiRequest = () => {
     },
   });
 
-  const updateScore = async (user_id, score, game_id, combo_played) => {
+  const updateScore = async(user_id, score, game_id, combo_played) => {
     return updateScoreMutation.mutateAsync({ user_id, score, game_id, combo_played });
   };
 
@@ -154,7 +154,7 @@ const useApiRequest = () => {
     },
   });
 
-  const updateLuckySymbol = async (user_id, lucky_symbol) => {
+  const updateLuckySymbol = async(user_id, lucky_symbol) => {
     return updateLuckySymbolMutation.mutateAsync({ user_id, lucky_symbol });
   };
 
@@ -169,7 +169,7 @@ const useApiRequest = () => {
     },
   });
 
-  const updateCardBalance = async (user_id, beta_block_id, card_balance) => {
+  const updateCardBalance = async(user_id, beta_block_id, card_balance) => {
     return updateCardBalanceMutation.mutateAsync({ user_id, beta_block_id, card_balance });
   };
 
@@ -184,7 +184,7 @@ const useApiRequest = () => {
     },
   });
 
-  const getLeaderBoard = async (beta_block_id, limit, page = 1) => {
+  const getLeaderBoard = async(beta_block_id, limit, page = 1) => {
     return getLeaderBoardMutation.mutateAsync({ beta_block_id, limit, page });
   };
 

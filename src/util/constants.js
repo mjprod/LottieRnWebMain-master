@@ -4,6 +4,9 @@ export const API_KEY = process.env.REACT_APP_API_KEY;
 
 export const BONUS_PACK_NUMBER_OF_CARDS = 12;
 
+export const isChromeBrowser = typeof navigator !== "undefined" && /Chrome/.test(navigator.userAgent) && !/Edge/.test(navigator.userAgent) && !/OPR/.test(navigator.userAgent);
+export const isAndroidWebView = typeof navigator !== "undefined" && (/wv/.test(navigator.userAgent) || (/Android/.test(navigator.userAgent) && /Version\//.test(navigator.userAgent)));
+
 export const Endpoint = {
   fetch_user_details: "/users",
   get_daily_question: "/daily/question",
@@ -17,8 +20,8 @@ export const Endpoint = {
   login: "/login",
   token: "/login/token",
   logout: "/login/logout",
-  winners: "/winners"
-}
+  winners: "/winners",
+};
 
 
 export const DailyCardStatus = {
@@ -55,7 +58,6 @@ export const Dimentions = {
 
 export const Colors = {
   background: "#0A0A0A",
-  black: "#000000",
   transparent: "#00000000",
 
   jokerGold400: "#FFDEA8",
@@ -71,6 +73,8 @@ export const Colors = {
   jokerBlack600: "#1B1B1B",
   jokerBlack700: "#171717",
   jokerBlack800: "#131313",
+  jokerBlack900: "#000000",
+  jokerBlack90070: "#000000B3",
   jokerBlack1100: "#0A0A0A",
 
   jokerWhite50: "#FFFFFF",
@@ -95,6 +99,8 @@ export const Colors = {
   jokerRed600: "#982929",
   jokerRed700: "#771F1F",
   jokerRed900: "#450F0F",
+
+  jokerRose100: "#D6BC9E",
 };
 
 export const Fonts = {

@@ -28,7 +28,7 @@ function getPagesArray(current, total) {
     current,
     current + 1,
     '...',
-    total
+    total,
   );
 
   return pages;
@@ -63,7 +63,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, containerStyle }) =
                 onPress={() => onPageChange(page)}>
                 <Text style={{
                   fontWeight: isActive ? 'bold' : 'normal',
-                  color: isActive ? '#000' : '#A6A6A6'
+                  color: isActive ? '#000' : '#A6A6A6',
                 }}>
                   {page}
                 </Text>
@@ -76,7 +76,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, containerStyle }) =
           style={styles.arrowRight}
           disabled={currentPage === totalPages}
           onPress={() => onPageChange(currentPage + 1)}>
-          <Image source={AssetPack.icons.ARROW_LEFT} style={{ width: 10, height: 20, transform: [{ rotate: "180deg" }], }} resizeMode="contain" />
+          <Image source={AssetPack.icons.ARROW_LEFT} style={{ width: 10, height: 20, transform: [{ rotate: "180deg" }] }} resizeMode="contain" />
         </Pressable>
       </View>
     </View >
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderLeftWidth: 1,
-    borderLeftColor: "#5F5F5F"
+    borderLeftColor: "#5F5F5F",
   },
 });
 export default Pagination;

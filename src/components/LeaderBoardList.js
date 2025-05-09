@@ -16,7 +16,7 @@ const LeaderBoardList = ({ username, style, numberOfItems = 10, beta_block_id, s
     getLeaderBoard(beta_block_id, numberOfItems, currentPage).then((response) => {
       if (response) {
         setTotalPages(response.totalPages);
-        const newData = Object.values(response.data,).map((item) => ({
+        const newData = Object.values(response.data).map((item) => ({
           id: item.user_id,
           rank: item.current_rank,
           username: item.name,
@@ -25,10 +25,10 @@ const LeaderBoardList = ({ username, style, numberOfItems = 10, beta_block_id, s
         }));
         setLeaderBoardData(newData);
       }
-    }
+    },
     ).catch((error) => {
       console.error("Error fetching leaderboard data:", error);
-    }
+    },
     );
   }, [currentPage]);
 

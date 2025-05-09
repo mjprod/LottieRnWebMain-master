@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Platform } from 'react-native';
-import { Animated, Text, View, StyleSheet } from 'react-native';
+import { Animated, Text, View, StyleSheet, Platform } from 'react-native';
 import { Colors, Fonts } from '../../../util/constants';
 
 const DigitTicker = ({ digit, duration = 500, textSize = 18, textStyle }) => {

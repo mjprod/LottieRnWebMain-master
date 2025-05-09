@@ -1,9 +1,16 @@
 import React, { useRef, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { eraserRadius, heightScratch, widthScratch } from "../../../global/Settings";
+import PropTypes from 'prop-types';
 import AssetPack from "../../../util/AssetsPack";
 
-const ScratchCard = ({ onScratch, setScratchStarted }) => {
+ScratchCard.propTypes = {
+  onScratch: PropTypes.func,
+  setScratchStarted: PropTypes.func,
+};
+export default React.memo(ScratchCard);
+
+function ScratchCard({ onScratch, setScratchStarted }) {
   const canvasRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [totalArea, setTotalArea] = useState(0);
@@ -19,7 +26,7 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) {return;}
+    if (!canvas) { return; }
 
     const img = new Image();
     img.src = AssetPack.images.SCRATCH_CARD_FOREGROUND;
@@ -112,7 +119,7 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
 
   const updateErasedArea = () => {
     const canvas = canvasRef.current;
-    if (!canvas) {return;}
+    if (!canvas) { return; }
 
     const ctx = ctxRef.current;
 
@@ -155,7 +162,7 @@ const ScratchCard = ({ onScratch, setScratchStarted }) => {
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -165,5 +172,3 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
-
-export default ScratchCard;
