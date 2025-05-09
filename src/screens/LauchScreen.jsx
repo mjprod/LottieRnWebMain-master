@@ -63,7 +63,7 @@ const LauchScreenEncrypted = () => {
           const userData = userResponse.user;
           const currentWeek = userResponse.current_week;
           if (userResponse.daily === null || userResponse.daily.length === 0) {
-            appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+            // appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
           } else {
             const currentWeekDaily = userResponse.daily.find(
               (item) => item.current_week === currentWeek,
@@ -74,10 +74,10 @@ const LauchScreenEncrypted = () => {
                 item.includes(getCurrentDate()),
               );
               if (!hasCurrentDate) {
-                appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+                // appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
               }
             } else {
-              appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
+              // appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
             }
           }
         }
