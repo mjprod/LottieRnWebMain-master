@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
   arrowIcon: {
     width: 24,
     height: 24,
+    marginTop: 5,
     marginRight: 28,
   },
   title: {

@@ -91,8 +91,6 @@ const LauchScreenEncrypted = () => {
 
   useEffect(() => {
     if (params.id && params.name && params.email) {
-      console.log(params);
-      // appNavigation.goToCongratulationsPage(params.id, params.name, params.email);
       login(params.id, params.name, params.email).then(() => {
         fetchAndProcessUserDetails({ user_id: params.id, name: params.name, email: params.email });
       }).catch((error) => {
@@ -134,7 +132,7 @@ const LauchScreenEncrypted = () => {
     if (user.card_balance <= 0) {
       showSnackbar("You don't have any cards left. Please wait till next day to play the game!");
     } else {
-      appNavigation.goToStartPage(user.user_id, user.name, user.email);
+      appNavigation.goToGamePage(user.user_id, user.name, user.email);
     }
   };
 

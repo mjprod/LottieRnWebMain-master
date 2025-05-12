@@ -39,13 +39,13 @@ const LeaderBoardScreen = () => {
     }
   }, [response]);
 
-  const handlePlayNowButtonPress = () => {
-    if (user.card_balance <= 0) {
-      showSnackbar("You don't have any cards left. Please wait till next day to play the game!");
-    } else {
-      appNavigation.goToStartPage(user.user_id, user.name, user.email);
-    }
-  };
+  // const handlePlayNowButtonPress = () => {
+  //   if (user.card_balance <= 0) {
+  //     showSnackbar("You don't have any cards left. Please wait till next day to play the game!");
+  //   } else {
+  //     appNavigation.goToStartPage(user.user_id, user.name, user.email);
+  //   }
+  // };
   return (
     <TopNavTemplate
       title="Champions Rise"
@@ -58,9 +58,9 @@ const LeaderBoardScreen = () => {
         <SectionTitle text="LeaderBard" style={{ marginBottom: 24 }} />
         <LeaderBoardList
           style={{ marginBottom: 32 }}
-          username={user && user.name} 
-          beta_block_id={user && user.current_beta_block}/>
-        <GameButton style={{ marginBottom: 32 }} text="Play Now" onPress={handlePlayNowButtonPress} />
+          username={user && user.name}
+          beta_block_id={user && user.current_beta_block} />
+        {/* <GameButton style={{ marginBottom: 32 }} text="Play Now" onPress={handlePlayNowButtonPress} /> */}
         <LinkButton
           style={{ marginBottom: 48 }}
           text={"How To Play Turbo Scratch >"}
