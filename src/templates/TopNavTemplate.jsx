@@ -113,7 +113,7 @@ function TopNavTemplate({ title, subtitle, navBackgroudImage, navBackgroudVideo,
             borderTopWidth: topNavOpacity, borderTopColor: Colors.jokerBlack200,
             borderBottomWidth: 1, borderBottomColor: Colors.jokerBlack200,
           }, showDropShadow && { boxShadow: '0px 4px 4px -2px rgba(0, 0, 0, 0.5)' }]}>
-            <ProfileHeader id={user.user_id} name={user.name} />
+            <ProfileHeader id={user.user_id} name={user.name} totalCards={user.card_balance} />
           </Animated.View>
         }
         <View style={showProfileHeader && { paddingTop: 32 }}>{children}</View>

@@ -8,17 +8,18 @@ const ResourceTile = ({
   icon = AssetPack.icons.CARDS,
   number = 0,
   style,
+  isBadge = false,
 }) => {
   return (
-    <View style={{ ...styles.backgroundRounded, ...style }}>
+    <View style={[styles.backgroundRounded, style, isBadge && styles.backgroundRoundedBadge]}>
       <View style={styles.leftContainer}>
         <Image
           style={{ width: 24, height: 20, marginTop: 2 }}
           resizeMode="contain"
           source={icon} />
-        <Text style={styles.gamesAvailableText}>{title}</Text>
+        {!isBadge && <Text style={styles.gamesAvailableText}>{title}</Text>}
       </View>
-      <View style={{ width: 1, backgroundColor: Colors.jokerBlack200, height: "100%" }} />
+      {!isBadge && <View style={{ width: 1, backgroundColor: Colors.jokerBlack200, height: "100%" }} />}
       <View style={styles.rightContainer}>
         <Text style={styles.valueText}>
           {number}
@@ -29,6 +30,11 @@ const ResourceTile = ({
 };
 
 const styles = StyleSheet.create({
+  backgroundRoundedBadge: {
+    justifyContent: "center",
+    gap: 8,
+    padding: 16,
+  },
   backgroundRounded: {
     width: "100%",
     alignItems: "center",
