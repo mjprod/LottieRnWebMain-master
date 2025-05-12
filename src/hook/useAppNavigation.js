@@ -10,8 +10,8 @@ const useAppNavigation = () => {
         replace: true,
       });
     },
-    goToLaunchScreen: (user_id, name, email) => {
-      navigate(`/${user_id}/${name}/${email}`, {
+    goToLaunchScreen: () => {
+      navigate(`/`, {
         replace: true,
       });
     },
