@@ -100,7 +100,7 @@ function TopNavTemplate({ title, subtitle, navBackgroudImage, navBackgroudVideo,
             hasBackButton={hasBackButton}
             pillText={pillText}
             type={type}
-            style={{ marginBottom: -10 }}
+            style={{ marginBottom: -60 }}
           />
         </Animated.View>
         {
@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
     display: "none",
     justifyContent: 'flex-end',
     paddingBottom: 10,
-    pointerEvents: "box-none",
     bottom: 0,
     height: 50,
     left: 0,
@@ -154,7 +153,6 @@ const styles = StyleSheet.create({
   lottieAnimation: {
     height: 20,
     pointerEvents: "box-none",
-    marginBottom: 32,
     width: 20,
   },
   wrapper: {

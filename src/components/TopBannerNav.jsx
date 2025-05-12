@@ -63,12 +63,11 @@ const TopBannerNav = ({
                   source={AssetPack.icons.ARROW_LEFT} />
               </Pressable>
             )}
-            <PurplePill
-              text={pillText}
-              style={styles.betaCompetitionText} />
+            <View style={{ flexDirection: "column" }}>
+              <Text style={styles.title}>{title}</Text>
+              <Text style={styles.subtitle}>{subtitle}</Text>
+            </View>
           </View>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subtitle}>{subtitle}</Text>
         </LinearGradient>
       </View>
     );
@@ -103,19 +102,12 @@ const TopBannerNav = ({
 const styles = StyleSheet.create({
   topContainer: {
     flexDirection: "row",
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
-    marginTop: 16,
     marginBottom: 28,
   },
   arrowIcon: {
     width: 24,
     height: 24,
     marginRight: 28,
-  },
-  betaCompetitionText: {
-    letterSpacing: 1,
   },
   title: {
     fontFamily: Fonts.TekoMedium,
@@ -134,13 +126,11 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     width: "100%",
-    height: "auto",
     paddingHorizontal: Dimentions.pageMargin,
     flex: 1,
     alignItems: "start",
-    justifyContent: "center",
     paddingBottom: Dimentions.sectionMargin,
-    paddingTop: Dimentions.pageMargin,
+    paddingTop: 74,
   },
 });
 
