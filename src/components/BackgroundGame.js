@@ -21,8 +21,7 @@ export const BackgroundGame = ({ source, showAlphaView }) => {
 
   return (
     <View style={styles.container}>
-      <TopBannerNav hasBackButton />
-
+      <TopBannerNav hasBackButton title={"Scratch To Win!"} subtitle={"Your next prize awaits."} blur />
       <View style={styles.videoContainer}>
         <video
           ref={videoRef}

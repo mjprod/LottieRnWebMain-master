@@ -26,7 +26,7 @@ const TopBannerNav = ({
   backgroundVideo = AssetPack.videos.TOP_NAV_HEROES,
   onBackPress,
   hasBackButton = false,
-  pillText = "Beta Competition",
+  blur = false,
   type = TopBannerNavType.home,
   style = {},
 }) => {
@@ -49,14 +49,22 @@ const TopBannerNav = ({
           source={backgroundVideo}
           poster={backgroundImage}
           loop={true}
-          style={{ width: "100%", height: 226, position: "absolute", objectFit: "cover" }} />
+          style={[{
+            width: "100%",
+            height: 226,
+            position: "absolute",
+            objectFit: "cover",
+          }, blur && {
+            filter: 'blur(2px)',
+            WebkitFilter: 'blur(2px)',
+          }]} />
         <LinearGradient
-          colors={[Colors.transparent, Colors.background]}
+          colors={[blur ? "#00000033" : Colors.transparent, Colors.background]}
           locations={[0, 1]}
           style={styles.linearGradient}>
           <View style={[styles.topContainer, !hasText && { marginBottom: 100 }]}>
             {hasBackButton && (
-              <Pressable onPress={onBackPressLocal} style={{ alignContent: "center", alignItems: "center", justifyContent: "center", height: "100%" }}>
+              <Pressable onPress={onBackPressLocal} style={{ alignContent: "flex-start", alignItems: "flex-start", justifyContent: "flex-start", height: "100%" }}>
                 <Image
                   resizeMode="contain"
                   style={styles.arrowIcon}
@@ -73,12 +81,12 @@ const TopBannerNav = ({
     );
   } else if (type === TopBannerNavType.startFinish) {
     return (
-      <View style={[style, { alignItems: "start", height: 226 }]} >
+      <View style={[style, { alignItems: "start", height: 226, marginBottom: 0 }]} >
         <Video
           source={backgroundVideo}
           poster={backgroundImage}
           loop={true}
-          style={{ width: "100%", height: 226, position: "absolute" }} />
+          style={[{ width: "100%", height: 226, position: "absolute" }, blur && { filter: 'blur(2px)', WebkitFilter: 'blur(2px)' }]} />
         <LinearGradient
           colors={[Colors.transparent, Colors.background]}
           locations={[0, 1]}
