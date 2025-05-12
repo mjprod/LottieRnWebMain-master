@@ -19,14 +19,13 @@ import NotFoundScreen from "./screens/NotFoundScreen";
 import StartScreen from "./screens/StartScreen";
 import ScratchLuckyGame from "./screens/game/ScratchLuckyGame";
 import InfoScreen, { InfoScreenContents } from "./screens/info/InfoScreen";
-import { Colors } from './util/constants';
+import { Colors, isMobileBrowser } from './util/constants';
 
 const { height } = Dimensions.get("window");
 
 const queryClient = new QueryClient();
 
 export default function App() {
-  console.log("Initial relative path loaded:", window.location.pathname);
   React.useEffect(() => {
     const noSelectElements = document.querySelectorAll(".no-select");
     noSelectElements.forEach((element) => {
@@ -36,10 +35,6 @@ export default function App() {
       element.style.userSelect = "none";
     });
   }, []);
-
-  const isMobileBrowser =
-    navigator.userAgent.includes("Mobile") ||
-    navigator.userAgent.includes("Android");
 
   const dynamicStyles = isMobileBrowser ? smallStyles : styles;
 

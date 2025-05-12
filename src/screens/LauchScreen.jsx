@@ -14,7 +14,7 @@ import StatCard from "../components/StatCard";
 import { useGame } from "../context/GameContext";
 import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
-import { Colors, Dimentions, GameStatus } from "../util/constants";
+import { Colors, Dimentions, GameStatus, isProduction } from "../util/constants";
 import { decrypt } from "../util/crypto";
 import { convertUTCToLocal, getCurrentDate } from "../util/Helpers";
 import { InfoScreenContents } from "./info/InfoScreen";
@@ -90,7 +90,7 @@ const LauchScreenEncrypted = () => {
   };
 
   useEffect(() => {
-    if (params.id && params.name && params.email) {
+    if (!isProduction && params.id && params.name && params.email) {
       login(params.id, params.name, params.email).then(() => {
         fetchAndProcessUserDetails({ user_id: params.id, name: params.name, email: params.email });
       }).catch((error) => {
