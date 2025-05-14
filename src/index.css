@@ -12,7 +12,9 @@
   display: none;
 }
 
-html, body {
+html,
+body {
+  background-color: #000;
   overflow: hidden;
   overscroll-behavior: none;
 }
@@ -82,8 +84,10 @@ video::-webkit-media-controls-overlay-play-button {
 }
 
 input::selection {
-  background: #ffb7b7; /* Your highlight color */
-  color: #000;         /* Color for the selected text */
+  background: #ffb7b7;
+  /* Your highlight color */
+  color: #000;
+  /* Color for the selected text */
 }
 
 /* If needed, target Firefox separately */
