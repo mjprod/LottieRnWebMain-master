@@ -19,14 +19,13 @@ import NotFoundScreen from "./screens/NotFoundScreen";
 import StartScreen from "./screens/StartScreen";
 import ScratchLuckyGame from "./screens/game/ScratchLuckyGame";
 import InfoScreen, { InfoScreenContents } from "./screens/info/InfoScreen";
-import { Colors } from './util/constants';
+import { Colors, isMobileBrowser, isProduction } from './util/constants';
 
 const { height } = Dimensions.get("window");
 
 const queryClient = new QueryClient();
 
 export default function App() {
-  console.log("Initial relative path loaded:", window.location.pathname);
   React.useEffect(() => {
     const noSelectElements = document.querySelectorAll(".no-select");
     noSelectElements.forEach((element) => {
@@ -36,10 +35,6 @@ export default function App() {
       element.style.userSelect = "none";
     });
   }, []);
-
-  const isMobileBrowser =
-    navigator.userAgent.includes("Mobile") ||
-    navigator.userAgent.includes("Android");
 
   const dynamicStyles = isMobileBrowser ? smallStyles : styles;
 
@@ -60,7 +55,7 @@ export default function App() {
                       <Route path="/game_over" element={<GameOverScreen />} />
                       <Route path="/how_to_play" element={<HowToPlayScreen />} />
                       <Route path="/leader_board" element={<LeaderBoardScreen />} />
-                      <Route path="/:id/:name/:email" element={<LauchScreen />} />
+                      {!isProduction && <Route path="/:id/:name/:email" element={<LauchScreen />} />}
                       <Route path="/" element={<LauchScreen />} />
                       <Route path={InfoScreenContents.extending} element={<InfoScreen contentName={InfoScreenContents.extending} />} />
                       <Route path={InfoScreenContents.thank_you} element={<InfoScreen contentName={InfoScreenContents.thank_you} />} />

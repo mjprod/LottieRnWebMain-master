@@ -26,7 +26,7 @@ const TopBannerNav = ({
   backgroundVideo = AssetPack.videos.TOP_NAV_HEROES,
   onBackPress,
   hasBackButton = false,
-  pillText = "Beta Competition",
+  blur = false,
   type = TopBannerNavType.home,
   style = {},
 }) => {
@@ -49,37 +49,44 @@ const TopBannerNav = ({
           source={backgroundVideo}
           poster={backgroundImage}
           loop={true}
-          style={{ width: "100%", height: 226, position: "absolute", objectFit: "cover" }} />
+          style={[{
+            width: "100%",
+            height: 226,
+            position: "absolute",
+            objectFit: "cover",
+          }, blur && {
+            filter: 'blur(2px)',
+            WebkitFilter: 'blur(2px)',
+          }]} />
         <LinearGradient
-          colors={[Colors.transparent, Colors.background]}
+          colors={[blur ? "#00000033" : Colors.transparent, Colors.background]}
           locations={[0, 1]}
           style={styles.linearGradient}>
           <View style={[styles.topContainer, !hasText && { marginBottom: 100 }]}>
             {hasBackButton && (
-              <Pressable onPress={onBackPressLocal} style={{ alignContent: "center", alignItems: "center", justifyContent: "center", height: "100%" }}>
+              <Pressable onPress={onBackPressLocal} style={{ alignContent: "flex-start", alignItems: "flex-start", justifyContent: "flex-start", height: "100%" }}>
                 <Image
                   resizeMode="contain"
                   style={styles.arrowIcon}
                   source={AssetPack.icons.ARROW_LEFT} />
               </Pressable>
             )}
-            <PurplePill
-              text={pillText}
-              style={styles.betaCompetitionText} />
+            <View style={{ flexDirection: "column" }}>
+              <Text style={styles.title}>{title}</Text>
+              <Text style={styles.subtitle}>{subtitle}</Text>
+            </View>
           </View>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subtitle}>{subtitle}</Text>
         </LinearGradient>
       </View>
     );
   } else if (type === TopBannerNavType.startFinish) {
     return (
-      <View style={[style, { alignItems: "start", height: 226 }]} >
+      <View style={[style, { alignItems: "start", height: 226, marginBottom: 0 }]} >
         <Video
           source={backgroundVideo}
           poster={backgroundImage}
           loop={true}
-          style={{ width: "100%", height: 226, position: "absolute" }} />
+          style={[{ width: "100%", height: 226, position: "absolute" }, blur && { filter: 'blur(2px)', WebkitFilter: 'blur(2px)' }]} />
         <LinearGradient
           colors={[Colors.transparent, Colors.background]}
           locations={[0, 1]}
@@ -103,19 +110,13 @@ const TopBannerNav = ({
 const styles = StyleSheet.create({
   topContainer: {
     flexDirection: "row",
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
-    marginTop: 16,
     marginBottom: 28,
   },
   arrowIcon: {
     width: 24,
     height: 24,
+    marginTop: 5,
     marginRight: 28,
-  },
-  betaCompetitionText: {
-    letterSpacing: 1,
   },
   title: {
     fontFamily: Fonts.TekoMedium,
@@ -134,13 +135,11 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     width: "100%",
-    height: "auto",
     paddingHorizontal: Dimentions.pageMargin,
     flex: 1,
     alignItems: "start",
-    justifyContent: "center",
     paddingBottom: Dimentions.sectionMargin,
-    paddingTop: Dimentions.pageMargin,
+    paddingTop: 74,
   },
 });
 

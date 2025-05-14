@@ -1,26 +1,41 @@
 [
-    {
-        "relation": [
-            "delegate_permission/common.handle_all_urls"
-        ],
-        "target": {
-            "namespace": "app.mjproductions.turboscratch",
-            "package_name": "app.mjproductions.turboscratch",
-            "sha256_cert_fingerprints": [
-                "FB:1C:3D:61:33:38:51:01:65:08:C8:50:FA:10:86:5F:49:D2:93:97:8F:35:5B:81:F3:37:46:79:ED:54:A0:FF"
-            ]
-        }
-    },
-    {
-        "relation": [
-            "delegate_permission/common.use_as_origin"
-        ],
-        "target": {
-            "namespace": "app.mjproductions.turboscratch",
-            "package_name": "app.mjproductions.turboscratch",
-            "sha256_cert_fingerprints": [
-                "FB:1C:3D:61:33:38:51:01:65:08:C8:50:FA:10:86:5F:49:D2:93:97:8F:35:5B:81:F3:37:46:79:ED:54:A0:FF"
-            ]
-        }
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.use_as_origin"
+    ],
+    "target": {
+      "namespace": "app.mjproductions.turboscratch",
+      "package_name": "app.mjproductions.turboscratch",
+      "sha256_cert_fingerprints": [
+        "FB:1C:3D:61:33:38:51:01:65:08:C8:50:FA:10:86:5F:49:D2:93:97:8F:35:5B:81:F3:37:46:79:ED:54:A0:FF"
+      ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.use_as_origin"
+    ],
+    "target": {
+      "namespace": "com.jokerplus",
+      "package_name": "com.jokerplus.app",
+      "sha256_cert_fingerprints": [
+        "BD:5D:3F:E3:D3:B9:CE:82:0B:44:A4:BF:6B:16:95:81:C4:B6:43:63:FF:39:EE:1A:97:8A:48:7F:E7:2D:FA:0D"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.use_as_origin"
+    ],
+    "target": {
+      "namespace": "com.jokerplus",
+      "package_name": "com.jokerplus.app.dev",
+      "sha256_cert_fingerprints": [
+        "BD:5D:3F:E3:D3:B9:CE:82:0B:44:A4:BF:6B:16:95:81:C4:B6:43:63:FF:39:EE:1A:97:8A:48:7F:E7:2D:FA:0D"
+      ]
+    }
+  }
 ]

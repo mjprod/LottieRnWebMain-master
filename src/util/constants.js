@@ -6,6 +6,8 @@ export const BONUS_PACK_NUMBER_OF_CARDS = 12;
 
 export const isChromeBrowser = typeof navigator !== "undefined" && /Chrome/.test(navigator.userAgent) && !/Edge/.test(navigator.userAgent) && !/OPR/.test(navigator.userAgent);
 export const isAndroidWebView = typeof navigator !== "undefined" && (/wv/.test(navigator.userAgent) || (/Android/.test(navigator.userAgent) && /Version\//.test(navigator.userAgent)));
+export const isProduction = process.env.NODE_ENV === 'production' || process.env.REACT_APP_ENV === 'production';
+export const isMobileBrowser = navigator.userAgent.includes("Mobile") || navigator.userAgent.includes("Android");
 
 export const Endpoint = {
   fetch_user_details: "/users",

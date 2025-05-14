@@ -100,7 +100,7 @@ function TopNavTemplate({ title, subtitle, navBackgroudImage, navBackgroudVideo,
             hasBackButton={hasBackButton}
             pillText={pillText}
             type={type}
-            style={{ marginBottom: -10 }}
+            style={{ marginBottom: -60 }}
           />
         </Animated.View>
         {
@@ -113,7 +113,7 @@ function TopNavTemplate({ title, subtitle, navBackgroudImage, navBackgroudVideo,
             borderTopWidth: topNavOpacity, borderTopColor: Colors.jokerBlack200,
             borderBottomWidth: 1, borderBottomColor: Colors.jokerBlack200,
           }, showDropShadow && { boxShadow: '0px 4px 4px -2px rgba(0, 0, 0, 0.5)' }]}>
-            <ProfileHeader id={user.user_id} name={user.name} />
+            <ProfileHeader id={user.user_id} name={user.name} totalCards={user.card_balance} />
           </Animated.View>
         }
         <View style={showProfileHeader && { paddingTop: 32 }}>{children}</View>
@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
     display: "none",
     justifyContent: 'flex-end',
     paddingBottom: 10,
-    pointerEvents: "box-none",
     bottom: 0,
     height: 50,
     left: 0,
@@ -154,7 +153,6 @@ const styles = StyleSheet.create({
   lottieAnimation: {
     height: 20,
     pointerEvents: "box-none",
-    marginBottom: 32,
     width: 20,
   },
   wrapper: {
