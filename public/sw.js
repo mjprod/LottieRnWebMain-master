@@ -18,18 +18,23 @@ self.addEventListener("install", (event) => {
               return cache.put(url, response);
             }).catch((err) => {
               console.error(`Error caching ${url}:`, err);
-            })
-          )
+            }),
+          ),
         );
       })
       .catch((err) => {
         console.error('Service worker installation failed:', err);
-      })
+      }),
   );
 });
 
 // Intercept Network Requests & Serve Cached Files
 self.addEventListener("fetch", (event) => {
+  const requestUrl = new URL(event.request.url);
+  // Bypass service worker cache for API calls
+  if (requestUrl.pathname.startsWith('/api/')) {
+    return event.respondWith(fetch(event.request));
+  }
   if (event.request.method !== 'GET') {
     return event.respondWith(fetch(event.request));
   }
@@ -52,7 +57,7 @@ self.addEventListener("fetch", (event) => {
         }
         return networkResponse;
       });
-    })
+    }),
   );
 });
 
@@ -67,8 +72,8 @@ self.addEventListener("activate", (event) => {
           if (!cacheWhitelist.includes(cache)) {
             return caches.delete(cache);
           }
-        })
+        }),
       );
-    })
+    }),
   );
 });

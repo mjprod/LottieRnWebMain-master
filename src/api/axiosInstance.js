@@ -12,7 +12,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.response.use(
-  async (response) => {
+  async(response) => {
     if (response.data) {
       try {
         response.data = JSON.parse(decrypt(response.data));
@@ -35,21 +35,21 @@ instance.interceptors.response.use(
       }
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 instance.interceptors.request.use(
-  async (config) => {
+  async(config) => {
     if (config.data) {
       config.data = JSON.stringify({ data: encrypt(config.data) });
     }
     const { loadData } = useStorage();
 
     const accessToken = await loadData('accessToken');
-    if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
+    if (accessToken) {config.headers.Authorization = `Bearer ${accessToken}`;}
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 export default instance;

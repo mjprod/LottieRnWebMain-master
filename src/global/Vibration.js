@@ -1,4 +1,4 @@
-import {Vibration} from 'react-native';
+import { Vibration } from 'react-native';
 import settings from './Settings';
 
 const lightVibrationPattern = [0, 50];

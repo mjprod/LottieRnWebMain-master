@@ -1,6 +1,5 @@
 import React from "react";
-import Svg, { Defs, G, Path } from "react-native-svg-web";
-import { Rect } from "react-native-svg-web";
+import Svg, { Defs, G, Path, Rect } from "react-native-svg-web";
 
 export const IconTypeCactusActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">

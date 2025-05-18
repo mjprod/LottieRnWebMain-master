@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
-import { Animated, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Animated, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native';
 import { Colors, Fonts } from '../util/constants';
 
 const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
@@ -43,12 +42,12 @@ const CustomSnackbar = ({ message, visible, onDismiss, duration = 3000 }) => {
     }
   }, [visible, duration, fadeAnim, slideAnim, onDismiss]);
 
-  if (!visible) return null;
+  if (!visible) { return null; }
 
   return (
     <Animated.View style={[
       styles.snackbar,
-      { opacity: fadeAnim, transform: [{ translateY: slideAnim }], zIndex: 9999 }
+      { opacity: fadeAnim, transform: [{ translateY: slideAnim }], zIndex: 9999 },
     ]}>
       <Text style={styles.snackbarText}>{message}</Text>
       <TouchableOpacity

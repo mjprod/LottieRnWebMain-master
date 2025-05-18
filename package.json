@@ -1,5 +1,5 @@
 {
-  "name": "react-native-web-starter",
+  "name": "turbo-scratch",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,7 +11,6 @@
     "crypto-js": "^4.2.0",
     "howler": "^2.2.4",
     "react": "18.0.0",
-    "react-browser-detection": "^1.2.1",
     "react-dom": "18.0.0",
     "react-native": "0.78.1",
     "react-native-svg-web": "^1.0.9",
@@ -27,6 +26,7 @@
     "build": "react-scripts build",
     "clean": "rm -rf node_modules yarn.lock && yarn install",
     "lint": "eslint . --max-warnings=0",
+    "fix": "eslint . --fix --max-warnings=0",
     "start-expo": "expo start",
     "start-native": "react-native-scripts start",
     "eject-native": "react-native-scripts eject",
@@ -39,11 +39,16 @@
     "preset": "react-native"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.27.1",
     "@babel/plugin-transform-react-jsx-source": "^7.22.5",
     "@tanstack/eslint-plugin-query": "^5.68.0",
     "add": "^2.0.6",
-    "eslint": "^9.24.0",
+    "eslint": "^8",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-native": "^5.0.0",
     "eslint-webpack-plugin": "^5.0.1",
     "globals": "^16.0.0",
     "metro-react-native-babel-preset": "^0.77.0",

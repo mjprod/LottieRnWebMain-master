@@ -1,5 +1,5 @@
 import React from "react";
-import Svg, { Path , G , Defs , Rect} from "react-native-svg-web";
+import Svg, { Path, G, Defs, Rect } from "react-native-svg-web";
 
 export const IconTypePlaneActive = () => (
   <Svg width="78" height="84" viewBox="0 0 78 84" fill="none">

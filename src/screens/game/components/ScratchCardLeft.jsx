@@ -1,45 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
+import PropTypes from 'prop-types';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import LottieView from "react-native-web-lottie";
 import { useSound } from "../../../hook/useSoundPlayer";
 import { useTheme } from "../../../hook/useTheme";
 import AssetPack from "../../../util/AssetsPack";
+import useStorage, { storageKeys } from "../../../hook/useStorage";
+import { Colors, Fonts } from "../../../util/constants";
 
-const ScratchCardLeft = ({ scratchCardLeft }) => {
+ScratchCardLeft.propTypes = {
+  scratchCardLeft: PropTypes.number.isRequired,
+  scratchStarted: PropTypes.bool,
+};
+
+ScratchCardLeft.defaultProps = {
+  scratchStarted: false,
+};
+
+export default memo(ScratchCardLeft);
+
+function ScratchCardLeft({ scratchCardLeft, scratchStarted = false }) {
   const { soundMuteOnBackground, soundMuteOffBackground } = useTheme();
 
-  const [displayedScratchCardsLeft, setDisplayedScratchCardsLeft] = useState(
-    scratchCardLeft
-  );
+  const [displayedScratchCardsLeft, setDisplayedScratchCardsLeft] = useState(0);
 
-  const [showLottie, setShowLottie] = useState(true);
+  const lottieRef = useRef();
+  const { saveData } = useStorage();
   const { isSoundEnabled, setIsSoundEnabled } = useSound();
 
   useEffect(() => {
-    setShowLottie(false);
-
-    const timeoutId = setTimeout(() => {
-      setDisplayedScratchCardsLeft(scratchCardLeft - 1);
-      setShowLottie(true);
-    }, 600);
-
-    return () => clearTimeout(timeoutId);
+    setDisplayedScratchCardsLeft(scratchCardLeft);
   }, [scratchCardLeft]);
 
-  const toggleSound = async (value) => {
-    try {
-      //await AsyncStorage.setItem("soundPreference", JSON.stringify(value));
-      setIsSoundEnabled(!isSoundEnabled);
-      //console.error(isSoundOn);
-      // Optional: Play or stop sound based on toggle state
-      if (value) {
-        //playSound();
-      } else {
-        //stopSound();
-      }
-    } catch (e) {
-      console.error("Failed to save sound preference", e);
+  useEffect(() => {
+    lottieRef.current && lottieRef.current.reset();
+    if (scratchStarted) {
+      setDisplayedScratchCardsLeft(scratchCardLeft - 1);
+      lottieRef.current && lottieRef.current.play();
     }
+  }, [scratchStarted, scratchCardLeft, lottieRef]);
+
+  const toggleSound = () => {
+    setIsSoundEnabled((oldVal) => {
+      saveData(storageKeys.soundEnabled, !oldVal);
+      return !oldVal;
+    });
   };
 
   const renderCounter = () => {
@@ -59,15 +64,14 @@ const ScratchCardLeft = ({ scratchCardLeft }) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
-        {showLottie && (
-          <LottieView
-            style={styles.lottieAnimation}
-            source={AssetPack.lotties.CARD_COUNT_DOWN}
-            autoPlay={true}
-            loop={false}
-            speed={1}
-          />
-        )}
+        <LottieView
+          ref={lottieRef}
+          style={styles.lottieAnimation}
+          source={AssetPack.lotties.CARD_COUNT_DOWN}
+          autoPlay={false}
+          loop={false}
+          speed={1}
+        />
         <View style={styles.textRow}>
           <Text style={styles.number}>{displayedScratchCardsLeft}</Text>
           <Text style={styles.text}>Scratch Cards Left</Text>
@@ -76,7 +80,7 @@ const ScratchCardLeft = ({ scratchCardLeft }) => {
       <View style={styles.rightContainer}>{renderCounter()}</View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -100,15 +104,15 @@ const styles = StyleSheet.create({
   },
   text: {
     userSelect: "none",
-    fontFamily: "Inter-Medium",
-    color: "#A9A9A9",
-    fontSize: 12,
+    fontFamily: Fonts.InterMedium,
+    color: Colors.jokerBlack50,
+    fontSize: 14,
     marginHorizontal: 6,
   },
   number: {
     userSelect: "none",
-    fontFamily: "Inter-Bold",
-    color: "#FFDFAB",
+    fontFamily: Fonts.InterBold,
+    color: Colors.jokerGold400,
     fontSize: 16,
   },
   rightContainer: {
@@ -116,18 +120,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginLeft: "auto",
   },
-  counter: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    marginHorizontal: 2,
-  },
-  activeCounter: {
-    backgroundColor: "#646464",
-  },
-  inactiveCounter: {
-    backgroundColor: "#434343",
-  },
 });
-
-export default ScratchCardLeft;

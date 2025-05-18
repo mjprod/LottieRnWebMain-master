@@ -29,15 +29,8 @@ const WeAreExtendingContent = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    padding: Dimentions.marginL,
-    alignItems: "center",
-    alignContent: "center",
-    justifyContent: "center"
-  },
   text: {
-    color: "#A6A6A6",
+    color: Colors.jokerBlack50,
     fontFamily: Fonts.InterRegular,
     textAlign: "center",
     lineHeight: "160%",
@@ -56,33 +49,25 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginHorizontal: Dimentions.pageMargin,
   },
-  bottomText: {
-    fontFamily: Fonts.InterRegular,
-    fontSize: 16,
-    color: Colors.jokerBlack50,
-    textAlign: "center",
-    marginBottom: 32,
-    marginHorizontal: Dimentions.pageMargin,
-  },
   roundedTextContainer: {
     width: 200,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#171717",
-    borderColor: "#D6BC9E",
+    backgroundColor: Colors.jokerBlack700,
+    borderColor: Colors.jokerRose100,
     borderWidth: 1.5,
     paddingHorizontal: 35.5,
     paddingVertical: 15,
     borderRadius: 30,
     boxShadow: "0px 2px 10px #FFDEA84D",
     elevation: 5,
-    marginBottom: 22
+    marginBottom: 22,
   },
   roundedText: {
-    color: "#FFDEA8",
+    color: Colors.jokerGold400,
     fontSize: 16,
     fontFamily: Fonts.InterRegular,
-  }
+  },
 });
 
 export default WeAreExtendingContent;

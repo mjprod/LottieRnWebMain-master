@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { View, Text, StyleSheet, Animated,Platform } from "react-native";
+import { View, Text, StyleSheet, Animated, Platform } from "react-native";
 
 const PopUpText = ({ value }) => {
 
@@ -47,7 +47,7 @@ const PopUpText = ({ value }) => {
             transform: [{ scale: scaleValue }],
             opacity: opacityValue,
           },
-          {backgroundColor: getTextColor(value)}
+          { backgroundColor: getTextColor(value) },
         ]}
       >
         

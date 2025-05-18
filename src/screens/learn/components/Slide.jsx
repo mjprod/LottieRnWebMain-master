@@ -1,5 +1,14 @@
 import React from "react";
 import { Image } from "react-native";
+import PropTypes from 'prop-types';
+
+Slide.propTypes = {
+  data: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+  }).isRequired,
+  height: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+};
 
 function Slide({ data, height, width }) {
   return (

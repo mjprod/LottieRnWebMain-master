@@ -16,9 +16,19 @@ import { Colors, Fonts } from "../../../util/constants";
 import Svg, { Path } from "react-native-svg-web";
 import LuckySymbolsSlot from "../../../components/LuckySymbolsSlot";
 import CircularProgress from "../../../components/CircularProgress";
+import PropTypes from 'prop-types';
 
-const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) => (
-  <View style={styles.container}>
+CentralImageWithLottie.propTypes = {
+  gameCenterIcon: PropTypes.any,
+  playAnimation: PropTypes.bool.isRequired,
+  animationIndex: PropTypes.number.isRequired,
+  lottieRef: PropTypes.shape({ current: PropTypes.any }).isRequired,
+  animations: PropTypes.arrayOf(PropTypes.any).isRequired,
+  onAnimationFinish: PropTypes.func.isRequired,
+};
+
+function CentralImageWithLottie({ gameCenterIcon, playAnimation, animationIndex, lottieRef, animations, onAnimationFinish }) {
+  return <View style={styles.container}>
     <Image source={gameCenterIcon} style={styles.centralImage} />
     {playAnimation && (
       <LottieView
@@ -31,10 +41,15 @@ const CentralImageWithLottie = ({ gameCenterIcon, playAnimation, animationIndex,
         onAnimationFinish={onAnimationFinish}
       />
     )}
-  </View>
-);
+  </View>;
+}
 
-const TopLayout = ({ clickCount, countdownTimer }) => {
+TopLayout.propTypes = {
+  clickCount: PropTypes.number.isRequired,
+  countdownTimer: PropTypes.number.isRequired,
+};
+
+export default function TopLayout({ clickCount, countdownTimer }) {
   const { score, scratchStarted } = useGame();
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const { gameCenterIcon } = useTheme();
@@ -44,17 +59,16 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
   const animations = [
     AssetPack.lotties.COMBO_2X,
     AssetPack.lotties.COMBO_3X,
-    AssetPack.lotties.COMBO_4X
+    AssetPack.lotties.COMBO_4X,
   ];
 
   const lottieRef = useRef(null);
-  const timerLottieRef = useRef(null);
 
   const { initializeComboSounds, playComboSound } = useComboSounds();
 
   useEffect(() => {
     initializeComboSounds();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     switch (clickCount) {
@@ -81,7 +95,7 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
       lottieRef.current.reset();
       lottieRef.current.play();
     }
-  }, [clickCount]);
+  }, [clickCount, lottieRef, playComboSound]);
 
   const getBackground = (value, scratchStarted) => {
     if (scratchStarted) {
@@ -119,11 +133,11 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
                 <>
                   <CircularProgress countdownTimer={countdownTimer} />
                   <Animated.View
-                    style={[{ transform: [{ scale: scaleAnim }] }]}>
-                    <Text style={[styles.countDownText]}>
+                    style={{ transform: [{ scale: scaleAnim }] }}>
+                    <Text style={styles.countDownText}>
                       {countdownTimer * 100}
                     </Text>
-                    <Text style={[styles.pointValue]}>
+                    <Text style={styles.pointValue}>
                       Point value
                     </Text>
                   </Animated.View>
@@ -154,7 +168,7 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
               justifyContent: "center",
               alignItems: "center",
               paddingRight: 16,
-              paddingTop: 8
+              paddingTop: 8,
             }}>
               <Text style={styles.textBottomRight}>3x Symbols = 12x</Text>
               <Image
@@ -164,6 +178,7 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
             </View>
           </View>
         </View>
+
         <CentralImageWithLottie
           gameCenterIcon={gameCenterIcon}
           playAnimation={playAnimation}
@@ -175,7 +190,7 @@ const TopLayout = ({ clickCount, countdownTimer }) => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   mainWrapper: {
@@ -227,12 +242,6 @@ const styles = StyleSheet.create({
     userSelect: "none",
     width: "50%",
   },
-  viewRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
   topRightTextContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
@@ -257,11 +266,7 @@ const styles = StyleSheet.create({
     userSelect: "none",
     justifyContent: "center",
     alignItems: "center",
-    width: "100%"
-  },
-  lottieAnimation: {
-    width: 35,
-    marginRight: 6,
+    width: "100%",
   },
   rowCountDown: {
     paddingHorizontal: 20,
@@ -315,5 +320,3 @@ const styles = StyleSheet.create({
     marginTop: -210,
   },
 });
-
-export default TopLayout;

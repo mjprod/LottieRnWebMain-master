@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import GameButton from "../../../components/GameButton";
-import { Colors, Fonts } from "../../../util/constants";
-import { Dimentions } from "../../../util/constants";
+import { Colors, Fonts, Dimentions } from "../../../util/constants";
 
 const QuestionOfTheDay = ({ question, onSubmit, style, numberOfSets, numberOfCardsInSet }) => {
   const [text, setText] = useState("");
@@ -106,8 +105,8 @@ const styles = StyleSheet.create({
     justifyContent: "top",
   },
   bottomText: {
-    fontFamily: "Inter-Medium",
-    color: "#A6A6A6",
+    fontFamily: Fonts.InterMedium,
+    color: Colors.jokerBlack50,
     textAlign: "center",
     fontSize: 16,
     marginTop: 12,

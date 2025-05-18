@@ -2,29 +2,29 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { Colors, Dimentions, Fonts } from '../util/constants';
-import AssetPack from '../util/AssetsPack';
 import { useSnackbar } from './SnackbarContext';
 import Avatar, { AvatarSize } from './Avatar';
+import ResourceTile from './ResourceTile';
 
-const ProfileHeader = ({ id, name, containerStyle }) => {
-  const { showSnackbar } = useSnackbar()
+const ProfileHeader = ({ id, name, totalCards, containerStyle }) => {
+  const { showSnackbar } = useSnackbar();
   const handleCopy = () => {
     if (id) {
       Clipboard.setString(`ID: ${id}`);
-      showSnackbar("ID Copied!")
+      showSnackbar("ID Copied!");
     }
   };
 
   return (
     <View style={{ ...containerStyle }}>
-      <View style={{ ...styles.container, }}>
+      <View style={{ ...styles.container }}>
         <Avatar size={AvatarSize.big} name={name} />
         <View style={styles.textContainer}>
           <Text style={styles.username}>{name}</Text>
           <Text style={styles.idText}>{id ? `ID: ${id}` : ""}</Text>
         </View>
         <Pressable onPress={handleCopy} style={styles.copyButton}>
-          <Image style={{ height: 22, width: 22 }} source={AssetPack.icons.COPY} />
+          <ResourceTile number={totalCards} isBadge={true} />
         </Pressable>
       </View>
     </View>
@@ -56,9 +56,7 @@ const styles = StyleSheet.create({
   },
   copyButton: {
     justifyContent: "center",
-    width: 56,
-    height: 56
-  }
+  },
 });
 
 export default ProfileHeader;

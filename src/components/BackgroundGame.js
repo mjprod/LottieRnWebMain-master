@@ -10,6 +10,7 @@ export const BackgroundGame = ({ source, showAlphaView }) => {
   useEffect(() => {
     if (videoRef.current) {
       const playPromise = videoRef.current.play();
+      videoRef.current.setAttribute('webkit-playsinline', 'true');
       if (playPromise !== undefined) {
         playPromise.catch((error) => {
           console.error("Autoplay failed:", error);
@@ -20,8 +21,7 @@ export const BackgroundGame = ({ source, showAlphaView }) => {
 
   return (
     <View style={styles.container}>
-      <TopBannerNav hasBackButton />
-
+      <TopBannerNav hasBackButton title={"Scratch To Win!"} subtitle={"Your next prize awaits."} blur />
       <View style={styles.videoContainer}>
         <video
           ref={videoRef}
@@ -32,7 +32,6 @@ export const BackgroundGame = ({ source, showAlphaView }) => {
           controls={false}
           muted={false}
           playsInline={true}
-          webkit-playsinline="true"
         />
         <LinearGradient
           colors={[Colors.background, Colors.background, Colors.transparent, Colors.transparent]}
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     zIndex: 1,
     height: "100%",
-    width: "100%"
+    width: "100%",
   },
   video: {
     position: "absolute",

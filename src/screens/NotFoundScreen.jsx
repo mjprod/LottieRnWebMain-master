@@ -11,7 +11,7 @@ const NotFoundScreen = () => {
     function onMessageChannelReady(e) {
       const port = e.ports[0];
       console.log("🌐 Extracted port:", port);
-      if (!port) return;
+      if (!port) {return;}
       port.onmessage = msg => console.log("🌐 Port got message:", msg.data);
       port.postMessage("HELLO_FROM_WEB");
       setPort(port);
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
-    paddingHorizontal: Dimentions.pageMargin
+    paddingHorizontal: Dimentions.pageMargin,
   },
   message: {
     fontFamily: Fonts.InterBold,

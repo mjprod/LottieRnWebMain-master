@@ -14,7 +14,7 @@ import StatCard from "../components/StatCard";
 import { useGame } from "../context/GameContext";
 import useApiRequest from "../hook/useApiRequest";
 import useAppNavigation from "../hook/useAppNavigation";
-import { Colors, Dimentions, GameStatus } from "../util/constants";
+import { Colors, Dimentions, GameStatus, isProduction } from "../util/constants";
 import { decrypt } from "../util/crypto";
 import { convertUTCToLocal, getCurrentDate } from "../util/Helpers";
 import { InfoScreenContents } from "./info/InfoScreen";
@@ -37,7 +37,7 @@ const LauchScreenEncrypted = () => {
     getWinner,
     getWinnerError,
     login,
-    loginError
+    loginError,
   } = useApiRequest();
 
   const fetchAndProcessUserDetails = (userDetails) => {
@@ -50,7 +50,7 @@ const LauchScreenEncrypted = () => {
           appNavigation.goToInProgressPage();
         } else if (gameStatus === GameStatus.check_winner) {
           getWinner().then((response) => {
-            const winner = response.winner
+            const winner = response.winner;
             if (winner.user_id === userResponse.user.user_id) {
               appNavigation.goToCongratulationsPage(InfoScreenContents.congratulations);
             } else {
@@ -66,12 +66,12 @@ const LauchScreenEncrypted = () => {
             appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
           } else {
             const currentWeekDaily = userResponse.daily.find(
-              (item) => item.current_week === currentWeek
+              (item) => item.current_week === currentWeek,
             );
-            if (currentWeekDaily != null) {
-              const localCurrentWeekDaily = currentWeekDaily.days.map((date) => convertUTCToLocal(date))
+            if (currentWeekDaily !== null) {
+              const localCurrentWeekDaily = currentWeekDaily.days.map((date) => convertUTCToLocal(date));
               const hasCurrentDate = localCurrentWeekDaily.some((item) =>
-                item.includes(getCurrentDate())
+                item.includes(getCurrentDate()),
               );
               if (!hasCurrentDate) {
                 appNavigation.goToDailyPage(userData.user_id, userData.name, userData.email);
@@ -82,17 +82,17 @@ const LauchScreenEncrypted = () => {
           }
         }
       } else {
-        appNavigation.goToNotFoundPage()
+        appNavigation.goToNotFoundPage();
       }
     }).catch((error) => {
       console.error('User failed:', error);
     });
-  }
+  };
 
   useEffect(() => {
-    if (params.id && params.name && params.email) {
+    if (!isProduction && params.id && params.name && params.email) {
       login(params.id, params.name, params.email).then(() => {
-        fetchAndProcessUserDetails({ user_id: params.id, name: params.name, email: params.email })
+        fetchAndProcessUserDetails({ user_id: params.id, name: params.name, email: params.email });
       }).catch((error) => {
         console.error('Login failed:', error);
       });
@@ -106,7 +106,7 @@ const LauchScreenEncrypted = () => {
         const authTokenData = JSON.parse(decrypt(authToken, true));
         login(authTokenData.user_id, authTokenData.name, authTokenData.email)
           .then(() => {
-            fetchAndProcessUserDetails(authTokenData)
+            fetchAndProcessUserDetails(authTokenData);
           }).catch((error) => {
             console.error('Login failed:', error);
           });
@@ -130,9 +130,9 @@ const LauchScreenEncrypted = () => {
       return;
     }
     if (user.card_balance <= 0) {
-      showSnackbar("You don't have any cards left. Please wait till next day to play the game!")
+      showSnackbar("You don't have any cards left. Please wait till next day to play the game!");
     } else {
-      appNavigation.goToStartPage(user.user_id, user.name, user.email);
+      appNavigation.goToGamePage(user.user_id, user.name, user.email);
     }
   };
 
@@ -151,7 +151,7 @@ const LauchScreenEncrypted = () => {
 
 
   const handleViewAllPress = () => {
-    appNavigation.goToLeaderBoardPage(user.user_id, user.name, user.email)
+    appNavigation.goToLeaderBoardPage(user.user_id, user.name, user.email);
   };
 
   if (user) {
@@ -190,14 +190,11 @@ const LauchScreenEncrypted = () => {
         </View>
       </TopNavTemplate>
     );
-  } else return (<LoadingView />);
+  } else { return (<LoadingView />); }
 
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginVertical: Dimentions.marginL
-  },
   statisticsContainer: {
     marginLeft: Dimentions.pageMargin,
     marginRight: Dimentions.pageMargin,
@@ -216,14 +213,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     width: "100%",
   },
-  copyright: {
-    lineHeight: "150%",
-    alignContent: "center",
-    textAlign: "center",
-    fontSize: 16,
-    marginTop: 20,
-    color: Colors.jokerBlack200
-  }
 });
 
 export default LauchScreenEncrypted;

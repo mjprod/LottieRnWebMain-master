@@ -1,6 +1,6 @@
 import {
   QueryClient,
-  QueryClientProvider
+  QueryClientProvider,
 } from '@tanstack/react-query';
 import React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
@@ -19,11 +19,11 @@ import NotFoundScreen from "./screens/NotFoundScreen";
 import StartScreen from "./screens/StartScreen";
 import ScratchLuckyGame from "./screens/game/ScratchLuckyGame";
 import InfoScreen, { InfoScreenContents } from "./screens/info/InfoScreen";
-import { Colors } from './util/constants';
+import { Colors, isMobileBrowser, isProduction } from './util/constants';
 
 const { height } = Dimensions.get("window");
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 export default function App() {
   React.useEffect(() => {
@@ -35,10 +35,6 @@ export default function App() {
       element.style.userSelect = "none";
     });
   }, []);
-
-  const isMobileBrowser =
-    navigator.userAgent.includes("Mobile") ||
-    navigator.userAgent.includes("Android");
 
   const dynamicStyles = isMobileBrowser ? smallStyles : styles;
 
@@ -59,7 +55,7 @@ export default function App() {
                       <Route path="/game_over" element={<GameOverScreen />} />
                       <Route path="/how_to_play" element={<HowToPlayScreen />} />
                       <Route path="/leader_board" element={<LeaderBoardScreen />} />
-                      <Route path="/:id/:name/:email" element={<LauchScreen />} />
+                      {!isProduction && <Route path="/:id/:name/:email" element={<LauchScreen />} />}
                       <Route path="/" element={<LauchScreen />} />
                       <Route path={InfoScreenContents.extending} element={<InfoScreen contentName={InfoScreenContents.extending} />} />
                       <Route path={InfoScreenContents.thank_you} element={<InfoScreen contentName={InfoScreenContents.thank_you} />} />
@@ -78,6 +74,7 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  // eslint-disable-next-line react-native/no-unused-styles
   container: {
     overflow: "hidden",
     height: "100vh",
@@ -85,6 +82,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(33,33,33,.9)",
   },
+  // eslint-disable-next-line react-native/no-unused-styles
   app: {
     margin: "auto",
     flex: 1,
@@ -98,6 +96,7 @@ const styles = StyleSheet.create({
 });
 
 const smallStyles = StyleSheet.create({
+  // eslint-disable-next-line react-native/no-unused-styles
   container: {
     flex: 1,
     overflow: "hidden",
@@ -106,6 +105,7 @@ const smallStyles = StyleSheet.create({
     userSelect: "none",
     backgroundColor: Colors.jokerBlack1100,
   },
+  // eslint-disable-next-line react-native/no-unused-styles
   app: {
     overflow: "hidden",
     width: "100%",
